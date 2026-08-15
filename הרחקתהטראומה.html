@@ -254,6 +254,12 @@ document.addEventListener('DOMContentLoaded', async function() {
       'function finishProcess(){\n      saveSession();\n      show("s-summary");\n    }',
       'function finishProcess(){\n      saveSession();\n      show("s-summary");\n      $("#sumTitle").textContent = "יופי — העבודה הסתיימה בהצלחה ✓";\n      $("#btnMoreRound").hidden = true;\n    }'
     );
+    // Step 13 must always use the participant's saved second image. Copy it
+    // directly from state on entry, including when the forward loops were skipped.
+    template = template.replace(
+      '"s-enter": ()=>{\n        const scene =',
+      '"s-enter": ()=>{\n        const futureImg = document.querySelector("#s-enter .future-memory img");\n        if(futureImg && state.image2){ futureImg.src = state.image2; futureImg.style.display = "block"; }\n        const scene ='
+    );
     template = template.replace(
       /let funnyTimer = null;[\s\S]*?function stopFunnySound\(\)\{ clearTimeout\(funnyTimer\); funnyTimer = null; \}/,
       'let funnyTimer = null, funnyNodes = [];\n    function startFunnySound(dur){\n      const ctx = AC();\n      const master = ctx.createGain(); master.gain.value = .12; master.connect(ctx.destination); funnyNodes.push(master);\n      const end = ctx.currentTime + dur; let step = 0;\n      function giggle(){\n        if(ctx.currentTime > end) return;\n        const now = ctx.currentTime;\n        [0,.105].forEach((delay,part)=>{\n          const o = ctx.createOscillator(), g = ctx.createGain();\n          o.type = part ? "triangle" : "sine";\n          const base = [520,620,570,710][step%4] + Math.random()*35;\n          o.frequency.setValueAtTime(base, now+delay);\n          o.frequency.exponentialRampToValueAtTime(base*1.28, now+delay+.07);\n          o.frequency.exponentialRampToValueAtTime(base*.9, now+delay+.15);\n          g.gain.setValueAtTime(.001, now+delay);\n          g.gain.exponentialRampToValueAtTime(.34, now+delay+.018);\n          g.gain.exponentialRampToValueAtTime(.001, now+delay+.18);\n          o.connect(g); g.connect(master); o.start(now+delay); o.stop(now+delay+.2); funnyNodes.push(o,g);\n        });\n        step++; funnyTimer = setTimeout(giggle, 245 + Math.random()*115);\n      }\n      giggle(); return master;\n    }\n    function stopFunnySound(){ clearTimeout(funnyTimer); funnyTimer = null; funnyNodes.forEach(n=>{try{n.disconnect();}catch(e){}}); funnyNodes=[]; }'
