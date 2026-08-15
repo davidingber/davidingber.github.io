@@ -254,6 +254,34 @@ document.addEventListener('DOMContentLoaded', async function() {
       'function finishProcess(){\n      saveSession();\n      show("s-summary");\n    }',
       'function finishProcess(){\n      saveSession();\n      show("s-summary");\n      $("#sumTitle").textContent = "יופי — העבודה הסתיימה בהצלחה ✓";\n      $("#btnMoreRound").hidden = true;\n    }'
     );
+    // During each transition only the destination image remains visible.
+    template = template.replace(
+      'await narrateStill("#fwd1", "תמונה 1 — הכל בסדר. קרה מה שקרה.", 2600);\n      const dur =',
+      'await narrateStill("#fwd1", "תמונה 1 — הכל בסדר. קרה מה שקרה.", 2600);\n      setStill("#fwd1", null);\n      const dur ='
+    );
+    template = template.replace(
+      'await narrateStill("#rev2", "תמונה 2 — הכל הסתיים.", 2000);\n      const dur =',
+      'await narrateStill("#rev2", "תמונה 2 — הכל הסתיים.", 2000);\n      setStill("#rev2", null);\n      const dur ='
+    );
+    // Replace the electronic confirmation chirp with a soft singing-bowl tone.
+    template = template.replace(
+      /function chime\(\)\{[\s\S]*?\n    \}\n\n    let funnyTimer = null;/,
+      `function chime(){
+      const ctx = AC(), now = ctx.currentTime;
+      const master = ctx.createGain();
+      const filter = ctx.createBiquadFilter(); filter.type = "lowpass"; filter.frequency.value = 2200; filter.Q.value = .7;
+      master.gain.setValueAtTime(.0001, now); master.gain.exponentialRampToValueAtTime(.13, now+.025); master.gain.exponentialRampToValueAtTime(.0001, now+3.8);
+      filter.connect(master); master.connect(ctx.destination);
+      [196,294,392,588].forEach((freq,i)=>{
+        const o=ctx.createOscillator(),g=ctx.createGain(); o.type="sine";o.frequency.setValueAtTime(freq,now);o.frequency.exponentialRampToValueAtTime(freq*.992,now+3.6);
+        g.gain.setValueAtTime(.0001,now);g.gain.exponentialRampToValueAtTime([.62,.24,.12,.055][i],now+.018+i*.012);g.gain.exponentialRampToValueAtTime(.0001,now+3.5-i*.25);
+        o.connect(g);g.connect(filter);o.start(now);o.stop(now+3.9);
+      });
+    }
+    document.addEventListener("click",e=>{const b=e.target.closest("button");if(!b||b.disabled)return;if(b.matches(".btn,[data-next],#btnStart,#btnPlayFwd,#btnPlayRev,#btnSaidIt,#btnFinishCheck"))chime();},true);
+
+    let funnyTimer = null;`
+    );
     // Step 13 must always use the participant's saved second image. Copy it
     // directly from state on entry, including when the forward loops were skipped.
     template = template.replace(
@@ -373,8 +401,8 @@ document.addEventListener('DOMContentLoaded', async function() {
       .cinema-compat { position:absolute;left:34%;right:34%;top:52%;height:12%;visibility:hidden;display:flex;flex-direction:column; }
       .cinema-redesign .sightlines { display:none !important; }
       .future-self-redesign { position:relative !important;display:block !important;width:100% !important;max-width:680px !important;height:auto !important;padding:0 !important;aspect-ratio:3/2 !important;background:#182623 !important;overflow:hidden !important;flex:none !important;border-radius:22px !important; }
-      .future-self-stage { position:absolute;inset:0;background:#273028; }
-      .future-scene-photo { position:absolute;z-index:1;inset:0;width:100%;height:100%;object-fit:cover;display:block; }
+      .future-self-stage { position:absolute !important;inset:0 !important;width:100% !important;height:100% !important;display:block !important;background:#273028;overflow:hidden !important; }
+      .future-self-stage > .future-scene-photo { position:absolute !important;z-index:1 !important;inset:0 !important;width:100% !important;height:100% !important;min-width:100% !important;min-height:100% !important;max-width:none !important;max-height:none !important;margin:0 !important;padding:0 !important;object-fit:cover !important;object-position:center center !important;display:block !important;transform:none !important; }
       .future-memory { position:absolute;z-index:2;left:29.75%;top:48.45%;width:14.45%;height:33.75%;overflow:hidden;border:0;background:#202425;box-shadow:inset 0 0 16px rgba(24,18,13,.34);transform:none;clip-path:polygon(0 2.6%,65.3% 0,100% 92.6%,28.6% 100%); }
       .future-memory::after { content:"";position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 14px 7px rgba(30,24,19,.2); }
       .future-memory img { width:100%;height:100%;object-fit:cover;display:block;filter:saturate(.94) contrast(.96) brightness(.98) !important;opacity:.97;transform:scale(.985); }
@@ -441,8 +469,9 @@ document.addEventListener('DOMContentLoaded', async function() {
       function syncReadiness(){var checks=Array.from(document.querySelectorAll('#readinessCheck .ready-check')),start=document.getElementById('btnStart'),hint=document.getElementById('startHint');if(!start)return;var ready=checks.length===3&&checks.every(function(c){return c.checked;});start.disabled=!ready;start.setAttribute('aria-disabled',String(!ready));start.style.opacity=ready?'1':'.42';start.style.cursor=ready?'pointer':'not-allowed';if(hint)hint.textContent=ready?'אפשר להתחיל. גם בהמשך אפשר לעצור בכל רגע.':'כדי להתחיל, יש לאשר את שלושת הסעיפים.';}
       function syncBodyMarkers(){document.querySelectorAll('.body-map-shell').forEach(function(shell){var chosen=shell.querySelector('.bodyzone[style*="#d8b77a"],.bodyzone[style*="#ffd166"],.bodyzone[style*="rgb(216, 183, 122)"],.bodyzone[style*="rgba(216, 183, 122"]');if(chosen)shell.dataset.activeZone=chosen.dataset.zone;});}
       function syncFutureImage(){var target=document.querySelector('#s-enter .future-memory img'),source=document.querySelector('#fwd2 img');if(target&&source&&source.src){target.src=source.src;target.style.display='block';}}
-      function enhance(){bodyMap('s-anchor');bodyMap('s-anchor2');cinema('cinemaScene','observe');cinema('fwdScene','forward');cinema('revScene','reverse');futureSelf();syncReadiness();syncBodyMarkers();syncFutureImage();}
-      document.addEventListener('change',function(e){if(e.target&&e.target.matches('.ready-check'))syncReadiness();},true);document.addEventListener('input',function(e){if(e.target&&e.target.matches('.ready-check'))syncReadiness();},true);document.addEventListener('click',function(e){var zone=e.target&&e.target.closest&&e.target.closest('.bodyzone');if(zone){var shell=zone.closest('.body-map-shell');if(shell)shell.dataset.activeZone=zone.dataset.zone;}setTimeout(function(){syncReadiness();syncBodyMarkers();syncFutureImage();},30);},true);
+      function syncSummary(){var screen=document.getElementById('s-summary'),before=document.getElementById('rangeBefore'),after=document.getElementById('rangeAfter');if(!screen||!before||!after||getComputedStyle(screen).display==='none')return;var b=Number(before.value),a=Number(after.value),drop=b-a;var sb=document.getElementById('sumBefore'),sa=document.getElementById('sumAfter'),sub=document.getElementById('sumSub'),bb=document.getElementById('barBefore'),ba=document.getElementById('barAfter');if(sb)sb.textContent=b;if(sa)sa.textContent=a;if(bb)bb.style.height=(b*10)+'%';if(ba)ba.style.height=(a*10)+'%';if(sub)sub.textContent=drop>0?'התחלת בעוצמה '+b+' וסיימת בעוצמה '+a+' — ירידה של '+drop+' נקודות.':drop<0?'העוצמה עלתה מ-'+b+' ל-'+a+'. מומלץ לעצור ולחזור לעוגן הביטחון.':'העוצמה נשארה '+a+'. השלמת את כל שלבי התהליך.';}
+      function enhance(){bodyMap('s-anchor');bodyMap('s-anchor2');cinema('cinemaScene','observe');cinema('fwdScene','forward');cinema('revScene','reverse');futureSelf();syncReadiness();syncBodyMarkers();syncFutureImage();syncSummary();}
+      document.addEventListener('change',function(e){if(e.target&&e.target.matches('.ready-check'))syncReadiness();},true);document.addEventListener('input',function(e){if(e.target&&e.target.matches('.ready-check'))syncReadiness();},true);document.addEventListener('click',function(e){var zone=e.target&&e.target.closest&&e.target.closest('.bodyzone');if(zone){var shell=zone.closest('.body-map-shell');if(shell)shell.dataset.activeZone=zone.dataset.zone;}setTimeout(function(){syncReadiness();syncBodyMarkers();syncFutureImage();syncSummary();},30);},true);
       if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhance);else enhance();setTimeout(enhance,500);
     })();<\/script>`;
     template = template.replace('</body>', visualSync + '</body>');
