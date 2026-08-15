@@ -3,15 +3,16 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>סוויש דיגיטלי — תהליך מודרך</title>
 </head>
 <body>
 <!--CORE-->
+<title>סוויש דיגיטלי — תהליך מודרך</title>
+
 <style>
 :root{
   --bg:#EDF3F7; --card:#FFFFFF; --soft:#F5F8FB;
-  --ink:#22344A; --muted:#57677E; --line:#D9E3EC;
-  --gold:#F5B840; --gold-deep:#9C660C; --gold-soft:#FFF3D9;
+  --ink:#22344A; --muted:#64778F; --line:#D9E3EC;
+  --gold:#F5B840; --gold-deep:#D89A1E; --gold-soft:#FFF3D9;
   --storm:#6B647F; --storm-soft:#E9E6F2; --storm-ink:#544D66;
   --teal:#2FA98C; --teal-soft:#E2F4EE; --water:#78BEFF;
   --r:22px;
@@ -159,10 +160,10 @@ input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;bac
 .scard{
   position:absolute;inset:14px;border-radius:16px;display:flex;flex-direction:column;
   align-items:center;justify-content:center;gap:4px;text-align:center;padding:10px;
-  transition-property:transform,opacity,filter,border-radius;transition-timing-function:cubic-bezier(.65,0,.35,1);
-  transition-duration:0s;will-change:transform,opacity,filter,border-radius;
+  transition-property:transform,opacity,filter;transition-timing-function:cubic-bezier(.65,0,.35,1);
+  transition-duration:0s;will-change:transform,opacity,filter;
 }
-.scard.trig{background:var(--storm-soft);border:2px solid #CFC8DE;z-index:2;padding-bottom:74px;transform-origin:50% 0%;border-radius:16px}
+.scard.trig{background:var(--storm-soft);border:2px solid #CFC8DE;z-index:2;padding-bottom:74px}
 .trig-label{font-size:1.15rem;font-weight:800;color:var(--storm-ink)}
 .scard.ideal{
   background:linear-gradient(180deg,#FFF8E6,#FFEFC4);border:2px solid var(--gold);z-index:6;
@@ -170,7 +171,7 @@ input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;bac
   transform:translateY(34%) scale(.04);opacity:0;
   transition-timing-function:cubic-bezier(.2,1.25,.35,1);
 }
-.stage.go .scard.trig{transform:scale(1.04,1.6) translateY(46%) skewX(-2deg);filter:blur(13px) grayscale(1) saturate(.35);opacity:0;border-radius:16px 16px 70% 70% / 16px 16px 160% 160%}
+.stage.go .scard.trig{transform:scale(.03) translate(60%,-40%);filter:blur(12px) grayscale(1);opacity:0}
 .stage.go .scard.ideal{transform:translateY(0) scale(1);opacity:1}
 .ideal-name{font-size:1.1rem;font-weight:800;color:var(--gold-deep)}
 .badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:420px}
@@ -435,18 +436,12 @@ footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation-duration:.01s !important;transition-duration:.15s !important}
 }
-.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border:0}
-.skip-link{position:absolute;top:-48px;insetInlineStart:8px;background:var(--ink);color:#fff;padding:10px 18px;border-radius:10px;z-index:100;transition:top .15s;font-weight:700}
-.skip-link:focus{top:8px}
-.stg-dot[aria-current="step"]{outline:3px solid var(--gold-deep);outline-offset:2px}
 </style>
 
-<a class="skip-link" href="#step-body">דילוג לתוכן השלב</a>
-<div id="live-announcer" class="sr-only" role="status" aria-live="polite" aria-atomic="true"></div>
-<main id="app" dir="rtl" lang="he">
+<div id="app" dir="rtl" lang="he">
 
   <!-- ===== HOME ===== -->
-  <section id="screen-home" aria-label="מסך פתיחה">
+  <section id="screen-home">
     <div class="eyebrow">תהליך סוויש קלאסי מה־NLP · מודרך צעד־צעד</div>
     <h1>סוויש דיגיטלי</h1>
     <p class="muted" style="font-size:1.05rem">שמים לב ל<b>טריגר</b>, בודקים <b>שליטה</b>, בונים את <b>האני האידיאלי</b>, מריצים את ה<b>סוויש</b> — ומפזרים לכל עבר.</p>
@@ -454,9 +449,17 @@ footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
     <div class="card center" id="gender-card">
       <h2 style="font-size:1.15rem">איך לפנות אליך?</h2>
       <p class="muted small" style="margin-top:0">כדי שהקריינות והמשפטים יהיו מדויקים עבורך.</p>
-      <div class="gender-chips" role="group" aria-label="בחירת פנייה">
-        <button class="chip" data-g="m" aria-pressed="false" type="button">גבר</button>
-        <button class="chip" data-g="f" aria-pressed="false" type="button">אישה</button>
+      <div class="gender-chips">
+        <button class="chip" data-g="m">גבר</button>
+        <button class="chip" data-g="f">אישה</button>
+      </div>
+      <div id="voice-pick-wrap" style="margin-top:14px">
+        <div style="font-weight:800;margin-bottom:6px">🔊 קול הקריינות</div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:center">
+          <select id="voice-select" class="vin-textbig" style="max-width:280px;font-size:.98rem;padding:10px 14px"></select>
+          <button class="btn ghost" id="voice-test" type="button" style="padding:9px 16px">▶ שמיעה</button>
+        </div>
+        <p class="muted small" id="voice-hint" style="margin:8px 0 0"></p>
       </div>
     </div>
 
@@ -468,8 +471,8 @@ footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
       <div class="demo-flash"></div>
     </div>
 
-    <h2 id="channels-h">במה נעבוד היום?</h2>
-    <div class="channels" role="group" aria-labelledby="channels-h">
+    <h2>במה נעבוד היום?</h2>
+    <div class="channels">
       <button class="channel" data-ch="visual">
         <span class="ch-ic"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
         <span class="ch-title">ראייה</span>
@@ -490,19 +493,19 @@ footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
   </section>
 
   <!-- ===== FLOW ===== -->
-  <section id="screen-flow" class="hidden" aria-label="תהליך הסוויש">
-    <div class="backline"><button id="flow-back" type="button">→ חזרה</button></div>
-    <nav class="stagesbar" id="stagesbar" aria-label="שלבי התהליך"></nav>
+  <section id="screen-flow" class="hidden">
+    <div class="backline"><button id="flow-back">→ חזרה</button></div>
+    <div class="stagesbar" id="stagesbar"></div>
     <h1 id="step-title" style="font-size:clamp(1.5rem,5vw,2rem)"></h1>
     <div id="step-body"></div>
     <div class="btnrow">
       <span class="spacer"></span>
-      <button class="btn" id="step-next" type="button">המשך ←</button>
+      <button class="btn" id="step-next">המשך ←</button>
     </div>
   </section>
 
   <!-- ===== FINISH ===== -->
-  <section id="screen-finish" class="hidden" aria-label="סיום התהליך">
+  <section id="screen-finish" class="hidden">
     <div class="eyebrow">סיום התהליך</div>
     <h1>כל הכבוד! 💛</h1>
     <div class="card">
@@ -520,7 +523,7 @@ footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
     </div>
   </section>
 
-</main>
+</div>
 
 <script>
 (function(){
@@ -528,7 +531,6 @@ footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
 
 /* ---------- helpers ---------- */
 const $ = s => document.querySelector(s);
-function announce(text){ const el=document.getElementById('live-announcer'); if(el){ el.textContent=''; requestAnimationFrame(()=>{ el.textContent=text; }); } }
 const wait = ms => new Promise(r=>setTimeout(r,ms));
 function h(tag, cls, html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e;}
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
@@ -540,7 +542,7 @@ const state = {
   gender:null, channel:null, emotion:'', before:6, after:null,
   resources:[], bodySpot:null, voiceDir:null,
   voiceQ:{speed:null, dist:null, vol:null},
-  voiceText:'', voiceTypes:[], voiceRec:null,
+  voiceText:'', voiceTypes:[], voiceRec:null, voiceName:null,
   trigPic:null, idealPic:null, voicePic:null, feelPic:null,
 };
 try{ state.gender = localStorage.getItem('swish-gender') || null; }catch(e){}
@@ -717,13 +719,31 @@ function drainSound(sec, vol){
 function tick(p){ swishSound(0.1, 0.12+p*0.1); }
 
 /* human-sounding gendered narration */
-function pickVoice(){
-  if(!('speechSynthesis' in window)) return null;
-  const vs=speechSynthesis.getVoices().filter(v=>v.lang && v.lang.indexOf('he')===0);
-  if(!vs.length) return null;
-  const want = state.gender==='f' ? /female|carmit|hila|אישה/i : /male|asaf|guy|גבר/i;
-  return vs.find(v=>want.test(v.name)) || vs[0];
+function hebrewVoices(){
+  if(!('speechSynthesis' in window)) return [];
+  return speechSynthesis.getVoices().filter(v=>v.lang && (v.lang.toLowerCase().indexOf('he')===0 || /iw|hebrew/i.test(v.lang)));
 }
+function voiceScore(v){
+  let s=0;
+  if(/enhanced|premium|natural|neural|siri/i.test(v.name)) s+=6;   /* high-quality engines */
+  if(/carmit|google|microsoft|asaf|amira|avri/i.test(v.name)) s+=3; /* known good Hebrew voices */
+  if(v.localService) s+=1;
+  return s;
+}
+function pickVoice(){
+  const vs=hebrewVoices();
+  if(!vs.length) return null;
+  /* explicit user choice wins */
+  if(state.voiceName){
+    const chosen=vs.find(v=>v.name===state.voiceName) || speechSynthesis.getVoices().find(v=>v.name===state.voiceName);
+    if(chosen) return chosen;
+  }
+  /* otherwise the best Hebrew voice, biased by gender when the name hints it */
+  const want = state.gender==='f' ? /female|carmit|hila|amira|נקבה|אישה/i : /male|asaf|guy|avri|זכר|גבר/i;
+  const sorted=[...vs].sort((a,b)=>voiceScore(b)-voiceScore(a));
+  return sorted.find(v=>want.test(v.name)) || sorted[0];
+}
+try{ state.voiceName = localStorage.getItem('swish-voice') || null; }catch(e){}
 function speak(text){
   if(!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
@@ -921,7 +941,7 @@ function makeVoiceInput(container){
 
   /* record box */
   const recBox=h('div','vin-big');
-  const micBtn=h('button','mic-btn','🎤'); micBtn.type='button'; micBtn.setAttribute('aria-label','הקלטה'); micBtn.setAttribute('aria-pressed','false');
+  const micBtn=h('button','mic-btn','🎤'); micBtn.type='button'; micBtn.setAttribute('aria-label','הקלטה');
   const recLabel=h('div',null,'<b>הקלטה</b>');
   const recStatus=h('div','muted','לחצו כדי להקליט');
   recBox.appendChild(micBtn); recBox.appendChild(recLabel); recBox.appendChild(recStatus);
@@ -972,14 +992,14 @@ function makeVoiceInput(container){
     };
     rec.start();
     secs=0; recStatus.textContent='מקליט… 0ש׳';
-    micBtn.classList.add('rec'); micBtn.textContent='⏹'; micBtn.setAttribute('aria-pressed','true'); micBtn.setAttribute('aria-label','עצירת הקלטה');
+    micBtn.classList.add('rec'); micBtn.textContent='⏹';
     recLabel.innerHTML='<b class="vin-time">מקליט…</b>';
     timer=setInterval(()=>{ secs++; recStatus.textContent='מקליט… '+secs+'ש׳'; if(secs>=15) stop(); },1000);
   }
   function stop(){
     if(rec && rec.state!=='inactive'){ try{rec.stop();}catch(e){} }
     clearInterval(timer);
-    micBtn.classList.remove('rec'); micBtn.textContent='🎤'; micBtn.setAttribute('aria-pressed','false'); micBtn.setAttribute('aria-label','הקלטה');
+    micBtn.classList.remove('rec'); micBtn.textContent='🎤';
     recLabel.innerHTML='<b>הקלטה</b>';
   }
   micBtn.addEventListener('click',()=>{ audio(); if(rec && rec.state==='recording') stop(); else start(); });
@@ -1126,16 +1146,15 @@ function makeChips(container, options, opts){
   function fire(){ o.onChange([...selected]); }
   function addChip(label, preOn){
     const b=h('button','chip'); b.type='button'; b.textContent=label;
-    b.setAttribute('aria-pressed', preOn?'true':'false');
     if(preOn){selected.add(label); b.classList.add('on');}
     b.addEventListener('click',()=>{
       if(o.multi){
-        if(selected.has(label)){selected.delete(label); b.classList.remove('on'); b.setAttribute('aria-pressed','false');}
-        else {selected.add(label); b.classList.add('on'); b.setAttribute('aria-pressed','true');}
+        if(selected.has(label)){selected.delete(label); b.classList.remove('on');}
+        else {selected.add(label); b.classList.add('on');}
       } else {
         selected.clear();
-        chips.querySelectorAll('.chip').forEach(c=>{c.classList.remove('on'); c.setAttribute('aria-pressed','false');});
-        selected.add(label); b.classList.add('on'); b.setAttribute('aria-pressed','true');
+        chips.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+        selected.add(label); b.classList.add('on');
       }
       fire();
     });
@@ -1164,11 +1183,9 @@ function makeScale(container, opts){
   const num=h('div','scale-num', o.value+' <small>/ 10</small>');
   const inp=h('input'); inp.type='range'; inp.min='1'; inp.max='10'; inp.step='1'; inp.value=o.value;
   inp.setAttribute('aria-label','עוצמה בין 1 ל-10');
-  inp.setAttribute('aria-valuetext', o.value+' מתוך 10');
   const ends=h('div','scale-ends','<span>1 · '+o.lowLabel+'</span><span>10 · '+o.highLabel+'</span>');
   inp.addEventListener('input',()=>{
     num.innerHTML=inp.value+' <small>/ 10</small>';
-    inp.setAttribute('aria-valuetext', inp.value+' מתוך 10');
     o.onChange(+inp.value);
   });
   box.appendChild(num); box.appendChild(inp); box.appendChild(ends);
@@ -1197,11 +1214,11 @@ function makeBodyMap(container, onPick){
   BODY_SPOTS.forEach(s=>{
     const mb=h('button','spot-btn'); mb.type='button';
     mb.style.left=(s.x/140*100)+'%'; mb.style.top=(s.y/190*100)+'%';
-    mb.setAttribute('aria-label',s.name); mb.title=s.name; mb.setAttribute('aria-pressed','false');
-    const cb=h('button','chip',s.name); cb.type='button'; cb.setAttribute('aria-pressed','false');
+    mb.setAttribute('aria-label',s.name); mb.title=s.name;
+    const cb=h('button','chip',s.name); cb.type='button';
     function select(){
-      pairs.forEach(p=>{p.mb.classList.remove('on'); p.cb.classList.remove('on'); p.mb.setAttribute('aria-pressed','false'); p.cb.setAttribute('aria-pressed','false');});
-      mb.classList.add('on'); cb.classList.add('on'); mb.setAttribute('aria-pressed','true'); cb.setAttribute('aria-pressed','true');
+      pairs.forEach(p=>{p.mb.classList.remove('on'); p.cb.classList.remove('on');});
+      mb.classList.add('on'); cb.classList.add('on');
       state.bodySpot=s;
       dot.style.display='block';
       dot.style.left=(s.x/140*100)+'%'; dot.style.top=(s.y/190*100)+'%';
@@ -1242,11 +1259,11 @@ function buildVoicePicker(onPick){
   }
   neg.style.opacity='0';
   VOICE_DIRS.forEach(d=>{
-    const b=h('button','dirbtn',d.name); b.type='button'; b.setAttribute('aria-pressed','false');
+    const b=h('button','dirbtn',d.name); b.type='button';
     b.style.left=d.x+'%'; b.style.top=d.y+'%';
     b.addEventListener('click',()=>{
-      stage.querySelectorAll('.dirbtn').forEach(x=>{x.classList.remove('on'); x.setAttribute('aria-pressed','false');});
-      b.classList.add('on'); b.setAttribute('aria-pressed','true');
+      stage.querySelectorAll('.dirbtn').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
       state.voiceDir=d;
       neg.setAttribute('d',pathFor(d));
       neg.style.opacity='0.9';
@@ -1264,8 +1281,6 @@ function show(name){
   Object.values(screens).forEach(s=>s.classList.add('hidden'));
   screens[name].classList.remove('hidden');
   window.scrollTo(0,0);
-  const names={home:'מסך הבית', flow:'תהליך הסוויש', finish:'סיום התהליך'};
-  announce(names[name]||'');
 }
 $('#demo-trig').innerHTML=gloomCharSVG(100,'פחד')+'<div class="trig-label small">הטריגר</div>';
 $('#demo-ideal').innerHTML=idealCharSVG(100)+'<div class="ideal-name small">האני האידיאלי</div>';
@@ -1273,15 +1288,51 @@ $('#demo-ideal').innerHTML=idealCharSVG(100)+'<div class="ideal-name small">הא
 /* gender selection */
 const genderCard=$('#gender-card');
 genderCard.querySelectorAll('.chip').forEach(b=>{
-  if(state.gender===b.dataset.g){ b.classList.add('on'); b.setAttribute('aria-pressed','true'); }
+  if(state.gender===b.dataset.g) b.classList.add('on');
   b.addEventListener('click',()=>{
-    genderCard.querySelectorAll('.chip').forEach(x=>{x.classList.remove('on'); x.setAttribute('aria-pressed','false');});
-    b.classList.add('on'); b.setAttribute('aria-pressed','true');
+    genderCard.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
     state.gender=b.dataset.g;
     genderCard.classList.remove('need');
     try{ localStorage.setItem('swish-gender', state.gender); }catch(e){}
   });
 });
+
+/* voice (narration) picker */
+const voiceSelect=$('#voice-select'), voiceHint=$('#voice-hint'), voiceTest=$('#voice-test');
+function populateVoices(){
+  const vs=hebrewVoices();
+  const all=('speechSynthesis' in window)? speechSynthesis.getVoices():[];
+  voiceSelect.innerHTML='';
+  if(!('speechSynthesis' in window)){
+    voiceHint.textContent='הדפדפן שלך לא תומך בקריינות קולית.';
+    voiceSelect.disabled=true; voiceTest.disabled=true; return;
+  }
+  const auto=h('option',null,'אוטומטי — הקול העברי הכי טוב'); auto.value=''; voiceSelect.appendChild(auto);
+  const list = vs.length ? vs : all;
+  list.forEach(v=>{
+    const o=h('option',null, v.name+' — '+v.lang); o.value=v.name;
+    if(state.voiceName===v.name) o.selected=true;
+    voiceSelect.appendChild(o);
+  });
+  if(state.voiceName) voiceSelect.value=state.voiceName;
+  if(!vs.length){
+    voiceHint.innerHTML='לא נמצא קול <b>עברי</b> במכשיר. להתקנת קול עברי טבעי: '
+      +'<b>אייפון</b> — הגדרות ← נגישות ← תוכן מדובר ← קולות ← עברית (למשל "כרמית" באיכות משופרת). '
+      +'<b>אנדרואיד</b> — הגדרות ← נגישות ← פלט טקסט־לדיבור ← מנוע Google + הורדת עברית. '
+      +'<b>מחשב</b> — Chrome/Edge משתמשים בקולות מערכת ההפעלה.';
+  } else {
+    voiceHint.innerHTML='טיפ: לקול טבעי יותר, '+g('בחר','בחרי')+' קול שכתוב לידו <b>Enhanced/Premium/Natural</b>, או '
+      +'התקן/י קול עברי משופר בהגדרות המכשיר.';
+  }
+}
+voiceSelect.addEventListener('change',()=>{
+  state.voiceName=voiceSelect.value||null;
+  try{ if(state.voiceName) localStorage.setItem('swish-voice',state.voiceName); else localStorage.removeItem('swish-voice'); }catch(e){}
+});
+voiceTest.addEventListener('click',()=>{ audio(); speak(sentence()); });
+populateVoices();
+if('speechSynthesis' in window) speechSynthesis.addEventListener('voiceschanged', populateVoices);
 
 /* ---------- flow engine ---------- */
 const EMOTIONS=['פחד','חרדה','כעס','עצב','בושה','אשמה','תסכול','דחייה','חוסר ערך','לחץ'];
@@ -1315,13 +1366,9 @@ document.querySelectorAll('.channel').forEach(b=>{
 function renderStep(){
   const st=steps[stepIdx];
   const bar=$('#stagesbar'); bar.innerHTML='';
-  bar.setAttribute('role','list');
   STAGE_NAMES.forEach((nm,i)=>{
     const d=h('div','stg'+(i<stepIdx?' done':i===stepIdx?' now':''));
-    d.setAttribute('role','listitem');
-    const dotAttrs = i===stepIdx ? ' aria-current="step"' : '';
-    d.innerHTML='<span class="stg-dot"'+dotAttrs+'>'+(i<stepIdx?'✓':(i+1))+'<span class="sr-only">'
-      +(i<stepIdx?' — הושלם':i===stepIdx?' — שלב נוכחי':'')+'</span></span><span class="stg-name">'+nm+'</span>';
+    d.innerHTML='<span class="stg-dot">'+(i<stepIdx?'✓':(i+1))+'</span><span class="stg-name">'+nm+'</span>';
     bar.appendChild(d);
   });
   $('#step-title').textContent=st.title;
@@ -1331,7 +1378,6 @@ function renderStep(){
   next.disabled=!!st.lock;
   st.make(body, ()=>{next.disabled=false;});
   window.scrollTo(0,0);
-  announce('שלב '+(stepIdx+1)+' מתוך '+STAGE_NAMES.length+': '+st.title);
 }
 $('#flow-back').addEventListener('click',()=>{
   if(stepIdx>0){stepIdx--; renderStep();}
@@ -1365,7 +1411,7 @@ function buildVisualStage(){
       +'<div class="ideal-name">האני האידיאלי</div>'
       +'<div class="badges">'+state.resources.slice(0,4).map(r=>'<span class="badge">'+r+'</span>').join('')+'</div>'
     +'</div>'
-    +'<div class="water"></div><div class="flash"></div><div class="stage-counter hidden" role="status" aria-live="polite"></div>';
+    +'<div class="water"></div><div class="flash"></div><div class="stage-counter hidden"></div>';
   const trig=stage.querySelector('.trig'), ideal=stage.querySelector('.ideal'),
         flash=stage.querySelector('.flash'), counter=stage.querySelector('.stage-counter'),
         box=stage.querySelector('.jbox');
@@ -1394,7 +1440,7 @@ function buildVisualStage(){
 function buildFeelingStage(){
   const spot=state.bodySpot||BODY_SPOTS[3];
   const stage=h('div','stage');
-  stage.innerHTML='<div class="water"></div><div class="flash"></div><div class="stage-counter hidden" role="status" aria-live="polite"></div>';
+  stage.innerHTML='<div class="water"></div><div class="flash"></div><div class="stage-counter hidden"></div>';
   const inner=h('div');
   inner.style.cssText='position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;gap:2px;padding-bottom:6px';
   const riser=h('div','side-riser');
@@ -1544,7 +1590,7 @@ function buildVoiceSceneStage(){
       +'<div class="bubble">'+sentence()+'</div>'
     +'</div>'
     +'<div class="vs-floor"></div>'
-    +'<div class="water"></div><div class="flash"></div><div class="stage-counter hidden" role="status" aria-live="polite"></div>';
+    +'<div class="water"></div><div class="flash"></div><div class="stage-counter hidden"></div>';
   const comet=stage.querySelector('.vs-comet'), tail=comet.querySelector('.tail'),
         impact=stage.querySelector('.vs-impact'), riser=stage.querySelector('.vs-riser'),
         glow=stage.querySelector('.vs-glow'), bubble=stage.querySelector('.bubble'),
