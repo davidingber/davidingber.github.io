@@ -140,6 +140,80 @@ document.addEventListener('DOMContentLoaded', async function() {
     setStatus('Rendering...');
     for (const uuid of uuids) template = template.split(uuid).join(blobUrls[uuid]);
 
+    // Trauma-informed welcome screen: establish choice, pacing, and readiness
+    // before asking the participant to approach a difficult memory.
+    const introStart = template.indexOf('<section class="screen" id="s-intro"');
+    const introEnd = template.indexOf('<section class="screen" id="s-connect"', introStart);
+    if (introStart !== -1 && introEnd !== -1) {
+      const safeIntro = `
+    <section class="screen" id="s-intro" data-screen-label="הכנה" style="display:flex;flex-direction:column;gap:1rem;align-items:center;width:100%" aria-labelledby="intro-title">
+      <div style="width:100%;padding:.35rem .1rem;text-align:center">
+        <div style="display:inline-flex;align-items:center;gap:.45rem;padding:.4rem .8rem;border:1px solid rgba(126,224,195,.28);border-radius:99px;background:rgba(126,224,195,.08);color:var(--ta-calm);font-size:.82rem;font-weight:650;margin-bottom:.8rem">
+          <span aria-hidden="true">◉</span><span>צעד ראשון · יוצרים מרחק בטוח</span>
+        </div>
+        <h1 id="intro-title" style="font-size:clamp(1.55rem,5vw,2.15rem);line-height:1.25;margin:0 0 .65rem;color:var(--ta-ink-100);letter-spacing:-.02em">לפני שנתקרב לזיכרון,<br>נוודא שיש לך שליטה מלאה בתהליך</h1>
+        <p style="font-size:1rem;line-height:1.75;color:var(--ta-ink-300);max-width:610px;margin:0 auto">
+          בתרגול נתבונן בזיכרון בהדרגה וממרחק, באמצעות דימוי של אולם קולנוע. אין צורך לספר את כל מה שקרה או להיכנס לפרטים שאינך רוצה לפגוש כרגע.
+        </p>
+      </div>
+
+      <div style="display:grid;grid-template-columns:repeat(auto-fit,minmax(175px,1fr));gap:.7rem;width:100%" role="list" aria-label="עקרונות הביטחון בתהליך">
+        <div role="listitem" style="padding:1rem;border:1px solid rgba(255,255,255,.1);border-radius:var(--ta-radius-sm);background:rgba(255,255,255,.045)">
+          <div aria-hidden="true" style="font-size:1.25rem;margin-bottom:.35rem">⏸</div><strong style="display:block;margin-bottom:.25rem">אתה קובע את הקצב</strong><span style="font-size:.88rem;line-height:1.55;color:var(--ta-ink-400)">אפשר לעצור, לחזור אחורה או לצאת בכל רגע.</span>
+        </div>
+        <div role="listitem" style="padding:1rem;border:1px solid rgba(255,255,255,.1);border-radius:var(--ta-radius-sm);background:rgba(255,255,255,.045)">
+          <div aria-hidden="true" style="font-size:1.25rem;margin-bottom:.35rem">↔</div><strong style="display:block;margin-bottom:.25rem">מתחילים במרחק</strong><span style="font-size:.88rem;line-height:1.55;color:var(--ta-ink-400)">קודם ניצור עוגן ביטחון ונלמד להתבונן מבחוץ.</span>
+        </div>
+        <div role="listitem" style="padding:1rem;border:1px solid rgba(255,255,255,.1);border-radius:var(--ta-radius-sm);background:rgba(255,255,255,.045)">
+          <div aria-hidden="true" style="font-size:1.25rem;margin-bottom:.35rem">⌂</div><strong style="display:block;margin-bottom:.25rem">המידע נשאר אצלך</strong><span style="font-size:.88rem;line-height:1.55;color:var(--ta-ink-400)">התשובות והתמונות נשמרות רק במכשיר שלך.</span>
+        </div>
+      </div>
+
+      <fieldset id="readinessCheck" style="width:100%;border:1px solid rgba(111,183,255,.22);border-radius:var(--ta-radius-md);background:linear-gradient(145deg,rgba(111,183,255,.08),rgba(126,224,195,.035));padding:1rem 1.1rem;margin:0">
+        <legend style="padding:0 .45rem;font-size:1.05rem;font-weight:700;color:var(--ta-ink-100)">רגע לפני שמתחילים</legend>
+        <div style="display:flex;flex-direction:column;gap:.7rem;margin-top:.2rem">
+          <label style="display:flex;align-items:flex-start;gap:.7rem;cursor:pointer;line-height:1.5"><input class="ready-check" type="checkbox" style="width:1.25rem;height:1.25rem;flex:0 0 auto;margin-top:.08rem;accent-color:var(--ta-calm)"><span>אני נמצא כרגע במקום שקט ובטוח.</span></label>
+          <label style="display:flex;align-items:flex-start;gap:.7rem;cursor:pointer;line-height:1.5"><input class="ready-check" type="checkbox" style="width:1.25rem;height:1.25rem;flex:0 0 auto;margin-top:.08rem;accent-color:var(--ta-calm)"><span>יש לי כ־15 דקות, ואינני נוהג או מבצע משימה אחרת.</span></label>
+          <label style="display:flex;align-items:flex-start;gap:.7rem;cursor:pointer;line-height:1.5"><input class="ready-check" type="checkbox" style="width:1.25rem;height:1.25rem;flex:0 0 auto;margin-top:.08rem;accent-color:var(--ta-calm)"><span>בחרתי זיכרון שאני מסוגל לחשוב עליו כרגע בלי להרגיש שאני מאבד שליטה.</span></label>
+        </div>
+      </fieldset>
+
+      <div style="display:flex;flex-wrap:wrap;align-items:center;justify-content:center;gap:.7rem;width:100%">
+        <button id="btnStart" disabled aria-describedby="startHint" style="min-height:52px;padding:.85rem 1.7rem;border-radius:99px;font-weight:700;font-size:1rem;background:linear-gradient(135deg,var(--ta-calm),#62c9ae);color:#07111e;box-shadow:0 8px 24px -8px rgba(126,224,195,.45);border:none;cursor:pointer;font-family:inherit;transition:transform .2s,opacity .2s;opacity:.42">אני מוכן להתחיל בהדרגה</button>
+        <button id="btnNotNow" type="button" style="min-height:52px;padding:.85rem 1.35rem;border-radius:99px;font-weight:600;font-size:1rem;background:transparent;color:var(--ta-ink-300);border:1px solid rgba(255,255,255,.18);cursor:pointer;font-family:inherit">לא מתאים לי עכשיו</button>
+      </div>
+      <p id="startHint" aria-live="polite" style="font-size:.82rem;color:var(--ta-ink-400);text-align:center;margin:-.35rem 0 0">כדי להתחיל, יש לאשר את שלושת הסעיפים.</p>
+
+      <aside role="note" style="width:100%;font-size:.84rem;line-height:1.65;color:var(--ta-ink-400);border-right:3px solid rgba(255,209,102,.7);background:rgba(255,209,102,.055);padding:.8rem .95rem;border-radius:10px">
+        <strong style="color:#f1d58a">חשוב לדעת:</strong> אם הזיכרון מעורר כרגע הצפה חזקה, ניתוק, בלבול או תחושה שאינך בטוח, אל תמשיך לבד. עצור ופנה לאיש מקצוע או לאדם תומך. התרגול אינו תחליף לטיפול מקצועי.
+      </aside>
+
+      <script>
+        (function(){
+          const checks = Array.from(document.querySelectorAll('#readinessCheck .ready-check'));
+          const start = document.getElementById('btnStart');
+          const hint = document.getElementById('startHint');
+          const update = function(){
+            const ready = checks.length === 3 && checks.every(function(c){ return c.checked; });
+            start.disabled = !ready;
+            start.style.opacity = ready ? '1' : '.42';
+            start.style.cursor = ready ? 'pointer' : 'not-allowed';
+            hint.textContent = ready ? 'אפשר להתחיל. גם בהמשך תוכל לעצור בכל רגע.' : 'כדי להתחיל, יש לאשר את שלושת הסעיפים.';
+          };
+          checks.forEach(function(c){ c.addEventListener('change', update); });
+          document.getElementById('btnNotNow').addEventListener('click', function(){
+            hint.textContent = 'זה בסדר לעצור כאן. אפשר לחזור לתרגול בזמן שירגיש מתאים יותר.';
+            document.getElementById('readinessCheck').scrollIntoView({behavior:'smooth', block:'center'});
+          });
+          update();
+        })();
+      <\/script>
+    </section>
+
+    `;
+      template = template.slice(0, introStart) + safeIntro + template.slice(introEnd);
+    }
+
     // Strip integrity + crossorigin — blob URLs from a file:// document inherit
     // a null origin, so crossorigin forces a CORS fetch that SRI then rejects.
     // The manifest bytes are ours; SRI protects against CDN compromise, not this.
