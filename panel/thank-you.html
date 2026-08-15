@@ -61,6 +61,17 @@ body::before {
 .check svg { width: 28px; height: 28px; }
 h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.2; font-weight: 700; text-wrap: balance; }
 .sub { font-size: 1.12rem; color: var(--ink-soft); margin-top: 16px; max-width: 42ch; margin-inline: auto; }
+.video-card { margin-top: 34px; text-align: right; }
+.video-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: var(--ink); }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
+.video-placeholder {
+  position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
+  background: linear-gradient(160deg, var(--sage-deep), #2f4038);
+  color: rgba(255,255,255,0.92); text-align: center; padding: 20px;
+}
+.video-placeholder .play-ic { width: 56px; height: 56px; border-radius: 50%; background: rgba(255,255,255,0.14); border: 1.5px solid rgba(255,255,255,0.35); display: grid; place-items: center; font-size: 1.3rem; }
+.video-placeholder p { font-size: 0.98rem; color: rgba(255,255,255,0.8); max-width: 30ch; }
+.video-caption { color: var(--ink-faint); font-size: 0.94rem; margin-top: 12px; }
 .card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 26px; box-shadow: var(--shadow); margin-top: 32px; text-align: right; }
 .card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
 .card p { color: var(--ink-soft); }
@@ -81,7 +92,17 @@ h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.2; font-weight: 700; 
     <svg viewBox="0 0 24 24" fill="none" stroke="#4E6A5A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
   </div>
   <h1 class="reveal" style="animation-delay:60ms" id="greeting">מעולה. זה בדרך אליך.</h1>
-  <p class="sub reveal" style="animation-delay:120ms">ברגע שתלחץ על הכפתור למטה, תוכל להתחיל את הבדיקה של מלכודת ההרגעה. זה לוקח כ־5 דקות, והתשובה מיידית.</p>
+  <p class="sub reveal" style="animation-delay:120ms">לפני שאתה מתחיל בבדיקה, צפה בסרטון הקצר הזה. אני מסביר בו על מה שעומד לקרות עכשיו, ועל הדרך שאני מלווה בה אנשים הרחק מעבר לרגע הזה.</p>
+
+  <div class="video-card reveal" style="animation-delay:160ms">
+    <div class="video-wrap" id="videoWrap">
+      <div class="video-placeholder" id="videoPlaceholder">
+        <div class="play-ic" aria-hidden="true">▶</div>
+        <p>הווידאו של דוד יופיע כאן</p>
+      </div>
+    </div>
+    <p class="video-caption">דוד מסביר על הבדיקה שעברת, ועל תוכניות הדגל שהוא מלווה בהן.</p>
+  </div>
 
   <div class="card reveal" style="animation-delay:180ms">
     <h2>הצעד הבא</h2>
@@ -96,6 +117,14 @@ h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.2; font-weight: 700; 
 </main>
 
 <script>
+/*
+ * הדבק כאן קישור embed לסרטון של דוד (מסביר על הבדיקה ועל תוכניות הדגל).
+ * יוטיוב: https://www.youtube.com/embed/VIDEO_ID
+ * וימאו:  https://player.vimeo.com/video/VIDEO_ID
+ * עד שתדביק קישור אמיתי, יוצג פלייסהולדר במקום הסרטון.
+ */
+var VIDEO_EMBED_URL = "PASTE_YOUR_VIDEO_EMBED_URL_HERE";
+
 (function () {
   try {
     var params = new URLSearchParams(location.search);
@@ -105,6 +134,11 @@ h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.2; font-weight: 700; 
       el.textContent = 'מעולה, ' + name + '. זה בדרך אליך.';
     }
   } catch (e) { /* no-op */ }
+
+  if (VIDEO_EMBED_URL && VIDEO_EMBED_URL.indexOf('PASTE_YOUR') !== 0) {
+    var wrap = document.getElementById('videoWrap');
+    wrap.innerHTML = '<iframe src="' + VIDEO_EMBED_URL + '" title="דוד אינגבר" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+  }
 })();
 </script>
 

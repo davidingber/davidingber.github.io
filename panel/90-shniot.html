@@ -3,12 +3,12 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>90 השניות הראשונות | הדרכה · דוד אינגבר</title>
-<meta name="description" content="מה לעשות ברגע שאתה מרגיש שהתקף חרדה מתחיל, בלי להפוך את התחושה הראשונה לסחרור של פחד.">
+<title>90 השניות הראשונות | בקרוב · דוד אינגבר</title>
+<meta name="description" content="90 השניות הראשונות — קורס דיגיטלי בדרך. השאר פרטים ותהיה הראשון לדעת כשהוא עולה.">
 <meta name="theme-color" content="#F4F1EA">
 <meta property="og:type" content="website">
 <meta property="og:title" content="90 השניות הראשונות">
-<meta property="og:description" content="מה לעשות ברגע שאתה מרגיש שהתקף חרדה מתחיל, בלי להפוך את התחושה הראשונה לסחרור של פחד.">
+<meta property="og:description" content="מה לעשות ברגע שאתה מרגיש שהתקף חרדה מתחיל, בלי להפוך את התחושה הראשונה לסחרור של פחד. קורס דיגיטלי בדרך.">
 <style>
 :root {
   --bg:        #F4F1EA;
@@ -23,12 +23,11 @@
   --sage-deep: #4E6A5A;
   --sage-tint: #EAF0EB;
   --rust:      #B4794C;
-  --rust-tint: #F3E7DB;
   --radius:    18px;
   --radius-sm: 12px;
   --shadow:    0 10px 40px rgba(60, 52, 36, 0.08);
   --shadow-sm: 0 4px 18px rgba(60, 52, 36, 0.06);
-  --content:   700px;
+  --content:   620px;
   --ease:      cubic-bezier(0.22, 0.61, 0.36, 1);
   --font: "Assistant", "Heebo", "Rubik", "Segoe UI", system-ui, -apple-system, "Arial Hebrew", Arial, sans-serif;
 }
@@ -53,132 +52,58 @@ body::before {
   pointer-events: none;
   z-index: 0;
 }
-.stage { position: relative; z-index: 1; max-width: var(--content); margin: 0 auto; padding: 48px 20px 60px; }
+.stage { position: relative; z-index: 1; max-width: var(--content); margin: 0 auto; padding: 56px 20px 60px; text-align: center; }
 .reveal { opacity: 0; transform: translateY(10px); animation: rise 0.55s var(--ease) forwards; }
 @keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
-.hero { text-align: center; }
-h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.16; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
-h2 { font-size: clamp(1.35rem, 4.6vw, 1.6rem); line-height: 1.28; font-weight: 700; text-wrap: balance; margin-bottom: 12px; }
 .eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: var(--sage-deep); background: var(--sage-tint); border: 1px solid rgba(110, 139, 123, 0.24); padding: 7px 14px; border-radius: 999px; }
-.hero .sub { font-size: 1.14rem; color: var(--ink-soft); font-weight: 500; margin-top: 18px; max-width: 46ch; margin-inline: auto; line-height: 1.55; }
-p + p { margin-top: 0.9em; }
-.muted { color: var(--ink-faint); }
-.center { text-align: center; }
-.card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; box-shadow: var(--shadow-sm); }
-.highlight { background: var(--sage-tint); border: 1px solid rgba(110, 139, 123, 0.28); border-inline-start: 4px solid var(--sage); border-radius: var(--radius-sm); padding: 18px 20px; color: var(--sage-deep); font-weight: 600; font-size: 1.06rem; line-height: 1.55; }
-.highlight.big { font-size: 1.18rem; padding: 24px; text-align: center; }
-.section { margin-top: 44px; }
-.section-num { display: inline-flex; align-items: center; justify-content: center; width: 32px; height: 32px; border-radius: 50%; background: var(--sage-tint); color: var(--sage-deep); font-weight: 700; font-size: 0.98rem; margin-bottom: 12px; }
-.chips { display: flex; flex-wrap: wrap; gap: 9px; }
-.chip { background: var(--sand); border: 1px solid var(--sand-deep); border-radius: 999px; padding: 8px 15px; font-size: 0.96rem; font-weight: 500; color: var(--ink-soft); }
-.thought { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px; padding: 12px 18px; color: var(--ink); font-weight: 600; font-size: 1.02rem; display: inline-block; }
-.divider { height: 1px; background: var(--line); margin: 44px 0; border: none; }
-.disclaimer { font-size: 0.88rem; color: var(--ink-faint); background: var(--sand); border: 1px solid var(--sand-deep); border-radius: 12px; padding: 14px 16px; line-height: 1.55; }
-.cta { appearance: none; border: none; cursor: pointer; font-family: inherit; font-size: 1.08rem; font-weight: 700; min-height: 56px; padding: 15px 28px; border-radius: 14px; background: linear-gradient(180deg, var(--rust), #9a6339); color: #fff; box-shadow: 0 12px 30px rgba(154, 99, 57, 0.28); transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; }
-.cta:hover { transform: translateY(-2px); box-shadow: 0 16px 36px rgba(154, 99, 57, 0.36); }
-.cta.sage { background: linear-gradient(180deg, var(--sage), var(--sage-deep)); box-shadow: 0 10px 26px rgba(78, 106, 90, 0.30); }
-.cta.sage:hover { box-shadow: 0 14px 32px rgba(78, 106, 90, 0.38); }
+h1 { font-size: clamp(2rem, 7vw, 2.8rem); line-height: 1.16; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; margin-top: 16px; }
+.sub { font-size: 1.14rem; color: var(--ink-soft); font-weight: 500; margin-top: 18px; max-width: 44ch; margin-inline: auto; line-height: 1.55; }
+.desc { color: var(--ink-soft); max-width: 46ch; margin: 16px auto 0; }
+.highlight { background: var(--sage-tint); border: 1px solid rgba(110, 139, 123, 0.28); border-inline-start: 4px solid var(--sage); border-radius: var(--radius-sm); padding: 18px 20px; color: var(--sage-deep); font-weight: 600; font-size: 1.06rem; line-height: 1.55; text-align: right; }
 .spacer-s { height: 16px; }
 .spacer-m { height: 26px; }
 .spacer-l { height: 38px; }
-.signature { text-align: center; margin-top: 8px; color: var(--ink-faint); font-size: 0.98rem; font-weight: 600; }
-.signature .role { color: var(--ink-faint); font-weight: 400; }
 
-.followup-card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 28px 24px; box-shadow: var(--shadow); text-align: center; }
-.field { text-align: right; margin-bottom: 12px; }
+.form-card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 26px; box-shadow: var(--shadow); text-align: right; }
+.form-card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 8px; text-align: center; }
+.form-card .form-sub { color: var(--ink-soft); text-align: center; margin-bottom: 22px; }
+.field { margin-bottom: 12px; }
 .field label { display: block; font-size: 0.9rem; font-weight: 600; color: var(--ink-soft); margin-bottom: 6px; }
 .field input { width: 100%; font-family: inherit; font-size: 1.02rem; padding: 13px 16px; border-radius: 12px; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink); }
 .field input:focus { outline: none; border-color: var(--sage); box-shadow: 0 0 0 3px rgba(110,139,123,0.18); }
 .hp { position: absolute; left: -9999px; top: -9999px; opacity: 0; height: 0; width: 0; overflow: hidden; }
-.form-status { font-size: 0.92rem; color: var(--sage-deep); margin-top: 10px; display: none; }
+.cta { appearance: none; border: none; cursor: pointer; font-family: inherit; font-size: 1.08rem; font-weight: 700; min-height: 56px; padding: 15px 28px; border-radius: 14px; background: linear-gradient(180deg, var(--sage), var(--sage-deep)); color: #fff; box-shadow: 0 10px 26px rgba(78, 106, 90, 0.30); transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; width: 100%; margin-top: 4px; }
+.cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(78, 106, 90, 0.38); }
+.cta:disabled { opacity: 0.65; cursor: default; transform: none; }
+.cta.outline { background: var(--bg); color: var(--ink); border: 1.5px solid var(--line); box-shadow: none; }
+.cta.outline:hover { border-color: var(--sage); color: var(--sage-deep); box-shadow: none; }
+.form-status { font-size: 0.94rem; color: var(--sage-deep); margin-top: 10px; display: none; text-align: center; font-weight: 600; }
 .form-status.show { display: block; }
 
-@media (max-width: 390px) { body { font-size: 16px; } .stage { padding: 34px 16px 46px; } .card, .followup-card { padding: 20px 18px; } }
+.disclaimer { font-size: 0.88rem; color: var(--ink-faint); background: var(--sand); border: 1px solid var(--sand-deep); border-radius: 12px; padding: 14px 16px; line-height: 1.55; text-align: right; }
+.signature { margin-top: 6px; color: var(--ink-faint); font-size: 0.98rem; font-weight: 600; }
+.signature .role { color: var(--ink-faint); font-weight: 400; }
+
+@media (max-width: 390px) { body { font-size: 16px; } .stage { padding: 40px 16px 46px; } .form-card { padding: 22px 18px; } }
 @media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
 </style>
 </head>
 <body>
 <main class="stage">
 
-  <section class="hero">
-    <div class="reveal" style="animation-delay:0ms"><span class="eyebrow">הדרכה חינם · דוד אינגבר</span></div>
-    <div class="spacer-s"></div>
-    <h1 class="reveal" style="animation-delay:60ms">90 השניות הראשונות</h1>
-    <p class="sub reveal" style="animation-delay:120ms">מה לעשות ברגע שאתה מרגיש שהתקף חרדה מתחיל, בלי להפוך את התחושה הראשונה לסחרור של פחד.</p>
-  </section>
+  <span class="eyebrow reveal" style="animation-delay:0ms">קורס דיגיטלי · בקרוב</span>
+  <h1 class="reveal" style="animation-delay:60ms">90 השניות הראשונות</h1>
+  <p class="sub reveal" style="animation-delay:120ms">מה לעשות ברגע שאתה מרגיש שהתקף חרדה מתחיל, בלי להפוך את התחושה הראשונה לסחרור של פחד.</p>
+  <p class="desc reveal" style="animation-delay:160ms">אני בונה כרגע קורס דיגיטלי מלא סביב הרגע הקריטי הזה. הוא עדיין לא מוכן, אבל תשאיר פרטים ותהיה הראשון לדעת ברגע שהוא עולה.</p>
+
+  <div class="spacer-m"></div>
+  <div class="highlight reveal" style="animation-delay:200ms">זו לא עוד רשימת טכניקות הרגעה. המטרה היא ניצחון קטן אבל משמעותי: בפעם הבאה שהחרדה עולה, אתה מתחיל לדעת איך להגיב, במקום להיבהל אוטומטית מעצמך.</div>
 
   <div class="spacer-l"></div>
 
-  <section class="reveal" style="animation-delay:160ms">
-    <p>זו לא הדרכה על "איך להעלים התקף חרדה ב־90 שניות". וזו גם לא עוד רשימת טכניקות הרגעה.</p>
-    <p>ההדרכה הזו עוסקת ברגע הקריטי אחד: הרגע שבו תחושה בגוף הופכת לפחד, ואז פחד הופך לפחד מהפחד. אם תדע להישאר ברגע הזה קצת אחרת, כל מה שקורה אחר כך משתנה.</p>
-  </section>
-
-  <div class="spacer-m"></div>
-
-  <div class="highlight reveal" style="animation-delay:200ms">המטרה אינה שבסוף ההדרכה לא תהיה לך יותר חרדה. המטרה היא ניצחון קטן אבל משמעותי: בפעם הבאה שהחרדה עולה, אתה מתחיל לדעת איך להגיב, במקום להיבהל אוטומטית מעצמך.</div>
-
-  <hr class="divider">
-
-  <section class="section">
-    <span class="section-num">1</span>
-    <h2>לזהות את 90 השניות</h2>
-    <p>יש רגע ספציפי שאנחנו רוצים ללמוד לזהות: המרווח שבין "שמתי לב לתחושה" לבין "אני בתוך סחרור". רוב האנשים לא יודעים שהמרווח הזה קיים, כי הוא נסגר תוך שניות. הצעד הראשון הוא פשוט להתחיל לשים לב שהוא שם. זה המרווח שאנחנו רוצים להגדיל.</p>
-  </section>
-
-  <section class="section">
-    <span class="section-num">2</span>
-    <h2>האזעקה הראשונה והאזעקה השנייה</h2>
-    <p>יש שתי אזעקות, לא אחת. האזעקה הראשונה היא מה שקורה בגוף: דופק, נשימה, תחושה, מחשבה, פחד. עליה אין לנו הרבה שליטה, היא פשוט מופיעה.</p>
-    <div class="spacer-s"></div>
-    <div class="chips">
-      <span class="chip">"אסור לי להרגיש ככה"</span>
-      <span class="chip">"אני חייב לעצור את זה"</span>
-      <span class="chip">"מה אם זה יחמיר?"</span>
-      <span class="chip">"אני לא אצליח להתמודד"</span>
-    </div>
-    <div class="spacer-s"></div>
-    <p>האזעקה השנייה היא כל מה שאנחנו אומרים לעצמנו על האזעקה הראשונה. וזו בדיוק הנקודה שבה יש לנו יותר יכולת בחירה ממה שנדמה.</p>
-  </section>
-
-  <section class="section">
-    <span class="section-num">3</span>
-    <h2>לזהות את הדחף</h2>
-    <p>ברגע שהחרדה עולה מגיע דחף: לבדוק, לברוח, לקבל אישור, להתווכח, להרגיע. לפני שאתה פועל אוטומטית, אפשר לעצור לרגע ולשאול: "מה הפחד מבקש ממני לעשות עכשיו?" השאלה הזו לבדה כבר יוצרת מרחק.</p>
-  </section>
-
-  <section class="section">
-    <span class="section-num">4</span>
-    <h2>ויסות בלי שהוא הופך לתנאי לביטחון</h2>
-    <p>זה החלק הכי קריטי, ואולי הכי מפתיע. אנחנו לא יוצאים למלחמה נגד הרגעה. נשימה, הרפיה, לדבר עם מישהו, כל אלה טובים. השאלה היא לא אם אתה משתמש בהם. השאלה היא אם אתה משתמש בהם כי בחרת, או כי אתה חייב, כדי להיות בטוח.</p>
-    <div class="spacer-s"></div>
-    <div class="thought">"אני יכול לעזור לעצמי בלי לדרוש מעצמי שהחרדה תיעלם."</div>
-  </section>
-
-  <section class="section">
-    <span class="section-num">5</span>
-    <h2>לחזור לבחירה</h2>
-    <p>השאלה אינה רק "איך אני מרגיש", אלא "מה אני רוצה לעשות עכשיו, גם כשהחרדה נמצאת". זה יכול להיות להישאר עוד רגע, להמשיך שיחה, להמשיך ללכת, לחזור בעדינות למה שעשית, בלי לבדוק בפעם הנוספת ובלי לדרוש ודאות מלאה. המטרה אינה גבורה. המטרה היא להתחיל להחזיר את ההגה לידיים שלך.</p>
-  </section>
-
-  <hr class="divider">
-
-  <section class="reveal">
-    <h2 class="center">אז מה עכשיו?</h2>
-    <p>90 השניות הראשונות הן התחלה, לא סוף הדרך. אתה כבר יודע להגיב קצת אחרת כשהחרדה עולה, אבל עדיין יכול להיות שאתה חושב פעמיים לפני נסיעה, נמנע ממקומות, מפחד להישאר לבד, ומקבל החלטות לפי השאלה "מה אם תהיה לי חרדה?"</p>
-    <p>זה לא באמת עוד רק ההתקף עצמו. משהו באמון שלך בעצמך נפגע, וזה מה שאנחנו בונים בהמשך: לחזור לסמוך על עצמך, גם כשהחרדה עולה.</p>
-  </section>
-
-  <div class="spacer-m"></div>
-
-  <div class="highlight big reveal">אתה לא צריך לדעת שלא תהיה לך חרדה כדי לסמוך על עצמך.</div>
-
-  <div class="spacer-l"></div>
-
-  <section class="followup-card reveal">
-    <h2>רוצה שאעדכן אותך כשהתהליך המלא ייפתח?</h2>
-    <p class="muted">תהליך עומק בן 8 שבועות לבניית אמון מחודש בעצמך וביכולת שלך להתמודד, בלי לחכות שהחרדה תיעלם כדי לחזור לחיות. אשלח לך פרטים ברגע שהוא נפתח.</p>
-    <div class="spacer-m"></div>
+  <section class="form-card reveal" style="animation-delay:240ms">
+    <h2>לעדכן אותי כשזה עולה</h2>
+    <p class="form-sub">בלי ספאם. עדכון אחד, ברגע שהקורס מוכן.</p>
     <form id="followupForm" novalidate>
       <div class="field">
         <label for="fu-email">האימייל שלך</label>
@@ -188,17 +113,17 @@ p + p { margin-top: 0.9em; }
         <label for="fu-website">Website</label>
         <input id="fu-website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
-      <button type="submit" class="cta sage" id="fuSubmitBtn">עדכנו אותי</button>
-      <div class="form-status" id="fuStatus">קיבלתי. אעדכן אותך.</div>
+      <button type="submit" class="cta" id="fuSubmitBtn">עדכנו אותי</button>
+      <div class="form-status" id="fuStatus">קיבלתי. אעדכן אותך ברגע שזה עולה.</div>
     </form>
-    <div class="spacer-m"></div>
-    <a class="cta" href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%93%D7%91%D7%A8%20%D7%90%D7%99%D7%AA%D7%9A%20%D7%A2%D7%9C%20%D7%9E%D7%94%20%D7%A9%D7%A2%D7%95%D7%91%D7%A8%20%D7%A2%D7%9C%D7%99%20%D7%9C%D7%92%D7%91%D7%99%20%D7%97%D7%A8%D7%93%D7%94" target="_blank" rel="noopener">מעדיף לדבר? לשיחה בוואטסאפ</a>
+    <div class="spacer-s"></div>
+    <a class="cta outline" href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%2C%20%D7%A8%D7%A6%D7%99%D7%AA%D7%99%20%D7%9C%D7%93%D7%91%D7%A8%20%D7%90%D7%99%D7%AA%D7%9A%20%D7%A2%D7%9C%20%D7%9E%D7%94%20%D7%A9%D7%A2%D7%95%D7%91%D7%A8%20%D7%A2%D7%9C%D7%99%20%D7%9C%D7%92%D7%91%D7%99%20%D7%97%D7%A8%D7%93%D7%94" target="_blank" rel="noopener">מעדיף לדבר עכשיו? לשיחה בוואטסאפ</a>
   </section>
 
   <div class="spacer-l"></div>
   <div class="signature">דוד אינגבר <span class="role">| טיפול ואימון רגשי</span></div>
   <div class="spacer-m"></div>
-  <div class="disclaimer">התוכן בהדרכה זו מתייחס לדפוסי חרדה מוכרים וחוזרים ואינו תחליף לאבחון או לטיפול מקצועי. במקרה של תסמין רפואי חדש, חריג או מדאיג, יש לפנות לבדיקה רפואית בהתאם לצורך.</div>
+  <div class="disclaimer">התוכן שיילמד בקורס מתייחס לדפוסי חרדה מוכרים וחוזרים ואינו תחליף לאבחון או לטיפול מקצועי. במקרה של תסמין רפואי חדש, חריג או מדאיג, יש לפנות לבדיקה רפואית בהתאם לצורך.</div>
 
 </main>
 
@@ -226,7 +151,7 @@ var SHEET_WEBAPP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
     var payload = {
       name: '',
       email: email,
-      source: 'panel-90-shniot-followup',
+      source: 'panel-90-shniot-waitlist',
       utm_source: '', utm_medium: '', utm_campaign: '',
       timestamp: new Date().toISOString()
     };
