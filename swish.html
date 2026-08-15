@@ -1,0 +1,2339 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+</head>
+<body>
+<!--CORE-->
+<title>סוויש דיגיטלי — תהליך מודרך</title>
+
+<style>
+:root{
+  --bg:#EDF3F7; --card:#FFFFFF; --soft:#F5F8FB;
+  --ink:#22344A; --muted:#64778F; --line:#D9E3EC;
+  --gold:#F5B840; --gold-deep:#D89A1E; --gold-soft:#FFF3D9;
+  --storm:#6B647F; --storm-soft:#E9E6F2; --storm-ink:#544D66;
+  --teal:#2FA98C; --teal-soft:#E2F4EE; --water:#78BEFF;
+  --r:22px;
+}
+*{box-sizing:border-box}
+html,body{margin:0;padding:0}
+body{
+  background:linear-gradient(180deg,#F7FAFC 0%, var(--bg) 340px) fixed, var(--bg);
+  color:var(--ink);
+  font-family:"Segoe UI","Noto Sans Hebrew","Arial Hebrew",Tahoma,Arial,sans-serif;
+  font-size:17px; line-height:1.65; min-height:100vh;
+}
+#app{max-width:680px;margin:0 auto;padding:18px 16px 80px}
+h1{font-size:clamp(1.8rem,6vw,2.5rem);font-weight:800;margin:.15em 0;text-wrap:balance}
+h2{font-size:clamp(1.2rem,4.5vw,1.5rem);font-weight:800;margin:.2em 0 .35em;text-wrap:balance}
+p{margin:.5em 0}
+.muted{color:var(--muted)}
+.small{font-size:.92rem}
+.center{text-align:center}
+.eyebrow{color:var(--gold-deep);font-size:.82rem;font-weight:800;letter-spacing:.1em;margin-bottom:2px}
+.card{background:var(--card);border:1px solid var(--line);border-radius:var(--r);padding:18px 20px;margin:14px 0;box-shadow:0 2px 10px rgba(34,52,74,.05)}
+.card.need{border:2px solid #E58A8A;animation:shake .4s}
+@keyframes shake{0%,100%{transform:none}25%{transform:translateX(6px)}75%{transform:translateX(-6px)}}
+.guide{
+  background:var(--gold-soft);border:1px solid #F1D9A4;border-radius:16px;
+  padding:12px 16px;margin:12px 0;font-size:1.02rem;
+}
+.goodmsg{background:var(--teal-soft);border:2px solid var(--teal);border-radius:16px;padding:12px 16px;margin:10px 0;font-weight:700;color:#1E6B57}
+button{font:inherit;color:inherit;cursor:pointer;border:none;background:none;-webkit-tap-highlight-color:transparent}
+button:focus-visible,input:focus-visible{outline:3px solid var(--gold-deep);outline-offset:2px;border-radius:10px}
+.btn{
+  display:inline-flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--gold);color:#3A2A05;font-weight:800;font-size:1.12rem;
+  border-radius:999px;padding:15px 30px;transition:transform .15s,box-shadow .15s,filter .15s;
+  box-shadow:0 4px 14px rgba(245,184,64,.4);
+}
+.btn:hover{transform:translateY(-1px);filter:brightness(1.04)}
+.btn:disabled{background:#E3E9F0;color:#9AA9BB;box-shadow:none;cursor:not-allowed;transform:none}
+.btn.ghost{background:var(--card);color:var(--ink);border:2px solid var(--line);box-shadow:none;font-weight:700}
+.btn.ghost:hover{border-color:var(--gold)}
+.btn.big{width:100%;padding:17px 20px;font-size:1.2rem}
+.btnrow{display:flex;gap:10px;flex-wrap:wrap;margin-top:16px;align-items:center}
+.spacer{flex:1}
+.hidden{display:none !important}
+
+/* ===== stages bar ===== */
+.stagesbar{display:flex;align-items:flex-start;justify-content:space-between;margin:16px 0 6px;position:relative}
+.stagesbar::before{content:'';position:absolute;top:17px;right:10%;left:10%;height:4px;background:var(--line);border-radius:4px;z-index:0}
+.stg{display:flex;flex-direction:column;align-items:center;gap:4px;z-index:1;flex:1}
+.stg-dot{
+  width:34px;height:34px;border-radius:50%;background:var(--card);border:3px solid var(--line);
+  display:flex;align-items:center;justify-content:center;font-weight:800;color:var(--muted);
+  transition:background .3s,border-color .3s,color .3s;
+}
+.stg span.stg-name{font-size:.74rem;color:var(--muted);font-weight:700;text-align:center;line-height:1.2}
+.stg.now .stg-dot{background:var(--gold);border-color:var(--gold-deep);color:#3A2A05;transform:scale(1.1)}
+.stg.now span.stg-name{color:var(--ink)}
+.stg.done .stg-dot{background:var(--teal);border-color:var(--teal);color:#fff}
+
+/* ===== home ===== */
+.gender-chips{display:flex;gap:10px;justify-content:center;margin-top:8px}
+.gender-chips .chip{font-size:1.1rem;padding:12px 34px}
+.channels{display:grid;grid-template-columns:1fr;gap:12px;margin-top:14px}
+@media(min-width:560px){.channels{grid-template-columns:repeat(3,1fr)}}
+.channel{
+  text-align:center;background:var(--card);border:2px solid var(--line);border-radius:var(--r);
+  padding:20px 14px;display:flex;flex-direction:column;align-items:center;gap:6px;
+  transition:transform .15s,border-color .15s,box-shadow .15s;
+}
+.channel:hover{transform:translateY(-3px);border-color:var(--gold);box-shadow:0 8px 20px rgba(34,52,74,.1)}
+.channel .ch-ic{
+  width:60px;height:60px;border-radius:50%;display:flex;align-items:center;justify-content:center;
+  background:var(--gold-soft);margin-bottom:4px;
+}
+.channel .ch-ic svg{width:32px;height:32px;stroke:var(--gold-deep);fill:none;stroke-width:2.2;stroke-linecap:round;stroke-linejoin:round}
+.channel .ch-title{font-weight:800;font-size:1.2rem}
+
+/* ===== chips ===== */
+.chips{display:flex;flex-wrap:wrap;gap:9px;margin:10px 0}
+.chip{
+  border:2px solid var(--line);border-radius:999px;padding:10px 18px;background:var(--card);
+  color:var(--ink);font-size:1.02rem;font-weight:600;transition:all .15s;
+}
+.chip:hover{border-color:var(--gold)}
+.chip.on{background:var(--gold);border-color:var(--gold-deep);color:#3A2A05;font-weight:800}
+.chip-add{display:flex;gap:8px;margin-top:8px}
+.chip-add input{
+  flex:1;background:var(--soft);border:2px solid var(--line);border-radius:999px;
+  color:var(--ink);font:inherit;padding:10px 18px;min-width:0;
+}
+.chip-add input::placeholder{color:var(--muted)}
+
+/* ===== scale ===== */
+.scale{margin:12px 0 4px}
+.scale-num{font-size:2.8rem;font-weight:800;color:var(--gold-deep);text-align:center;line-height:1.1;font-variant-numeric:tabular-nums}
+.scale-num small{font-size:1rem;color:var(--muted);font-weight:700}
+input[type=range]{
+  width:100%;appearance:none;-webkit-appearance:none;height:12px;border-radius:999px;
+  background:linear-gradient(to left,#7ECBB2,#F5B840 50%,#E58A8A);margin:12px 0 4px;
+}
+input[type=range]::-webkit-slider-thumb{
+  -webkit-appearance:none;width:34px;height:34px;border-radius:50%;background:#fff;
+  border:5px solid var(--gold-deep);box-shadow:0 2px 8px rgba(34,52,74,.3);cursor:pointer;
+}
+input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;background:#fff;border:5px solid var(--gold-deep);cursor:pointer}
+.scale-ends{display:flex;justify-content:space-between;color:var(--muted);font-size:.85rem}
+
+/* ===== stage ===== */
+.stage{
+  position:relative;height:340px;border-radius:var(--r);overflow:hidden;
+  background:linear-gradient(180deg,#F9FBFD,#EBF1F7);
+  border:2px solid var(--line);margin:14px 0;
+}
+.flash{position:absolute;inset:0;background:#fff;opacity:0;pointer-events:none;z-index:40}
+.flash.cut{opacity:1}
+.stage-counter{
+  position:absolute;top:10px;inset-inline-start:12px;z-index:45;color:#3A2A05;
+  font-weight:800;font-size:1.02rem;font-variant-numeric:tabular-nums;
+  background:var(--gold);padding:4px 14px;border-radius:999px;box-shadow:0 2px 8px rgba(245,184,64,.4);
+}
+.water{
+  position:absolute;inset:0;z-index:38;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,transparent 0%,rgba(120,190,255,.4) 30%,rgba(120,190,255,.55) 50%,rgba(120,190,255,.4) 70%,transparent 100%);
+  background-size:100% 65%;background-repeat:no-repeat;background-position:0 -120%;
+}
+.water.on{opacity:1;animation:waterwash .95s ease-in forwards}
+@keyframes waterwash{from{background-position:0 -120%}to{background-position:0 230%}}
+/* golden compassion light washing down the body */
+.goldwash{
+  position:absolute;inset:0;z-index:6;pointer-events:none;opacity:0;
+  background:linear-gradient(180deg,transparent 0%,rgba(245,184,64,.5) 30%,rgba(255,224,150,.7) 50%,rgba(245,184,64,.5) 70%,transparent 100%);
+  background-size:100% 75%;background-repeat:no-repeat;background-position:0 -120%;
+  -webkit-mask-image:radial-gradient(60% 50% at 50% 50%, #000 40%, transparent 100%);
+  mask-image:radial-gradient(60% 50% at 50% 50%, #000 40%, transparent 100%);
+}
+.goldwash.on{opacity:1;animation:waterwash 1.15s ease-in forwards}
+/* calming colored words flying from the ideal self's mouth */
+.word-fly{
+  position:absolute;z-index:22;font-weight:800;font-size:.88rem;padding:3px 12px;border-radius:999px;
+  color:#fff;opacity:0;pointer-events:none;box-shadow:0 2px 8px rgba(0,0,0,.25);
+  transition:left 1.5s ease-out, top 1.5s ease-out, opacity .5s;white-space:nowrap;
+}
+
+/* swish cards */
+.scard{
+  position:absolute;inset:14px;border-radius:16px;display:flex;flex-direction:column;
+  align-items:center;justify-content:center;gap:4px;text-align:center;padding:10px;
+  transition-property:transform,opacity,filter;transition-timing-function:cubic-bezier(.65,0,.35,1);
+  transition-duration:0s;will-change:transform,opacity,filter;
+}
+.scard.trig{background:var(--storm-soft);border:2px solid #CFC8DE;z-index:2;padding-bottom:74px}
+.trig-label{font-size:1.15rem;font-weight:800;color:var(--storm-ink)}
+.scard.ideal{
+  background:linear-gradient(180deg,#FFF8E6,#FFEFC4);border:2px solid var(--gold);z-index:6;
+  transform-origin:50% 100%;
+  transform:translateY(34%) scale(.04);opacity:0;
+  transition-timing-function:cubic-bezier(.2,1.25,.35,1);
+}
+.stage.go .scard.trig{transform:scale(.03) translate(60%,-40%);filter:blur(12px) grayscale(1);opacity:0}
+.stage.go .scard.ideal{transform:translateY(0) scale(1);opacity:1}
+.ideal-name{font-size:1.1rem;font-weight:800;color:var(--gold-deep)}
+.badges{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;max-width:420px}
+.badge{background:#fff;border:2px solid var(--gold);color:var(--gold-deep);border-radius:999px;padding:3px 13px;font-size:.88rem;font-weight:800;box-shadow:0 2px 6px rgba(245,184,64,.25)}
+
+/* jack-in-the-box */
+.jbox{position:relative;width:64px;height:50px}
+.jbox-body{
+  position:absolute;bottom:0;width:64px;height:40px;border-radius:7px;
+  background:linear-gradient(180deg,#D89A4E,#B4762F);border:2px solid #96601F;
+}
+.jbox-body::after{content:'';position:absolute;top:0;bottom:0;left:50%;width:8px;transform:translateX(-50%);background:rgba(245,184,64,.75)}
+.jbox-lid{
+  position:absolute;top:-4px;left:-3px;width:70px;height:14px;border-radius:5px;
+  background:linear-gradient(180deg,#E7B369,#C98B3F);border:2px solid #96601F;
+  transform-origin:100% 100%;transition:transform .3s cubic-bezier(.4,1.6,.6,1);z-index:2;
+}
+.jbox.open .jbox-lid{transform:rotate(105deg)}
+.stage .jbox{position:absolute;bottom:20px;left:50%;transform:translateX(-50%);z-index:4}
+
+/* characters */
+.charsvg{display:block}
+.rain line{stroke:#8FA6C8;stroke-width:3;stroke-linecap:round;animation:rainfall 1.1s linear infinite}
+.rain line:nth-child(2){animation-delay:.35s}
+.rain line:nth-child(3){animation-delay:.7s}
+@keyframes rainfall{0%{transform:translateY(0);opacity:1}100%{transform:translateY(14px);opacity:0}}
+.figwrap{position:relative;display:flex;align-items:center;justify-content:center}
+.aura{
+  position:absolute;width:200px;height:200px;border-radius:50%;
+  background:radial-gradient(circle, rgba(245,184,64,.45) 0%, rgba(245,184,64,0) 70%);
+  animation:aurapulse 3s ease-in-out infinite;
+}
+@keyframes aurapulse{0%,100%{transform:scale(1);opacity:.8}50%{transform:scale(1.15);opacity:1}}
+.spark{position:absolute;color:var(--gold-deep);font-size:1.1rem;animation:twinkle 2.4s ease-in-out infinite}
+@keyframes twinkle{0%,100%{opacity:.2;transform:scale(.8)}50%{opacity:1;transform:scale(1.15)}}
+.illus{
+  display:flex;align-items:center;justify-content:center;gap:8px;
+  background:var(--soft);border:2px dashed var(--line);border-radius:var(--r);
+  padding:14px 8px;margin:12px 0;min-height:190px;position:relative;overflow:hidden;
+}
+
+/* speech bubble */
+.bubble{
+  position:relative;background:#FFFDF6;border:2px solid var(--gold);color:#7A5B14;
+  border-radius:16px;padding:9px 14px;font-weight:800;font-size:.95rem;max-width:250px;
+  box-shadow:0 3px 10px rgba(245,184,64,.3);opacity:0;transition:opacity .5s,transform .5s;transform:translateY(8px);
+}
+.bubble::after{
+  content:'';position:absolute;bottom:-9px;right:26px;width:14px;height:14px;
+  background:#FFFDF6;border-left:2px solid var(--gold);border-bottom:2px solid var(--gold);
+  transform:rotate(-45deg);
+}
+.bubble.on{opacity:1;transform:none}
+.scard .bubble::after{display:none}
+
+/* ===== prominent voice input ===== */
+.voicecard{background:linear-gradient(180deg,#FFF8E6,#FFEFC9);border:3px solid var(--gold);box-shadow:0 4px 16px rgba(245,184,64,.28)}
+.voicecard h2{color:var(--gold-deep)}
+.vin-row{display:flex;gap:10px;flex-wrap:wrap;align-items:stretch;margin:8px 0}
+.vin-big{
+  flex:1 1 180px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:6px;
+  background:var(--card);border:2px solid var(--line);border-radius:16px;padding:14px 10px;min-height:118px;text-align:center;
+}
+.vin-big b{font-size:1.05rem}
+.vin-big .muted{font-size:.85rem}
+.mic-btn{
+  width:66px;height:66px;border-radius:50%;background:var(--gold);color:#3A2A05;
+  display:flex;align-items:center;justify-content:center;font-size:1.7rem;
+  box-shadow:0 4px 12px rgba(245,184,64,.5);transition:transform .15s,background .2s;
+}
+.mic-btn:hover{transform:scale(1.06)}
+.mic-btn.rec{background:#E5484D;color:#fff;animation:recpulse 1s ease-in-out infinite}
+@keyframes recpulse{0%,100%{box-shadow:0 0 0 0 rgba(229,72,77,.55)}50%{box-shadow:0 0 0 12px rgba(229,72,77,0)}}
+.vin-time{font-variant-numeric:tabular-nums;font-weight:800;color:#E5484D}
+.vin-or{display:flex;align-items:center;color:var(--muted);font-weight:800;padding:0 4px}
+.vin-textbig{
+  width:100%;background:var(--card);border:2px solid var(--line);border-radius:14px;
+  color:var(--ink);font:inherit;font-size:1.05rem;padding:13px 16px;
+}
+.vin-textbig:focus{border-color:var(--gold-deep);outline:none}
+.vin-played{display:flex;gap:8px;align-items:center;justify-content:center;margin-top:6px}
+
+/* ===== picture editor (draw + icons) ===== */
+.pe-toolbar{display:flex;gap:8px;align-items:center;flex-wrap:wrap;margin-bottom:8px}
+.pe-upload{display:inline-flex;align-items:center;gap:6px}
+.pe-color{width:32px;height:32px;border-radius:50%;border:3px solid #fff;box-shadow:0 0 0 2px var(--line);cursor:pointer;padding:0}
+.pe-color.on{box-shadow:0 0 0 3px var(--gold-deep)}
+.pe-tool.on{border-color:var(--gold-deep);background:var(--gold-soft)}
+.pe-wrap{position:relative;border:2px solid var(--line);border-radius:14px;background:#fff;touch-action:none;overflow:hidden}
+.pe-wrap canvas{display:block;width:100%;height:auto;touch-action:none}
+.pe-stk{position:absolute;transform:translate(-50%,-50%);font-size:2rem;cursor:grab;user-select:none;touch-action:none;line-height:1}
+.pe-stk:active{cursor:grabbing}
+.pe-emojis{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px}
+.pe-emojis button{font-size:1.5rem;background:var(--soft);border:2px solid var(--line);border-radius:10px;padding:4px 9px;line-height:1}
+.pe-emojis button:hover{border-color:var(--gold)}
+.pic-view{
+  position:relative;width:min(230px,72%);aspect-ratio:3/2;border-radius:12px;overflow:hidden;
+  background-color:#fff;background-size:100% 100%;border:2px solid rgba(0,0,0,.12);
+}
+.pic-view .pe-stk{cursor:default;font-size:1.5rem;pointer-events:none}
+/* drawn voice-source picture falling with the comet */
+.vs-srcpic{position:absolute;z-index:8;transform:translate(-50%,-50%);transition:transform .7s cubic-bezier(.4,0,.8,.5),opacity .5s}
+.vs-srcpic.fall{transform:translate(-50%,-50%) translateY(130px) scale(.4);opacity:0}
+/* drawn feeling picture — sits on the person's body, squeezed out during the drain */
+.fl-pic{
+  position:absolute;left:50%;transform:translate(-50%,-50%);z-index:6;opacity:.93;
+  transition:transform .9s cubic-bezier(.55,0,.8,.4),opacity .6s;
+}
+.fl-pic .pic-view{box-shadow:0 3px 12px rgba(78,64,98,.35)}
+.fl-pic.squeeze{transform:translate(-50%,-50%) translateY(150px) scale(.45,1.7);opacity:0}
+
+/* pack-into-box */
+.packbox{display:flex;flex-direction:column;align-items:center;gap:8px;padding:10px 0}
+.packbox .figwrap{transition:transform .9s cubic-bezier(.5,0,.7,.3),opacity .8s .15s}
+.packbox.packed .figwrap{transform:translateY(74px) scale(.06);opacity:0}
+
+/* ===== home demo ===== */
+.demo-stage{position:relative;height:230px;border-radius:var(--r);overflow:hidden;border:2px solid var(--line);background:linear-gradient(180deg,#F9FBFD,#EBF1F7);margin:14px 0}
+.demo-card{position:absolute;inset:12px;border-radius:16px;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:2px;padding-bottom:56px}
+.demo-trig{background:var(--storm-soft);animation:demoTrig 7s cubic-bezier(.65,0,.35,1) infinite}
+.demo-ideal{background:linear-gradient(180deg,#FFF8E6,#FFEFC4);border:2px solid var(--gold);transform-origin:50% 100%;animation:demoIdeal 7s cubic-bezier(.2,1.25,.35,1) infinite;z-index:4}
+.demo-flash{position:absolute;inset:0;background:#fff;opacity:0;animation:demoFlash 7s steps(1) infinite;z-index:5}
+.demo-tag{position:absolute;top:10px;inset-inline-start:12px;background:var(--card);border:1px solid var(--line);border-radius:999px;padding:2px 12px;font-size:.8rem;font-weight:700;color:var(--muted);z-index:6}
+.demo-box{position:absolute;bottom:16px;left:50%;transform:translateX(-50%);z-index:4}
+@keyframes demoTrig{
+  0%,36%{transform:scale(1);opacity:1;filter:none}
+  46%,90%{transform:scale(.04);opacity:0;filter:blur(10px)}
+  97%,100%{transform:scale(1);opacity:1;filter:none}
+}
+@keyframes demoIdeal{
+  0%,36%{transform:translateY(36%) scale(.05);opacity:0}
+  46%,90%{transform:translateY(0) scale(1);opacity:1}
+  97%,100%{transform:translateY(36%) scale(.05);opacity:0}
+}
+@keyframes demoFlash{0%,41%{opacity:0}42%,45%{opacity:1}46%,92%{opacity:0}93%,96%{opacity:1}97%,100%{opacity:0}}
+
+/* ===== body map v2 ===== */
+.bm2{display:flex;gap:14px;align-items:center;justify-content:center;flex-wrap:wrap}
+.bm2-map{
+  position:relative;width:250px;height:330px;flex:0 0 auto;
+  background:var(--soft);border:2px dashed var(--line);border-radius:var(--r);padding:8px;
+}
+.bm2-map svg{width:100%;height:100%}
+.bm2-list{display:flex;flex-direction:column;gap:8px;min-width:130px}
+.bm2-list .chip{text-align:center}
+.spot-btn{
+  position:absolute;width:44px;height:44px;border-radius:50%;transform:translate(-50%,-50%);
+  border:3px dashed #AFC0D2;background:rgba(255,255,255,.55);transition:all .15s;z-index:4;
+}
+.spot-btn:hover{border-color:var(--gold-deep);background:var(--gold-soft)}
+.spot-btn.on{border:4px solid var(--gold-deep);background:var(--gold-soft);box-shadow:0 0 0 5px rgba(245,184,64,.25)}
+.spot-dot{
+  position:absolute;width:28px;height:28px;border-radius:50%;transform:translate(-50%,-50%);
+  background:radial-gradient(circle at 35% 30%, #8B7A9E, #4E4062);
+  box-shadow:0 0 14px rgba(107,100,127,.55);pointer-events:none;z-index:5;
+}
+.bodybox{position:relative;width:210px;height:290px;margin:6px auto}
+.bodybox svg{width:100%;height:100%}
+.hands{position:absolute;inset:0;opacity:0;transform:translateY(-28px);transition:opacity .7s,transform .7s;z-index:7;pointer-events:none}
+.hands.on{opacity:1;transform:translateY(0)}
+.warmth{
+  position:absolute;inset:0;opacity:0;transition:opacity 1s;pointer-events:none;z-index:3;
+  background:radial-gradient(150px 130px at 50% 22%, rgba(245,184,64,.5), rgba(245,184,64,0) 70%);
+}
+.warmth.on{opacity:1}
+.ground-ripple{
+  position:absolute;bottom:4px;left:50%;transform:translateX(-50%) scale(.3);width:130px;height:16px;border-radius:50%;
+  border:3px solid var(--teal);opacity:0;transition:opacity .4s,transform 1s;z-index:5;
+}
+.ground-ripple.on{opacity:.9;transform:translateX(-50%) scale(1.25)}
+.side-riser{position:absolute;bottom:14px;display:flex;flex-direction:column;align-items:center;gap:4px;z-index:8}
+.side-riser .jbox{position:relative;z-index:1}
+.side-riser .figwrap{position:relative;z-index:2;transform:translateY(90%) scale(.15);opacity:0;transition:transform .7s cubic-bezier(.2,1.25,.4,1),opacity .4s}
+.side-riser .bubble{z-index:3}
+.side-riser.up .figwrap{transform:translateY(0) scale(1);opacity:1}
+
+/* ===== voice scene: standing person + comet ===== */
+.stage.control{background:linear-gradient(180deg,#22304A,#101827);border-color:#31425F}
+.vs-floor{position:absolute;bottom:0;left:0;right:0;height:32px;background:linear-gradient(180deg,#26334B,#1A2436);border-top:3px solid #3A4C6C;z-index:4}
+.vs-you{position:absolute;bottom:24px;left:60%;transform:translateX(-50%);z-index:6;display:flex;flex-direction:column;align-items:center;gap:2px}
+.vs-you .vs-you-label{font-size:.75rem;color:#B9C7DC;font-weight:700}
+.vs-src{position:absolute;transform:translate(-50%,-130%);color:#FFB3BE;font-weight:800;font-size:.82rem;z-index:8;white-space:nowrap;transition:opacity .5s}
+.vs-comet{
+  position:absolute;width:26px;height:26px;border-radius:50%;z-index:9;opacity:0;pointer-events:none;
+  background:radial-gradient(circle at 35% 30%, #A793C2, #4E4062);
+  box-shadow:0 0 20px rgba(150,130,180,.95);
+}
+.vs-comet .tail{
+  position:absolute;top:50%;left:50%;width:56px;height:10px;margin-top:-5px;
+  transform-origin:left center;border-radius:999px;
+  background:linear-gradient(90deg, rgba(156,144,181,.85), rgba(156,144,181,0));
+}
+.vs-impact{
+  position:absolute;bottom:22px;width:90px;height:14px;border-radius:50%;border:3px solid #9C90B5;
+  opacity:0;transform:translateX(-50%) scale(.3);transition:opacity .3s,transform .7s;z-index:8;
+}
+.vs-impact.on{opacity:.9;transform:translateX(-50%) scale(1.3)}
+.vs-riser{
+  position:absolute;bottom:28px;left:30%;transform:translate(-50%,140%);
+  transition:transform .8s cubic-bezier(.2,1.22,.4,1);z-index:10;
+  display:flex;flex-direction:column-reverse;align-items:center;gap:6px;
+}
+.vs-riser.up{transform:translate(-50%,0)}
+.vs-glow{
+  position:absolute;bottom:0;left:30%;width:230px;height:190px;transform:translate(-50%,20%) scale(.4);border-radius:50%;
+  background:radial-gradient(circle, rgba(245,184,64,.5), rgba(245,184,64,0) 70%);opacity:0;transition:opacity .8s,transform .8s;z-index:7;
+}
+.vs-glow.on{opacity:1;transform:translate(-50%,10%) scale(1.1)}
+.qrow{display:flex;align-items:center;gap:10px;flex-wrap:wrap;margin:6px 0}
+.qrow .qlabel{font-weight:800;min-width:64px}
+
+/* ===== waveline (submodality demo, voice) ===== */
+.waveline{stroke:#9C90B5;stroke-width:4;fill:none;stroke-linecap:round;transition:all .7s}
+
+/* ===== finale ===== */
+.mini-fig{position:absolute;opacity:0;transform:scale(.2);transition:opacity .6s,transform .6s;z-index:5}
+.mini-fig.on{opacity:1;transform:scale(1)}
+.edge-glow{position:absolute;opacity:0;transition:opacity 1.4s;pointer-events:none;z-index:3}
+.edge-glow.on{opacity:1}
+.time-ribbon{position:absolute;bottom:10px;inset-inline:0;display:flex;justify-content:space-around;z-index:12}
+.time-ribbon span{background:var(--card);border:2px solid var(--gold);color:var(--gold-deep);border-radius:999px;padding:4px 16px;font-weight:800;font-size:.95rem}
+.snd-arc{position:absolute;opacity:0;transition:opacity .8s;z-index:6}
+.snd-arc.on{opacity:1;animation:arcpulse 1.6s ease-in-out infinite}
+@keyframes arcpulse{0%,100%{transform:scale(1)}50%{transform:scale(1.12)}}
+.snd-arc span{display:block;border:3px solid var(--gold-deep);border-radius:50%;position:absolute}
+.float-note{position:absolute;color:var(--gold-deep);font-size:1.3rem;opacity:0;z-index:8;animation:floatnote 2.6s ease-in-out infinite}
+@keyframes floatnote{0%{opacity:0;transform:translateY(8px)}30%,70%{opacity:1}100%{opacity:0;transform:translateY(-22px)}}
+.hand-pair{position:absolute;opacity:0;transform:scale(.3);transition:opacity .6s,transform .6s;z-index:7;display:flex;flex-direction:column;align-items:center;gap:2px}
+.hand-pair.on{opacity:1;transform:scale(1)}
+.hand-pair .badge{font-size:.78rem;padding:2px 10px}
+
+/* ===== finish bars ===== */
+.bars{display:flex;gap:44px;justify-content:center;align-items:flex-end;height:200px;margin:18px 0 6px}
+.barcol{display:flex;flex-direction:column;align-items:center;gap:8px;height:100%;justify-content:flex-end}
+.bar{width:62px;border-radius:12px 12px 5px 5px;transition:height 1.2s cubic-bezier(.2,.8,.3,1)}
+.bar.before{background:linear-gradient(180deg,#9C90B5,var(--storm))}
+.bar.after{background:linear-gradient(180deg,#FFD97A,var(--gold-deep))}
+.barnum{font-size:1.6rem;font-weight:800;font-variant-numeric:tabular-nums}
+.tipbox{border:2px solid #E0B8B8;background:#FBF0F0;border-radius:16px;padding:14px 16px;margin:12px 0}
+
+.thousand{display:flex;flex-direction:column;align-items:center;justify-content:center;height:100%;gap:2px}
+.thousand .tnum{font-size:4rem;font-weight:800;color:var(--gold-deep);font-variant-numeric:tabular-nums;line-height:1}
+
+.dirbtn{
+  position:absolute;transform:translate(-50%,-50%);z-index:10;
+  border:2px solid var(--line);background:var(--card);border-radius:999px;padding:8px 15px;
+  font-size:.95rem;font-weight:700;color:var(--ink);box-shadow:0 2px 6px rgba(34,52,74,.08);
+}
+.dirbtn:hover{border-color:var(--gold-deep)}
+.dirbtn.on{background:var(--gold);color:#3A2A05;border-color:var(--gold-deep)}
+.vlines{position:absolute;inset:0;width:100%;height:100%;z-index:4}
+.vpath{fill:none;stroke-linecap:round;vector-effect:non-scaling-stroke}
+.vpath.neg{stroke:#9C90B5;stroke-width:4;stroke-dasharray:4 8}
+.voice-pick .vhead{position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:5}
+
+.reveal{animation:fadeup .7s ease both}
+@keyframes fadeup{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:none}}
+footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
+.backline{margin:2px 0 6px}
+.backline button{color:var(--muted);font-size:.95rem;font-weight:700}
+.backline button:hover{color:var(--gold-deep)}
+@media (prefers-reduced-motion:reduce){
+  *,*::before,*::after{animation-duration:.01s !important;transition-duration:.15s !important}
+}
+</style>
+
+<div id="app" dir="rtl" lang="he">
+
+  <!-- ===== HOME ===== -->
+  <section id="screen-home">
+    <div class="eyebrow">תהליך סוויש קלאסי מה־NLP · מודרך צעד־צעד</div>
+    <h1>סוויש דיגיטלי</h1>
+    <p class="muted" style="font-size:1.05rem">שמים לב ל<b>טריגר</b>, בודקים <b>שליטה</b>, בונים את <b>האני האידיאלי</b>, מריצים את ה<b>סוויש</b> — ומפזרים לכל עבר.</p>
+
+    <div class="card center" id="gender-card">
+      <h2 style="font-size:1.15rem">איך לפנות אליך?</h2>
+      <p class="muted small" style="margin-top:0">כדי שהקריינות והמשפטים יהיו מדויקים עבורך.</p>
+      <div class="gender-chips">
+        <button class="chip" data-g="m">גבר</button>
+        <button class="chip" data-g="f">אישה</button>
+      </div>
+      <div id="voice-pick-wrap" style="margin-top:14px">
+        <div style="font-weight:800;margin-bottom:6px">🔊 קול הקריינות</div>
+        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:center">
+          <select id="voice-select" class="vin-textbig" style="max-width:280px;font-size:.98rem;padding:10px 14px"></select>
+          <button class="btn ghost" id="voice-test" type="button" style="padding:9px 16px">▶ שמיעה</button>
+        </div>
+        <p class="muted small" id="voice-hint" style="margin:8px 0 0"></p>
+      </div>
+    </div>
+
+    <div class="demo-stage" aria-hidden="true">
+      <div class="demo-tag">הדגמה</div>
+      <div class="demo-card demo-trig" id="demo-trig"></div>
+      <div class="demo-box jbox open"><div class="jbox-lid"></div><div class="jbox-body"></div></div>
+      <div class="demo-card demo-ideal" id="demo-ideal"></div>
+      <div class="demo-flash"></div>
+    </div>
+
+    <h2>במה נעבוד היום?</h2>
+    <div class="channels">
+      <button class="channel" data-ch="visual">
+        <span class="ch-ic"><svg viewBox="0 0 24 24"><path d="M1 12s4-7 11-7 11 7 11 7-4 7-11 7S1 12 1 12z"/><circle cx="12" cy="12" r="3"/></svg></span>
+        <span class="ch-title">ראייה</span>
+        <span class="muted small">תמונה שמדליקה את הרגש</span>
+      </button>
+      <button class="channel" data-ch="voice">
+        <span class="ch-ic"><svg viewBox="0 0 24 24"><path d="M11 5 6 9H2v6h4l5 4z"/><path d="M15.5 8.5a5 5 0 0 1 0 7"/><path d="M19 5a9 9 0 0 1 0 14"/></svg></span>
+        <span class="ch-title">שמיעה</span>
+        <span class="muted small">קול פנימי שלילי</span>
+      </button>
+      <button class="channel" data-ch="feeling">
+        <span class="ch-ic"><svg viewBox="0 0 24 24"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8l8.8 8.9 8.8-8.9a5.5 5.5 0 0 0 0-7.8z"/></svg></span>
+        <span class="ch-title">תחושה</span>
+        <span class="muted small">תחושה לא נעימה בגוף</span>
+      </button>
+    </div>
+    <footer>מרחב מוגן לתרגול · אפשר לעצור בכל שלב</footer>
+  </section>
+
+  <!-- ===== FLOW ===== -->
+  <section id="screen-flow" class="hidden">
+    <div class="backline"><button id="flow-back">→ חזרה</button></div>
+    <div class="stagesbar" id="stagesbar"></div>
+    <h1 id="step-title" style="font-size:clamp(1.5rem,5vw,2rem)"></h1>
+    <div id="step-body"></div>
+    <div class="btnrow">
+      <span class="spacer"></span>
+      <button class="btn" id="step-next">המשך ←</button>
+    </div>
+  </section>
+
+  <!-- ===== FINISH ===== -->
+  <section id="screen-finish" class="hidden">
+    <div class="eyebrow">סיום התהליך</div>
+    <h1>כל הכבוד! 💛</h1>
+    <div class="card">
+      <div class="bars">
+        <div class="barcol"><div class="barnum" id="bar-before-num"></div><div class="bar before" id="bar-before"></div><div class="muted small">לפני</div></div>
+        <div class="barcol"><div class="barnum" id="bar-after-num"></div><div class="bar after" id="bar-after"></div><div class="muted small">אחרי</div></div>
+      </div>
+      <p id="finish-text" class="center"></p>
+    </div>
+    <div class="guide" id="finish-tip"></div>
+    <div class="btnrow">
+      <button class="btn" id="again-same">סבב נוסף על אותו רגש</button>
+      <button class="btn ghost" id="again-new">רגש אחר</button>
+      <button class="btn ghost" id="again-home">ערוץ אחר</button>
+    </div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+"use strict";
+
+/* ---------- helpers ---------- */
+const $ = s => document.querySelector(s);
+const wait = ms => new Promise(r=>setTimeout(r,ms));
+function h(tag, cls, html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e;}
+const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+const CH_NAMES = {visual:'ראייה — תמונה', voice:'שמיעה — קול', feeling:'תחושה בגוף'};
+const STAGE_NAMES = ['הטריגר','בדיקת שליטה','האני האידיאלי','הסוויש','פיזור'];
+
+const state = {
+  gender:null, channel:null, emotion:'', before:6, after:null,
+  resources:[], bodySpot:null, voiceDir:null,
+  voiceQ:{speed:null, dist:null, vol:null},
+  voiceText:'', voiceTypes:[], voiceRec:null, voiceName:null,
+  trigPic:null, idealPic:null, voicePic:null, feelPic:null,
+};
+try{ state.gender = localStorage.getItem('swish-gender') || null; }catch(e){}
+
+/* gendered text */
+function g(m,f){ return state.gender==='f' ? f : m; }
+function sentence(){
+  return state.gender==='f'
+    ? 'את יכולה להרגיש טוב עם עצמך. את יכולה להרגיש בטוחה עם עצמך. אני כאן איתך.'
+    : 'אתה יכול להרגיש טוב עם עצמך. אתה יכול להרגיש בטוח עם עצמך. אני כאן איתך.';
+}
+function sentenceParts(){
+  return state.gender==='f'
+    ? ['את יכולה להרגיש טוב עם עצמך','את יכולה להרגיש בטוחה עם עצמך','אני כאן איתך']
+    : ['אתה יכול להרגיש טוב עם עצמך','אתה יכול להרגיש בטוח עם עצמך','אני כאן איתך'];
+}
+
+/* ---------- audio ---------- */
+let actx=null;
+function audio(){
+  const AC = window.AudioContext || window.webkitAudioContext;
+  if(!AC) return null;
+  if(!actx) actx = new AC();
+  if(actx.state==='suspended') actx.resume();
+  return actx;
+}
+function noiseBuf(c,dur){
+  const n = Math.max(1, Math.floor(c.sampleRate*dur));
+  const b = c.createBuffer(1,n,c.sampleRate);
+  const d = b.getChannelData(0);
+  for(let i=0;i<n;i++) d[i]=Math.random()*2-1;
+  return b;
+}
+function swishSound(dur, vol, pan){
+  dur=dur||0.45; vol=vol==null?0.5:vol; pan=pan||0;
+  const c=audio(); if(!c) return;
+  const t=c.currentTime;
+  const src=c.createBufferSource(); src.buffer=noiseBuf(c,dur+0.05);
+  const f=c.createBiquadFilter(); f.type='bandpass'; f.Q.value=1.1;
+  f.frequency.setValueAtTime(350,t);
+  f.frequency.exponentialRampToValueAtTime(4200,t+dur*0.75);
+  const gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(vol,t+dur*0.18);
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+dur);
+  src.connect(f); f.connect(gn);
+  if(c.createStereoPanner){const p=c.createStereoPanner(); p.pan.value=pan; gn.connect(p); p.connect(c.destination);}
+  else gn.connect(c.destination);
+  src.start(t); src.stop(t+dur+0.1);
+}
+function waveSound(dur, vol){
+  dur=dur||1.5; vol=vol||0.2;
+  const c=audio(); if(!c) return;
+  const t=c.currentTime;
+  const src=c.createBufferSource(); src.buffer=noiseBuf(c,dur+0.1);
+  const f=c.createBiquadFilter(); f.type='lowpass';
+  f.frequency.setValueAtTime(280,t);
+  f.frequency.linearRampToValueAtTime(900,t+dur*0.4);
+  f.frequency.linearRampToValueAtTime(200,t+dur);
+  const gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.linearRampToValueAtTime(vol,t+dur*0.35);
+  gn.gain.linearRampToValueAtTime(0.0001,t+dur);
+  src.connect(f); f.connect(gn); gn.connect(c.destination);
+  src.start(t); src.stop(t+dur+0.1);
+}
+function showerSound(dur, vol){
+  dur=dur||1.1; vol=vol||0.16;
+  const c=audio(); if(!c) return;
+  const t=c.currentTime;
+  const src=c.createBufferSource(); src.buffer=noiseBuf(c,dur+0.1);
+  const f=c.createBiquadFilter(); f.type='lowpass';
+  f.frequency.setValueAtTime(1600,t);
+  f.frequency.linearRampToValueAtTime(500,t+dur);
+  const gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.linearRampToValueAtTime(vol,t+dur*0.2);
+  gn.gain.linearRampToValueAtTime(0.0001,t+dur);
+  src.connect(f); f.connect(gn); gn.connect(c.destination);
+  src.start(t); src.stop(t+dur+0.1);
+}
+function chime(vol){
+  vol=vol||0.16;
+  const c=audio(); if(!c) return;
+  [523.25,659.25,783.99].forEach((fr,i)=>{
+    const t=c.currentTime+i*0.14;
+    const o=c.createOscillator(); o.type='sine'; o.frequency.value=fr;
+    const gn=c.createGain();
+    gn.gain.setValueAtTime(0.0001,t);
+    gn.gain.exponentialRampToValueAtTime(vol,t+0.03);
+    gn.gain.exponentialRampToValueAtTime(0.0001,t+0.9);
+    o.connect(gn); gn.connect(c.destination); o.start(t); o.stop(t+1);
+  });
+}
+function popSound(vol){
+  vol=vol||0.2;
+  const c=audio(); if(!c) return;
+  const t=c.currentTime;
+  const o=c.createOscillator(); o.type='sine';
+  o.frequency.setValueAtTime(280,t);
+  o.frequency.exponentialRampToValueAtTime(950,t+0.12);
+  const gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(vol,t+0.02);
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+0.16);
+  o.connect(gn); gn.connect(c.destination); o.start(t); o.stop(t+0.2);
+}
+function alarmHandle(vol, lfoRate){
+  vol=vol||0.085;
+  const c=audio(); if(!c) return null;
+  const o=c.createOscillator(); o.type='square';
+  o.frequency.value=620;
+  const lfo=c.createOscillator(); lfo.type='square'; lfo.frequency.value=lfoRate||3.4;
+  const lg=c.createGain(); lg.gain.value=150;
+  lfo.connect(lg); lg.connect(o.frequency);
+  const gn=c.createGain(); gn.gain.setValueAtTime(0.0001,c.currentTime);
+  gn.gain.exponentialRampToValueAtTime(vol,c.currentTime+0.09);
+  o.connect(gn); gn.connect(c.destination);
+  o.start(); lfo.start();
+  let dead=false;
+  return {
+    die(durSec){
+      if(dead) return; dead=true;
+      const t=c.currentTime;
+      lfo.frequency.setValueAtTime(lfoRate||3.4,t);
+      lfo.frequency.linearRampToValueAtTime(0.4,t+durSec);
+      o.frequency.setValueAtTime(620,t);
+      o.frequency.exponentialRampToValueAtTime(48,t+durSec);
+      gn.gain.setValueAtTime(vol,t);
+      gn.gain.exponentialRampToValueAtTime(0.0001,t+durSec);
+      setTimeout(()=>{try{o.stop();lfo.stop();}catch(e){}},durSec*1000+150);
+    },
+    stop(){
+      if(dead) return; dead=true;
+      try{gn.gain.cancelScheduledValues(0); gn.gain.value=0.0001; o.stop(); lfo.stop();}catch(e){}
+    }
+  };
+}
+/* short demo buzz for the control test */
+function demoBuzz(opts){
+  opts=opts||{};
+  const c=audio(); if(!c) return;
+  const t=c.currentTime;
+  const dur=opts.dur||0.7;
+  const o=c.createOscillator(); o.type='sawtooth';
+  const base=opts.slow?95:150;
+  o.frequency.setValueAtTime(base,t);
+  o.frequency.linearRampToValueAtTime(base*0.8,t+dur);
+  const gn=c.createGain();
+  const vol=opts.vol==null?0.12:opts.vol;
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.linearRampToValueAtTime(vol,t+0.06);
+  gn.gain.linearRampToValueAtTime(0.0001,t+dur);
+  o.connect(gn);
+  if(c.createStereoPanner){const p=c.createStereoPanner(); p.pan.value=opts.pan||0; gn.connect(p); p.connect(c.destination);}
+  else gn.connect(c.destination);
+  o.start(t); o.stop(t+dur+0.05);
+}
+function drainSound(sec, vol){
+  sec=sec||0.9; vol=vol||0.26;
+  const c=audio(); if(!c) return;
+  const t=c.currentTime;
+  const src=c.createBufferSource(); src.buffer=noiseBuf(c,sec+0.1);
+  const f=c.createBiquadFilter(); f.type='bandpass'; f.Q.value=2;
+  f.frequency.setValueAtTime(2400,t);
+  f.frequency.exponentialRampToValueAtTime(140,t+sec);
+  const gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(vol,t+0.08);
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+sec);
+  src.connect(f); f.connect(gn); gn.connect(c.destination);
+  src.start(t); src.stop(t+sec+0.1);
+}
+function tick(p){ swishSound(0.1, 0.12+p*0.1); }
+
+/* human-sounding gendered narration */
+function hebrewVoices(){
+  if(!('speechSynthesis' in window)) return [];
+  return speechSynthesis.getVoices().filter(v=>v.lang && (v.lang.toLowerCase().indexOf('he')===0 || /iw|hebrew/i.test(v.lang)));
+}
+function voiceScore(v){
+  let s=0;
+  if(/enhanced|premium|natural|neural|siri/i.test(v.name)) s+=6;   /* high-quality engines */
+  if(/carmit|google|microsoft|asaf|amira|avri/i.test(v.name)) s+=3; /* known good Hebrew voices */
+  if(v.localService) s+=1;
+  return s;
+}
+function pickVoice(){
+  const vs=hebrewVoices();
+  if(!vs.length) return null;
+  /* explicit user choice wins */
+  if(state.voiceName){
+    const chosen=vs.find(v=>v.name===state.voiceName) || speechSynthesis.getVoices().find(v=>v.name===state.voiceName);
+    if(chosen) return chosen;
+  }
+  /* otherwise the best Hebrew voice, biased by gender when the name hints it */
+  const want = state.gender==='f' ? /female|carmit|hila|amira|נקבה|אישה/i : /male|asaf|guy|avri|זכר|גבר/i;
+  const sorted=[...vs].sort((a,b)=>voiceScore(b)-voiceScore(a));
+  return sorted.find(v=>want.test(v.name)) || sorted[0];
+}
+try{ state.voiceName = localStorage.getItem('swish-voice') || null; }catch(e){}
+function speak(text){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const v=pickVoice();
+  const parts=(text||sentence()).split(/(?<=\.)\s+/).filter(Boolean);
+  parts.forEach((p,i)=>{
+    const u=new SpeechSynthesisUtterance(p);
+    u.lang='he-IL'; u.rate=0.9; u.pitch = state.gender==='f' ? 1.18 : 0.85;
+    u.volume=1;
+    if(v) u.voice=v;
+    speechSynthesis.speak(u);
+  });
+}
+/* the negative voice speaks the user's word, harshly */
+function speakNeg(text){
+  if(!('speechSynthesis' in window)) return;
+  speechSynthesis.cancel();
+  const u=new SpeechSynthesisUtterance(text);
+  u.lang='he-IL'; u.pitch=0.45;
+  const q=state.voiceQ||{};
+  u.rate = q.speed==='מהיר' ? 1.35 : q.speed==='איטי' ? 0.8 : 1.05;
+  let vol=0.9;
+  if(q.vol==='חלש') vol=0.5;
+  if(q.dist==='מרחוק') vol*=0.6;
+  u.volume=Math.min(1,vol);
+  const v=speechSynthesis.getVoices().find(v=>v.lang && v.lang.indexOf('he')===0);
+  if(v) u.voice=v;
+  speechSynthesis.speak(u);
+}
+/* soft whisper-like hiss */
+function whisperSound(dur, vol){
+  dur=dur||1.2; vol=vol||0.05;
+  const c=audio(); if(!c) return null;
+  const t=c.currentTime;
+  const src=c.createBufferSource(); src.buffer=noiseBuf(c,dur+0.1);
+  const f=c.createBiquadFilter(); f.type='bandpass'; f.Q.value=0.6;
+  f.frequency.value=3200;
+  const gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.linearRampToValueAtTime(vol,t+0.15);
+  gn.gain.linearRampToValueAtTime(0.0001,t+dur);
+  src.connect(f); f.connect(gn); gn.connect(c.destination);
+  src.start(t); src.stop(t+dur+0.1);
+  return null;
+}
+/* play a recorded clip as the negative voice, with a fade-out "die" */
+function recHandle(){
+  const a=new Audio(state.voiceRec);
+  const q=state.voiceQ||{};
+  let vol=0.95; if(q.vol==='חלש') vol=0.55; if(q.dist==='מרחוק') vol*=0.6;
+  a.volume=Math.min(1,vol);
+  try{ a.playbackRate = q.speed==='מהיר'?1.3:q.speed==='איטי'?0.8:1; }catch(e){}
+  a.play().catch(()=>{});
+  let dead=false;
+  return {
+    isRec:true,
+    die(sec){
+      if(dead) return; dead=true;
+      const v0=a.volume, steps=8; let i=0;
+      const t=setInterval(()=>{ i++; try{a.volume=Math.max(0,v0*(1-i/steps));}catch(e){} if(i>=steps){ clearInterval(t); try{a.pause();}catch(e){} } }, Math.max(30,sec*1000/steps));
+    },
+    cut(){ if(dead) return; dead=true; try{a.pause(); a.currentTime=0;}catch(e){} },
+    /* cut it off with a dropping tone, like a tape running out of battery */
+    battery(sec){
+      if(dead) return; dead=true;
+      try{ a.preservesPitch=false; a.mozPreservesPitch=false; a.webkitPreservesPitch=false; }catch(e){}
+      const r0=(a.playbackRate||1), v0=a.volume, steps=12; let i=0;
+      const t=setInterval(()=>{
+        i++; const k=i/steps;
+        try{ a.playbackRate=Math.max(0.25, r0*(1-0.82*k)); }catch(e){}
+        try{ a.volume=Math.max(0, v0*(1-k)); }catch(e){}
+        if(i>=steps){ clearInterval(t); try{a.pause();}catch(e){} }
+      }, Math.max(22, sec*1000/steps));
+    },
+    stop(){ if(dead) return; dead=true; try{a.pause();}catch(e){} }
+  };
+}
+/* start the negative voice according to what the user recorded/wrote/chose:
+   a recording -> plays; a written word -> the word is spoken; "אזעקה" -> alarm; "לחישה" -> hiss */
+function negVoiceStart(){
+  if(state.voiceRec) return recHandle();
+  const txt=(state.voiceText||'').trim();
+  const types=state.voiceTypes||[];
+  if(txt && txt!=='אזעקה'){ speakNeg(txt); return null; }
+  if(!txt && types.indexOf('לחישה')>=0 && types.indexOf('אזעקה')<0){ whisperSound(1.4,0.06); return null; }
+  return voiceAlarm();
+}
+function negVoiceStop(handle, dieSec){
+  if(handle) handle.die(dieSec);
+  else if('speechSynthesis' in window){ try{ speechSynthesis.cancel(); }catch(e){} }
+}
+function speakAwait(text){
+  return new Promise(res=>{
+    if(!('speechSynthesis' in window)){ res(); return; }
+    speechSynthesis.cancel();
+    const u=new SpeechSynthesisUtterance(text);
+    u.lang='he-IL'; u.rate=0.9; u.pitch = state.gender==='f' ? 1.18 : 0.85;
+    const v=pickVoice(); if(v) u.voice=v;
+    let done=false;
+    const fin=()=>{ if(!done){ done=true; res(); } };
+    u.onend=fin; u.onerror=fin;
+    setTimeout(fin, 3500);
+    speechSynthesis.speak(u);
+  });
+}
+if('speechSynthesis' in window) speechSynthesis.getVoices();
+
+/* ---------- characters ---------- */
+function idealCharSVG(w, label){
+  w=w||130;
+  return '<svg class="charsvg" width="'+w+'" viewBox="0 0 140 170" aria-label="'+(label||'האני האידיאלי')+'">'
+    +'<line x1="70" y1="62" x2="42" y2="36" stroke="#F5A840" stroke-width="10" stroke-linecap="round"/>'
+    +'<line x1="70" y1="62" x2="98" y2="36" stroke="#F5A840" stroke-width="10" stroke-linecap="round"/>'
+    +'<circle cx="40" cy="34" r="6" fill="#FFD9B8"/><circle cx="100" cy="34" r="6" fill="#FFD9B8"/>'
+    +'<line x1="70" y1="52" x2="70" y2="104" stroke="#F5A840" stroke-width="17" stroke-linecap="round"/>'
+    +'<line x1="65" y1="110" x2="58" y2="152" stroke="#4A5B78" stroke-width="10" stroke-linecap="round"/>'
+    +'<line x1="75" y1="110" x2="82" y2="152" stroke="#4A5B78" stroke-width="10" stroke-linecap="round"/>'
+    +'<circle cx="70" cy="32" r="17" fill="#FFD9B8"/>'
+    +'<path d="M53 29 a17 17 0 0 1 34 0" stroke="#6B4A2F" stroke-width="7" fill="none" stroke-linecap="round"/>'
+    +'<circle cx="64" cy="32" r="2.1" fill="#22344A"/><circle cx="76" cy="32" r="2.1" fill="#22344A"/>'
+    +'<path d="M62 39 Q70 47 78 39" stroke="#22344A" stroke-width="2.5" fill="none" stroke-linecap="round"/>'
+    +'</svg>';
+}
+function gloomCharSVG(w, emotion){
+  w=w||130;
+  const label = emotion || 'הרגש הלא נעים';
+  return '<svg class="charsvg" width="'+w+'" viewBox="0 0 140 175" aria-label="דמות עם ענן של '+label+'">'
+    +'<g><circle cx="50" cy="26" r="13" fill="#6B647F"/><circle cx="74" cy="20" r="16" fill="#6B647F"/>'
+    +'<circle cx="94" cy="27" r="11" fill="#6B647F"/><ellipse cx="72" cy="32" rx="34" ry="11" fill="#6B647F"/>'
+    +'<text x="72" y="30" text-anchor="middle" font-size="12" font-weight="800" fill="#EDEAF4">'+label+'</text></g>'
+    +'<g class="rain"><line x1="54" y1="46" x2="51" y2="57"/><line x1="72" y1="48" x2="69" y2="59"/><line x1="90" y1="46" x2="87" y2="57"/></g>'
+    +'<line x1="66" y1="88" x2="56" y2="112" stroke="#8B93A8" stroke-width="8" stroke-linecap="round"/>'
+    +'<line x1="70" y1="88" x2="78" y2="114" stroke="#8B93A8" stroke-width="8" stroke-linecap="round"/>'
+    +'<path d="M68 82 q-9 14 -4 32" stroke="#8B93A8" stroke-width="15" stroke-linecap="round" fill="none"/>'
+    +'<line x1="63" y1="112" x2="58" y2="150" stroke="#66708A" stroke-width="9" stroke-linecap="round"/>'
+    +'<line x1="68" y1="112" x2="76" y2="150" stroke="#66708A" stroke-width="9" stroke-linecap="round"/>'
+    +'<circle cx="66" cy="70" r="14" fill="#E8C8AE"/>'
+    +'<circle cx="61" cy="69" r="1.9" fill="#544D66"/><circle cx="72" cy="69" r="1.9" fill="#544D66"/>'
+    +'<path d="M60 79 Q66 74 72 79" stroke="#544D66" stroke-width="2.4" fill="none" stroke-linecap="round"/>'
+    +'</svg>';
+}
+function neutralCharSVG(w){
+  w=w||200;
+  return '<svg class="charsvg" width="'+w+'" viewBox="0 0 140 190" aria-hidden="true">'
+    +'<line x1="70" y1="66" x2="44" y2="98" stroke="#A6B7C9" stroke-width="9" stroke-linecap="round"/>'
+    +'<line x1="70" y1="66" x2="96" y2="98" stroke="#A6B7C9" stroke-width="9" stroke-linecap="round"/>'
+    +'<line x1="70" y1="52" x2="70" y2="118" stroke="#A6B7C9" stroke-width="16" stroke-linecap="round"/>'
+    +'<line x1="65" y1="122" x2="59" y2="170" stroke="#8DA0B5" stroke-width="10" stroke-linecap="round"/>'
+    +'<line x1="75" y1="122" x2="81" y2="170" stroke="#8DA0B5" stroke-width="10" stroke-linecap="round"/>'
+    +'<circle cx="70" cy="32" r="16" fill="#F2DAC2"/>'
+    +'<circle cx="64" cy="31" r="2" fill="#41536B"/><circle cx="76" cy="31" r="2" fill="#41536B"/>'
+    +'<path d="M63 39 Q70 44 77 39" stroke="#41536B" stroke-width="2.3" fill="none" stroke-linecap="round"/>'
+    +'</svg>';
+}
+function voiceHeadSVG(w){
+  w=w||120;
+  return '<svg class="charsvg" width="'+w+'" viewBox="0 0 120 120" aria-hidden="true">'
+    +'<ellipse cx="27" cy="62" rx="7" ry="11" fill="#F2DAC2"/>'
+    +'<ellipse cx="93" cy="62" rx="7" ry="11" fill="#F2DAC2"/>'
+    +'<circle cx="60" cy="60" r="32" fill="#F2DAC2"/>'
+    +'<path d="M30 52 a32 32 0 0 1 60 0" stroke="#6B4A2F" stroke-width="10" fill="none" stroke-linecap="round"/>'
+    +'<circle cx="49" cy="60" r="3" fill="#22344A"/><circle cx="71" cy="60" r="3" fill="#22344A"/>'
+    +'<path d="M50 74 Q60 81 70 74" stroke="#22344A" stroke-width="3" fill="none" stroke-linecap="round"/>'
+    +'</svg>';
+}
+function goldenHandsSVG(w){
+  w=w||64;
+  return '<svg width="'+w+'" viewBox="0 0 70 34" aria-hidden="true">'
+    +'<g fill="#F5A840">'
+    +'<ellipse cx="20" cy="17" rx="14" ry="9" transform="rotate(-14 20 17)"/>'
+    +'<ellipse cx="50" cy="17" rx="14" ry="9" transform="rotate(14 50 17)"/>'
+    +'</g></svg>';
+}
+function jboxHTML(open){
+  return '<div class="jbox'+(open?' open':'')+'"><div class="jbox-lid"></div><div class="jbox-body"></div></div>';
+}
+function sparkles(container, n){
+  const spots=[[8,12],[85,8],[4,60],[90,55],[14,88],[78,86]];
+  for(let i=0;i<(n||4);i++){
+    const s=h('span','spark','✦');
+    s.style.position='absolute';
+    s.style.insetInlineStart=spots[i%spots.length][0]+'%';
+    s.style.top=spots[i%spots.length][1]+'%';
+    s.style.animationDelay=(i*0.5)+'s';
+    container.appendChild(s);
+  }
+}
+
+/* ---------- prominent voice input: record OR type ---------- */
+function makeVoiceInput(container){
+  const card=h('div','card voicecard');
+  card.innerHTML='<h2>🎙 מה הקול השלילי אומר?</h2>'
+    +'<p class="muted small" style="margin-top:0">'+g('הקלט','הקליטי')+' את הקול, או '+g('כתוב','כתבי')+' מה הוא אומר — זה בדיוק מה שיישמע בסוויש.</p>';
+  const row=h('div','vin-row');
+
+  /* record box */
+  const recBox=h('div','vin-big');
+  const micBtn=h('button','mic-btn','🎤'); micBtn.type='button'; micBtn.setAttribute('aria-label','הקלטה');
+  const recLabel=h('div',null,'<b>הקלטה</b>');
+  const recStatus=h('div','muted','לחצו כדי להקליט');
+  recBox.appendChild(micBtn); recBox.appendChild(recLabel); recBox.appendChild(recStatus);
+  const played=h('div','vin-played hidden');
+  const playBtn=h('button','btn ghost','▶ השמעה'); playBtn.type='button'; playBtn.style.padding='6px 14px';
+  const delBtn=h('button','btn ghost','🗑 מחיקה'); delBtn.type='button'; delBtn.style.padding='6px 14px';
+  played.appendChild(playBtn); played.appendChild(delBtn);
+
+  const orBox=h('div','vin-or','או');
+
+  /* type box */
+  const typeBox=h('div','vin-big');
+  typeBox.innerHTML='<b>כתיבה</b><div class="muted">מה הקול אומר?</div>';
+  const inp=h('input','vin-textbig');
+  inp.placeholder='למשל: "אתה לא מסוגל", או: אזעקה';
+  inp.setAttribute('aria-label','מה הקול אומר');
+  inp.value=state.voiceText||'';
+  inp.addEventListener('input',()=>{ state.voiceText=inp.value; });
+  typeBox.appendChild(inp);
+
+  row.appendChild(recBox); row.appendChild(orBox); row.appendChild(typeBox);
+  card.appendChild(row);
+  card.appendChild(played);
+
+  /* recording logic */
+  let rec=null, chunks=[], stream=null, timer=null, secs=0;
+  const supported = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+  if(!supported){
+    micBtn.disabled=true; micBtn.style.opacity='.5';
+    recStatus.textContent='לא נתמך בדפדפן זה — אפשר לכתוב';
+  }
+  function stopStream(){ if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } }
+  async function start(){
+    try{
+      stream=await navigator.mediaDevices.getUserMedia({audio:true});
+    }catch(e){ recStatus.textContent='אין הרשאת מיקרופון — אפשר לכתוב'; return; }
+    chunks=[];
+    let mime='';
+    ['audio/webm','audio/mp4','audio/ogg'].forEach(m=>{ if(!mime && window.MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) mime=m; });
+    rec = mime ? new MediaRecorder(stream,{mimeType:mime}) : new MediaRecorder(stream);
+    rec.ondataavailable=e=>{ if(e.data && e.data.size) chunks.push(e.data); };
+    rec.onstop=()=>{
+      const blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'});
+      const fr=new FileReader();
+      fr.onload=()=>{ state.voiceRec=fr.result; played.classList.remove('hidden'); recStatus.textContent='הוקלט ✓'; };
+      fr.readAsDataURL(blob);
+      stopStream();
+    };
+    rec.start();
+    secs=0; recStatus.textContent='מקליט… 0ש׳';
+    micBtn.classList.add('rec'); micBtn.textContent='⏹';
+    recLabel.innerHTML='<b class="vin-time">מקליט…</b>';
+    timer=setInterval(()=>{ secs++; recStatus.textContent='מקליט… '+secs+'ש׳'; if(secs>=15) stop(); },1000);
+  }
+  function stop(){
+    if(rec && rec.state!=='inactive'){ try{rec.stop();}catch(e){} }
+    clearInterval(timer);
+    micBtn.classList.remove('rec'); micBtn.textContent='🎤';
+    recLabel.innerHTML='<b>הקלטה</b>';
+  }
+  micBtn.addEventListener('click',()=>{ audio(); if(rec && rec.state==='recording') stop(); else start(); });
+  let previewAudio=null;
+  playBtn.addEventListener('click',()=>{
+    if(!state.voiceRec) return;
+    try{ if(previewAudio) previewAudio.pause(); }catch(e){}
+    previewAudio=new Audio(state.voiceRec); previewAudio.play().catch(()=>{});
+  });
+  delBtn.addEventListener('click',()=>{
+    state.voiceRec=null; played.classList.add('hidden'); recStatus.textContent='לחצו כדי להקליט';
+  });
+
+  container.appendChild(card);
+}
+
+/* ---------- picture editor: freehand drawing + draggable icons + photo upload ---------- */
+function makePicEditor(container, opts){
+  opts=opts||{};
+  const CW=600, CH=400;
+  const box=h('div');
+  const toolbar=h('div','pe-toolbar');
+  const colors=opts.colors||['#3B3B54','#C0392B','#2471A3','#27AE60','#F5B840'];
+  let cur=colors[0], erase=false;
+  function sel(active){ toolbar.querySelectorAll('.pe-color,.pe-tool').forEach(x=>x.classList.remove('on')); active.classList.add('on'); }
+  colors.forEach((c,i)=>{
+    const b=h('button','pe-color'+(i===0?' on':'')); b.type='button'; b.style.background=c;
+    b.setAttribute('aria-label','צבע ציור');
+    b.addEventListener('click',()=>{ cur=c; erase=false; sel(b); });
+    toolbar.appendChild(b);
+  });
+  const er=h('button','btn ghost pe-tool','מחק'); er.type='button'; er.style.padding='6px 14px';
+  er.addEventListener('click',()=>{ erase=true; sel(er); });
+  const clr=h('button','btn ghost','נקה הכל'); clr.type='button'; clr.style.padding='6px 14px';
+  toolbar.appendChild(er); toolbar.appendChild(clr);
+  /* photo upload */
+  const upLabel=h('label','btn ghost pe-upload','📷 העלאת תמונה'); upLabel.style.padding='6px 14px';
+  const upInp=document.createElement('input'); upInp.type='file'; upInp.accept='image/*'; upInp.style.display='none';
+  upLabel.appendChild(upInp);
+  toolbar.appendChild(upLabel);
+
+  const wrap=h('div','pe-wrap');
+  const canvas=document.createElement('canvas'); canvas.width=CW; canvas.height=CH;
+  wrap.appendChild(canvas);
+  const ctx=canvas.getContext('2d');
+  ctx.lineCap='round'; ctx.lineJoin='round';
+  let drawing=false, last=null, drew=false;
+  const stickers=[];
+  function pos(e){ const r=canvas.getBoundingClientRect(); return {x:(e.clientX-r.left)/r.width*CW, y:(e.clientY-r.top)/r.height*CH}; }
+  canvas.addEventListener('pointerdown',e=>{
+    e.preventDefault(); drawing=true; last=pos(e);
+    try{ canvas.setPointerCapture(e.pointerId); }catch(err){}
+  });
+  canvas.addEventListener('pointermove',e=>{
+    if(!drawing) return;
+    const p=pos(e);
+    ctx.globalCompositeOperation = erase ? 'destination-out' : 'source-over';
+    ctx.strokeStyle=cur; ctx.lineWidth = erase ? 28 : 6;
+    ctx.beginPath(); ctx.moveTo(last.x,last.y); ctx.lineTo(p.x,p.y); ctx.stroke();
+    last=p; drew=true;
+  });
+  ['pointerup','pointercancel'].forEach(ev=>canvas.addEventListener(ev,()=>{ if(drawing){ drawing=false; fire(); } }));
+  clr.addEventListener('click',()=>{
+    ctx.clearRect(0,0,CW,CH); drew=false;
+    stickers.splice(0).forEach(()=>{});
+    wrap.querySelectorAll('.pe-stk').forEach(x=>x.remove());
+    fire();
+  });
+  /* upload a photo — drawn onto the canvas (contain-fit) */
+  upInp.addEventListener('change',()=>{
+    const f=upInp.files && upInp.files[0]; if(!f) return;
+    const img=new Image();
+    const url=URL.createObjectURL(f);
+    img.onload=()=>{
+      const r=Math.min(CW/img.width, CH/img.height);
+      const w=img.width*r, h2=img.height*r;
+      ctx.globalCompositeOperation='source-over';
+      ctx.clearRect(0,0,CW,CH);
+      ctx.drawImage(img,(CW-w)/2,(CH-h2)/2,w,h2);
+      drew=true; URL.revokeObjectURL(url); fire();
+    };
+    img.onerror=()=>{ URL.revokeObjectURL(url); };
+    img.src=url;
+    upInp.value='';
+  });
+
+  const em=h('div','pe-emojis');
+  (opts.emojis||[]).forEach(e2=>{
+    const b=h('button',null,e2); b.type='button'; b.setAttribute('aria-label','הוספת אייקון '+e2);
+    b.addEventListener('click',()=>{ addStk(e2, 44+Math.random()*12, 40+Math.random()*20); fire(); });
+    em.appendChild(b);
+  });
+  function addStk(e2,x,y){
+    const s={e:e2,x:x,y:y};
+    const el2=h('span','pe-stk',e2);
+    el2.style.left=x+'%'; el2.style.top=y+'%';
+    el2.title='גרירה להזזה · לחיצה כפולה למחיקה';
+    let dragId=null;
+    el2.addEventListener('pointerdown',ev=>{ ev.preventDefault(); dragId=ev.pointerId; try{el2.setPointerCapture(dragId);}catch(err){} });
+    el2.addEventListener('pointermove',ev=>{
+      if(dragId===null) return;
+      const r=wrap.getBoundingClientRect();
+      s.x=Math.min(96,Math.max(4,(ev.clientX-r.left)/r.width*100));
+      s.y=Math.min(93,Math.max(7,(ev.clientY-r.top)/r.height*100));
+      el2.style.left=s.x+'%'; el2.style.top=s.y+'%';
+    });
+    ['pointerup','pointercancel'].forEach(ev=>el2.addEventListener(ev,()=>{ dragId=null; fire(); }));
+    el2.addEventListener('dblclick',()=>{
+      const i=stickers.indexOf(s);
+      if(i>=0) stickers.splice(i,1);
+      el2.remove(); fire();
+    });
+    wrap.appendChild(el2);
+    stickers.push(s);
+  }
+  let fireT=null;
+  function fire(){ if(fireT) clearTimeout(fireT); fireT=setTimeout(()=>{ opts.onChange && opts.onChange(snapshot()); },200); }
+  function snapshot(){
+    return {
+      used: drew || stickers.length>0,
+      img: canvas.toDataURL('image/png'),
+      stickers: stickers.map(s=>({e:s.e,x:s.x,y:s.y})),
+    };
+  }
+  box.appendChild(toolbar); box.appendChild(wrap); box.appendChild(em);
+  box.appendChild(h('p','muted small','ציור באצבע או בעכבר · לחיצה על אייקון מוסיפה אותו לתמונה · גרירה ממקמת · לחיצה כפולה מוחקת'));
+  container.appendChild(box);
+  return {snapshot};
+}
+function picViewHTML(pic, w){
+  if(!pic || !pic.used) return null;
+  let s='<div class="pic-view" style="background-image:url('+pic.img+')'+(w?(';width:'+w+'px'):'')+'">';
+  (pic.stickers||[]).forEach(st=>{ s+='<span class="pe-stk" style="left:'+st.x+'%;top:'+st.y+'%">'+st.e+'</span>'; });
+  return s+'</div>';
+}
+
+/* ---------- ui builders ---------- */
+function makeChips(container, options, opts){
+  const o = Object.assign({multi:false, custom:true, placeholder:'אחר…', onChange:function(){}}, opts||{});
+  const selected = new Set();
+  const box = h('div');
+  const chips = h('div','chips');
+  box.appendChild(chips);
+  function fire(){ o.onChange([...selected]); }
+  function addChip(label, preOn){
+    const b=h('button','chip'); b.type='button'; b.textContent=label;
+    if(preOn){selected.add(label); b.classList.add('on');}
+    b.addEventListener('click',()=>{
+      if(o.multi){
+        if(selected.has(label)){selected.delete(label); b.classList.remove('on');}
+        else {selected.add(label); b.classList.add('on');}
+      } else {
+        selected.clear();
+        chips.querySelectorAll('.chip').forEach(c=>c.classList.remove('on'));
+        selected.add(label); b.classList.add('on');
+      }
+      fire();
+    });
+    chips.appendChild(b);
+    return b;
+  }
+  options.forEach(op=>addChip(op));
+  if(o.custom){
+    const row=h('div','chip-add');
+    const inp=h('input'); inp.placeholder=o.placeholder; inp.setAttribute('aria-label',o.placeholder);
+    const add=h('button','btn ghost','הוספה'); add.type='button'; add.style.padding='8px 18px';
+    function doAdd(){
+      const v=inp.value.trim(); if(!v) return;
+      const b=addChip(v); inp.value=''; b.click();
+    }
+    add.addEventListener('click',doAdd);
+    inp.addEventListener('keydown',e=>{if(e.key==='Enter'){e.preventDefault();doAdd();}});
+    row.appendChild(inp); row.appendChild(add); box.appendChild(row);
+  }
+  container.appendChild(box);
+  return {get:()=>[...selected]};
+}
+function makeScale(container, opts){
+  const o=Object.assign({value:6, onChange:function(){}, lowLabel:'בקושי מורגש', highLabel:'חזק מאוד'},opts||{});
+  const box=h('div','scale');
+  const num=h('div','scale-num', o.value+' <small>/ 10</small>');
+  const inp=h('input'); inp.type='range'; inp.min='1'; inp.max='10'; inp.step='1'; inp.value=o.value;
+  inp.setAttribute('aria-label','עוצמה בין 1 ל-10');
+  const ends=h('div','scale-ends','<span>1 · '+o.lowLabel+'</span><span>10 · '+o.highLabel+'</span>');
+  inp.addEventListener('input',()=>{
+    num.innerHTML=inp.value+' <small>/ 10</small>';
+    o.onChange(+inp.value);
+  });
+  box.appendChild(num); box.appendChild(inp); box.appendChild(ends);
+  container.appendChild(box);
+  return {get:()=>+inp.value};
+}
+
+/* ---------- body map v2: map + synced list ---------- */
+const BODY_SPOTS=[
+  {name:'ראש', x:70, y:30},
+  {name:'גרון', x:70, y:52},
+  {name:'כתפיים', x:94, y:58},
+  {name:'חזה / לב', x:70, y:76},
+  {name:'בטן', x:70, y:98},
+  {name:'ידיים', x:42, y:96},
+  {name:'רגליים', x:80, y:145},
+];
+function makeBodyMap(container, onPick){
+  const wrap=h('div','bm2');
+  const map=h('div','bm2-map');
+  map.innerHTML=neutralCharSVG(240);
+  const dot=h('div','spot-dot'); dot.style.display='none';
+  map.appendChild(dot);
+  const list=h('div','bm2-list');
+  const pairs=[];
+  BODY_SPOTS.forEach(s=>{
+    const mb=h('button','spot-btn'); mb.type='button';
+    mb.style.left=(s.x/140*100)+'%'; mb.style.top=(s.y/190*100)+'%';
+    mb.setAttribute('aria-label',s.name); mb.title=s.name;
+    const cb=h('button','chip',s.name); cb.type='button';
+    function select(){
+      pairs.forEach(p=>{p.mb.classList.remove('on'); p.cb.classList.remove('on');});
+      mb.classList.add('on'); cb.classList.add('on');
+      state.bodySpot=s;
+      dot.style.display='block';
+      dot.style.left=(s.x/140*100)+'%'; dot.style.top=(s.y/190*100)+'%';
+      popSound(0.08);
+      onPick && onPick(s);
+    }
+    mb.addEventListener('click',select);
+    cb.addEventListener('click',select);
+    map.appendChild(mb); list.appendChild(cb);
+    pairs.push({mb,cb});
+  });
+  wrap.appendChild(map); wrap.appendChild(list);
+  container.appendChild(wrap);
+  return wrap;
+}
+
+/* ---------- voice direction picker ---------- */
+const VOICE_DIRS=[
+  {id:'front', name:'מלפנים', x:50, y:11},
+  {id:'back', name:'מאחור', x:50, y:89},
+  {id:'right', name:'מימין', x:87, y:50},
+  {id:'left', name:'משמאל', x:13, y:50},
+  {id:'above', name:'מלמעלה', x:82, y:13},
+  {id:'inside', name:'בתוך הראש', x:50, y:68},
+];
+function buildVoicePicker(onPick){
+  const stage=h('div','stage voice-pick');
+  stage.style.height='300px';
+  stage.innerHTML='<svg class="vlines" viewBox="0 0 100 100" preserveAspectRatio="none">'
+    +'<path class="vpath neg" d="" vector-effect="non-scaling-stroke"/></svg>'
+    +'<div class="vhead">'+voiceHeadSVG(110)+'</div>';
+  const neg=stage.querySelector('.vpath.neg');
+  function pathFor(dir){
+    if(dir.id==='inside') return 'M50 50 m-13 0 a13 13 0 1 0 26 0 a13 13 0 1 0 -26 0';
+    const mx=(dir.x+50)/2 + (dir.y===50?0:(dir.x>50?8:-8));
+    const my=(dir.y+50)/2 + (dir.x===50?(dir.y>50?6:-6):0);
+    return 'M'+dir.x+' '+dir.y+' Q'+mx+' '+my+' 50 50';
+  }
+  neg.style.opacity='0';
+  VOICE_DIRS.forEach(d=>{
+    const b=h('button','dirbtn',d.name); b.type='button';
+    b.style.left=d.x+'%'; b.style.top=d.y+'%';
+    b.addEventListener('click',()=>{
+      stage.querySelectorAll('.dirbtn').forEach(x=>x.classList.remove('on'));
+      b.classList.add('on');
+      state.voiceDir=d;
+      neg.setAttribute('d',pathFor(d));
+      neg.style.opacity='0.9';
+      demoBuzz({dur:0.4,vol:0.07});
+      onPick && onPick(d);
+    });
+    stage.appendChild(b);
+  });
+  return stage;
+}
+
+/* ---------- screens ---------- */
+const screens={home:$('#screen-home'),flow:$('#screen-flow'),finish:$('#screen-finish')};
+function show(name){
+  Object.values(screens).forEach(s=>s.classList.add('hidden'));
+  screens[name].classList.remove('hidden');
+  window.scrollTo(0,0);
+}
+$('#demo-trig').innerHTML=gloomCharSVG(100,'פחד')+'<div class="trig-label small">הטריגר</div>';
+$('#demo-ideal').innerHTML=idealCharSVG(100)+'<div class="ideal-name small">האני האידיאלי</div>';
+
+/* gender selection */
+const genderCard=$('#gender-card');
+genderCard.querySelectorAll('.chip').forEach(b=>{
+  if(state.gender===b.dataset.g) b.classList.add('on');
+  b.addEventListener('click',()=>{
+    genderCard.querySelectorAll('.chip').forEach(x=>x.classList.remove('on'));
+    b.classList.add('on');
+    state.gender=b.dataset.g;
+    genderCard.classList.remove('need');
+    try{ localStorage.setItem('swish-gender', state.gender); }catch(e){}
+  });
+});
+
+/* voice (narration) picker */
+const voiceSelect=$('#voice-select'), voiceHint=$('#voice-hint'), voiceTest=$('#voice-test');
+function populateVoices(){
+  const vs=hebrewVoices();
+  const all=('speechSynthesis' in window)? speechSynthesis.getVoices():[];
+  voiceSelect.innerHTML='';
+  if(!('speechSynthesis' in window)){
+    voiceHint.textContent='הדפדפן שלך לא תומך בקריינות קולית.';
+    voiceSelect.disabled=true; voiceTest.disabled=true; return;
+  }
+  const auto=h('option',null,'אוטומטי — הקול העברי הכי טוב'); auto.value=''; voiceSelect.appendChild(auto);
+  const list = vs.length ? vs : all;
+  list.forEach(v=>{
+    const o=h('option',null, v.name+' — '+v.lang); o.value=v.name;
+    if(state.voiceName===v.name) o.selected=true;
+    voiceSelect.appendChild(o);
+  });
+  if(state.voiceName) voiceSelect.value=state.voiceName;
+  if(!vs.length){
+    voiceHint.innerHTML='לא נמצא קול <b>עברי</b> במכשיר. להתקנת קול עברי טבעי: '
+      +'<b>אייפון</b> — הגדרות ← נגישות ← תוכן מדובר ← קולות ← עברית (למשל "כרמית" באיכות משופרת). '
+      +'<b>אנדרואיד</b> — הגדרות ← נגישות ← פלט טקסט־לדיבור ← מנוע Google + הורדת עברית. '
+      +'<b>מחשב</b> — Chrome/Edge משתמשים בקולות מערכת ההפעלה.';
+  } else {
+    voiceHint.innerHTML='טיפ: לקול טבעי יותר, '+g('בחר','בחרי')+' קול שכתוב לידו <b>Enhanced/Premium/Natural</b>, או '
+      +'התקן/י קול עברי משופר בהגדרות המכשיר.';
+  }
+}
+voiceSelect.addEventListener('change',()=>{
+  state.voiceName=voiceSelect.value||null;
+  try{ if(state.voiceName) localStorage.setItem('swish-voice',state.voiceName); else localStorage.removeItem('swish-voice'); }catch(e){}
+});
+voiceTest.addEventListener('click',()=>{ audio(); speak(sentence()); });
+populateVoices();
+if('speechSynthesis' in window) speechSynthesis.addEventListener('voiceschanged', populateVoices);
+
+/* ---------- flow engine ---------- */
+const EMOTIONS=['פחד','חרדה','כעס','עצב','בושה','אשמה','תסכול','דחייה','חוסר ערך','לחץ'];
+const RESOURCES=['ביטחון','רוגע','קבלה עצמית','כוח','חמלה','נוכחות','חוש הומור','אומץ','שמחת חיים','אהבה'];
+
+let steps=[], stepIdx=0;
+const SWISH_STEP=3;
+
+document.querySelectorAll('.channel').forEach(b=>{
+  b.addEventListener('click',()=>{
+    if(!state.gender){
+      genderCard.classList.remove('need');
+      void genderCard.offsetWidth;
+      genderCard.classList.add('need');
+      genderCard.scrollIntoView({behavior:'smooth', block:'center'});
+      return;
+    }
+    audio();
+    state.channel=b.dataset.ch;
+    state.emotion=''; state.resources=[]; state.bodySpot=null; state.voiceDir=null; state.after=null;
+    state.voiceQ={speed:null, dist:null, vol:null};
+    state.voiceText=''; state.voiceTypes=[]; state.voiceRec=null;
+    state.trigPic=null; state.idealPic=null; state.voicePic=null; state.feelPic=null;
+    steps=buildSteps(state.channel);
+    stepIdx=0;
+    renderStep();
+    show('flow');
+  });
+});
+
+function renderStep(){
+  const st=steps[stepIdx];
+  const bar=$('#stagesbar'); bar.innerHTML='';
+  STAGE_NAMES.forEach((nm,i)=>{
+    const d=h('div','stg'+(i<stepIdx?' done':i===stepIdx?' now':''));
+    d.innerHTML='<span class="stg-dot">'+(i<stepIdx?'✓':(i+1))+'</span><span class="stg-name">'+nm+'</span>';
+    bar.appendChild(d);
+  });
+  $('#step-title').textContent=st.title;
+  const body=$('#step-body'); body.innerHTML='';
+  const next=$('#step-next');
+  next.textContent=st.next||'המשך ←';
+  next.disabled=!!st.lock;
+  st.make(body, ()=>{next.disabled=false;});
+  window.scrollTo(0,0);
+}
+$('#flow-back').addEventListener('click',()=>{
+  if(stepIdx>0){stepIdx--; renderStep();}
+  else show('home');
+});
+$('#step-next').addEventListener('click',()=>{
+  stepIdx++;
+  if(stepIdx>=steps.length) openFinish();
+  else renderStep();
+});
+function jumpToSwish(){ stepIdx=SWISH_STEP; renderStep(); show('flow'); }
+
+/* =========================================================
+   SWISH STAGES
+   ========================================================= */
+async function hardWhiteCut(flash, holdMs){
+  flash.classList.add('cut');
+  await wait(holdMs==null?280:holdMs);
+  flash.classList.remove('cut');
+}
+
+/* ===== VISUAL ===== */
+function buildVisualStage(){
+  const stage=h('div','stage');
+  const trigPic=picViewHTML(state.trigPic);
+  const idealPic=picViewHTML(state.idealPic);
+  stage.innerHTML=
+    '<div class="scard trig">'+(trigPic||gloomCharSVG(110,state.emotion))+'<div class="trig-label">התמונה הישנה</div></div>'
+    +jboxHTML(false)
+    +'<div class="scard ideal">'+(idealPic||idealCharSVG(110))
+      +'<div class="ideal-name">האני האידיאלי</div>'
+      +'<div class="badges">'+state.resources.slice(0,4).map(r=>'<span class="badge">'+r+'</span>').join('')+'</div>'
+    +'</div>'
+    +'<div class="water"></div><div class="flash"></div><div class="stage-counter hidden"></div>';
+  const trig=stage.querySelector('.trig'), ideal=stage.querySelector('.ideal'),
+        flash=stage.querySelector('.flash'), counter=stage.querySelector('.stage-counter'),
+        box=stage.querySelector('.jbox');
+  function setCounter(t){ counter.classList.toggle('hidden',!t); counter.textContent=t||''; }
+  async function round(dur, hold, o){
+    o=o||{};
+    stage.classList.remove('go'); box.classList.remove('open');
+    trig.style.transitionDuration='0s'; ideal.style.transitionDuration='0s';
+    void stage.offsetWidth;
+    await wait(hold==null?450:hold);
+    const d=reduceMotion?170:dur;
+    box.classList.add('open');
+    if(!o.silent) popSound();
+    await wait(Math.min(180,d*0.12));
+    trig.style.transitionDuration=(d*0.6)+'ms'; ideal.style.transitionDuration=(d*0.6)+'ms';
+    if(!o.silent) swishSound(Math.min(0.8,Math.max(0.15,d*0.6/1000)),0.5);
+    stage.classList.add('go');
+    await wait(d*0.6+90);
+    await hardWhiteCut(flash);
+    await wait(100);
+  }
+  return {stage, round, setCounter};
+}
+
+/* ===== FEELING ===== */
+function buildFeelingStage(){
+  const spot=state.bodySpot||BODY_SPOTS[3];
+  const stage=h('div','stage');
+  stage.innerHTML='<div class="water"></div><div class="flash"></div><div class="stage-counter hidden"></div>';
+  const inner=h('div');
+  inner.style.cssText='position:absolute;inset:0;display:flex;align-items:flex-end;justify-content:center;gap:2px;padding-bottom:6px';
+  const riser=h('div','side-riser');
+  riser.style.insetInlineStart='2%';
+  const fIdealInner = (state.idealPic && state.idealPic.used)
+    ? '<div class="figwrap"><div class="aura" style="width:170px;height:170px"></div>'+picViewHTML(state.idealPic,115)+'</div>'
+    : '<div class="figwrap"><div class="aura" style="width:220px;height:220px"></div>'+idealCharSVG(160)+'</div>';
+  riser.innerHTML='<div class="bubble">'+sentence()+'</div>'
+    +fIdealInner
+    +jboxHTML(false);
+  const bb=h('div','bodybox');
+  bb.style.cssText='height:225px;width:165px;margin:0;position:relative;left:-38px';
+  bb.innerHTML=neutralCharSVG(165)
+    +'<div class="warmth"></div>'
+    +'<div class="goldwash"></div>'
+    +'<svg class="hands" viewBox="0 0 140 190" aria-hidden="true" style="width:100%;height:100%">'
+    +'<line x1="152" y1="66" x2="86" y2="54" stroke="#F5A840" stroke-width="9" stroke-linecap="round"/>'
+    +'<g fill="#F5A840">'
+    +'<ellipse cx="58" cy="52" rx="10" ry="6.5" transform="rotate(-18 58 52)"/>'
+    +'<ellipse cx="82" cy="52" rx="10" ry="6.5" transform="rotate(18 82 52)"/>'
+    +'</g></svg>'
+    +'<div class="ground-ripple"></div>';
+  bb.querySelector('.charsvg').style.width='100%';
+  const dot=h('div','spot-dot');
+  bb.appendChild(dot);
+  inner.appendChild(riser); inner.appendChild(bb);
+  stage.appendChild(inner);
+  /* the drawn feeling picture — on the person's body, at the chosen spot,
+     squeezed out together with the feeling */
+  let flpic=null;
+  const flpicHtml=picViewHTML(state.feelPic, 92);
+  if(flpicHtml){
+    flpic=h('div','fl-pic',flpicHtml);
+    flpic.style.top=(spot.y/190*100)+'%';
+    bb.appendChild(flpic);
+  }
+  const flash=stage.querySelector('.flash'), counter=stage.querySelector('.stage-counter'),
+        water=stage.querySelector('.water'), box=riser.querySelector('.jbox'),
+        bubble=riser.querySelector('.bubble');
+  function setCounter(t){ counter.classList.toggle('hidden',!t); counter.textContent=t||''; }
+  function resetDot(){
+    dot.style.transition='none';
+    dot.style.left=(spot.x/140*100)+'%'; dot.style.top=(spot.y/190*100)+'%';
+    dot.style.opacity='1'; dot.style.transform='translate(-50%,-50%)';
+  }
+  async function round(dur, hold, o){
+    o=o||{};
+    const hands=bb.querySelector('.hands'), warmth=bb.querySelector('.warmth'),
+          ripple=bb.querySelector('.ground-ripple'), goldwash=bb.querySelector('.goldwash');
+    hands.classList.remove('on'); warmth.classList.remove('on'); ripple.classList.remove('on');
+    goldwash.classList.remove('on');
+    riser.classList.remove('up'); box.classList.remove('open'); bubble.classList.remove('on');
+    if(flpic) flpic.classList.remove('squeeze');
+    resetDot();
+    void bb.offsetWidth;
+    await wait(hold==null?400:hold);
+    const d=reduceMotion?250:dur;
+    box.classList.add('open');
+    if(!o.silent) popSound();
+    riser.querySelector('.figwrap').style.transitionDuration=(d*0.3)+'ms';
+    riser.classList.add('up');
+    await wait(d*0.28);
+    hands.style.transitionDuration=(d*0.3)+'ms';
+    hands.classList.add('on'); warmth.classList.add('on');
+    if(!o.silent) chime(0.09);
+    await wait(d*0.22);
+    /* glowing light of calm and compassion washes down the body,
+       pushing the painful feeling out */
+    goldwash.classList.add('on');
+    if(flpic) flpic.classList.add('squeeze');
+    dot.style.transition='top '+(d*0.5)+'ms cubic-bezier(.55,0,.8,.4), transform '+(d*0.5)+'ms, opacity '+(d*0.2)+'ms '+(d*0.4)+'ms';
+    dot.style.top='95%'; dot.style.left='50%';
+    dot.style.transform='translate(-50%,-50%) scale(.45,2.3)';
+    dot.style.opacity='0';
+    if(!o.silent) drainSound(d*0.5/1000);
+    await wait(d*0.5);
+    ripple.classList.add('on');
+    if(d>800){ bubble.classList.add('on'); }
+    if(o.speak) speak();
+    await wait(Math.max(220,d*0.18));
+    water.classList.add('on');
+    if(!o.silent) showerSound(Math.min(1.3,0.6+d/2500),0.15);
+    await wait(reduceMotion?150:950);
+    water.classList.remove('on');
+    ripple.classList.remove('on');
+    await wait(80);
+  }
+  return {stage, round, setCounter};
+}
+
+/* ===== VOICE: standing person, comet from the chosen direction ===== */
+const COMET_ENTRIES={
+  front:{x:8, y:30}, back:{x:92, y:30},
+  right:{x:92, y:55}, left:{x:8, y:55},
+  above:{x:50, y:4}, inside:{x:60, y:24},
+};
+function cometFallSound(sec){
+  const c=audio(); if(!c) return;
+  const t=c.currentTime;
+  const o=c.createOscillator(); o.type='sine';
+  o.frequency.setValueAtTime(880,t);
+  o.frequency.exponentialRampToValueAtTime(90,t+sec);
+  const gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.linearRampToValueAtTime(0.12,t+0.05);
+  gn.gain.linearRampToValueAtTime(0.0001,t+sec);
+  o.connect(gn); gn.connect(c.destination); o.start(t); o.stop(t+sec+0.05);
+}
+function thudSound(){
+  const c=audio(); if(!c) return;
+  const t=c.currentTime;
+  const o=c.createOscillator(); o.type='sine'; o.frequency.setValueAtTime(85,t);
+  o.frequency.exponentialRampToValueAtTime(45,t+0.25);
+  const gn=c.createGain();
+  gn.gain.setValueAtTime(0.0001,t);
+  gn.gain.exponentialRampToValueAtTime(0.25,t+0.02);
+  gn.gain.exponentialRampToValueAtTime(0.0001,t+0.3);
+  o.connect(gn); gn.connect(c.destination); o.start(t); o.stop(t+0.35);
+}
+function voiceAlarm(){
+  const q=state.voiceQ||{};
+  let vol=0.085;
+  if(q.vol==='חזק') vol=0.13; else if(q.vol==='חלש') vol=0.05;
+  if(q.dist==='מקרוב') vol*=1.45; else if(q.dist==='מרחוק') vol*=0.55;
+  const rate = q.speed==='מהיר' ? 5.4 : q.speed==='איטי' ? 2.0 : 3.4;
+  return alarmHandle(Math.min(0.2,vol), rate);
+}
+function buildVoiceSceneStage(){
+  const stage=h('div','stage control');
+  const dir = state.voiceDir || VOICE_DIRS[0];
+  const entry = COMET_ENTRIES[dir.id] || COMET_ENTRIES.front;
+  const srcPic = picViewHTML(state.voicePic, 105);
+  const idealInner = (state.idealPic && state.idealPic.used)
+    ? '<div class="figwrap"><div class="aura" style="width:190px;height:190px"></div>'+picViewHTML(state.idealPic,150)+'</div>'
+    : '<div class="figwrap"><div class="aura" style="width:210px;height:210px"></div>'+idealCharSVG(155)+'</div>';
+  stage.innerHTML=
+    '<div class="vs-glow"></div>'
+    +'<div class="vs-you">'+neutralCharSVG(120)+'<span class="vs-you-label">'+g('אתה','את')+'</span></div>'
+    +'<div class="vs-src" style="left:'+Math.min(78,Math.max(22,entry.x))+'%;top:'+entry.y+'%;'
+      +(entry.y<12?'transform:translate(-50%,45%);':'')
+      +'">🔊 '+((state.voiceText||'').trim() ? ('"'+state.voiceText.trim()+'"') : (state.emotion?('הקול השלילי — '+state.emotion):'הקול השלילי'))+'</div>'
+    +(srcPic?('<div class="vs-srcpic" style="left:'+Math.min(78,Math.max(22,entry.x))+'%;top:'+Math.min(58,Math.max(20,entry.y+16))+'%">'+srcPic+'</div>'):'')
+    +'<div class="vs-comet"><div class="tail"></div></div>'
+    +'<div class="vs-impact" style="left:60%"></div>'
+    +'<div class="vs-riser">'
+      +idealInner
+      +'<div class="bubble">'+sentence()+'</div>'
+    +'</div>'
+    +'<div class="vs-floor"></div>'
+    +'<div class="water"></div><div class="flash"></div><div class="stage-counter hidden"></div>';
+  const comet=stage.querySelector('.vs-comet'), tail=comet.querySelector('.tail'),
+        impact=stage.querySelector('.vs-impact'), riser=stage.querySelector('.vs-riser'),
+        glow=stage.querySelector('.vs-glow'), bubble=stage.querySelector('.bubble'),
+        src=stage.querySelector('.vs-src'), srcpic=stage.querySelector('.vs-srcpic'),
+        water=stage.querySelector('.water'), counter=stage.querySelector('.stage-counter');
+  function setCounter(t){ counter.classList.toggle('hidden',!t); counter.textContent=t||''; }
+  /* points (percent of stage): near the standing person's head, then the floor */
+  const HEAD={x:60, y:26}, FLOOR={x:60, y:86};
+  function place(elm,x,y){ elm.style.left=x+'%'; elm.style.top=y+'%'; }
+  function aimTail(fromX,fromY,toX,toY){
+    const r=stage.getBoundingClientRect();
+    const dx=(toX-fromX)*r.width/100, dy=(toY-fromY)*r.height/100;
+    const ang=Math.atan2(dy,dx)*180/Math.PI;
+    tail.style.transform='rotate('+(ang+180)+'deg)';
+  }
+  function reset(){
+    riser.classList.remove('up'); glow.classList.remove('on');
+    bubble.classList.remove('on'); impact.classList.remove('on');
+    comet.style.transition='none';
+    place(comet, entry.x, entry.y);
+    comet.style.opacity='0'; comet.style.transform='scale(1)';
+    src.style.opacity='1';
+    if(srcpic) srcpic.classList.remove('fall');
+    stage.querySelectorAll('.word-fly').forEach(x=>x.remove());
+  }
+  /* calming colored words from the ideal self's mouth — toward the person
+     and toward the place the voice came from */
+  function flyWords(){
+    const words = state.gender==='f' ? ['טוב','בטוחה','איתך'] : ['טוב','בטוח','איתך'];
+    const colors = ['#5FB8A0','#7FB4E8','#E8B54A'];
+    const MOUTH={x:32,y:38};
+    const targets=[{x:58,y:30},{x:entry.x,y:entry.y},{x:58,y:44}];
+    words.forEach((w,i)=>{
+      const wEl=h('span','word-fly',w);
+      wEl.style.background=colors[i%3];
+      wEl.style.left=MOUTH.x+'%'; wEl.style.top=MOUTH.y+'%';
+      stage.appendChild(wEl);
+      setTimeout(()=>{
+        wEl.style.opacity='1';
+        const t=targets[i%targets.length];
+        wEl.style.left=t.x+'%'; wEl.style.top=t.y+'%';
+      }, 60+i*220);
+      setTimeout(()=>{ wEl.style.opacity='0'; }, 1500+i*220);
+      setTimeout(()=>wEl.remove(), 2200+i*220);
+    });
+  }
+  async function round(dur, hold, o){
+    o=o||{};
+    reset();
+    const part = sentenceParts()[(o.index||0) % 3];
+    bubble.textContent=part;
+    void stage.offsetWidth;
+    const d=reduceMotion?300:dur;
+    /* 1. the negative voice starts from the chosen direction —
+          a written word is spoken, "אזעקה" starts an alarm */
+    comet.style.opacity='1';
+    const alarm = o.silent? null : negVoiceStart();
+    const isRec = !!(alarm && alarm.isRec);
+    /* with a recording: play only the very beginning, then the ideal self cuts it short */
+    const preHold = hold!=null ? hold : (isRec ? Math.min(480,d*0.2) : Math.max(320,d*0.25));
+    await wait(preHold);
+    /* 2. it flies toward the person… (quicker when it's a recording) */
+    const flyT = isRec ? Math.min(240,d*0.18) : d*0.28;
+    aimTail(entry.x, entry.y, HEAD.x, HEAD.y);
+    comet.style.transition='left '+flyT+'ms ease-in, top '+flyT+'ms ease-in';
+    place(comet, HEAD.x, HEAD.y);
+    await wait(flyT);
+    /* 3. …and plunges to the floor like a comet, dying like a drained battery */
+    const fallT = isRec ? Math.min(300,d*0.22) : d*0.3;
+    aimTail(HEAD.x, HEAD.y, FLOOR.x, FLOOR.y);
+    comet.style.transition='left '+fallT+'ms cubic-bezier(.4,0,.85,.5), top '+fallT+'ms cubic-bezier(.4,0,.85,.5), transform '+fallT+'ms, opacity '+(fallT*0.4)+'ms '+(fallT*0.8)+'ms';
+    place(comet, FLOOR.x, FLOOR.y);
+    comet.style.transform='scale(1.1,0.4)';
+    comet.style.opacity='0';
+    src.style.opacity='0.25';
+    if(srcpic) srcpic.classList.add('fall');
+    /* the recording is cut with a dropping tone, like a tape running out of battery;
+       a synthesized voice fades the same way */
+    if(!o.silent){ if(isRec) alarm.battery(Math.max(0.4,fallT/1000)); else negVoiceStop(alarm, Math.max(0.4,d*0.3/1000)); }
+    if(!o.silent) cometFallSound(Math.max(0.3,fallT/1000));
+    await wait(fallT);
+    impact.classList.add('on');
+    if(!o.silent) thudSound();
+    await wait(isRec?90:180);
+    /* 4. immediately the Ideal Self rises — bigger than the frightened self,
+          facing him — and calming colored words flow from his mouth */
+    riser.classList.add('up'); glow.classList.add('on');
+    bubble.classList.add('on');
+    if(!o.silent) chime(0.14);
+    flyWords();
+    if(!o.silent) await speakAwait(part);
+    else await wait(Math.max(450,d*0.35));
+    await wait(150);
+    /* 5. auditory reset: a wave sound replaces everything */
+    if(!o.silent) waveSound(Math.min(1.6,0.6+d/2000),0.18);
+    water.classList.add('on');
+    await wait(reduceMotion?150:900);
+    water.classList.remove('on');
+    await wait(80);
+  }
+  return {stage, round, setCounter};
+}
+
+function buildStageFor(ch){
+  if(ch==='feeling') return buildFeelingStage();
+  if(ch==='voice') return buildVoiceSceneStage();
+  return buildVisualStage();
+}
+
+/* pacing: 3 slow, 3 fast, 4 very fast */
+function pace(i){
+  const p=[
+    {dur:2600,hold:900},{dur:2300,hold:800},{dur:2000,hold:700},
+    {dur:1300,hold:420},{dur:1050,hold:330},{dur:850,hold:260},
+    {dur:640,hold:190},{dur:520,hold:150},{dur:430,hold:120},{dur:360,hold:100},
+  ];
+  return p[Math.min(i,p.length-1)];
+}
+async function runRounds(sw, n){
+  for(let i=0;i<n;i++){
+    const p=pace(i);
+    sw.setCounter('סבב '+(i+1)+' / '+n+(i<3?' · לאט':i<6?' · מהר':' · מהר מאוד'));
+    await sw.round(p.dur, p.hold, {speak: i===0, index: i});
+  }
+}
+
+/* =========================================================
+   STEPS: [trigger, control-test, ideal, swish(+1000+check), scatter]
+   ========================================================= */
+function buildSteps(ch){
+  return [triggerStep(ch), controlTestStep(ch), idealStep(ch), swishStep(ch), scatterStep(ch)];
+}
+
+/* ===== step 1: trigger ===== */
+function triggerStep(ch){
+  const intro={
+    visual:g('עצום לרגע את העיניים וראה','עצמי לרגע את העיניים וראי')+' את <b>התמונה</b> שקופצת ומדליקה את הרגש. '+g('אל תיכנס לתוכה — רק הבט','אל תיכנסי לתוכה — רק הביטי')+' בה מבחוץ: איפה היא? כמה גדולה? כמה קרובה?',
+    voice:g('שים','שימי')+' לב ל<b>קול השלילי</b> — צעקה? אזעקה? ביקורת? <b>מאיפה הוא מגיע?</b> '+g('סמן','סמני')+' על האיור.',
+    feeling:g('שים','שימי')+' לב ל<b>תחושה</b> הלא נעימה. <b>איפה היא יושבת בגוף?</b> '+g('בחר','בחרי')+' במפה או ברשימה.',
+  }[ch];
+  return {
+    title:'שלב 1 · הטריגר',
+    lock:true, next:'לבדיקת שליטה ←',
+    make(el, unlock){
+      let needSpot = ch==='feeling';
+      let needDir = ch==='voice';
+      let emotionOk=false;
+      function check(){
+        if(emotionOk && (!needSpot||state.bodySpot) && (!needDir||state.voiceDir)) unlock();
+      }
+      el.appendChild(h('div','guide',intro));
+
+      const c1=h('div','card');
+      c1.innerHTML='<h2>איזה רגש לא נעים עולה?</h2>';
+      const illus=h('div','illus');
+      illus.innerHTML=gloomCharSVG(125,'הרגש');
+      makeChips(c1, EMOTIONS, {multi:false, placeholder:'רגש אחר…', onChange:v=>{
+        state.emotion=v[0]||'';
+        emotionOk=!!state.emotion;
+        illus.innerHTML=gloomCharSVG(125, state.emotion||'הרגש');
+        check();
+      }});
+      c1.appendChild(illus);
+      el.appendChild(c1);
+
+      if(ch==='visual'){
+        const cD=h('div','card');
+        cD.innerHTML='<h2>🖌 '+g('צייר','ציירי')+' או '+g('העלה','העלי')+' את תמונת הטריגר <span class="muted small">(רשות)</span></h2>'
+          +'<p class="muted small">אפשר לצייר, להוסיף אייקונים, או <b>להעלות תמונה אמיתית</b> (📷) — התמונה שלך תופיע בסוויש.</p>';
+        makePicEditor(cD,{
+          emojis:['😨','😢','😡','😖','🌩','⚡','🔥','💔','🖤','👤'],
+          onChange:p=>{ state.trigPic=p; },
+        });
+        el.appendChild(cD);
+      }
+
+      if(needDir){
+        /* prominent: record or type what the voice says */
+        makeVoiceInput(el);
+
+        const cT=h('div','card');
+        cT.innerHTML='<h2>ואיזה סוג קול זה?</h2>';
+        makeChips(cT,['צעקה','אזעקה','ביקורת','לחישה','קול שלי','קול של מישהו אחר'],{multi:true,custom:true,placeholder:'אחר…',onChange:v=>{ state.voiceTypes=v; }});
+        el.appendChild(cT);
+
+        const cQ=h('div','card');
+        cQ.innerHTML='<h2>מאפייני הקול</h2><p class="muted small">'+g('בחר','בחרי')+' — זה ישפיע על איך הקול יישמע בסוויש:</p>';
+        [['speed','מהירות',['מהיר','איטי']],['dist','מרחק',['מקרוב','מרחוק']],['vol','עוצמה',['חזק','חלש']]].forEach(([key,label,opts])=>{
+          const row=h('div','qrow','<span class="qlabel">'+label+':</span>');
+          const holder=h('span');
+          makeChips(holder, opts, {multi:false, custom:false, onChange:v=>{ state.voiceQ[key]=v[0]||null; }});
+          row.appendChild(holder.firstChild);
+          cQ.appendChild(row);
+        });
+        el.appendChild(cQ);
+
+        const c=h('div','card');
+        c.innerHTML='<h2>מאיפה מגיע הקול?</h2><p class="muted small">בסוויש הקול יגיע בדיוק מהכיוון הזה.</p>';
+        c.appendChild(buildVoicePicker(()=>check()));
+        el.appendChild(c);
+
+        const cD=h('div','card');
+        cD.innerHTML='<h2>🖌 '+g('צייר','ציירי')+' את הקול <span class="muted small">(רשות)</span></h2>'
+          +'<p class="muted small">'+g('צייר','ציירי')+' את מסלול הקול, את הריצוד שלו, את הצבע שלו ואת המקור שממנו הוא מגיע — הציור יופיע בסוויש ויצנח יחד עם הקול.</p>';
+        makePicEditor(cD,{
+          emojis:['🔊','📢','🗣','👤','⚡','〰️','🌀','❗','😖','🖤'],
+          onChange:p=>{ state.voicePic=p; },
+        });
+        el.appendChild(cD);
+      }
+      if(needSpot){
+        const c=h('div','card');
+        c.innerHTML='<h2>איפה התחושה בגוף?</h2><p class="muted small">'+g('לחץ','לחצי')+' על המקום במפה, או '+g('בחר','בחרי')+' מהרשימה.</p>';
+        makeBodyMap(c, ()=>check());
+        el.appendChild(c);
+
+        const cD=h('div','card');
+        cD.innerHTML='<h2>🖌 '+g('צייר','ציירי')+' את התחושה <span class="muted small">(רשות)</span></h2>'
+          +'<p class="muted small">איפה היא יושבת? איזה צבע יש לה? איזו צורה? — הציור יופיע בסוויש ויידחק החוצה יחד עם התחושה.</p>';
+        makePicEditor(cD,{
+          emojis:['🌀','🔥','🧊','⚡','🪨','⚫','💜','😖','🌩','💔'],
+          onChange:p=>{ state.feelPic=p; },
+        });
+        el.appendChild(cD);
+      }
+
+      const c2=h('div','card');
+      c2.innerHTML='<h2>כמה חזק זה מרגיש עכשיו?</h2>';
+      makeScale(c2,{value:state.before,onChange:v=>state.before=v});
+      el.appendChild(c2);
+      check();
+    }
+  };
+}
+
+/* ===== step 2: control test (submodalities) ===== */
+function controlTestStep(ch){
+  return {
+    title:'שלב 2 · בדיקת שליטה',
+    lock:true, next:'לאני האידיאלי ←',
+    make(el, unlock){
+      const guideTxt={
+        visual:'רגע לפני שממשיכים — '+g('בוא נבדוק','בואי נבדוק')+' שיש לך שליטה: '+g('נסה','נסי')+' <b>להרחיק את התמונה או להקטין אותה</b>. האם '+g('אתה שם','את שמה')+' לב שמשהו משתנה ברגש?',
+        voice:'רגע לפני שממשיכים — '+g('בוא נבדוק','בואי נבדוק')+' שיש לך שליטה: '+g('נסה','נסי')+' <b>להרחיק את הקול, להאט אותו, להנמיך אותו או לשנות כיוון</b>. האם משהו משתנה?',
+        feeling:'רגע לפני שממשיכים — '+g('בוא נבדוק','בואי נבדוק')+' שיש לך שליטה: '+g('נסה','נסי')+' לדמיין שהתחושה <b>קטנה יותר, זזה למקום אחר, משנה צבע או פחות דחוסה</b>. האם משהו משתנה?',
+      }[ch];
+      el.appendChild(h('div','guide',guideTxt));
+
+      const c=h('div','card');
+      c.innerHTML='<h2>'+g('נסה','נסי')+' עכשיו:</h2>';
+      const illus=h('div','illus');
+      illus.style.minHeight='220px';
+      const row=h('div','btnrow'); row.style.justifyContent='center';
+
+      if(ch==='visual'){
+        const fw=h('div','figwrap');
+        fw.style.transition='transform 1.1s cubic-bezier(.4,0,.6,1), filter 1.1s ease, opacity 1.1s ease';
+        const drawn=picViewHTML(state.trigPic,150);
+        fw.innerHTML=drawn||gloomCharSVG(130, state.emotion);
+        illus.appendChild(fw);
+        let dist=0, size=0;
+        function apply(){
+          /* shrink = smaller in place; move away = receding motion into the distance */
+          const s=Math.max(0.18, 1 - size*0.2 - dist*0.14);
+          fw.style.transform='translateY('+(-dist*16)+'px) scale('+s+')';
+          fw.style.filter='blur('+(dist*1.2)+'px) grayscale('+Math.min(1,(dist+size)*0.2)+')';
+          fw.style.opacity=String(Math.max(0.3,1-dist*0.17));
+        }
+        const bFar=h('button','btn ghost','⬅ הרחק את התמונה'); bFar.type='button';
+        bFar.addEventListener('click',()=>{ dist=Math.min(4,dist+1); apply(); swishSound(0.4,0.15); });
+        row.appendChild(bFar);
+        const bSmall=h('button','btn ghost','🔍 הקטן אותה'); bSmall.type='button';
+        bSmall.addEventListener('click',()=>{ size=Math.min(4,size+1); apply(); popSound(0.12); });
+        row.appendChild(bSmall);
+        const rst=h('button','btn ghost','⟲ החזר'); rst.type='button';
+        rst.addEventListener('click',()=>{ dist=0; size=0; apply(); });
+        row.appendChild(rst);
+      }
+      if(ch==='voice'){
+        const drawn=picViewHTML(state.voicePic,150);
+        const word=(state.voiceText||'').trim();
+        illus.style.flexDirection='column'; illus.style.gap='10px';
+        const holder=h('div');
+        holder.style.transition='transform .8s ease, opacity .8s ease';
+        holder.style.transformOrigin='center';
+        if(drawn){
+          holder.innerHTML=drawn;
+        } else if(word){
+          holder.innerHTML='<div class="bubble on" style="max-width:none">"'+word+'"</div>';
+        } else {
+          holder.innerHTML='<svg width="240" viewBox="0 0 240 70">'
+            +'<path class="waveline" d="M10 35 L30 12 L50 58 L70 15 L90 55 L110 18 L130 52 L150 22 L170 48 L190 28 L210 42 L230 35"/></svg>';
+        }
+        illus.appendChild(holder);
+        const wv=holder.querySelector('.waveline');
+        let lvl=0, far=0, slow=0, soft=0, panned=0;
+        const hasRec=!!state.voiceRec;
+        function apply(){
+          holder.style.opacity=String(Math.max(0.25,1-lvl*0.2));
+          holder.style.transform='scale('+Math.max(0.45,1-lvl*0.14)+')';
+          if(wv) wv.style.strokeWidth=String(Math.max(1.2,4-lvl*0.8));
+        }
+        let prev=null;
+        function playRec(pan){
+          if(!hasRec) return false;
+          try{ if(prev){ prev.stop(); } }catch(e){}
+          const c=audio();
+          const a=new Audio(state.voiceRec);
+          a.volume=Math.max(0.06, Math.min(1, 1 - far*0.2 - soft*0.22));
+          try{ a.playbackRate=Math.max(0.5, 1 - slow*0.16); }catch(e){}
+          /* pan the recording through Web Audio when possible */
+          if(c && c.createMediaElementSource && pan){
+            try{
+              const src=c.createMediaElementSource(a);
+              const p=c.createStereoPanner(); p.pan.value=pan;
+              src.connect(p); p.connect(c.destination);
+            }catch(e){}
+          }
+          a.play().catch(()=>{});
+          prev={stop(){try{a.pause();}catch(e){}}};
+          return true;
+        }
+        if(hasRec){
+          const hint=h('p','muted small','🎧 '+g('נסה','נסי')+' — '+g('תשמע','תשמעי')+' איך ההקלטה שלך משתנה:');
+          hint.style.textAlign='center'; hint.style.width='100%'; hint.style.margin='0';
+          row.appendChild(hint);
+        }
+        [['⬅ הרחק את הקול',{vol:0.05},()=>{far=Math.min(4,far+1);},0],
+         ['🐢 האט אותו',{slow:true,vol:0.09},()=>{slow=Math.min(4,slow+1);},0],
+         ['🔉 הנמך עוצמה',{vol:0.04},()=>{soft=Math.min(4,soft+1);},0],
+         ['↔ שנה כיוון',{pan:0.9,vol:0.09},()=>{panned=panned>0?-0.9:0.9;},null],
+        ].forEach(([label,opts,bump,pan])=>{
+          const b=h('button','btn ghost',label); b.type='button';
+          b.addEventListener('click',()=>{
+            bump(); lvl=Math.min(4,lvl+1); apply();
+            const usePan = pan===null ? panned : 0;
+            if(!playRec(usePan)) demoBuzz(opts);
+          });
+          row.appendChild(b);
+        });
+      }
+      if(ch==='feeling'){
+        const spot=state.bodySpot||BODY_SPOTS[3];
+        const bb=h('div','bodybox');
+        bb.innerHTML=neutralCharSVG(200);
+        bb.querySelector('svg').style.width='100%';
+        const drawn=picViewHTML(state.feelPic,80);
+        let mark;
+        if(drawn){
+          mark=h('div','fl-pic',drawn);
+          mark.style.left='50%'; mark.style.top=(spot.y/190*100)+'%';
+          mark.style.transition='all .8s ease';
+          mark.style.position='absolute';
+        } else {
+          mark=h('div','spot-dot');
+          mark.style.left=(spot.x/140*100)+'%'; mark.style.top=(spot.y/190*100)+'%';
+          mark.style.transition='all .8s ease';
+        }
+        bb.appendChild(mark);
+        illus.appendChild(bb);
+        const baseX = drawn ? '50%' : (spot.x/140*100)+'%';
+        [['🔍 הקטן אותה',()=>{ mark.style.transform=(drawn?'translate(-50%,-50%) ':'')+'scale(0.5)'; }],
+         ['↕ הזז אותה',()=>{const s2=BODY_SPOTS[(BODY_SPOTS.indexOf(spot)+3)%BODY_SPOTS.length]; mark.style.left=(drawn?'50%':(s2.x/140*100)+'%'); mark.style.top=(s2.y/190*100)+'%';}],
+         ['🎨 שנה צבע',()=>{ if(drawn){ mark.style.filter='hue-rotate(160deg)'; } else { mark.style.background='radial-gradient(circle at 35% 30%, #7EC7E8, #2E6E8E)'; mark.style.boxShadow='0 0 14px rgba(80,150,190,.6)'; } }],
+         ['💨 פחות דחוסה',()=>{mark.style.opacity='0.4';mark.style.filter=(mark.style.filter||'')+' blur(3px)';}],
+        ].forEach(([label,fn])=>{
+          const b=h('button','btn ghost',label); b.type='button';
+          b.addEventListener('click',()=>{ fn(); popSound(0.1); });
+          row.appendChild(b);
+        });
+      }
+      c.appendChild(illus);
+      c.appendChild(row);
+      el.appendChild(c);
+
+      const q=h('div','card');
+      q.innerHTML='<h2>האם '+g('שמת','שמת')+' לב שמשהו השתנה ברגש?</h2>';
+      const msgYes=h('div','goodmsg hidden','מעולה! זה אומר ששינוי ב'+({visual:'תמונה',voice:'קול',feeling:'תחושה'}[ch])+' משנה את הרגש — התהליך יעבוד. ✔');
+      const msgNo=h('div','guide hidden','זה בסדר — '+g('נסה','נסי')+' שינוי אחר (עוד יותר רחוק, עוד יותר קטן…) או '+g('המשך','המשיכי')+' בכל זאת: הסוויש עצמו יעשה את העבודה.');
+      makeChips(q,['כן, משהו השתנה','קצת','לא הרגשתי שינוי'],{multi:false,custom:false,onChange:v=>{
+        const yes=v[0] && v[0]!=='לא הרגשתי שינוי';
+        msgYes.classList.toggle('hidden',!yes);
+        msgNo.classList.toggle('hidden',!!yes);
+        if(yes) chime(0.12);
+        unlock();
+      }});
+      q.appendChild(msgYes); q.appendChild(msgNo);
+      el.appendChild(q);
+    }
+  };
+}
+
+/* ===== step 3: ideal self ===== */
+function idealStep(ch){
+  const extra={
+    visual:g('ראה','ראי')+' אותו גדול, קרוב וצבעוני.',
+    voice:g('שמע','שמעי')+' את הקול שלו — חם, בטוח ואוהב.',
+    feeling:g('שים','שימי')+' לב לגוף שלו: כתפיים משוחררות, נשימה עמוקה, חיוך קל.',
+  }[ch];
+  const needBox = (ch!=='voice');
+  return {
+    title:'שלב 3 · האני האידיאלי',
+    lock:true, next:'לסוויש! ←',
+    make(el, unlock){
+      let packed=!needBox;
+      let markers=[];
+      function check(){ if(state.resources.length>=1 && markers.length>=1 && packed) unlock(); }
+      el.appendChild(h('div','guide',
+        g('דמיין','דמייני')+' את עצמך <b>בלי הבעיה</b>: '+g('מחובר','מחוברת')+' למשאבים, לא '+g('מושלם אך שלם','מושלמת אך שלמה')+', עם <b>חוש הומור</b>, '+g('רגוע ובטוח','רגועה ובטוחה')+'. '+extra));
+
+      const c1=h('div','card');
+      c1.innerHTML='<h2>אילו משאבים יש לדמות?</h2><p class="muted small">'+g('בחר','בחרי')+' 2–4. האיור יתעדכן!</p>';
+      const illus=h('div','illus');
+      illus.style.minHeight='240px';
+      function renderIdeal(){
+        illus.innerHTML='';
+        const fw=h('div','figwrap');
+        fw.appendChild(h('div','aura'));
+        fw.insertAdjacentHTML('beforeend', idealCharSVG(140));
+        illus.appendChild(fw);
+        sparkles(illus,6);
+        const slots=[[6,10],[72,6],[2,48],[76,46],[10,82],[68,84]];
+        state.resources.slice(0,6).forEach((r,i)=>{
+          const bd=h('span','badge',r);
+          bd.style.position='absolute';
+          bd.style.insetInlineStart=slots[i][0]+'%'; bd.style.top=slots[i][1]+'%';
+          illus.appendChild(bd);
+        });
+      }
+      makeChips(c1, RESOURCES, {multi:true, placeholder:'משאב משלי…', onChange:v=>{
+        state.resources=v.slice(0,6);
+        renderIdeal();
+        check();
+      }});
+      c1.appendChild(illus);
+      renderIdeal();
+      el.appendChild(c1);
+
+      /* what marks the resources in the ideal self */
+      const cM=h('div','card');
+      cM.innerHTML='<h2>מה מסמן לך באני האידיאלי את המשאבים?</h2>'
+        +'<p class="muted small">איך '+g('אתה רואה','את רואה')+' על הדמות שהמשאבים באמת שם?</p>';
+      const mMsg=h('div','goodmsg hidden','');
+      makeChips(cM,['הנשימה','היציבה','הכתפיים','החיוך','הסביבה','הרגש','השמחה בלב'],{multi:true,custom:true,placeholder:'אחר…',onChange:v=>{
+        markers=v;
+        if(v.length){
+          mMsg.textContent='יפה! בכל פעם שהדמות תופיע — '+v.join(', ')+' יזכירו לך שהמשאבים שם. ✔';
+          mMsg.classList.remove('hidden');
+          chime(0.08);
+        } else mMsg.classList.add('hidden');
+        check();
+      }});
+      cM.appendChild(mMsg);
+      el.appendChild(cM);
+
+      const cD=h('div','card');
+      cD.innerHTML='<h2>🖌 '+g('צייר','ציירי')+' או '+g('העלה','העלי')+' את תמונת האני האידיאלי <span class="muted small">(רשות)</span></h2>'
+        +'<p class="muted small">אפשר לצייר, להוסיף אייקונים, או <b>להעלות תמונה</b> (📷). '+(ch==='visual'
+          ? 'התמונה שלך היא זו שתקפוץ מהקופסה ותכסה את הטריגר.'
+          : 'התמונה שלך תופיע בסוויש במקום הדמות המצוירת.')+'</p>';
+      makePicEditor(cD,{
+        emojis:['😊','😎','🌞','🌈','❤️','⭐','🕊','🙌','💪','✨'],
+        colors:['#D89A1E','#27AE60','#2471A3','#C0392B','#8E5AC8'],
+        onChange:p=>{ state.idealPic=p; },
+      });
+      el.appendChild(cD);
+
+      const s=h('div','card center');
+      s.innerHTML='<h2 style="font-size:1.1rem">והוא אומר לך:</h2>';
+      const bub=h('div','bubble on'); bub.style.margin='4px auto'; bub.textContent='"'+sentence()+'"';
+      const sBtn=h('button','btn ghost','🔊 '+g('שמע','שמעי')+' את הקול שלו'); sBtn.type='button'; sBtn.style.marginTop='10px';
+      sBtn.addEventListener('click',()=>speak());
+      s.appendChild(bub); s.appendChild(sBtn);
+      el.appendChild(s);
+
+      if(needBox){
+        const c3=h('div','card center');
+        c3.innerHTML='<h2 style="font-size:1.1rem">עכשיו — '+g('הכנס','הכניסי')+' את הדמות לקופסה 📦</h2>'
+          +'<p class="muted small">משם היא תקפוץ בסוויש!</p>';
+        const pk=h('div','packbox');
+        const fw=h('div','figwrap');
+        fw.insertAdjacentHTML('beforeend', idealCharSVG(85));
+        pk.appendChild(fw);
+        pk.insertAdjacentHTML('beforeend', jboxHTML(true));
+        c3.appendChild(pk);
+        const pBtn=h('button','btn',g('הכנס','הכניסי')+' לקופסה'); pBtn.type='button';
+        pBtn.addEventListener('click',async()=>{
+          if(packed) return;
+          pBtn.disabled=true;
+          pk.classList.add('packed');
+          swishSound(0.5,0.25);
+          await wait(reduceMotion?200:950);
+          pk.querySelector('.jbox').classList.remove('open');
+          popSound(0.12);
+          pBtn.textContent='הדמות בפנים! ✓';
+          packed=true;
+          check();
+        });
+        c3.appendChild(pBtn);
+        el.appendChild(c3);
+      }
+      check();
+    }
+  };
+}
+
+/* ===== step 4: swish + 1000 + check ===== */
+function swishStep(ch){
+  const explain={
+    visual:'הקופסה נפתחת — האני האידיאלי <b>קופץ ממנה, גדל במהירות ומכסה את הטריגר</b>. התמונה הישנה נעשית קטנה, מטושטשת ורחוקה. <b>סוויש!</b> ואז — מסך לבן, חיתוך חד.',
+    voice:g('אתה עומד','את עומדת')+' — והקול השלילי מגיע <b>מהכיוון שבחרת</b>, בדיוק כפי שהוא נשמע. ואז הוא <b>צונח לרצפה כמו כוכב שביט</b>, נחלש כמו טייפ שנגמרה לו הסוללה — ונעלם. מיד עולה <b>האני האידיאלי — גדול יותר, עומד מולך</b> — ומפיו יוצאות <b>מילים בצבעים מרגיעים</b>, אליך ואל המקום שממנו הגיע הקול: "'+sentenceParts().join('… ')+'".',
+    feeling:'האני האידיאלי — <b>גדול וזוהר</b> — עולה מהקופסה, מניח את ידיו על כתפיך, ו<b>אור זוהר של רוגע וחמלה שוטף את הגוף</b> מלמעלה למטה ודוחק החוצה את התחושה הכואבת — היא <b>נסחטת כמו משחת שיניים</b> דרך הרגליים. ואז — מים נעימים שוטפים הכול.',
+  }[ch];
+  return {
+    title:'שלב 4 · הסוויש',
+    lock:true, next:'לפיזור ←',
+    make(el, unlock){
+      el.appendChild(h('div','guide', explain+'<br><b>10 סבבים: 3 לאט · 3 מהר · 4 מהר מאוד.</b>'));
+
+      const sw=buildStageFor(ch);
+      el.appendChild(sw.stage);
+
+      (async()=>{ sw.setCounter('הדגמה 👀'); await sw.round(2600,700,{silent:true}); sw.setCounter(''); })();
+
+      const row=h('div','btnrow');
+      const b=h('button','btn big','▶ '+g('התחל','התחילי')+' 10 סבבים'); b.type='button';
+      row.appendChild(b); el.appendChild(row);
+
+      /* 1000x */
+      const thousand=h('div','card hidden');
+      thousand.innerHTML='<h2>ואם היית עושה את זה אלף פעמים?</h2>'
+        +'<p class="muted small">'+g('קח','קחי')+' רגע לחשוב מה היה משתנה… ואז '+g('תן','תני')+' לתת־המודע לעשות את זה בשבילך.</p>';
+      const tStage=h('div','stage'); tStage.style.height='210px';
+      tStage.innerHTML='<div class="thousand"><div class="tnum">1</div><div class="muted">חזרות</div></div><div class="flash"></div>';
+      thousand.appendChild(tStage);
+      const tRow=h('div','btnrow');
+      const tBtn=h('button','btn','תת־המודע מבצע 1,000 חזרות ✦'); tBtn.type='button';
+      tRow.appendChild(tBtn); thousand.appendChild(tRow);
+      el.appendChild(thousand);
+
+      /* check — right after the 1000 */
+      const check=h('div','card hidden');
+      check.innerHTML='<h2>בדיקה: '+g('נסה','נסי')+' להחזיר את ה'+({visual:'תמונה הישנה',voice:'קול הישן',feeling:'תחושה הישנה'}[ch])+'</h2>'
+        +'<p class="muted small">מה קורה? ולאיזו עוצמה ירד הרגש עכשיו?</p>';
+      const addRes=h('div','tipbox hidden');
+      addRes.innerHTML='<b>אין ירידה?</b> '+g('שאל','שאלי')+' את עצמך: <b>מה עוד צריך להיות באני האידיאלי כדי שהבעיה לא תהיה קיימת?</b> '+g('בחר או הוסף','בחרי או הוסיפי')+' משאב — ונחזור לסוויש איתו:';
+      let newRes=null;
+      makeChips(addRes, RESOURCES.filter(r=>state.resources.indexOf(r)<0), {multi:false, custom:true, placeholder:'משאב חדש…', onChange:v=>{ newRes=v[0]||null; }});
+      const backBtn=h('button','btn','⟲ '+g('הוסף וחזור','הוסיפי וחזרי')+' לסוויש'); backBtn.type='button'; backBtn.style.marginTop='8px';
+      backBtn.addEventListener('click',()=>{
+        if(newRes && state.resources.indexOf(newRes)<0) state.resources.push(newRes);
+        state.after=null;
+        renderStep(); /* rebuild this swish step with the new resource */
+      });
+      addRes.appendChild(backBtn);
+      makeScale(check,{value:Math.max(1,Math.min(state.before,3)), onChange:v=>{
+        state.after=v;
+        const noDrop = v>=state.before;
+        addRes.classList.toggle('hidden',!noDrop);
+        if(!noDrop) unlock();
+      }});
+      check.appendChild(addRes);
+      el.appendChild(check);
+
+      b.addEventListener('click',async()=>{
+        b.disabled=true;
+        await runRounds(sw,10);
+        sw.setCounter('הושלמו 10 סבבים ✔');
+        chime();
+        thousand.classList.remove('hidden'); thousand.classList.add('reveal');
+        thousand.scrollIntoView({behavior:reduceMotion?'auto':'smooth', block:'center'});
+      });
+
+      tBtn.addEventListener('click',()=>{
+        tBtn.disabled=true;
+        const numEl=tStage.querySelector('.tnum');
+        const dur=reduceMotion?800:4200;
+        const start=performance.now();
+        let lastTick=0;
+        function frame(t){
+          const p=Math.min(1,(t-start)/dur);
+          const eased=p<.5?2*p*p:1-Math.pow(-2*p+2,2)/2;
+          const n=Math.round(1+999*eased);
+          numEl.textContent=n.toLocaleString('he-IL');
+          const gap=n<100?9:n<500?31:61;
+          if(n-lastTick>gap){lastTick=n; tick(p);}
+          if(p<1) requestAnimationFrame(frame);
+          else {
+            numEl.textContent='1,000';
+            chime();
+            const fl=tStage.querySelector('.flash');
+            fl.classList.add('cut'); setTimeout(()=>fl.classList.remove('cut'),300);
+            check.classList.remove('hidden'); check.classList.add('reveal');
+            state.after=Math.max(1,Math.min(state.before,3));
+            if(state.after<state.before) unlock();
+            check.scrollIntoView({behavior:reduceMotion?'auto':'smooth', block:'center'});
+          }
+        }
+        requestAnimationFrame(frame);
+      });
+    }
+  };
+}
+
+/* ===== step 5: scatter (per channel) ===== */
+function scatterStep(ch){
+  const guideTxt={
+    visual:'עכשיו — '+g('פזר','פזרי')+' את <b>התמונות</b> לכל עבר: האני האידיאלי מכפיל את עצמו ונמצא סביבך — <b>בעבר, בהווה ובעתיד</b>.',
+    voice:'עכשיו — '+g('פזר','פזרי')+' את <b>הקול</b>: הקול החומל נשמע <b>מכל כיוון</b> — מלפנים, מאחור, מהצדדים, מלמעלה ומבפנים.',
+    feeling:'עכשיו — האני האידיאלי <b>מגיע מכל כיוון</b> ומניח ידיים <b>מלאות חמלה, ביטחון ואהבה</b> — והתחושה הטובה מתפזרת בכל הגוף.',
+  }[ch];
+  return {
+    title:'שלב 5 · פיזור לכל עבר',
+    lock:true, next:'סיום ✔',
+    make(el, unlock){
+      el.appendChild(h('div','guide',guideTxt));
+      const fStage=h('div','stage'); fStage.style.height='260px';
+      fStage.innerHTML='<div class="flash"></div>';
+      [['top:0;left:0;right:0;height:60px;background:linear-gradient(180deg,rgba(245,184,64,.4),transparent)'],
+       ['bottom:0;left:0;right:0;height:60px;background:linear-gradient(0deg,rgba(245,184,64,.4),transparent)'],
+       ['top:0;bottom:0;left:0;width:60px;background:linear-gradient(90deg,rgba(245,184,64,.35),transparent)'],
+       ['top:0;bottom:0;right:0;width:60px;background:linear-gradient(270deg,rgba(245,184,64,.35),transparent)'],
+      ].forEach(([css])=>{
+        const gl=h('div','edge-glow'); gl.style.cssText+=css; fStage.appendChild(gl);
+      });
+      const ribbon=h('div','time-ribbon','<span>עבר</span><span>הווה</span><span>עתיד</span>');
+      ribbon.style.opacity='0'; ribbon.style.transition='opacity 1.4s';
+      fStage.appendChild(ribbon);
+      el.appendChild(fStage);
+
+      const row=h('div','btnrow');
+      const fBtn=h('button','btn big','✦ '+({visual:'פיזור התמונות',voice:'פיזור הקול',feeling:'פיזור התחושה הטובה'}[ch])); fBtn.type='button';
+      row.appendChild(fBtn); el.appendChild(row);
+
+      const daily=h('div','guide hidden',
+        'מיום ליום '+g('תוכל','תוכלי')+' לשים לב איך האני האידיאלי <b>נראה, מורגש ונשמע בכל מקום</b> — בעבר, בהווה ובעתיד, בכל סיטואציה. '
+        +g('אתה רואה','את רואה')+' את האני האידיאלי: <b>כל נשימה עמוקה מזכירה לך אותו, כל זריחה מזכירה לך אותו.</b>');
+      el.appendChild(daily);
+
+      fBtn.addEventListener('click',async()=>{
+        fBtn.disabled=true;
+
+        if(ch==='visual'){
+          const spots=[[10,14],[72,8],[42,24],[84,44],[6,50],[56,50],[26,62],[76,70],[46,70],[14,30]];
+          for(let i=0;i<spots.length;i++){
+            const m=h('div','mini-fig',idealCharSVG(46));
+            m.style.left=spots[i][0]+'%'; m.style.top=spots[i][1]+'%';
+            fStage.appendChild(m);
+            requestAnimationFrame(()=>requestAnimationFrame(()=>m.classList.add('on')));
+            swishSound(0.22,0.18,(i%3-1)*0.8);
+            await wait(reduceMotion?40:180);
+          }
+        }
+
+        if(ch==='voice'){
+          /* the listener in the center, sound arcs from every direction */
+          const head=h('div'); head.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-50%);z-index:9';
+          head.innerHTML=voiceHeadSVG(78);
+          fStage.appendChild(head);
+          const dirs=[[50,6,0],[50,94,180],[6,50,270],[94,50,90],[12,12,315],[88,12,45]];
+          for(let i=0;i<dirs.length;i++){
+            const [x,y]=dirs[i];
+            const arc=h('div','snd-arc');
+            arc.style.left=x+'%'; arc.style.top=y+'%'; arc.style.transform='translate(-50%,-50%)';
+            arc.innerHTML='<span style="width:20px;height:20px;top:-10px;left:-10px;opacity:.9"></span>'
+              +'<span style="width:36px;height:36px;top:-18px;left:-18px;opacity:.55"></span>'
+              +'<span style="width:54px;height:54px;top:-27px;left:-27px;opacity:.3"></span>';
+            fStage.appendChild(arc);
+            requestAnimationFrame(()=>requestAnimationFrame(()=>arc.classList.add('on')));
+            swishSound(0.3,0.2, x<40?-0.9:x>60?0.9:0);
+            await wait(reduceMotion?40:230);
+          }
+          ['♪','♥','♪','♥'].forEach((ch2,i)=>{
+            const nt=h('span','float-note',ch2);
+            nt.style.left=(22+i*18)+'%'; nt.style.top=(30+(i%2)*24)+'%';
+            nt.style.animationDelay=(i*0.5)+'s';
+            fStage.appendChild(nt);
+          });
+        }
+
+        if(ch==='feeling'){
+          const person=h('div'); person.style.cssText='position:absolute;top:50%;left:50%;transform:translate(-50%,-46%);z-index:6';
+          person.innerHTML=neutralCharSVG(120);
+          fStage.appendChild(person);
+          const spots2=[[32,18,'חמלה'],[68,18,'ביטחון'],[20,52,'אהבה'],[80,52,'חמלה'],[32,84,'ביטחון'],[68,84,'אהבה']];
+          for(let i=0;i<spots2.length;i++){
+            const [x,y,word]=spots2[i];
+            const hp=h('div','hand-pair');
+            hp.style.left=x+'%'; hp.style.top=y+'%'; hp.style.transform='translate(-50%,-50%)';
+            hp.innerHTML=goldenHandsSVG(60)+'<span class="badge">'+word+'</span>';
+            fStage.appendChild(hp);
+            requestAnimationFrame(()=>requestAnimationFrame(()=>hp.classList.add('on')));
+            chime(0.07);
+            await wait(reduceMotion?40:260);
+          }
+          const warm=h('div');
+          warm.style.cssText='position:absolute;inset:0;z-index:5;opacity:0;transition:opacity 1.4s;background:radial-gradient(circle at 50% 50%, rgba(245,184,64,.35), transparent 65%)';
+          fStage.appendChild(warm);
+          requestAnimationFrame(()=>{warm.style.opacity='1';});
+        }
+
+        fStage.querySelectorAll('.edge-glow').forEach((gl,i)=>setTimeout(()=>gl.classList.add('on'),i*200));
+        ribbon.style.opacity='1';
+        chime(0.2);
+        speak();
+        await wait(1200);
+        daily.classList.remove('hidden'); daily.classList.add('reveal');
+        unlock();
+      });
+    }
+  };
+}
+
+/* ---------- finish ---------- */
+function openFinish(){
+  const before=state.before, after=state.after==null?Math.max(1,before-3):state.after;
+  $('#bar-before-num').textContent=before;
+  $('#bar-after-num').textContent=after;
+  const bb=$('#bar-before'), ba=$('#bar-after');
+  bb.style.height='0'; ba.style.height='0';
+  requestAnimationFrame(()=>requestAnimationFrame(()=>{
+    bb.style.height=(before*10)+'%';
+    ba.style.height=(after*10)+'%';
+  }));
+  const drop=before-after;
+  let txt;
+  if(after<=2) txt='ה'+state.emotion+' ירד מ־'+before+' ל־'+after+'. האני האידיאלי שלך נמצא עכשיו סביבך — בעבר, בהווה ובעתיד.';
+  else if(drop>=2) txt='ירידה יפה: מ־'+before+' ל־'+after+'. המוח לומד בחזרות — כל סבב נוסף מחזק את המסלול החדש.';
+  else txt='מ־'+before+' ל־'+after+'. לפעמים צריך עוד סבב עם משאב נוסף באני האידיאלי.';
+  $('#finish-text').textContent=txt;
+  $('#finish-tip').innerHTML='<b>להמשך:</b> בימים הקרובים, בכל פעם שהטריגר עולה — '+g('שמע','שמעי')+' בדמיון את צליל ה<b>סוויש</b> '+g('ותן','ותני')+' לאני האידיאלי לקפוץ מהקופסה. תת־המודע כבר מכיר את הדרך.';
+  if(drop>=2) chime(0.18);
+  show('finish');
+}
+$('#again-same').addEventListener('click',()=>{ state.after=null; jumpToSwish(); });
+$('#again-new').addEventListener('click',()=>{
+  state.emotion=''; state.after=null; state.bodySpot=null; state.voiceDir=null;
+  steps=buildSteps(state.channel); stepIdx=0; renderStep(); show('flow');
+});
+$('#again-home').addEventListener('click',()=>show('home'));
+
+})();
+</script>
+<!--/CORE-->
+</body>
+</html>
