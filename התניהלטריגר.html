@@ -745,11 +745,14 @@ function pickVoice(){
 }
 try{ state.voiceName = localStorage.getItem('swish-voice') || null; }catch(e){}
 function speak(text){
+  /* prefer embedded human clips; fall back to the browser voice */
+  const t=(text||sentence());
+  const parts=t.split(/(?<=\.)\s+/).map(s=>s.trim()).filter(Boolean);
+  if(parts.some(p=>clipFor(p))){ speakSeq(t); return; }
   if(!('speechSynthesis' in window)) return;
   speechSynthesis.cancel();
   const v=pickVoice();
-  const parts=(text||sentence()).split(/(?<=\.)\s+/).filter(Boolean);
-  parts.forEach((p,i)=>{
+  parts.forEach((p)=>{
     const u=new SpeechSynthesisUtterance(p);
     u.lang='he-IL'; u.rate=0.9; u.pitch = state.gender==='f' ? 1.18 : 0.85;
     u.volume=1;
@@ -850,6 +853,46 @@ function speakAwait(text){
   });
 }
 if('speechSynthesis' in window) speechSynthesis.getVoices();
+
+/* ==========================================================
+   Human narration clips (optional).
+   Drop a data:audio/... URI next to any phrase below and the tool
+   will play that real recording instead of the browser voice.
+   Keys must match the spoken phrase EXACTLY (no trailing period).
+   ========================================================== */
+const NARR = {
+  'אתה יכול להרגיש טוב עם עצמך': '',
+  'אתה יכול להרגיש בטוח עם עצמך': '',
+  'את יכולה להרגיש טוב עם עצמך': '',
+  'את יכולה להרגיש בטוחה עם עצמך': '',
+  'אני כאן איתך': '',
+};
+function clipFor(text){
+  const u = NARR[(text||'').replace(/\.\s*$/,'').trim()];
+  return (u && u.length>20) ? u : null;
+}
+let narrAudio=null;
+function playClip(url){
+  return new Promise(res=>{
+    try{ if(narrAudio){ narrAudio.pause(); } }catch(e){}
+    narrAudio=new Audio(url);
+    let done=false; const fin=()=>{ if(!done){done=true; res();} };
+    narrAudio.onended=fin; narrAudio.onerror=fin;
+    narrAudio.play().then(()=>{},()=>fin());
+    setTimeout(fin, 6000);
+  });
+}
+/* speak one phrase — a human clip if we have one, otherwise the browser voice */
+function speakOne(text){
+  const u=clipFor(text);
+  return u ? playClip(u) : speakAwait(text);
+}
+/* speak a full sentence as a sequence of its phrases */
+async function speakSeq(text){
+  try{ if('speechSynthesis' in window) speechSynthesis.cancel(); }catch(e){}
+  const parts=(text||sentence()).split(/(?<=\.)\s+/).map(s=>s.trim()).filter(Boolean);
+  for(const p of parts){ await speakOne(p); }
+}
 
 /* ---------- characters ---------- */
 function idealCharSVG(w, label){
@@ -1681,7 +1724,7 @@ function buildVoiceSceneStage(){
     bubble.classList.add('on');
     if(!o.silent) chime(0.14);
     flyWords();
-    if(!o.silent) await speakAwait(part);
+    if(!o.silent) await speakOne(part);
     else await wait(Math.max(450,d*0.35));
     await wait(150);
     /* 5. auditory reset: a wave sound replaces everything */
