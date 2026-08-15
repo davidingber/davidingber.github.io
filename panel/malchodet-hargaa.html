@@ -1,0 +1,644 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מלכודת ההרגעה | אבחון עצמי · דוד אינגבר</title>
+<meta name="description" content="7 דברים שאתה עושה כדי להרגיש בטוח כשהחרדה עולה, שעלולים דווקא לגרום לך לפחד יותר מההתקף הבא. בדיקת 5 דקות, אנונימית וללא שמירה בשרת.">
+<meta name="theme-color" content="#F4F1EA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="מלכודת ההרגעה | אבחון עצמי">
+<meta property="og:description" content="בדיקת 5 דקות שתעזור לך לזהות מה קורה מהרגע שבו החרדה מתחילה לעלות.">
+<style>
+/* =====================================================
+   מלכודת ההרגעה — The Calm Trap
+   Hebrew · RTL · Mobile-first · Calm & premium
+   ===================================================== */
+
+:root {
+  --bg:        #F4F1EA;
+  --bg-soft:   #FBFAF6;
+  --sand:      #EBE4D6;
+  --sand-deep: #DED4C0;
+  --ink:       #23211C;
+  --ink-soft:  #4A463D;
+  --ink-faint: #6E6A5E;
+  --line:      #E2DBCC;
+  --sage:      #6E8B7B;
+  --sage-deep: #4E6A5A;
+  --sage-tint: #EAF0EB;
+  --teal:      #5E827E;
+  --rust:      #B4794C;
+  --rust-tint: #F3E7DB;
+  --radius:    18px;
+  --radius-sm: 12px;
+  --shadow:    0 10px 40px rgba(60, 52, 36, 0.08);
+  --shadow-sm: 0 4px 18px rgba(60, 52, 36, 0.06);
+  --content:   760px;
+  --ease:      cubic-bezier(0.22, 0.61, 0.36, 1);
+  --font: "Assistant", "Heebo", "Rubik", "Segoe UI", system-ui, -apple-system, "Arial Hebrew", Arial, sans-serif;
+}
+
+* { box-sizing: border-box; margin: 0; padding: 0; }
+
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  text-rendering: optimizeLegibility;
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1200px 700px at 100% -10%, rgba(110, 139, 123, 0.10), transparent 60%),
+    radial-gradient(1000px 600px at -10% 110%, rgba(180, 121, 76, 0.06), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+
+.lm-app { position: relative; z-index: 1; }
+
+.progress-wrap {
+  position: sticky;
+  top: 0;
+  z-index: 20;
+  background: rgba(244, 241, 234, 0.88);
+  backdrop-filter: saturate(180%) blur(12px);
+  -webkit-backdrop-filter: saturate(180%) blur(12px);
+  border-bottom: 1px solid var(--line);
+  padding: 12px 20px;
+}
+.progress-inner { max-width: var(--content); margin: 0 auto; display: flex; align-items: center; gap: 14px; }
+.progress-track { flex: 1; height: 6px; background: var(--sand); border-radius: 999px; overflow: hidden; }
+.progress-fill { height: 100%; width: 12.5%; background: linear-gradient(90deg, var(--sage), var(--teal)); border-radius: 999px; transition: width 0.6s var(--ease); }
+.progress-label { font-size: 13.5px; font-weight: 600; color: var(--ink-faint); white-space: nowrap; font-variant-numeric: tabular-nums; }
+
+.stage { position: relative; max-width: var(--content); margin: 0 auto; padding: 34px 20px 140px; }
+.screen { display: none; }
+.screen.active { display: block; animation: rise 0.5s var(--ease) both; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.reveal { opacity: 0; transform: translateY(10px); animation: rise 0.55s var(--ease) forwards; }
+.screen.active .reveal { animation-delay: calc(var(--i, 0) * 90ms); }
+
+h1 { font-size: clamp(2.05rem, 8vw, 3.1rem); line-height: 1.12; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); text-wrap: balance; }
+h2 { font-size: clamp(1.55rem, 5.4vw, 2.1rem); line-height: 1.22; font-weight: 700; letter-spacing: -0.01em; text-wrap: balance; }
+h3 { text-wrap: balance; }
+.lede { font-size: 1.12rem; color: var(--ink-soft); }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.04em; color: var(--sage-deep); background: var(--sage-tint); border: 1px solid rgba(110, 139, 123, 0.24); padding: 7px 14px; border-radius: 999px; }
+p + p { margin-top: 0.9em; }
+.muted { color: var(--ink-faint); }
+.center { text-align: center; }
+
+.card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; box-shadow: var(--shadow-sm); }
+.card + .card { margin-top: 16px; }
+.highlight { background: var(--sage-tint); border: 1px solid rgba(110, 139, 123, 0.28); border-inline-start: 4px solid var(--sage); border-radius: var(--radius-sm); padding: 18px 20px; color: var(--sage-deep); font-weight: 600; font-size: 1.08rem; line-height: 1.55; }
+.highlight.big { font-size: 1.22rem; padding: 24px; text-align: center; }
+
+.thoughts { display: flex; flex-direction: column; gap: 10px; }
+.thought { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px; padding: 12px 18px; color: var(--ink-soft); font-size: 1.04rem; }
+.thought.spoken { color: var(--ink); font-weight: 600; }
+
+.chips { display: flex; flex-wrap: wrap; gap: 9px; }
+.chip { background: var(--sand); border: 1px solid var(--sand-deep); border-radius: 999px; padding: 8px 15px; font-size: 0.98rem; font-weight: 500; color: var(--ink-soft); }
+
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.checklist li { position: relative; padding-inline-start: 34px; color: var(--ink-soft); font-size: 1.05rem; }
+.checklist li::before { content: ""; position: absolute; inset-inline-start: 0; top: 0.42em; width: 18px; height: 18px; border-radius: 6px; background: var(--sage-tint); border: 1.5px solid var(--sage); }
+.checklist li::after { content: ""; position: absolute; inset-inline-start: 6px; top: 0.55em; width: 5px; height: 9px; border: solid var(--sage-deep); border-width: 0 0 2px 2px; transform: rotate(-45deg); }
+
+.flow { display: flex; flex-direction: column; align-items: stretch; gap: 0; }
+.flow-step { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px; padding: 13px 18px; text-align: center; font-weight: 600; color: var(--ink); box-shadow: var(--shadow-sm); }
+.flow-step.soft { color: var(--ink-soft); font-weight: 500; }
+.flow-step.win { background: var(--sage-tint); border-color: rgba(110,139,123,0.30); color: var(--sage-deep); }
+.flow-arrow { align-self: center; color: var(--sage); font-size: 20px; line-height: 1; padding: 7px 0; }
+
+.q-card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 24px 22px; box-shadow: var(--shadow-sm); transition: border-color 0.3s var(--ease), box-shadow 0.3s var(--ease); }
+.q-card.answered { border-color: rgba(110, 139, 123, 0.45); box-shadow: 0 8px 30px rgba(110, 139, 123, 0.12); }
+.q-card + .q-card { margin-top: 18px; }
+.q-num { display: inline-flex; align-items: center; justify-content: center; width: 34px; height: 34px; border-radius: 50%; background: var(--sage-tint); color: var(--sage-deep); font-weight: 700; font-size: 1rem; margin-bottom: 12px; }
+.q-title { font-size: 1.24rem; font-weight: 700; line-height: 1.3; margin-bottom: 10px; }
+.q-body { color: var(--ink-soft); margin-bottom: 12px; }
+.q-quotes { display: flex; flex-direction: column; gap: 7px; margin-bottom: 14px; }
+.q-quote { color: var(--ink-soft); padding-inline-start: 16px; border-inline-start: 2px solid var(--sand-deep); font-size: 1.02rem; }
+.q-inline-hl { background: var(--sage-tint); border-radius: 10px; padding: 12px 15px; color: var(--sage-deep); font-weight: 600; font-size: 0.99rem; margin-bottom: 16px; line-height: 1.5; }
+
+.answers { display: grid; grid-template-columns: 1fr 1fr 1fr; gap: 8px; }
+.answer { appearance: none; border: 1.5px solid var(--line); background: var(--bg); color: var(--ink-soft); font-family: inherit; font-size: 0.98rem; font-weight: 600; min-height: 52px; padding: 8px 6px; border-radius: 12px; cursor: pointer; transition: all 0.22s var(--ease); line-height: 1.2; }
+.answer:hover { border-color: var(--sage); color: var(--sage-deep); }
+.answer:focus-visible { outline: 3px solid rgba(110,139,123,0.55); outline-offset: 2px; }
+.answer[aria-pressed="true"] { background: var(--sage); border-color: var(--sage); color: #fff; box-shadow: 0 6px 18px rgba(110, 139, 123, 0.28); }
+
+.result-item { display: flex; align-items: center; gap: 14px; background: var(--sage-tint); border: 1px solid rgba(110,139,123,0.30); border-radius: 14px; padding: 16px 18px; font-weight: 700; font-size: 1.1rem; color: var(--sage-deep); }
+.result-item .dot { width: 10px; height: 10px; border-radius: 50%; background: var(--sage); flex: none; }
+.result-list { display: flex; flex-direction: column; gap: 10px; }
+
+.compare { display: grid; gap: 14px; }
+.compare-card { border-radius: 16px; padding: 20px; font-size: 1.08rem; line-height: 1.5; }
+.compare-a { background: var(--sage-tint); border: 1px solid rgba(110,139,123,0.30); }
+.compare-b { background: var(--rust-tint); border: 1px solid rgba(180,121,76,0.28); }
+.compare-tag { display: inline-block; font-size: 0.82rem; font-weight: 700; letter-spacing: 0.04em; margin-bottom: 8px; padding: 3px 10px; border-radius: 999px; }
+.compare-a .compare-tag { background: var(--sage); color: #fff; }
+.compare-b .compare-tag { background: var(--rust); color: #fff; }
+
+.neq { text-align: center; font-size: 1.1rem; font-weight: 600; color: var(--ink-soft); }
+.neq b { color: var(--ink); }
+.neq .sep { color: var(--rust); font-weight: 700; padding: 0 6px; }
+
+.offer-bullets { display: grid; gap: 10px; }
+.offer-bullet { display: flex; gap: 12px; align-items: flex-start; background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px; padding: 15px 17px; box-shadow: var(--shadow-sm); }
+.offer-bullet .ic { flex: none; width: 26px; height: 26px; border-radius: 8px; background: var(--sage-tint); color: var(--sage-deep); display: grid; place-items: center; font-weight: 700; margin-top: 1px; }
+.offer-bullet span:last-child { color: var(--ink-soft); font-weight: 500; }
+
+.disclaimer { font-size: 0.9rem; color: var(--ink-faint); background: var(--sand); border: 1px solid var(--sand-deep); border-radius: 12px; padding: 14px 16px; line-height: 1.55; }
+
+.actions { display: flex; gap: 12px; align-items: center; margin-top: 30px; flex-wrap: wrap; }
+.cta { appearance: none; border: none; cursor: pointer; font-family: inherit; font-size: 1.08rem; font-weight: 700; min-height: 54px; padding: 14px 30px; border-radius: 14px; background: linear-gradient(180deg, var(--sage), var(--sage-deep)); color: #fff; box-shadow: 0 10px 26px rgba(78, 106, 90, 0.30); transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; flex: 1 1 auto; text-align: center; }
+.cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(78, 106, 90, 0.38); }
+.cta:active { transform: translateY(0); }
+.cta:focus-visible { outline: 3px solid rgba(110,139,123,0.6); outline-offset: 3px; }
+.cta.arrow::after { content: "←"; font-size: 1.15em; }
+.cta-final { font-size: 1.14rem; padding: 18px 30px; min-height: 62px; background: linear-gradient(180deg, var(--rust), #9a6339); box-shadow: 0 12px 30px rgba(154, 99, 57, 0.32); }
+.cta-final:hover { box-shadow: 0 16px 36px rgba(154, 99, 57, 0.40); }
+.btn-back { appearance: none; background: transparent; border: 1.5px solid var(--line); color: var(--ink-faint); font-family: inherit; font-size: 1rem; font-weight: 600; min-height: 54px; padding: 12px 22px; border-radius: 14px; cursor: pointer; transition: all 0.2s var(--ease); flex: 0 0 auto; }
+.btn-back:hover { border-color: var(--sage); color: var(--sage-deep); }
+.btn-back:focus-visible { outline: 3px solid rgba(110,139,123,0.55); outline-offset: 2px; }
+
+.subcta { text-align: center; color: var(--ink-faint); font-size: 1.02rem; font-style: italic; margin-top: 14px; }
+.signature { text-align: center; margin-top: 30px; color: var(--ink-faint); font-size: 0.98rem; font-weight: 600; }
+.signature .role { color: var(--ink-faint); font-weight: 400; }
+.spacer-s { height: 16px; }
+.spacer-m { height: 24px; }
+.spacer-l { height: 34px; }
+
+.cover { text-align: center; padding-top: 12px; }
+.cover .sub { font-size: 1.18rem; color: var(--ink-soft); font-weight: 500; max-width: 34ch; margin: 18px auto 0; line-height: 1.5; }
+.cover .desc { max-width: 40ch; margin: 18px auto 0; color: var(--ink-soft); }
+.cover .badge-row { margin: 26px 0 6px; }
+
+@media (min-width: 620px) { .compare { grid-template-columns: 1fr 1fr; } }
+@media (max-width: 390px) {
+  body { font-size: 16px; }
+  .answers { grid-template-columns: 1fr; }
+  .answer { min-height: 48px; }
+  .stage { padding: 26px 16px 130px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="lm-app" dir="rtl" lang="he">
+
+  <div class="progress-wrap" role="progressbar" aria-label="התקדמות באבחון" aria-valuemin="1" aria-valuemax="8" aria-valuenow="1" id="progressBar">
+    <div class="progress-inner">
+      <div class="progress-track"><div class="progress-fill" id="progressFill"></div></div>
+      <div class="progress-label" id="progressLabel">1 מתוך 8</div>
+    </div>
+  </div>
+
+  <main class="stage" id="stage">
+
+    <!-- SCREEN 1 — Cover -->
+    <section class="screen active" id="screen-1" aria-labelledby="t1">
+      <div class="cover">
+        <div class="badge-row reveal" style="--i:0"><span class="eyebrow">אבחון עצמי · כ־5 דקות</span></div>
+        <h1 id="t1" class="reveal" style="--i:1">מלכודת ההרגעה</h1>
+        <p class="sub reveal" style="--i:2">7 דברים שאתה עושה כדי להרגיש בטוח כשהחרדה עולה — שעלולים דווקא לגרום לך לפחד יותר מההתקף הבא.</p>
+        <p class="desc reveal" style="--i:3">בדיקת 5 דקות שתעזור לך לזהות מה קורה מהרגע שבו החרדה מתחילה לעלות, ומה עלול להפוך תחושה מפחידה לסחרור של פחד.</p>
+        <div class="actions reveal" style="--i:4; justify-content:center;">
+          <button class="cta arrow" data-next="2" data-event="start">מתחילים</button>
+        </div>
+        <div class="signature reveal" style="--i:5">דוד אינגבר <span class="role">| טיפול ואימון רגשי</span></div>
+      </div>
+    </section>
+
+    <!-- SCREEN 2 -->
+    <section class="screen" id="screen-2" aria-labelledby="t2">
+      <h2 id="t2" class="reveal" style="--i:0">ההתקף נגמר.<br>אבל הפחד ממנו לא.</h2>
+      <div class="spacer-m"></div>
+      <div class="thoughts reveal" style="--i:1">
+        <div class="thought">פתאום הלב מתחיל לדפוק.</div>
+        <div class="thought">הנשימה מרגישה אחרת.</div>
+        <div class="thought">מגיע לחץ בחזה.</div>
+        <div class="thought">סחרחורת. רעד. חום.</div>
+        <div class="thought">תחושה מוזרה בגוף.</div>
+      </div>
+      <div class="spacer-m"></div>
+      <div class="thoughts reveal" style="--i:2">
+        <div class="thought spoken">"רגע... זה שוב מתחיל?"</div>
+        <div class="thought spoken">"מה אם הפעם זה יהיה חזק יותר?"</div>
+        <div class="thought spoken">"מה אם אני לא אצליח להתמודד?"</div>
+      </div>
+      <div class="spacer-l"></div>
+      <div class="card reveal" style="--i:3">
+        <p style="font-weight:600; margin-bottom:14px;">לפעמים התקף החרדה עצמו כבר נגמר מזמן. אבל אתה עדיין:</p>
+        <ul class="checklist">
+          <li>בודק את הגוף</li>
+          <li>חושב פעמיים לפני נסיעה</li>
+          <li>רוצה לדעת איפה היציאה</li>
+          <li>מרגיש בטוח יותר כשמישהו נמצא לידך</li>
+          <li>שם לב לכל שינוי קטן בדופק או בנשימה</li>
+        </ul>
+      </div>
+      <div class="spacer-m"></div>
+      <div class="highlight reveal" style="--i:4">לא בגלל שיש התקף עכשיו.<br>בגלל שאתה מפחד מההתקף הבא.</div>
+      <div class="actions reveal" style="--i:5">
+        <button class="btn-back" data-back="1">חזרה</button>
+        <button class="cta arrow" data-next="3">זה מוכר לי</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 3 — Aha -->
+    <section class="screen" id="screen-3" aria-labelledby="t3">
+      <h2 id="t3" class="reveal" style="--i:0">ואז מתחיל "מבצע ההרגעה"</h2>
+      <div class="spacer-m"></div>
+      <div class="flow reveal" style="--i:1">
+        <div class="flow-step">תחושה בגוף</div>
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+        <div class="flow-step soft">"משהו קורה לי"</div>
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+        <div class="flow-step">בדיקה</div>
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+        <div class="flow-step soft">נשימה / הרגעה / אישור / בריחה</div>
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+        <div class="flow-step">החרדה יורדת</div>
+        <div class="flow-arrow" aria-hidden="true">↓</div>
+        <div class="flow-step win">"יופי. הצלחתי לעצור את זה."</div>
+      </div>
+      <div class="spacer-l"></div>
+      <p class="center reveal" style="--i:2; font-size:1.2rem; font-weight:700;">אבל מה המוח למד?</p>
+      <div class="spacer-m"></div>
+      <div class="card reveal" style="--i:3">
+        <p class="muted" style="margin-bottom:6px;">לא בהכרח:</p>
+        <p style="font-weight:600; font-size:1.1rem;">"הרגשתי חרדה והצלחתי להתמודד."</p>
+        <div class="spacer-s"></div>
+        <p class="muted" style="margin-bottom:6px;">אלא לפעמים:</p>
+        <p style="font-weight:600; font-size:1.1rem; color:var(--rust);">"מזל שעשיתי משהו, אחרת מי יודע מה היה קורה."</p>
+      </div>
+      <div class="spacer-m"></div>
+      <div class="highlight big reveal" style="--i:4">זו מלכודת ההרגעה.</div>
+      <div class="spacer-m"></div>
+      <p class="center muted reveal" style="--i:5">הבעיה היא לא להירגע.<br>הבעיה מתחילה כשהרגיעה הופכת לתנאי לביטחון.</p>
+      <div class="actions reveal" style="--i:6">
+        <button class="btn-back" data-back="2">חזרה</button>
+        <button class="cta arrow" data-next="4">בדוק אם זה קורה גם לי</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 4 — Q1–3 -->
+    <section class="screen" id="screen-4" aria-labelledby="t4">
+      <h2 id="t4" class="reveal" style="--i:0">האם אתה תקוע במלכודת ההרגעה?</h2>
+      <p class="lede reveal" style="--i:1; margin-top:12px;">לכל משפט בחר עד כמה זה נכון לגביך. אין תשובה נכונה — רק שים לב.</p>
+      <div class="spacer-m"></div>
+      <div id="questions-4"></div>
+      <div class="actions">
+        <button class="btn-back" data-back="3">חזרה</button>
+        <button class="cta arrow" data-next="5">המשך</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 5 — Q4–7 -->
+    <section class="screen" id="screen-5" aria-labelledby="t5">
+      <h2 id="t5" class="reveal" style="--i:0">עוד כמה משפטים לזהות</h2>
+      <div class="spacer-m"></div>
+      <div id="questions-5"></div>
+      <div class="actions">
+        <button class="btn-back" data-back="4">חזרה</button>
+        <button class="cta arrow" data-next="6" data-event="complete">לראות מה גיליתי</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 6 — Result -->
+    <section class="screen" id="screen-6" aria-labelledby="t6">
+      <h2 id="t6" class="reveal" style="--i:0">אל תסתכל רק על כמה סימנת.<br>חפש את ה"חייב".</h2>
+      <div class="spacer-m"></div>
+      <div id="result-body" class="reveal" style="--i:1"></div>
+      <div class="spacer-l"></div>
+      <div class="card reveal" style="--i:2">
+        <p style="font-weight:600; margin-bottom:8px;">עכשיו שאל את עצמך:</p>
+        <p class="highlight" style="border:none; background:var(--sage-tint);">"איזה מהדברים האלה אני מרגיש שאני חייב לעשות כדי להיות בטוח?"</p>
+      </div>
+      <div class="spacer-m"></div>
+      <div class="compare reveal" style="--i:3">
+        <div class="compare-card compare-a">
+          <span class="compare-tag">אפשרות א׳</span>
+          <div>"קשה לי עכשיו, ואני בוחר לעזור לעצמי."</div>
+        </div>
+        <div class="compare-card compare-b">
+          <span class="compare-tag">אפשרות ב׳</span>
+          <div>"אני חייב לעשות משהו עכשיו, כי אם החרדה לא תרד אני לא יודע מה יקרה."</div>
+        </div>
+      </div>
+      <div class="spacer-m"></div>
+      <p class="center reveal" style="--i:4; font-size:1.15rem; font-weight:700;">זה כל ההבדל.</p>
+      <p class="center muted reveal" style="--i:5">הבעיה היא לא שעשית נשימה.<br>השאלה היא מה המוח למד ממנה.</p>
+      <div class="actions reveal" style="--i:6">
+        <button class="btn-back" data-back="5">חזרה</button>
+        <button class="cta arrow" data-next="7">המשך</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 7 — Quick Win -->
+    <section class="screen" id="screen-7" aria-labelledby="t7">
+      <span class="eyebrow reveal" style="--i:0">ניסוי קטן</span>
+      <h2 id="t7" class="reveal" style="--i:1; margin-top:12px;">ניסוי קטן לפעם הבאה</h2>
+      <div class="spacer-m"></div>
+      <p class="reveal" style="--i:2">אל תנסה להפסיק עכשיו את כל הדברים שאתה עושה. בחר רק תגובה אוטומטית אחת שאתה כבר מזהה כדפוס חרדה חוזר ומוכר.</p>
+      <div class="spacer-s"></div>
+      <div class="chips reveal" style="--i:3">
+        <span class="chip">לבדוק שוב את הדופק</span>
+        <span class="chip">לבקש שוב אישור</span>
+        <span class="chip">לבדוק שוב אם החרדה ירדה</span>
+        <span class="chip">להתווכח שוב עם אותה מחשבה</span>
+      </div>
+      <div class="spacer-m"></div>
+      <div class="card reveal" style="--i:4">
+        <p style="font-weight:600;">לפני שאתה עושה אותה שוב — עצור.</p>
+        <div class="spacer-s"></div>
+        <p class="highlight" style="border:none; background:var(--sage-tint); font-size:1.14rem;">"מה אני מפחד שיקרה אם לא אעשה את זה עכשיו?"</p>
+        <div class="spacer-s"></div>
+        <p class="muted">אל תנסה לענות תשובה נכונה. רק שים לב. אולי עולה:</p>
+        <div class="thoughts" style="margin-top:12px;">
+          <div class="thought spoken">"אני מפחד שהחרדה תעלה."</div>
+          <div class="thought spoken">"אני מפחד שלא אצליח להתמודד."</div>
+          <div class="thought spoken">"אני מפחד שאאבד שליטה."</div>
+          <div class="thought spoken">"אני מפחד שזה לא יעבור."</div>
+        </div>
+      </div>
+      <div class="spacer-m"></div>
+      <div class="highlight big reveal" style="--i:5">"אני לא חייב לפתור את מה שאני מרגיש ברגע הזה כדי להיות בסדר."</div>
+      <div class="spacer-m"></div>
+      <p class="center muted reveal" style="--i:6">המטרה אינה לגרום לחרדה לרדת. המטרה היא להתחיל להפריד בין:</p>
+      <div class="spacer-s"></div>
+      <p class="neq reveal" style="--i:7"><b>"אני מרגיש חרדה"</b> <span class="sep">≠</span> <b>"אני בסכנה כי אני מרגיש חרדה."</b></p>
+      <div class="spacer-m"></div>
+      <div class="disclaimer reveal" style="--i:8">התרגיל מתייחס לדפוסי חרדה מוכרים וחוזרים. במקרה של תסמין רפואי חדש, חריג או מדאיג, יש לפנות לבדיקה רפואית בהתאם לצורך.</div>
+      <div class="actions reveal" style="--i:9">
+        <button class="btn-back" data-back="6">חזרה</button>
+        <button class="cta arrow" data-next="8">ומה עושים כשהחרדה באמת מתחילה?</button>
+      </div>
+    </section>
+
+    <!-- SCREEN 8 — Offer -->
+    <section class="screen" id="screen-8" aria-labelledby="t8">
+      <h2 id="t8" class="reveal" style="--i:0">ואז מגיע רגע האמת.</h2>
+      <div class="spacer-m"></div>
+      <p class="reveal" style="--i:1">קל לקרוא את כל זה עכשיו. אבל מה קורה כשהלב באמת מתחיל לדפוק? כשהנשימה משתנה? כשהמחשבה מגיעה:</p>
+      <div class="spacer-s"></div>
+      <div class="thought spoken reveal" style="--i:2">"שיט. זה מתחיל."</div>
+      <div class="spacer-m"></div>
+      <p class="reveal" style="--i:3">ברגע הזה המוח רוצה לעשות משהו. עכשיו. ופה רוב האנשים חוזרים לדפוס הישן:</p>
+      <div class="spacer-s"></div>
+      <div class="chips reveal" style="--i:4">
+        <span class="chip">לבדוק</span>
+        <span class="chip">להילחם</span>
+        <span class="chip">לברוח</span>
+        <span class="chip">לנסות לגרום לזה להיעלם</span>
+        <span class="chip">לבדוק אם הצליחו</span>
+      </div>
+      <div class="spacer-l"></div>
+      <div class="card reveal" style="--i:5">
+        <p class="muted" style="margin-bottom:6px;">בשביל הרגע הזה בניתי:</p>
+        <h2 style="font-size:1.7rem; color:var(--rust);">90 השניות הראשונות</h2>
+        <p style="margin-top:12px; color:var(--ink-soft); font-weight:500;">מה לעשות ברגע שאתה מרגיש שהתקף חרדה מתחיל — בלי להפוך את התחושה הראשונה לסחרור של פחד.</p>
+        <div class="spacer-s"></div>
+        <p class="muted">הדרכה מעשית וקצרה לאנשים שכבר לא מפחדים רק מההתקף עצמו, אלא גם מהאפשרות שהוא יחזור. ההדרכה לא מבטיחה להעלים חרדה — המטרה היא להתחיל לפתח דרך אחרת להגיב כשהיא מופיעה.</p>
+      </div>
+      <div class="spacer-m"></div>
+      <div class="offer-bullets reveal" style="--i:6">
+        <div class="offer-bullet"><span class="ic" aria-hidden="true">✓</span><span>לזהות מה קורה לפני שהראש נכנס לסחרור</span></div>
+        <div class="offer-bullet"><span class="ic" aria-hidden="true">✓</span><span>לא להפוך כל תחושה לאיום</span></div>
+        <div class="offer-bullet"><span class="ic" aria-hidden="true">✓</span><span>לא להפוך כל מחשבה לוויכוח</span></div>
+        <div class="offer-bullet"><span class="ic" aria-hidden="true">✓</span><span>להשתמש בוויסות בלי להפוך אותו לתנאי לביטחון</span></div>
+        <div class="offer-bullet"><span class="ic" aria-hidden="true">✓</span><span>להחזיר לעצמך את היכולת לבחור איך להגיב</span></div>
+      </div>
+      <div class="spacer-m"></div>
+      <div class="highlight big reveal" style="--i:7">המטרה אינה להיות בטוח שלעולם לא יהיה עוד התקף.<br>המטרה היא לדעת שגם אם החרדה תגיע, אתה יודע להיות שם בשביל עצמך.</div>
+      <div class="spacer-l"></div>
+      <a class="cta cta-final" id="frontOfferCta" href="#" target="_self" rel="noopener">אני רוצה ללמוד מה לעשות ב־90 השניות הראשונות</a>
+      <p class="subcta">אני לא חייב לפחד מעצמי רק בגלל שאני מפחד.</p>
+      <div class="signature">דוד אינגבר <span class="role">| טיפול ואימון רגשי</span></div>
+    </section>
+
+  </main>
+</div>
+
+<script>
+/* Config — this is the free front-end guide page, hosted on the same site */
+var FRONT_OFFER_URL = "90-shniot.html";
+
+/* Analytics — placeholders בלבד */
+function track(event, payload) {
+  try {
+    (window.dataLayer = window.dataLayer || []).push(Object.assign({ event: event }, payload || {}));
+    if (typeof window.gtag === 'function') window.gtag('event', event, payload || {});
+  } catch (e) { /* no-op */ }
+}
+
+/* Data */
+var ANSWER_OPTIONS = [
+  { key: 'never',     label: 'כמעט אף פעם', value: 0 },
+  { key: 'sometimes', label: 'לפעמים',      value: 1 },
+  { key: 'often',     label: 'הרבה פעמים',  value: 2 }
+];
+
+var questions = [
+  { id: 1, screen: 4, shortLabel: 'בדיקת הגוף',
+    title: 'אני מתחיל לסרוק את הגוף',
+    body: 'ברגע שאני מרגיש משהו, תשומת הלב שלי עוברת פנימה. אני בודק: דופק, נשימה, ראש, חזה, בטן או יציבות.',
+    quotes: ['"זה רגיל?"', '"למה אני מרגיש ככה?"', '"התקף מתחיל?"'], insight: '' },
+  { id: 2, screen: 4, shortLabel: 'חיפוש אישור',
+    title: 'אני מחפש אישור שאני בסדר', body: '',
+    quotes: ['"זה רק חרדה, נכון?"', '"זה נורמלי?"', '"אני בסדר?"', '"אתה בטוח שלא יקרה לי משהו?"'],
+    insight: 'האישור נותן הקלה. אבל לפעמים אחרי זמן קצר מגיע: "כן... אבל מה אם הפעם זה שונה?"' },
+  { id: 3, screen: 4, shortLabel: 'ויכוח עם המחשבות',
+    title: 'אני מתחיל להתווכח עם הראש', body: 'מגיעה מחשבה מפחידה, ואני מיד מנסה לענות:',
+    quotes: ['"זה רק חרדה."', '"זה כבר קרה לי."', '"אני לא אאבד שליטה."', '"הכול בסדר."'],
+    insight: 'לפעמים אני מגלה שאני כבר מנהל ויכוח שלם עם מחשבה.' },
+  { id: 4, screen: 5, shortLabel: 'חובה להוריד את החרדה עכשיו',
+    title: 'אני חייב למצוא משהו שיוריד את החרדה עכשיו',
+    body: 'נשימה. מים. אוויר. מוזיקה. מדיטציה. הרפיה. הליכה. טלפון למישהו.', quotes: [],
+    insight: 'השאלה היא לא אם הכלי טוב. השאלה היא אם אני בוחר להשתמש בו, או מרגיש שאני חייב להשתמש בו כדי להיות בטוח.' },
+  { id: 5, screen: 5, shortLabel: 'בדיקה אם זה כבר עובד',
+    title: 'אני בודק אם זה כבר עובד', body: '',
+    quotes: ['"זה ירד?"', '"ועכשיו?"', '"אני יותר רגוע?"', '"הלב עדיין דופק?"'],
+    insight: 'וכשהחרדה עדיין שם... "למה זה לא עובד?!" ואז אני כבר לא רק חרד. אני חרד מזה שאני עדיין חרד.' },
+  { id: 6, screen: 5, shortLabel: 'תכנון מילוט והימנעות',
+    title: 'אני כבר חושב מראש איפה אהיה אם זה יקרה',
+    body: '"איפה היציאה?" · "מי יהיה איתי?" · "מה אם זה יקרה בנהיגה?" · "מה אם אהיה רחוק מהבית?" · "מה אם לא אוכל לצאת?"',
+    quotes: ['נמנע מנסיעות', 'לא רוצה להישאר לבד', 'נמנע ממקום שבו כבר היה התקף', 'מוותר על אימון', 'צריך "דרך מילוט"'],
+    insight: 'ולפעמים אני לא קורא לזה הימנעות. אני פשוט אומר: "לא מתאים לי היום."' },
+  { id: 7, screen: 5, shortLabel: 'ניתוח אחרי ההתקף',
+    title: 'גם אחרי שההתקף נגמר, הראש ממשיך לעבוד', body: '',
+    quotes: ['"למה זה קרה?"', '"מה הפעיל אותי?"', '"אולי לא ישנתי מספיק?"', '"אולי זה הקפה?"', '"איך אני מונע את הפעם הבאה?"'],
+    insight: 'ההתקף כבר הסתיים. אבל הראש שלי עדיין בתוכו.' }
+];
+
+/* State — Local בלבד. אין שמירה בשרת. */
+var state = { current: 1, total: 8, answers: {} };
+
+function esc(s) { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;'); }
+
+function renderQuestion(q) {
+  var quotesHtml = q.quotes && q.quotes.length
+    ? '<div class="q-quotes">' + q.quotes.map(function(qt){ return '<div class="q-quote">' + esc(qt) + '</div>'; }).join('') + '</div>'
+    : '';
+  var bodyHtml = q.body ? '<p class="q-body">' + esc(q.body) + '</p>' : '';
+  var insightHtml = q.insight ? '<div class="q-inline-hl">' + esc(q.insight) + '</div>' : '';
+  var options = ANSWER_OPTIONS.map(function(opt){
+    return '<button class="answer" type="button" role="radio" aria-checked="false" aria-pressed="false" ' +
+           'data-qid="' + q.id + '" data-answer="' + opt.key + '" data-value="' + opt.value + '">' +
+           esc(opt.label) + '</button>';
+  }).join('');
+  return '<div class="q-card" id="qcard-' + q.id + '">' +
+           '<span class="q-num">' + q.id + '</span>' +
+           '<h3 class="q-title">' + esc(q.title) + '</h3>' +
+           bodyHtml + quotesHtml + insightHtml +
+           '<div class="answers" role="radiogroup" aria-label="' + esc(q.title) + '">' + options + '</div>' +
+         '</div>';
+}
+
+function buildQuestions() {
+  var byScreen = { 4: [], 5: [] };
+  questions.forEach(function(q){ if (byScreen[q.screen]) byScreen[q.screen].push(q); });
+  var el4 = document.getElementById('questions-4');
+  var el5 = document.getElementById('questions-5');
+  if (el4) el4.innerHTML = byScreen[4].map(renderQuestion).join('');
+  if (el5) el5.innerHTML = byScreen[5].map(renderQuestion).join('');
+}
+
+function selectAnswer(btn) {
+  var qid = btn.getAttribute('data-qid');
+  var answerKey = btn.getAttribute('data-answer');
+  var group = btn.closest('.answers');
+  var card = btn.closest('.q-card');
+  group.querySelectorAll('.answer').forEach(function(b){
+    var on = (b === btn);
+    b.setAttribute('aria-pressed', on ? 'true' : 'false');
+    b.setAttribute('aria-checked', on ? 'true' : 'false');
+  });
+  if (card) card.classList.add('answered');
+  state.answers[qid] = answerKey;
+  track('assessment_question_answered', { question_id: Number(qid), answer: answerKey, value: Number(btn.getAttribute('data-value')) });
+}
+
+function goto(n) {
+  n = Math.max(1, Math.min(state.total, n));
+  var currentEl = document.getElementById('screen-' + state.current);
+  var nextEl = document.getElementById('screen-' + n);
+  if (!nextEl) return;
+  if (currentEl) currentEl.classList.remove('active');
+  nextEl.classList.add('active');
+  state.current = n;
+  updateProgress();
+  if (n === 6) renderResult();
+  window.scrollTo({ top: 0, behavior: 'smooth' });
+  var heading = nextEl.querySelector('h1, h2');
+  if (heading) {
+    heading.setAttribute('tabindex', '-1');
+    setTimeout(function(){ try { heading.focus({ preventScroll: true }); } catch(e){} }, 120);
+  }
+  if (n === 7) track('quickwin_viewed', {});
+  if (n === 8) track('front_offer_viewed', {});
+}
+
+function updateProgress() {
+  var pct = (state.current / state.total) * 100;
+  var fill = document.getElementById('progressFill');
+  var label = document.getElementById('progressLabel');
+  var bar = document.getElementById('progressBar');
+  if (fill) fill.style.width = pct + '%';
+  if (label) label.textContent = state.current + ' מתוך ' + state.total;
+  if (bar) bar.setAttribute('aria-valuenow', String(state.current));
+}
+
+function computeResult() {
+  var scored = questions.map(function(q){
+    var key = state.answers[q.id];
+    var opt = ANSWER_OPTIONS.filter(function(o){ return o.key === key; })[0];
+    return { q: q, value: opt ? opt.value : null };
+  });
+  var answered = scored.filter(function(s){ return s.value !== null; });
+  var maxVal = answered.reduce(function(m, s){ return Math.max(m, s.value); }, 0);
+  if (answered.length === 0 || maxVal === 0) return { empty: true, items: [] };
+  var top = scored.filter(function(s){ return s.value === maxVal; }).slice(0, 3).map(function(s){ return s.q.shortLabel; });
+  return { empty: false, items: top };
+}
+
+function renderResult() {
+  var res = computeResult();
+  var el = document.getElementById('result-body');
+  if (!el) return;
+  if (res.empty) {
+    el.innerHTML =
+      '<div class="card">' +
+        '<p style="font-weight:600; font-size:1.1rem;">לא זיהית כרגע דפוס חזק במיוחד.</p>' +
+        '<p class="muted" style="margin-top:10px;">זה לא אומר שאין קושי, אלא שהתגובות שתיארנו כאן כנראה אינן החלק המרכזי אצלך.</p>' +
+      '</div>';
+  } else {
+    var items = res.items.map(function(lbl){
+      return '<div class="result-item"><span class="dot" aria-hidden="true"></span><span>' + esc(lbl) + '</span></div>';
+    }).join('');
+    el.innerHTML = '<p style="font-weight:600; margin-bottom:14px;">אצלך בולט במיוחד:</p><div class="result-list">' + items + '</div>';
+  }
+}
+
+function init() {
+  buildQuestions();
+  updateProgress();
+  var cta = document.getElementById('frontOfferCta');
+  if (cta) {
+    cta.setAttribute('href', FRONT_OFFER_URL);
+    cta.addEventListener('click', function(){
+      track('front_offer_clicked', { url: FRONT_OFFER_URL });
+      try {
+        window.__leadmagnet = window.__leadmagnet || {};
+        window.__leadmagnet.completed_assessment = true;
+        window.__leadmagnet.clicked_front_offer = true;
+      } catch(e){}
+    });
+  }
+  document.addEventListener('click', function(e){
+    var ans = e.target.closest && e.target.closest('.answer');
+    if (ans) { selectAnswer(ans); return; }
+    var nextBtn = e.target.closest && e.target.closest('[data-next]');
+    if (nextBtn) {
+      var ev = nextBtn.getAttribute('data-event');
+      if (ev === 'start') track('leadmagnet_started', {});
+      if (ev === 'complete') {
+        try { window.__leadmagnet = window.__leadmagnet || {}; window.__leadmagnet.completed_assessment = true; } catch(err){}
+        track('assessment_completed', {});
+      }
+      goto(Number(nextBtn.getAttribute('data-next')));
+      return;
+    }
+    var backBtn = e.target.closest && e.target.closest('[data-back]');
+    if (backBtn) { goto(Number(backBtn.getAttribute('data-back'))); return; }
+  });
+  document.addEventListener('keydown', function(e){
+    var t = e.target;
+    if (!t.classList || !t.classList.contains('answer')) return;
+    var group = t.closest('.answers');
+    if (!group) return;
+    var buttons = Array.prototype.slice.call(group.querySelectorAll('.answer'));
+    var idx = buttons.indexOf(t);
+    var next = null;
+    if (e.key === 'ArrowLeft' || e.key === 'ArrowDown') next = buttons[idx + 1];
+    else if (e.key === 'ArrowRight' || e.key === 'ArrowUp') next = buttons[idx - 1];
+    else if (e.key === ' ' || e.key === 'Enter') { e.preventDefault(); selectAnswer(t); return; }
+    if (next) { e.preventDefault(); next.focus(); selectAnswer(next); }
+  });
+}
+
+if (document.readyState === 'loading') { document.addEventListener('DOMContentLoaded', init); } else { init(); }
+</script>
+
+</body>
+</html>

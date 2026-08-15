@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>קיבלנו. עכשיו תורך | דוד אינגבר</title>
+<meta name="description" content="ההרשמה נקלטה. עכשיו אפשר להתחיל את הבדיקה של מלכודת ההרגעה.">
+<meta name="theme-color" content="#F4F1EA">
+<meta name="robots" content="noindex">
+<style>
+:root {
+  --bg:        #F4F1EA;
+  --bg-soft:   #FBFAF6;
+  --sand:      #EBE4D6;
+  --sand-deep: #DED4C0;
+  --ink:       #23211C;
+  --ink-soft:  #4A463D;
+  --ink-faint: #6E6A5E;
+  --line:      #E2DBCC;
+  --sage:      #6E8B7B;
+  --sage-deep: #4E6A5A;
+  --sage-tint: #EAF0EB;
+  --rust:      #B4794C;
+  --radius:    18px;
+  --radius-sm: 12px;
+  --shadow:    0 10px 40px rgba(60, 52, 36, 0.08);
+  --shadow-sm: 0 4px 18px rgba(60, 52, 36, 0.06);
+  --content:   620px;
+  --ease:      cubic-bezier(0.22, 0.61, 0.36, 1);
+  --font: "Assistant", "Heebo", "Rubik", "Segoe UI", system-ui, -apple-system, "Arial Hebrew", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.7;
+  min-height: 100vh;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: hidden;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1200px 700px at 100% -10%, rgba(110, 139, 123, 0.10), transparent 60%),
+    radial-gradient(1000px 600px at -10% 110%, rgba(180, 121, 76, 0.06), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.stage { position: relative; z-index: 1; max-width: var(--content); margin: 0 auto; padding: 64px 20px 60px; text-align: center; }
+.reveal { opacity: 0; transform: translateY(10px); animation: rise 0.55s var(--ease) forwards; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+.check {
+  width: 64px; height: 64px; border-radius: 50%; margin: 0 auto 22px;
+  background: var(--sage-tint); border: 1.5px solid rgba(110,139,123,0.35);
+  display: grid; place-items: center;
+}
+.check svg { width: 28px; height: 28px; }
+h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.2; font-weight: 700; text-wrap: balance; }
+.sub { font-size: 1.12rem; color: var(--ink-soft); margin-top: 16px; max-width: 42ch; margin-inline: auto; }
+.card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 26px; box-shadow: var(--shadow); margin-top: 32px; text-align: right; }
+.card h2 { font-size: 1.3rem; font-weight: 700; margin-bottom: 10px; }
+.card p { color: var(--ink-soft); }
+.cta { appearance: none; border: none; cursor: pointer; font-family: inherit; font-size: 1.1rem; font-weight: 700; width: 100%; min-height: 56px; padding: 16px 24px; border-radius: 14px; background: linear-gradient(180deg, var(--sage), var(--sage-deep)); color: #fff; box-shadow: 0 10px 26px rgba(78, 106, 90, 0.30); transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 20px; }
+.cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(78, 106, 90, 0.38); }
+.cta.arrow::after { content: "←"; font-size: 1.15em; }
+.note { font-size: 0.96rem; color: var(--ink-faint); margin-top: 18px; text-align: center; }
+.spacer-l { height: 40px; }
+.signature { margin-top: 8px; color: var(--ink-faint); font-size: 0.98rem; font-weight: 600; }
+.signature .role { color: var(--ink-faint); font-weight: 400; }
+@media (max-width: 390px) { body { font-size: 16px; } .stage { padding: 44px 16px 44px; } .card { padding: 22px 18px; } }
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="stage">
+  <div class="check reveal" style="animation-delay:0ms" aria-hidden="true">
+    <svg viewBox="0 0 24 24" fill="none" stroke="#4E6A5A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
+  </div>
+  <h1 class="reveal" style="animation-delay:60ms" id="greeting">מעולה. זה בדרך אליך.</h1>
+  <p class="sub reveal" style="animation-delay:120ms">ברגע שתלחץ על הכפתור למטה, תוכל להתחיל את הבדיקה של מלכודת ההרגעה. זה לוקח כ־5 דקות, והתשובה מיידית.</p>
+
+  <div class="card reveal" style="animation-delay:180ms">
+    <h2>הצעד הבא</h2>
+    <p>לחץ על הכפתור כדי להתחיל עכשיו. בתוך כמה דקות תדע בדיוק אילו מהדפוסים האלה קיימים אצלך, ומה זה אומר.</p>
+    <a class="cta arrow" href="malchodet-hargaa.html">להתחיל את הבדיקה עכשיו</a>
+  </div>
+
+  <p class="note">בדוק גם את תיבת הדואר שלך. בימים הקרובים אשלח לך עוד כמה דברים שיעזרו לך להבין מה קורה לך בדיוק, ואיך להגיב אחרת בפעם הבאה.</p>
+
+  <div class="spacer-l"></div>
+  <div class="signature">דוד אינגבר <span class="role">| טיפול ואימון רגשי</span></div>
+</main>
+
+<script>
+(function () {
+  try {
+    var params = new URLSearchParams(location.search);
+    var name = (params.get('name') || '').trim();
+    if (name) {
+      var el = document.getElementById('greeting');
+      el.textContent = 'מעולה, ' + name + '. זה בדרך אליך.';
+    }
+  } catch (e) { /* no-op */ }
+})();
+</script>
+
+</body>
+</html>
