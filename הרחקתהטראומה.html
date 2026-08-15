@@ -303,6 +303,20 @@ document.addEventListener('DOMContentLoaded', async function() {
       #readinessCheck .ready-check:focus-visible { outline:3px solid rgba(216,183,122,.68); outline-offset:3px; }
       #btnStart { box-shadow:0 9px 26px -10px rgba(155,199,177,.62) !important; }
       #s-intro aside { padding:.62rem .82rem !important; }
+      .screen > div[style*="rgba(255,255,255,.05)"] { background:linear-gradient(145deg,rgba(241,238,231,.075),rgba(155,199,177,.045)) !important; border-color:rgba(216,183,122,.16) !important; box-shadow:0 14px 40px rgba(4,11,10,.12); }
+      .screen button { min-height:48px; }
+      .screen textarea { background:rgba(241,238,231,.07) !important; border:1px solid rgba(184,195,190,.28) !important; box-shadow:inset 0 1px 0 rgba(255,255,255,.04); }
+      .screen textarea:focus-visible,.screen button:focus-visible { outline:3px solid rgba(216,183,122,.72) !important; outline-offset:3px; }
+      input[type="range"] { height:12px !important; accent-color:#9bc7b1; cursor:pointer; }
+      #numBefore,#numAfter { display:grid;place-items:center;width:92px;height:92px;margin:.45rem auto !important;border-radius:50%;background:radial-gradient(circle at 35% 30%,rgba(216,183,122,.25),rgba(155,199,177,.08));border:1px solid rgba(216,183,122,.3);box-shadow:0 14px 36px rgba(4,11,10,.22);font-size:3rem !important; }
+      #s-reset1 button[data-val],#s-rate-before button[data-val],#s-rate-after button[data-val] { border-radius:16px !important;background:rgba(241,238,231,.075) !important;border-color:rgba(184,195,190,.24) !important;box-shadow:0 8px 22px rgba(4,11,10,.12); }
+      #s-images canvas { border-radius:22px !important;box-shadow:0 18px 50px rgba(4,11,10,.24);border:2px solid rgba(216,183,122,.2); }
+      #s-images [role="tablist"] { background:rgba(241,238,231,.055);padding:.35rem;border-radius:99px; }
+      .cinema-photo { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;opacity:.58;pointer-events:none; }
+      .human-body-photo { position:absolute;inset:0;width:100%;height:100%;object-fit:contain;pointer-events:none;filter:saturate(.82) brightness(.9); }
+      .future-self-photo { position:absolute;inset:0;width:100%;height:100%;object-fit:cover;border-radius:inherit;pointer-events:none; }
+      #s-anchor svg,#s-anchor2 svg { position:relative;z-index:2; }
+      #s-cinema [id$="Scene"],#s-forward [id$="Scene"],#s-reverse [id$="Scene"],#s-enter .inner-scene { border:1px solid rgba(216,183,122,.22) !important;box-shadow:0 22px 60px rgba(3,9,8,.34); }
       @media (max-width:620px) {
         #ta-root > header { padding-block:.58rem !important; }
         #ta-root > header h1 { font-size:.92rem !important; }
@@ -313,6 +327,17 @@ document.addEventListener('DOMContentLoaded', async function() {
       }
     </style>`;
     template = template.replace('</head>', comfortStyles + '</head>');
+    const visualSync = `<script>(function(){
+      function addPhoto(host,src,cls,alt){ if(!host||host.querySelector('.'+cls))return; host.style.position='relative'; var im=document.createElement('img');im.src=src;im.className=cls;im.alt=alt;host.prepend(im); }
+      function enhance(){
+        ['s-anchor','s-anchor2'].forEach(function(id){var s=document.getElementById(id),svg=s&&s.querySelector('svg');if(svg)addPhoto(svg.parentElement,'assets/trauma/human-body.png','human-body-photo','דמות אנושית לבחירת אזור בגוף');});
+        ['cinemaScene','fwdScene'].forEach(function(id){addPhoto(document.getElementById(id),'assets/trauma/cinema-control-room.png','cinema-photo','חדר בקרה המשקיף אל אולם קולנוע');});
+        var rev=document.getElementById('s-reverse');if(rev)addPhoto(rev.querySelector('div[style*="background"]'),'assets/trauma/cinema-control-room.png','cinema-photo','אולם קולנוע להרצה לאחור');
+        var enter=document.getElementById('s-enter');if(enter){var scene=enter.querySelector('.inner-scene')||enter.querySelector('div[style*="linear-gradient"]');addPhoto(scene,'assets/trauma/future-self.png','future-self-photo','האני של היום פוגש ותומך באני הצעיר');}
+      }
+      if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhance);else enhance();setTimeout(enhance,500);
+    })();<\/script>`;
+    template = template.replace('</body>', visualSync + '</body>');
 
     // Strip integrity + crossorigin — blob URLs from a file:// document inherit
     // a null origin, so crossorigin forces a CORS fetch that SRI then rejects.
