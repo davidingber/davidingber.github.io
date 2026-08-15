@@ -251,6 +251,9 @@ document.addEventListener('DOMContentLoaded', async function() {
         border-bottom:1px solid rgba(216,183,122,.08);
       }
       #stage { padding-top:.25rem !important; }
+      section.screen { position:relative;width:100%;max-width:720px;margin:0 auto;box-sizing:border-box;isolation:isolate; }
+      section.screen > * { flex-shrink:0;max-width:100%;box-sizing:border-box; }
+      section.screen > div[style*="background:rgba(255,255,255,.05)"] { position:relative;z-index:2; }
       #s-intro { gap:.72rem !important; }
       #s-intro > div:first-child { padding:.05rem .1rem !important; }
       #s-intro h1 {
@@ -319,7 +322,9 @@ document.addEventListener('DOMContentLoaded', async function() {
       .body-map-shell .bodyzone { fill:transparent;stroke:transparent;stroke-width:2.2;cursor:pointer;transition:fill .18s,stroke .18s,filter .18s; }
       .body-map-shell .bodyzone:hover,.body-map-shell .bodyzone:focus { fill:rgba(155,199,177,.28);stroke:#d8b77a;filter:drop-shadow(0 0 5px rgba(216,183,122,.7));outline:none; }
       .body-map-shell::after { content:'בחרו את המקום שמרגיש בטוח';position:absolute;left:50%;bottom:-1.55rem;transform:translateX(-50%);white-space:nowrap;font-size:.72rem;color:var(--ta-ink-400); }
-      .cinema-redesign { position:relative !important;width:100% !important;max-width:680px !important;aspect-ratio:16/9 !important;overflow:hidden !important;border-radius:22px !important;background-image:linear-gradient(180deg,rgba(5,10,12,.08),rgba(5,10,12,.3)),url('assets/trauma/cinema-control-room.png') !important;background-size:cover !important;background-position:center !important;border:1px solid rgba(216,183,122,.28) !important; }
+      .cinema-redesign { position:relative !important;width:100% !important;max-width:560px !important;aspect-ratio:16/9 !important;overflow:hidden !important;border-radius:22px !important;background:#07100f !important;border:1px solid rgba(216,183,122,.28) !important;flex:none !important; }
+      .cinema-backdrop { position:absolute !important;z-index:0;inset:0;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover !important;object-position:center !important;display:block !important;pointer-events:none; }
+      .cinema-tint { position:absolute;z-index:1;inset:0;background:linear-gradient(180deg,rgba(5,10,12,.04),rgba(5,10,12,.18));pointer-events:none; }
       .cinema-redesign::after { content:'';position:absolute;inset:0;pointer-events:none;box-shadow:inset 0 0 55px rgba(2,7,8,.54);border-radius:inherit; }
       .cinema-live-screen { position:absolute;z-index:2;top:8.6%;left:32.4%;right:32.4%;height:27.8%;display:flex;align-items:center;gap:3%;padding:2.2%;box-sizing:border-box;direction:ltr;background:rgba(8,10,12,.94);border:1px solid rgba(216,183,122,.24);border-radius:4px;overflow:hidden; }
       .cinema-live-screen.reverse { top:8%;left:24%;right:24%;height:33%; }
@@ -333,7 +338,7 @@ document.addEventListener('DOMContentLoaded', async function() {
       .cinema-status { position:absolute;z-index:3;top:4%;left:4%;font-size:clamp(.42rem,1vw,.62rem);letter-spacing:.08em;color:#d8c9a6;background:rgba(5,10,10,.76);padding:.15rem .4rem;border-radius:5px; }
       .cinema-compat { position:absolute;left:34%;right:34%;top:52%;height:12%;visibility:hidden;display:flex;flex-direction:column; }
       .cinema-redesign .sightlines { display:none !important; }
-      .future-self-redesign { display:block !important;padding:0 !important;aspect-ratio:16/10 !important;background:#182623 !important; }
+      .future-self-redesign { position:relative !important;display:block !important;width:100% !important;max-width:520px !important;height:auto !important;padding:0 !important;aspect-ratio:16/10 !important;background:#182623 !important;overflow:hidden !important;flex:none !important; }
       .future-self-redesign svg { position:absolute;inset:0;width:100%;height:100%; }
       .future-self-redesign::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 54%,rgba(10,19,17,.72));pointer-events:none; }
       .future-self-caption { position:absolute;z-index:2;left:1rem;right:1rem;bottom:.75rem;text-align:center;color:#f1eee7;font-size:.84rem;text-shadow:0 2px 8px #07100e; }
@@ -345,6 +350,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         #s-intro { gap:.62rem !important; }
         #s-intro [role="list"] { grid-template-columns:1fr !important; }
         #s-intro [role="list"] > [role="listitem"] { padding:.68rem .76rem !important; }
+        .cinema-redesign { max-width:100% !important;border-radius:16px !important; }
+        .future-self-redesign { max-width:100% !important; }
       }
     </style>`;
     template = template.replace('</head>', comfortStyles + '</head>');
@@ -367,7 +374,7 @@ document.addEventListener('DOMContentLoaded', async function() {
         var strip=isFwd?'fwdStrip':isRev?'revStrip':'';
         var content=still(a,'תמונה 2 · אחרי','תמונת אחרי')+run(r,isRev?'▶▶':'◀◀')+still(b,'תמונה 1 · לפני','תמונת לפני');
         scene.className='cinema-redesign';scene.removeAttribute('style');
-        scene.innerHTML='<span class="cinema-status">'+(isRev?'COLOR · SOUND · ×20 ⏪':'B/W · MUTE · מרחק בטוח')+'</span><div '+(id==='cinemaScene'?'id="cinemaScreen" ':'')+'class="cinema-live-screen'+(isRev?' reverse':'')+'">'+(strip?'<div id="'+strip+'" class="film-strip">'+content+'</div>':content)+'</div>'+(isRev?'':'<div id="'+(isFwd?'seats2':'seats')+'" class="cinema-compat"></div><svg class="sightlines"></svg><div aria-hidden="true" style="position:absolute;opacity:0;background:radial-gradient(circle at 50% 28%,#fff,#000);width:1px;height:1px"></div>');
+        scene.innerHTML='<img class="cinema-backdrop" src="assets/trauma/cinema-control-room.png" alt=""><div class="cinema-tint"></div><span class="cinema-status">'+(isRev?'COLOR · SOUND · ×20 ⏪':'B/W · MUTE · מרחק בטוח')+'</span><div '+(id==='cinemaScene'?'id="cinemaScreen" ':'')+'class="cinema-live-screen'+(isRev?' reverse':'')+'">'+(strip?'<div id="'+strip+'" class="film-strip">'+content+'</div>':content)+'</div>'+(isRev?'':'<div id="'+(isFwd?'seats2':'seats')+'" class="cinema-compat"></div><svg class="sightlines"></svg><div aria-hidden="true" style="position:absolute;opacity:0;background:radial-gradient(circle at 50% 28%,#fff,#000);width:1px;height:1px"></div>');
       }
       function futureSelf(){
         var section=document.getElementById('s-enter'),scene=section&&section.querySelector('.inner-scene');if(!scene||scene.classList.contains('future-self-redesign'))return;
