@@ -218,6 +218,7 @@ document.addEventListener('DOMContentLoaded', async function() {
     // Keep the cinema depth while reducing the cold, technical blue cast.
     const traumaPalette = {
       '#0d1420':'#111a1a',
+      '#142033':'#182724',
       '#16202f':'#1b2928',
       '#1d2a3d':'#243533',
       '#f2f6fb':'#f1eee7',
@@ -238,6 +239,80 @@ document.addEventListener('DOMContentLoaded', async function() {
     for (const [from, to] of Object.entries(traumaPalette)) {
       template = template.split(from).join(to);
     }
+
+    const comfortStyles = `<style>
+      #ta-root {
+        background:
+          radial-gradient(72% 58% at 50% 24%, rgba(155,199,177,.11) 0%, rgba(155,199,177,.035) 42%, transparent 72%),
+          linear-gradient(180deg, #182724 0%, #15211f 48%, #111a1a 100%) !important;
+      }
+      #ta-root > header {
+        background:linear-gradient(180deg,rgba(36,53,51,.72),rgba(24,39,36,.28));
+        border-bottom:1px solid rgba(216,183,122,.08);
+      }
+      #stage { padding-top:.25rem !important; }
+      #s-intro { gap:.72rem !important; }
+      #s-intro > div:first-child { padding:.05rem .1rem !important; }
+      #s-intro h1 {
+        font-size:clamp(1.42rem,4vw,1.92rem) !important;
+        line-height:1.22 !important;
+        margin-bottom:.4rem !important;
+        text-wrap:balance;
+        text-shadow:0 2px 22px rgba(155,199,177,.08);
+      }
+      #s-intro h1 + p { line-height:1.58 !important; max-width:570px !important; }
+      #s-intro [role="list"] { gap:.58rem !important; }
+      #s-intro [role="list"] > [role="listitem"] {
+        padding:.78rem .82rem !important;
+        background:linear-gradient(145deg,rgba(241,238,231,.075),rgba(216,183,122,.035)) !important;
+        border-color:rgba(216,183,122,.16) !important;
+        box-shadow:0 10px 30px rgba(5,12,11,.12);
+      }
+      #s-intro [role="list"] > [role="listitem"] > div { margin-bottom:.18rem !important; color:#d8b77a; }
+      #readinessCheck {
+        padding:.72rem .9rem !important;
+        background:linear-gradient(145deg,rgba(155,199,177,.105),rgba(216,183,122,.035)) !important;
+        border-color:rgba(155,199,177,.25) !important;
+      }
+      #readinessCheck > div { gap:.46rem !important; }
+      #readinessCheck label { font-size:.94rem; }
+      #readinessCheck .ready-check {
+        appearance:none;
+        display:grid;
+        place-content:center;
+        border:1.5px solid rgba(184,195,190,.68);
+        border-radius:5px;
+        background:rgba(241,238,231,.055);
+        transition:background .18s,border-color .18s,box-shadow .18s;
+      }
+      #readinessCheck .ready-check::before {
+        content:'✓';
+        color:#0d1715;
+        font-size:.88rem;
+        font-weight:800;
+        line-height:1;
+        transform:scale(0);
+        transition:transform .16s ease;
+      }
+      #readinessCheck .ready-check:checked {
+        background:#9bc7b1;
+        border-color:#9bc7b1;
+        box-shadow:0 0 0 3px rgba(155,199,177,.13);
+      }
+      #readinessCheck .ready-check:checked::before { transform:scale(1); }
+      #readinessCheck .ready-check:focus-visible { outline:3px solid rgba(216,183,122,.68); outline-offset:3px; }
+      #btnStart { box-shadow:0 9px 26px -10px rgba(155,199,177,.62) !important; }
+      #s-intro aside { padding:.62rem .82rem !important; }
+      @media (max-width:620px) {
+        #ta-root > header { padding-block:.58rem !important; }
+        #ta-root > header h1 { font-size:.92rem !important; }
+        #stage { padding-inline:.82rem !important; }
+        #s-intro { gap:.62rem !important; }
+        #s-intro [role="list"] { grid-template-columns:1fr !important; }
+        #s-intro [role="list"] > [role="listitem"] { padding:.68rem .76rem !important; }
+      }
+    </style>`;
+    template = template.replace('</head>', comfortStyles + '</head>');
 
     // Strip integrity + crossorigin — blob URLs from a file:// document inherit
     // a null origin, so crossorigin forces a CORS fetch that SRI then rejects.
