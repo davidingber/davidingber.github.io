@@ -5,9 +5,9 @@
   <title>Bundled Page</title>
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
-    body { background: #0d1420; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
+    body { background: #111a1a; display: flex; align-items: center; justify-content: center; min-height: 100vh; font-family: -apple-system, BlinkMacSystemFont, sans-serif; }
     #__bundler_loading { position: fixed; bottom: 20px; right: 20px; font: 13px/1.4 -apple-system, BlinkMacSystemFont, sans-serif; color: #666; background: #fff; padding: 8px 14px; border-radius: 8px; box-shadow: 0 1px 4px rgba(0,0,0,0.12); z-index: 10000; }
-    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #0d1420; z-index: 9999; }
+    #__bundler_thumbnail { position: fixed; inset: 0; width: 100%; height: 100%; display: flex; align-items: center; justify-content: center; background: #111a1a; z-index: 9999; }
     #__bundler_thumbnail svg { width: 100%; height: 100%; object-fit: contain; }
     #__bundler_placeholder { color: #999; font-size: 14px; }
   </style>
@@ -21,8 +21,8 @@
 <body>
   <div id="__bundler_thumbnail">
 <svg viewBox="0 0 1200 800" xmlns="http://www.w3.org/2000/svg">
-<rect width="1200" height="800" fill="#0d1420"></rect>
-<text x="600" y="440" font-size="220" text-anchor="middle" fill="#6fb7ff" font-family="sans-serif">🎬</text>
+<rect width="1200" height="800" fill="#111a1a"></rect>
+<text x="600" y="440" font-size="220" text-anchor="middle" fill="#88b8a8" font-family="sans-serif">🎬</text>
 </svg>
 </div>
   <div id="__bundler_loading">Unpacking...</div>
@@ -212,6 +212,31 @@ document.addEventListener('DOMContentLoaded', async function() {
 
     `;
       template = template.slice(0, introStart) + safeIntro + template.slice(introEnd);
+    }
+
+    // Softer trauma-informed palette: warm charcoal, sage, cream, and sand.
+    // Keep the cinema depth while reducing the cold, technical blue cast.
+    const traumaPalette = {
+      '#0d1420':'#111a1a',
+      '#16202f':'#1b2928',
+      '#1d2a3d':'#243533',
+      '#f2f6fb':'#f1eee7',
+      '#cdd9e8':'#d8ddd8',
+      '#a7bcd2':'#b8c3be',
+      '#6fb7ff':'#88b8a8',
+      '#4a8fd6':'#729a91',
+      '#7ee0c3':'#9bc7b1',
+      '#ffd166':'#d8b77a',
+      '#ff9eb3':'#c9a6a6',
+      '#ff8080':'#c99276',
+      '#07111e':'#0d1715',
+      'rgba(111,183,255':'rgba(136,184,168',
+      'rgba(126,224,195':'rgba(155,199,177',
+      'rgba(255,209,102':'rgba(216,183,122',
+      'rgba(167,188,210':'rgba(184,195,190'
+    };
+    for (const [from, to] of Object.entries(traumaPalette)) {
+      template = template.split(from).join(to);
     }
 
     // Strip integrity + crossorigin — blob URLs from a file:// document inherit
