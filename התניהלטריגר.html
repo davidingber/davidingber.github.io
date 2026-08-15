@@ -861,14 +861,19 @@ if('speechSynthesis' in window) speechSynthesis.getVoices();
    Keys must match the spoken phrase EXACTLY (no trailing period).
    ========================================================== */
 const NARR = {
-  'אתה יכול להרגיש טוב עם עצמך': '',
-  'אתה יכול להרגיש בטוח עם עצמך': '',
-  'את יכולה להרגיש טוב עם עצמך': '',
-  'את יכולה להרגיש בטוחה עם עצמך': '',
-  'אני כאן איתך': '',
+  'אתה יכול להרגיש טוב עם עצמך': '',      /* גבר */
+  'אתה יכול להרגיש בטוח עם עצמך': '',     /* גבר */
+  'אני כאן איתך|m': '',                    /* "אני כאן אִתְּךָ" — גבר */
+  'את יכולה להרגיש טוב עם עצמך': '',      /* אישה */
+  'את יכולה להרגיש בטוחה עם עצמך': '',    /* אישה */
+  'אני כאן איתך|f': '',                    /* "אני כאן אִתָּךְ" — אישה */
 };
 function clipFor(text){
-  const u = NARR[(text||'').replace(/\.\s*$/,'').trim()];
+  let key=(text||'').replace(/\.\s*$/,'').trim();
+  /* the written form of "אני כאן איתך" is identical for both genders,
+     but the niqqud (and recorded voice) differ — pick by gender */
+  if(key==='אני כאן איתך') key += '|' + (state.gender==='f' ? 'f' : 'm');
+  const u = NARR[key];
   return (u && u.length>20) ? u : null;
 }
 let narrAudio=null;
