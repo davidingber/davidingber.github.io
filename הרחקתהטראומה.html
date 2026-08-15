@@ -240,6 +240,25 @@ document.addEventListener('DOMContentLoaded', async function() {
       template = template.split(from).join(to);
     }
 
+    // Let the participant decide whether the result is sufficient. The numeric
+    // rating remains useful feedback, but must not override their own judgment.
+    template = template.replace(
+      /<button class="btn" id="btnFinishCheck"[\s\S]*?<\/button>/,
+      '<div class="outcome-actions"><button class="btn" id="btnFinishCheck">התוצאה טובה לי — סיום ✓</button><button class="btn ghost" id="btnNeedMore">אני רוצה סבב נוסף</button></div>'
+    );
+    template = template.replace(
+      /\$\("#btnFinishCheck"\)\.addEventListener\("click", \(\)=>\{[\s\S]*?\n    \}\);\n\n    function prepareReverseScreen/,
+      `$("#btnFinishCheck").addEventListener("click", ()=>{\n      state.intensityAfter = +$("#rangeAfter").value;\n      finishProcess();\n    });\n    $("#btnNeedMore").addEventListener("click", ()=>{\n      state.intensityAfter = +$("#rangeAfter").value;\n      prepareReverseScreen(true);\n      show("s-reverse", {back:true});\n      $("#revGuide").innerHTML = "עוד סבב אחורה — בקצב שלך, מהר וצבעוני ⏪";\n    });\n\n    function prepareReverseScreen`
+    );
+    template = template.replace(
+      'function finishProcess(){\n      saveSession();\n      show("s-summary");\n    }',
+      'function finishProcess(){\n      saveSession();\n      show("s-summary");\n      $("#sumTitle").textContent = "יופי — העבודה הסתיימה בהצלחה ✓";\n      $("#btnMoreRound").hidden = true;\n    }'
+    );
+    template = template.replace(
+      /let funnyTimer = null;[\s\S]*?function stopFunnySound\(\)\{ clearTimeout\(funnyTimer\); funnyTimer = null; \}/,
+      'let funnyTimer = null, funnyNodes = [];\n    function startFunnySound(dur){\n      const ctx = AC();\n      const master = ctx.createGain(); master.gain.value = .12; master.connect(ctx.destination); funnyNodes.push(master);\n      const end = ctx.currentTime + dur; let step = 0;\n      function giggle(){\n        if(ctx.currentTime > end) return;\n        const now = ctx.currentTime;\n        [0,.105].forEach((delay,part)=>{\n          const o = ctx.createOscillator(), g = ctx.createGain();\n          o.type = part ? "triangle" : "sine";\n          const base = [520,620,570,710][step%4] + Math.random()*35;\n          o.frequency.setValueAtTime(base, now+delay);\n          o.frequency.exponentialRampToValueAtTime(base*1.28, now+delay+.07);\n          o.frequency.exponentialRampToValueAtTime(base*.9, now+delay+.15);\n          g.gain.setValueAtTime(.001, now+delay);\n          g.gain.exponentialRampToValueAtTime(.34, now+delay+.018);\n          g.gain.exponentialRampToValueAtTime(.001, now+delay+.18);\n          o.connect(g); g.connect(master); o.start(now+delay); o.stop(now+delay+.2); funnyNodes.push(o,g);\n        });\n        step++; funnyTimer = setTimeout(giggle, 245 + Math.random()*115);\n      }\n      giggle(); return master;\n    }\n    function stopFunnySound(){ clearTimeout(funnyTimer); funnyTimer = null; funnyNodes.forEach(n=>{try{n.disconnect();}catch(e){}}); funnyNodes=[]; }'
+    );
+
     const comfortStyles = `<style>
       #ta-root {
         background:
@@ -315,12 +334,20 @@ document.addEventListener('DOMContentLoaded', async function() {
       #s-reset1 button[data-val],#s-rate-before button[data-val],#s-rate-after button[data-val] { border-radius:16px !important;background:rgba(241,238,231,.075) !important;border-color:rgba(184,195,190,.24) !important;box-shadow:0 8px 22px rgba(4,11,10,.12); }
       #s-images canvas { border-radius:22px !important;box-shadow:0 18px 50px rgba(4,11,10,.24);border:2px solid rgba(216,183,122,.2); }
       #s-images [role="tablist"] { background:rgba(241,238,231,.055);padding:.35rem;border-radius:99px; }
-      .body-map-shell { position:relative;width:min(250px,72vw);aspect-ratio:100/210;margin:.2rem auto;border-radius:42% 42% 30% 30%;background:radial-gradient(ellipse at 50% 38%,rgba(155,199,177,.14),transparent 67%);filter:drop-shadow(0 18px 28px rgba(4,11,10,.25)); }
+      .body-map-shell { position:relative;width:min(170px,48vw);aspect-ratio:100/210;margin:.2rem auto 1.4rem;border-radius:42% 42% 30% 30%;background:radial-gradient(ellipse at 50% 38%,rgba(155,199,177,.14),transparent 67%);filter:drop-shadow(0 18px 28px rgba(4,11,10,.25)); }
       .body-map-shell .body-silhouette { position:absolute;inset:0;width:100%;height:100%;overflow:visible;pointer-events:none; }
       .body-map-shell .body-silhouette path,.body-map-shell .body-silhouette circle { fill:url(#bodyWarmth);stroke:rgba(231,225,212,.38);stroke-width:1.15; }
       .body-map-shell > svg:last-child { position:absolute !important;inset:0;width:100% !important;height:100% !important;z-index:2;overflow:visible; }
-      .body-map-shell .bodyzone { fill:transparent;stroke:transparent;stroke-width:2.2;cursor:pointer;transition:fill .18s,stroke .18s,filter .18s; }
-      .body-map-shell .bodyzone:hover,.body-map-shell .bodyzone:focus { fill:rgba(155,199,177,.28);stroke:#d8b77a;filter:drop-shadow(0 0 5px rgba(216,183,122,.7));outline:none; }
+      .body-map-shell .bodyzone { fill:transparent !important;stroke:transparent !important;stroke-width:2.2 !important;cursor:pointer;outline:none; }
+      .body-map-shell .bodyzone:hover,.body-map-shell .bodyzone:focus { fill:rgba(155,199,177,.13) !important;stroke:rgba(216,183,122,.55) !important; }
+      .body-marker { position:absolute;z-index:3;display:none;pointer-events:none;border:2px solid #d8b77a;background:radial-gradient(ellipse,rgba(216,183,122,.42),rgba(155,199,177,.12) 60%,transparent 72%);box-shadow:0 0 22px rgba(216,183,122,.42);transform:translate(-50%,-50%); }
+      .body-map-shell[data-active-zone] .body-marker { display:block; }
+      .body-map-shell[data-active-zone="ראש"] .body-marker { left:50%;top:10%;width:31%;height:15%;border-radius:50%; }
+      .body-map-shell[data-active-zone="חזה"] .body-marker { left:50%;top:29%;width:38%;height:24%;border-radius:48% 48% 38% 38%; }
+      .body-map-shell[data-active-zone="בטן"] .body-marker { left:50%;top:48%;width:31%;height:18%;border-radius:45%; }
+      .body-map-shell[data-active-zone="יד ימין"] .body-marker { left:25%;top:39%;width:18%;height:34%;border-radius:50%;transform:translate(-50%,-50%) rotate(8deg); }
+      .body-map-shell[data-active-zone="יד שמאל"] .body-marker { left:75%;top:39%;width:18%;height:34%;border-radius:50%;transform:translate(-50%,-50%) rotate(-8deg); }
+      .body-map-shell[data-active-zone="רגליים"] .body-marker { left:50%;top:75%;width:29%;height:43%;border-radius:44%; }
       .body-map-shell::after { content:'בחרו את המקום שמרגיש בטוח';position:absolute;left:50%;bottom:-1.55rem;transform:translateX(-50%);white-space:nowrap;font-size:.72rem;color:var(--ta-ink-400); }
       .cinema-redesign { position:relative !important;width:100% !important;max-width:560px !important;aspect-ratio:16/9 !important;overflow:hidden !important;border-radius:22px !important;background:#07100f !important;border:1px solid rgba(216,183,122,.28) !important;flex:none !important; }
       .cinema-backdrop { position:absolute !important;z-index:1;inset:0;width:100% !important;height:100% !important;max-width:none !important;object-fit:cover !important;object-position:center !important;display:block !important;pointer-events:none; }
@@ -339,9 +366,15 @@ document.addEventListener('DOMContentLoaded', async function() {
       .cinema-compat { position:absolute;left:34%;right:34%;top:52%;height:12%;visibility:hidden;display:flex;flex-direction:column; }
       .cinema-redesign .sightlines { display:none !important; }
       .future-self-redesign { position:relative !important;display:block !important;width:100% !important;max-width:520px !important;height:auto !important;padding:0 !important;aspect-ratio:16/10 !important;background:#182623 !important;overflow:hidden !important;flex:none !important; }
-      .future-self-redesign svg { position:absolute;inset:0;width:100%;height:100%; }
-      .future-self-redesign::after { content:'';position:absolute;inset:0;background:linear-gradient(180deg,transparent 54%,rgba(10,19,17,.72));pointer-events:none; }
-      .future-self-caption { position:absolute;z-index:2;left:1rem;right:1rem;bottom:.75rem;text-align:center;color:#f1eee7;font-size:.84rem;text-shadow:0 2px 8px #07100e; }
+      .future-self-stage { position:absolute;inset:0;display:grid;grid-template-columns:52% 48%;align-items:stretch;background:radial-gradient(circle at 48% 40%,rgba(216,183,122,.2),transparent 45%),#182623; }
+      .future-memory { position:relative;margin:7%;border-radius:16px;overflow:hidden;border:1px solid rgba(216,183,122,.34);background:#101b19;box-shadow:0 18px 40px rgba(2,8,7,.3); }
+      .future-memory img { width:100%;height:100%;object-fit:cover;display:block; }
+      .future-memory span { position:absolute;right:.55rem;bottom:.45rem;padding:.18rem .48rem;border-radius:99px;background:rgba(8,16,14,.74);font-size:.68rem;color:#f1eee7; }
+      .future-companion { width:100%;height:100%;overflow:visible; }
+      .outcome-actions { display:flex;gap:.7rem;justify-content:center;flex-wrap:wrap;width:100%; }
+      .outcome-actions .btn { min-height:52px;padding:.85rem 1.7rem;border-radius:99px;font:600 1rem inherit;border:none;cursor:pointer;background:linear-gradient(135deg,var(--ta-calm),#729a91);color:#0d1715; }
+      .outcome-actions .ghost { background:rgba(241,238,231,.06);color:var(--ta-ink-100);border:1px solid rgba(184,195,190,.25); }
+      #btnStart:not(:disabled) { opacity:1 !important;cursor:pointer !important;pointer-events:auto !important;box-shadow:0 10px 28px -9px rgba(155,199,177,.7) !important; }
       #s-cinema [id$="Scene"],#s-forward [id$="Scene"],#s-reverse [id$="Scene"],#s-enter .inner-scene { border:1px solid rgba(216,183,122,.22) !important;box-shadow:0 22px 60px rgba(3,9,8,.34); }
       @media (max-width:620px) {
         #ta-root > header { padding-block:.58rem !important; }
@@ -363,7 +396,8 @@ document.addEventListener('DOMContentLoaded', async function() {
         old.querySelectorAll('.bodyzone').forEach(function(zone){zone.removeAttribute('style');zone.setAttribute('tabindex','0');zone.setAttribute('role','button');zone.setAttribute('aria-label','בחירת אזור: '+zone.dataset.zone);zone.addEventListener('keydown',function(e){if(e.key==='Enter'||e.key===' '){e.preventDefault();zone.click();}});});
         var shell=document.createElement('div');shell.className='body-map-shell';shell.setAttribute('aria-label','דמות גוף כללית ללא תווי פנים');
         shell.innerHTML='<svg class="body-silhouette" viewBox="0 0 100 210" aria-hidden="true"><defs><linearGradient id="bodyWarmth" x1="0" y1="0" x2="1" y2="1"><stop offset="0" stop-color="#d7c7aa"/><stop offset=".52" stop-color="#9bc7b1"/><stop offset="1" stop-color="#6f9f91"/></linearGradient></defs><circle cx="50" cy="21" r="15"/><path d="M34 43 C38 38 43 37 50 37 C57 37 62 38 66 43 C70 49 72 61 73 75 L83 100 C85 106 82 112 77 113 C72 114 69 110 67 105 L61 84 L62 113 C65 126 66 143 64 160 L61 197 C60 204 55 207 50 205 C45 207 40 204 39 197 L36 160 C34 143 35 126 38 113 L39 84 L33 105 C31 110 28 114 23 113 C18 112 15 106 17 100 L27 75 C28 61 30 49 34 43 Z"/></svg>';
-        old.parentNode.insertBefore(shell,old);shell.appendChild(old);
+        old.parentNode.insertBefore(shell,old);shell.appendChild(old);var marker=document.createElement('div');marker.className='body-marker';marker.setAttribute('aria-hidden','true');shell.appendChild(marker);
+        old.querySelectorAll('.bodyzone').forEach(function(zone){zone.addEventListener('click',function(){shell.dataset.activeZone=zone.dataset.zone;});});
       }
       function still(id,label,alt){return '<div id="'+id+'" class="film-still"><img alt="'+alt+'"><span>'+label+'</span></div>';}
       function run(id,arrows){return '<div id="'+id+'" class="film-run"><i></i><span>'+arrows+'</span></div>';}
@@ -379,9 +413,13 @@ document.addEventListener('DOMContentLoaded', async function() {
       function futureSelf(){
         var section=document.getElementById('s-enter'),scene=section&&section.querySelector('.inner-scene');if(!scene||scene.classList.contains('future-self-redesign'))return;
         scene.className='inner-scene future-self-redesign';scene.removeAttribute('style');
-        scene.innerHTML='<svg viewBox="0 0 640 400" role="img" aria-label="שתי דמויות כלליות ללא תווי פנים נפגשות במרחב רגוע"><defs><radialGradient id="safeGlow"><stop stop-color="#e5cf9e" stop-opacity=".34"/><stop offset="1" stop-color="#e5cf9e" stop-opacity="0"/></radialGradient><linearGradient id="adultTone" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#b6d3c3"/><stop offset="1" stop-color="#6f9f91"/></linearGradient><linearGradient id="youngTone" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d7c7aa"/><stop offset="1" stop-color="#b58f83"/></linearGradient></defs><rect width="640" height="400" fill="#182623"/><circle cx="320" cy="180" r="245" fill="url(#safeGlow)"/><path d="M0 322 Q160 288 320 320 T640 310 V400 H0Z" fill="#20332e"/><g transform="translate(350 72)"><circle cx="65" cy="49" r="37" fill="#c9d8cb"/><path d="M34 97 Q65 76 96 97 Q121 126 116 205 L106 307 H24 L14 205 Q9 126 34 97Z" fill="url(#adultTone)"/><path d="M24 116 Q-2 150 9 207" fill="none" stroke="#9bc7b1" stroke-width="22" stroke-linecap="round"/><path d="M105 116 Q133 140 126 183" fill="none" stroke="#9bc7b1" stroke-width="22" stroke-linecap="round"/></g><g transform="translate(176 142) scale(.8)"><circle cx="65" cy="49" r="37" fill="#d8cfbf"/><path d="M34 97 Q65 76 96 97 Q121 126 116 205 L106 307 H24 L14 205 Q9 126 34 97Z" fill="url(#youngTone)"/><path d="M24 116 Q-2 150 9 207" fill="none" stroke="#c3a79b" stroke-width="22" stroke-linecap="round"/><path d="M105 116 Q133 140 126 183" fill="none" stroke="#c3a79b" stroke-width="22" stroke-linecap="round"/></g><path d="M363 205 Q326 192 294 218" fill="none" stroke="#d8b77a" stroke-width="4" stroke-linecap="round" stroke-dasharray="2 12" opacity=".75"/></svg><div class="future-self-caption">נוכחות רגועה, מרחק מכבד ובחירה להתקרב בקצב שלך</div>';
+        scene.innerHTML='<div class="future-self-stage"><div class="future-memory"><img alt="תמונה 2 — הרגע שאחרי האירוע"><span>תמונה 2 · האירוע הסתיים</span></div><svg class="future-companion" viewBox="0 0 300 400" role="img" aria-label="דמות כללית וחומלת עומדת לצד תמונת הסיום"><defs><linearGradient id="compTone" x1="0" y1="0" x2="1" y2="1"><stop stop-color="#d8c7a6"/><stop offset=".45" stop-color="#a9ccb9"/><stop offset="1" stop-color="#6f9f91"/></linearGradient></defs><circle cx="165" cy="78" r="38" fill="#d5d8c8"/><path d="M123 126 Q164 101 202 128 Q224 167 216 260 L204 361 H116 L106 258 Q99 168 123 126Z" fill="url(#compTone)"/><path d="M119 145 Q81 158 49 194" fill="none" stroke="#b8cfbe" stroke-width="24" stroke-linecap="round"/><path d="M203 145 Q232 178 224 224" fill="none" stroke="#8eb9a7" stroke-width="24" stroke-linecap="round"/><circle cx="45" cy="198" r="13" fill="#d5d8c8"/><path d="M105 365 Q163 384 220 365" fill="none" stroke="#d8b77a" stroke-width="3" opacity=".55"/></svg></div>';
       }
-      function enhance(){bodyMap('s-anchor');bodyMap('s-anchor2');cinema('cinemaScene','observe');cinema('fwdScene','forward');cinema('revScene','reverse');futureSelf();}
+      function syncReadiness(){var checks=Array.from(document.querySelectorAll('#readinessCheck .ready-check')),start=document.getElementById('btnStart'),hint=document.getElementById('startHint');if(!start)return;var ready=checks.length===3&&checks.every(function(c){return c.checked;});start.disabled=!ready;start.setAttribute('aria-disabled',String(!ready));start.style.opacity=ready?'1':'.42';start.style.cursor=ready?'pointer':'not-allowed';if(hint)hint.textContent=ready?'אפשר להתחיל. גם בהמשך אפשר לעצור בכל רגע.':'כדי להתחיל, יש לאשר את שלושת הסעיפים.';}
+      function syncBodyMarkers(){document.querySelectorAll('.body-map-shell').forEach(function(shell){if(shell.dataset.activeZone)return;var section=shell.closest('section');if(section&&section.id==='s-anchor2'){var chosen=section.querySelector('.bodyzone[style*="#d8b77a"],.bodyzone[style*="#ffd166"]');if(chosen)shell.dataset.activeZone=chosen.dataset.zone;}});}
+      function syncFutureImage(){var target=document.querySelector('#s-enter .future-memory img'),source=document.querySelector('#fwd2 img');if(target&&source&&source.src){target.src=source.src;target.style.display='block';}}
+      function enhance(){bodyMap('s-anchor');bodyMap('s-anchor2');cinema('cinemaScene','observe');cinema('fwdScene','forward');cinema('revScene','reverse');futureSelf();syncReadiness();syncBodyMarkers();syncFutureImage();}
+      document.addEventListener('change',function(e){if(e.target&&e.target.matches('.ready-check'))syncReadiness();},true);document.addEventListener('input',function(e){if(e.target&&e.target.matches('.ready-check'))syncReadiness();},true);document.addEventListener('click',function(){setTimeout(function(){syncReadiness();syncBodyMarkers();syncFutureImage();},30);},true);
       if(document.readyState==='loading')document.addEventListener('DOMContentLoaded',enhance);else enhance();setTimeout(enhance,500);
     })();<\/script>`;
     template = template.replace('</body>', visualSync + '</body>');
