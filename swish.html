@@ -453,14 +453,6 @@ footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
         <button class="chip" data-g="m">גבר</button>
         <button class="chip" data-g="f">אישה</button>
       </div>
-      <div id="voice-pick-wrap" style="margin-top:14px">
-        <div style="font-weight:800;margin-bottom:6px">🔊 קול הקריינות</div>
-        <div style="display:flex;gap:8px;justify-content:center;flex-wrap:wrap;align-items:center">
-          <select id="voice-select" class="vin-textbig" style="max-width:280px;font-size:.98rem;padding:10px 14px"></select>
-          <button class="btn ghost" id="voice-test" type="button" style="padding:9px 16px">▶ שמיעה</button>
-        </div>
-        <p class="muted small" id="voice-hint" style="margin:8px 0 0"></p>
-      </div>
     </div>
 
     <div class="demo-stage" aria-hidden="true">
@@ -1348,42 +1340,6 @@ genderCard.querySelectorAll('.chip').forEach(b=>{
     try{ localStorage.setItem('swish-gender', state.gender); }catch(e){}
   });
 });
-
-/* voice (narration) picker */
-const voiceSelect=$('#voice-select'), voiceHint=$('#voice-hint'), voiceTest=$('#voice-test');
-function populateVoices(){
-  const vs=hebrewVoices();
-  const all=('speechSynthesis' in window)? speechSynthesis.getVoices():[];
-  voiceSelect.innerHTML='';
-  if(!('speechSynthesis' in window)){
-    voiceHint.textContent='הדפדפן שלך לא תומך בקריינות קולית.';
-    voiceSelect.disabled=true; voiceTest.disabled=true; return;
-  }
-  const auto=h('option',null,'אוטומטי — הקול העברי הכי טוב'); auto.value=''; voiceSelect.appendChild(auto);
-  const list = vs.length ? vs : all;
-  list.forEach(v=>{
-    const o=h('option',null, v.name+' — '+v.lang); o.value=v.name;
-    if(state.voiceName===v.name) o.selected=true;
-    voiceSelect.appendChild(o);
-  });
-  if(state.voiceName) voiceSelect.value=state.voiceName;
-  if(!vs.length){
-    voiceHint.innerHTML='לא נמצא קול <b>עברי</b> במכשיר. להתקנת קול עברי טבעי: '
-      +'<b>אייפון</b> — הגדרות ← נגישות ← תוכן מדובר ← קולות ← עברית (למשל "כרמית" באיכות משופרת). '
-      +'<b>אנדרואיד</b> — הגדרות ← נגישות ← פלט טקסט־לדיבור ← מנוע Google + הורדת עברית. '
-      +'<b>מחשב</b> — Chrome/Edge משתמשים בקולות מערכת ההפעלה.';
-  } else {
-    voiceHint.innerHTML='טיפ: לקול טבעי יותר, '+g('בחר','בחרי')+' קול שכתוב לידו <b>Enhanced/Premium/Natural</b>, או '
-      +'התקן/י קול עברי משופר בהגדרות המכשיר.';
-  }
-}
-voiceSelect.addEventListener('change',()=>{
-  state.voiceName=voiceSelect.value||null;
-  try{ if(state.voiceName) localStorage.setItem('swish-voice',state.voiceName); else localStorage.removeItem('swish-voice'); }catch(e){}
-});
-voiceTest.addEventListener('click',()=>{ audio(); speak(sentence()); });
-populateVoices();
-if('speechSynthesis' in window) speechSynthesis.addEventListener('voiceschanged', populateVoices);
 
 /* ---------- flow engine ---------- */
 const EMOTIONS=['פחד','חרדה','כעס','עצב','בושה','אשמה','תסכול','דחייה','חוסר ערך','לחץ'];
