@@ -1,0 +1,357 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>מסע 8 הזהויות | תוכנית קבוצתית · דוד אינגבר</title>
+<meta name="description" content="אתה מבין שזאת חרדה. אז למה הגוף עדיין מתנהג כאילו אתה בסכנה? תוכנית קבוצתית בת 8 שבועות לחזור לסמוך על עצמך.">
+<meta name="theme-color" content="#F4F1EA">
+<meta property="og:type" content="website">
+<meta property="og:title" content="מסע 8 הזהויות | תוכנית קבוצתית בת 8 שבועות">
+<meta property="og:description" content="המטרה היא לא שלא תרגיש יותר חרדה. המטרה היא שלא תאבד את עצמך בכל פעם שהיא מגיעה.">
+<style>
+:root {
+  --bg:        #F4F1EA;
+  --bg-soft:   #FBFAF6;
+  --sand:      #EBE4D6;
+  --sand-deep: #DED4C0;
+  --ink:       #23211C;
+  --ink-soft:  #4A463D;
+  --ink-faint: #6E6A5E;
+  --line:      #E2DBCC;
+  --sage:      #6E8B7B;
+  --sage-deep: #4E6A5A;
+  --sage-tint: #EAF0EB;
+  --teal:      #5E827E;
+  --rust:      #B4794C;
+  --rust-tint: #F3E7DB;
+  --gold:      #C79A45;
+  --gold-tint: #F6EDD9;
+  --radius:    18px;
+  --radius-sm: 12px;
+  --shadow:    0 10px 40px rgba(60, 52, 36, 0.08);
+  --shadow-sm: 0 4px 18px rgba(60, 52, 36, 0.06);
+  --content:   700px;
+  --ease:      cubic-bezier(0.22, 0.61, 0.36, 1);
+  --font: "Assistant", "Heebo", "Rubik", "Segoe UI", system-ui, -apple-system, "Arial Hebrew", Arial, sans-serif;
+}
+* { box-sizing: border-box; margin: 0; padding: 0; }
+body {
+  background: var(--bg);
+  color: var(--ink);
+  font-family: var(--font);
+  font-size: 17px;
+  line-height: 1.7;
+  -webkit-font-smoothing: antialiased;
+  min-height: 100vh;
+  overflow-x: hidden;
+  padding-bottom: 78px;
+}
+body::before {
+  content: "";
+  position: fixed;
+  inset: 0;
+  background:
+    radial-gradient(1200px 700px at 100% -10%, rgba(110, 139, 123, 0.10), transparent 60%),
+    radial-gradient(1000px 600px at -10% 110%, rgba(180, 121, 76, 0.06), transparent 55%);
+  pointer-events: none;
+  z-index: 0;
+}
+.stage { position: relative; z-index: 1; max-width: var(--content); margin: 0 auto; padding: 48px 20px 20px; }
+.reveal { opacity: 0; transform: translateY(10px); animation: rise 0.55s var(--ease) forwards; }
+@keyframes rise { from { opacity: 0; transform: translateY(14px); } to { opacity: 1; transform: translateY(0); } }
+h1 { font-size: clamp(2rem, 7vw, 2.9rem); line-height: 1.16; font-weight: 700; letter-spacing: -0.01em; color: var(--ink); text-wrap: balance; }
+h2 { font-size: clamp(1.4rem, 5vw, 1.8rem); line-height: 1.28; font-weight: 700; text-wrap: balance; }
+p + p { margin-top: 0.9em; }
+.muted { color: var(--ink-faint); }
+.center { text-align: center; }
+.hero { text-align: center; }
+.hero .sub { font-size: 1.18rem; color: var(--sage-deep); font-weight: 600; margin-top: 14px; }
+.hero .desc { max-width: 40ch; margin: 16px auto 0; color: var(--ink-soft); font-size: 1.08rem; }
+.badge-row { margin: 0 0 6px; }
+.eyebrow { display: inline-flex; align-items: center; gap: 8px; font-size: 13px; font-weight: 600; letter-spacing: 0.02em; color: var(--sage-deep); background: var(--sage-tint); border: 1px solid rgba(110, 139, 123, 0.24); padding: 7px 14px; border-radius: 999px; text-align: center; }
+
+section.block { margin-top: 56px; }
+.kicker { display: block; font-size: 0.86rem; font-weight: 700; letter-spacing: 0.03em; color: var(--sage-deep); margin-bottom: 8px; }
+
+.thoughts { display: flex; flex-direction: column; gap: 10px; }
+.thought { background: var(--bg-soft); border: 1px solid var(--line); border-radius: 14px; padding: 12px 18px; color: var(--ink-soft); font-size: 1.02rem; }
+.thought.spoken { color: var(--ink); font-weight: 600; }
+
+.card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 26px 24px; box-shadow: var(--shadow-sm); }
+.checklist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.checklist li { position: relative; padding-inline-start: 34px; color: var(--ink-soft); font-size: 1.03rem; }
+.checklist li::before { content: ""; position: absolute; inset-inline-start: 0; top: 0.42em; width: 18px; height: 18px; border-radius: 6px; background: var(--sage-tint); border: 1.5px solid var(--sage); }
+.checklist li::after { content: ""; position: absolute; inset-inline-start: 6px; top: 0.55em; width: 5px; height: 9px; border: solid var(--sage-deep); border-width: 0 0 2px 2px; transform: rotate(-45deg); }
+
+.xlist { list-style: none; display: flex; flex-direction: column; gap: 12px; }
+.xlist li { position: relative; padding-inline-start: 34px; color: var(--ink-soft); font-size: 1.03rem; }
+.xlist li::before { content: ""; position: absolute; inset-inline-start: 0; top: 0.42em; width: 18px; height: 18px; border-radius: 6px; background: var(--rust-tint); border: 1.5px solid var(--rust); }
+.xlist li::after { content: "\2715"; position: absolute; inset-inline-start: 3px; top: 0.16em; font-size: 11px; line-height: 18px; color: var(--rust); }
+
+.highlight { background: var(--sage-tint); border: 1px solid rgba(110, 139, 123, 0.28); border-inline-start: 4px solid var(--sage); border-radius: var(--radius-sm); padding: 18px 20px; color: var(--sage-deep); font-weight: 600; font-size: 1.05rem; line-height: 1.55; }
+.highlight.big { font-size: 1.25rem; text-align: center; border-inline-start: none; border: 1px solid rgba(110, 139, 123, 0.28); padding: 26px 24px; }
+
+.spacer-s { height: 16px; }
+.spacer-m { height: 26px; }
+.spacer-l { height: 38px; }
+
+/* syllabus */
+.weeks { display: flex; flex-direction: column; gap: 10px; counter-reset: week; }
+.week { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-sm); padding: 16px 18px; position: relative; padding-inline-start: 58px; }
+.week-num { position: absolute; inset-inline-start: 14px; top: 16px; width: 32px; height: 32px; border-radius: 50%; background: var(--sage-tint); border: 1.5px solid var(--sage); color: var(--sage-deep); font-weight: 700; font-size: 0.95rem; display: flex; align-items: center; justify-content: center; }
+.week-topic { font-weight: 700; color: var(--ink); margin-bottom: 4px; }
+.week-shift { color: var(--ink-soft); font-size: 0.98rem; }
+.week-shift .from { color: var(--ink-faint); }
+.week-shift .arrow { color: var(--sage); margin: 0 4px; }
+.week-shift .to { color: var(--sage-deep); font-weight: 600; }
+
+/* format */
+.format-list { display: flex; flex-direction: column; gap: 14px; }
+.format-item { display: flex; gap: 14px; align-items: flex-start; }
+.format-dot { flex: 0 0 10px; width: 10px; height: 10px; border-radius: 50%; background: var(--sage); margin-top: 8px; }
+.format-item strong { color: var(--ink); }
+.format-item span { color: var(--ink-soft); }
+
+/* fit cards */
+.fit-grid { display: flex; flex-direction: column; gap: 16px; }
+.fit-card { border-radius: var(--radius); padding: 22px 22px; }
+.fit-card.yes { background: var(--sage-tint); border: 1px solid rgba(110,139,123,0.3); }
+.fit-card.no { background: var(--rust-tint); border: 1px solid rgba(180,121,76,0.28); }
+.fit-card h3 { font-size: 1.1rem; margin-bottom: 12px; }
+.fit-card.yes h3 { color: var(--sage-deep); }
+.fit-card.no h3 { color: var(--rust); }
+
+/* price */
+.price-card { background: var(--bg-soft); border: 1.5px solid var(--sage); border-radius: var(--radius); padding: 30px 26px; box-shadow: var(--shadow); text-align: center; }
+.price-tag { font-size: 2.4rem; font-weight: 700; color: var(--ink); margin: 6px 0 2px; }
+.price-tag .cur { font-size: 1.2rem; font-weight: 600; color: var(--ink-soft); }
+.price-note { color: var(--ink-faint); font-size: 0.94rem; }
+.price-meta { display: flex; justify-content: center; gap: 22px; margin-top: 18px; flex-wrap: wrap; }
+.price-meta div { text-align: center; }
+.price-meta strong { display: block; color: var(--ink); font-size: 1.05rem; }
+.price-meta span { color: var(--ink-faint); font-size: 0.86rem; }
+
+/* faq */
+.faq { display: flex; flex-direction: column; gap: 10px; }
+.faq-item { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius-sm); overflow: hidden; }
+.faq-item summary { cursor: pointer; list-style: none; padding: 16px 20px; font-weight: 600; color: var(--ink); display: flex; justify-content: space-between; align-items: center; gap: 12px; }
+.faq-item summary::-webkit-details-marker { display: none; }
+.faq-item summary::after { content: "+"; font-size: 1.3rem; color: var(--sage-deep); flex-shrink: 0; transition: transform 0.2s var(--ease); }
+.faq-item[open] summary::after { transform: rotate(45deg); }
+.faq-item .faq-a { padding: 0 20px 18px; color: var(--ink-soft); }
+
+.cta { appearance: none; border: none; cursor: pointer; font-family: inherit; font-size: 1.1rem; font-weight: 700; width: 100%; min-height: 56px; padding: 16px 24px; border-radius: 14px; background: linear-gradient(180deg, var(--sage), var(--sage-deep)); color: #fff; box-shadow: 0 10px 26px rgba(78, 106, 90, 0.30); transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease); text-decoration: none; display: inline-flex; align-items: center; justify-content: center; gap: 10px; margin-top: 6px; }
+.cta:hover { transform: translateY(-2px); box-shadow: 0 14px 32px rgba(78, 106, 90, 0.38); }
+.cta:active { transform: translateY(0); }
+
+.final-card { background: var(--bg-soft); border: 1px solid var(--line); border-radius: var(--radius); padding: 30px 26px; box-shadow: var(--shadow); text-align: center; }
+.final-card p { color: var(--ink-soft); }
+
+.disclaimer { font-size: 0.88rem; color: var(--ink-faint); background: var(--sand); border: 1px solid var(--sand-deep); border-radius: 12px; padding: 14px 16px; line-height: 1.55; }
+.signature { text-align: center; margin-top: 6px; color: var(--ink-faint); font-size: 0.98rem; font-weight: 600; }
+.signature .role { color: var(--ink-faint); font-weight: 400; }
+
+.sticky-cta { position: fixed; inset-inline: 0; bottom: 0; z-index: 20; background: var(--bg-soft); border-top: 1px solid var(--line); box-shadow: 0 -8px 24px rgba(60,52,36,0.10); padding: 10px 16px; display: none; }
+.sticky-cta a { margin: 0; }
+@media (max-width: 640px) { .sticky-cta { display: block; } }
+
+@media (max-width: 390px) {
+  body { font-size: 16px; }
+  .stage { padding: 34px 16px 20px; }
+  .card, .price-card, .final-card { padding: 22px 18px; }
+}
+@media (prefers-reduced-motion: reduce) { *, *::before, *::after { animation: none !important; transition: none !important; } }
+</style>
+</head>
+<body>
+<main class="stage">
+
+  <section class="hero">
+    <div class="badge-row reveal" style="animation-delay:0ms"><span class="eyebrow">תוכנית קבוצתית · 8 שבועות · מחזור חדש נפתח בקרוב</span></div>
+    <h1 class="reveal" style="animation-delay:60ms">מסע 8 הזהויות</h1>
+    <p class="sub reveal" style="animation-delay:110ms">מהישרדות פנימית להנהגה עצמית</p>
+    <p class="desc reveal" style="animation-delay:160ms">אתה מבין שזאת חרדה. אז למה הגוף שלך עדיין מתנהג כאילו אתה בסכנה?</p>
+    <div class="spacer-m"></div>
+    <a class="cta reveal" style="animation-delay:200ms" href="#fit">לקביעת שיחת התאמה</a>
+    <p class="muted reveal" style="animation-delay:230ms; font-size:0.9rem; margin-top:10px;">מחיר גלוי בהמשך הדף. קבוצה קטנה, 8 עד 15 משתתפים.</p>
+  </section>
+
+  <section class="block">
+    <span class="kicker">זה לא שאתה לא מבין</span>
+    <h2>זה שהגוף לא מקשיב להבנה</h2>
+    <div class="spacer-m"></div>
+    <div class="thoughts reveal">
+      <div class="thought spoken">"אני יודע שזה חרדה, אבל זה עדיין מרגיש אמיתי."</div>
+      <div class="thought spoken">"אני מבין הכול, והגוף עדיין לא מקשיב."</div>
+      <div class="thought spoken">"אני כל הזמן בודק את עצמי."</div>
+      <div class="thought spoken">"אני מפחד מההתקף הבא."</div>
+    </div>
+    <div class="spacer-m"></div>
+    <div class="card">
+      <p style="font-weight:600; margin-bottom:14px;">מבחוץ אתה מתפקד. עובד, מנהל זוגיות, נשמע הגיוני. בפנים זה נראה אחרת:</p>
+      <ul class="checklist">
+        <li>כל תחושה בגוף הופכת לחקירה</li>
+        <li>כל מחשבה נבדקת פעמיים, ואז שוב</li>
+        <li>יציאה מהבית עוברת קודם דרך "מה אם"</li>
+        <li>אתה מרגיש בטוח יותר כשמישהו נמצא לידך</li>
+      </ul>
+    </div>
+    <div class="spacer-m"></div>
+    <div class="highlight">הבעיה אינה שאין לך מספיק אומץ. הבעיה היא שכל מה שאתה עושה כדי להרגיש בטוח, מלמד את המוח שלך שיש ממה לפחד.</div>
+  </section>
+
+  <section class="block">
+    <span class="kicker">כבר ניסית</span>
+    <h2>אז למה זה חוזר?</h2>
+    <div class="spacer-m"></div>
+    <p>גוגל. רופאים. בדיקות דם. אישור מבן זוג שהכול בסדר. נשימות, מדיטציה, אולי גם פסיכולוג. כל אחד מהם נותן הקלה לכמה שעות, ואז חוזר אותו דבר.</p>
+    <p>וזה לא כי לא ניסית מספיק. זה כי כל בדיקה חוזרת מוכיחה למוח שלך שהיה משהו לבדוק. כל הרגעה חיצונית מלמדת אותו שהוא לא יכול לסמוך על עצמו. המעגל לא נשבר, הוא רק מתחדש בכל פעם מחדש.</p>
+    <div class="spacer-m"></div>
+    <div class="highlight">התוכנית הזאת לא בנויה רק על שיחה והבנה. היא בנויה על לזהות את המעגל שלך בזמן אמת, לתרגל תגובה אחרת, וללוות אותך שבוע אחרי שבוע ביישום.</div>
+  </section>
+
+  <section class="block">
+    <span class="kicker">הגישה שלי</span>
+    <h2>אני לא בונה בית חולים מתחת לגשר. אני מסדר את הגשר.</h2>
+    <div class="spacer-m"></div>
+    <p>אני לא נותן לך עוד כלי להילחם בחרדה. אנחנו עובדים על זהות: מי אתה כשאתה לא בהישרדות.</p>
+    <p>המנגנון המרכזי הוא ההורה המיטיב של עצמך. לא רק "לדבר אל הילד הפנימי", אלא ללמוד להיות ההורה, עם סמכות וחמלה, שרואה את הפחד כחלק מפוחד שמבקש מענה, לא כתקלה שצריך לתקן.</p>
+  </section>
+
+  <section class="block">
+    <div class="highlight big reveal">המטרה היא לא שלא תרגיש יותר חרדה.<br>המטרה היא שלא תאבד את עצמך בכל פעם שהיא מגיעה.</div>
+  </section>
+
+  <section class="block">
+    <span class="kicker">המבנה</span>
+    <h2>מסע של 8 שבועות. 8 מעברי זהות.</h2>
+    <div class="spacer-s"></div>
+    <p class="muted">כל שבוע לוקח אותך צעד אחד קדימה, מהמקום שבו החרדה מנהלת אותך, למקום שבו אתה מנהיג את עצמך.</p>
+    <div class="spacer-m"></div>
+    <div class="weeks">
+      <div class="week"><div class="week-num">1</div><div class="week-topic">להבין את המערכת</div><div class="week-shift"><span class="from">"משהו לא בסדר בי"</span><span class="arrow">←</span><span class="to">"יש בי מערכת שמגנה עליי"</span></div></div>
+      <div class="week"><div class="week-num">2</div><div class="week-topic">לזהות את מעגל ההישרדות</div><div class="week-shift"><span class="from">"החרדה פשוט קורה לי"</span><span class="arrow">←</span><span class="to">"אני רואה את הדפוס בזמן אמת"</span></div></div>
+      <div class="week"><div class="week-num">3</div><div class="week-topic">להפסיק להילחם</div><div class="week-shift"><span class="from">"אני המחשבות שלי"</span><span class="arrow">←</span><span class="to">"יש בי משהו רחב יותר"</span></div></div>
+      <div class="week"><div class="week-num">4</div><div class="week-topic">להנהיג את הגוף</div><div class="week-shift"><span class="from">"הגוף שלי מסוכן"</span><span class="arrow">←</span><span class="to">"אני יכול להרגיש ולהישאר בטוח"</span></div></div>
+      <div class="week"><div class="week-num">5</div><div class="week-topic">להנהיג את המחשבות</div><div class="week-shift"><span class="from">"המחשבה קובעת מה מסוכן"</span><span class="arrow">←</span><span class="to">"המחשבה היא הצעה, אני מנהיג אותה"</span></div></div>
+      <div class="week"><div class="week-num">6</div><div class="week-topic">הורות עצמית</div><div class="week-shift"><span class="from">"אני נגד עצמי"</span><span class="arrow">←</span><span class="to">"אני ההורה המיטיב של עצמי"</span></div></div>
+      <div class="week"><div class="week-num">7</div><div class="week-topic">פעולה למרות פחד</div><div class="week-shift"><span class="from">"חייב להרגיש בטוח כדי לפעול"</span><span class="arrow">←</span><span class="to">"פועל גם עם פחד"</span></div></div>
+      <div class="week"><div class="week-num">8</div><div class="week-topic">זהות חדשה והמשכיות</div><div class="week-shift"><span class="from">"שורד"</span><span class="arrow">←</span><span class="to">"מנהיג את חייו"</span></div></div>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="kicker">איך זה נראה בפועל</span>
+    <h2>שבוע אחרי שבוע, לא הכול בבת אחת</h2>
+    <div class="spacer-m"></div>
+    <div class="card">
+      <div class="format-list">
+        <div class="format-item"><div class="format-dot"></div><div><strong>יחידת תוכן שבועית.</strong> <span>חצי שעה עד שעה, מחולקת לקטעים קצרים שאפשר לצפות בהם בזמן שלך.</span></div></div>
+        <div class="format-item"><div class="format-dot"></div><div><strong>תרגיל יישומי.</strong> <span>לא רק ידע, תרגול קונקרטי שנועד לשנות תגובה.</span></div></div>
+        <div class="format-item"><div class="format-dot"></div><div><strong>משימת התבוננות.</strong> <span>לשים לב למה שקורה בחיים האמיתיים שלך במהלך השבוע.</span></div></div>
+        <div class="format-item"><div class="format-dot"></div><div><strong>מפגש זום קבוצתי.</strong> <span>מפגש יישום ותמיכה, לא הרצאה. שאלות, תרגול, פירוק מקרים.</span></div></div>
+        <div class="format-item"><div class="format-dot"></div><div><strong>ליווי בין המפגשים.</strong> <span>אתה לא נשאר לבד עם מה שעולה במהלך השבוע.</span></div></div>
+      </div>
+    </div>
+    <div class="spacer-m"></div>
+    <div class="highlight">בונוס: פגישה אישית אחת איתי, בזום, בדרך כלל באמצע התוכנית, לעבודה על נקודות ספציפיות שלך.</div>
+  </section>
+
+  <section class="block">
+    <span class="kicker">למי זה מתאים</span>
+    <h2>לפני שממשיכים</h2>
+    <div class="spacer-m"></div>
+    <div class="fit-grid">
+      <div class="fit-card yes">
+        <h3>מתאים לך אם</h3>
+        <ul class="checklist">
+          <li>אתה מבין שהחרדה משפיעה על החיים שלך, לא רק על רגעים בודדים</li>
+          <li>אתה מוכן ללמוד ולתרגל, לא רק לצפות</li>
+          <li>אתה רוצה להפחית הימנעות ובדיקות, לא רק "להרגיע" את הרגע</li>
+          <li>אתה יכול להשתתף במסגרת קבוצתית</li>
+          <li>אתה מחפש תהליך מסודר, לא עוד טכניקה בודדת</li>
+        </ul>
+      </div>
+      <div class="fit-card no">
+        <h3>כנראה לא מתאים לך אם</h3>
+        <ul class="xlist">
+          <li>אתה נמצא במצב חירום נפשי או רפואי</li>
+          <li>אתה זקוק למסגרת אישית ואינטנסיבית יותר</li>
+          <li>אתה לא זמין לתרגל בין המפגשים</li>
+          <li>אתה מחפש הבטחה שהחרדה תיעלם לגמרי</li>
+          <li>אתה רוצה רק לצפות, בלי להשתתף</li>
+        </ul>
+      </div>
+    </div>
+    <div class="spacer-m"></div>
+    <p class="muted">אין חובה לשתף בקבוצה מה שלא רוצה. אפשר להשתתף וללמוד ברמת הנוחות שלך.</p>
+  </section>
+
+  <section class="block" id="price">
+    <span class="kicker">המחיר</span>
+    <h2>גלוי, בלי הפתעות בשיחה</h2>
+    <div class="spacer-m"></div>
+    <div class="price-card">
+      <div class="eyebrow">מחזור הבדיקה הקרוב</div>
+      <div class="price-tag">2,600 <span class="cur">₪</span></div>
+      <div class="price-note">טווח 2,400 עד 2,800 ₪ למחזור הראשון. המחיר עולה במחזורים הבאים.</div>
+      <div class="price-meta">
+        <div><strong>8 שבועות</strong><span>תוכן + מפגש זום שבועי</span></div>
+        <div><strong>8 עד 15</strong><span>משתתפים בקבוצה</span></div>
+        <div><strong>1</strong><span>פגישה אישית איתי</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="block">
+    <span class="kicker">שאלות שעולות</span>
+    <h2>לפני שקובעים שיחה</h2>
+    <div class="spacer-m"></div>
+    <div class="faq">
+      <details class="faq-item">
+        <summary>כבר הייתי בטיפול וזה לא עזר. למה זה יהיה שונה?</summary>
+        <div class="faq-a">התוכנית לא בנויה רק על שיחה והבנה. אתה לומד לזהות את המעגל שלך, מתרגל תגובות אחרות, ומיושם שבוע אחרי שבוע עם הכוונה קבועה.</div>
+      </details>
+      <details class="faq-item">
+        <summary>איך קבוצה יכולה להתאים לבעיה האישית שלי?</summary>
+        <div class="faq-a">הצורה שבה החרדה מופיעה משתנה מאדם לאדם, אבל המנגנון שמזין אותה חוזר על עצמו. הקבוצה מלמדת את המנגנון, והתרגילים מותאמים לכל אחד בנפרד.</div>
+      </details>
+      <details class="faq-item">
+        <summary>אני מפחד להיחשף מול אנשים</summary>
+        <div class="faq-a">אין חובה לשתף מה שלא רוצה. אפשר להשתתף וללמוד לפי רמת הנוחות שלך, והרבה מהעבודה היא אישית גם בתוך המסגרת הקבוצתית.</div>
+      </details>
+      <details class="faq-item">
+        <summary>אין לי זמן לתהליך כזה</summary>
+        <div class="faq-a">התוכנית דורשת זמן שבועי מוגדר, אבל המטרה שלה להחזיר לך זמן ואנרגיה שמתבזבזים היום על בדיקות, הימנעות ומאבק פנימי.</div>
+      </details>
+      <details class="faq-item">
+        <summary>מה אם המצב שלי חמור מדי בשביל קבוצה?</summary>
+        <div class="faq-a">בדיוק בשביל זה יש שיחת התאמה לפני ההצטרפות. מי שזקוק למסגרת אחרת יקבל המלצה ישרה, ולא יצורף לקבוצה בכוח.</div>
+      </details>
+    </div>
+  </section>
+
+  <section class="block" id="fit">
+    <div class="final-card">
+      <h2>המקום הבא הוא שיחת התאמה קצרה</h2>
+      <div class="spacer-s"></div>
+      <p>לפני שמצטרפים למחזור, יש שיחה קצרה אחד על אחד, לוודא שהתוכנית מתאימה לך עכשיו. לא כולם מתאימים, וזה בסדר.</p>
+      <div class="spacer-m"></div>
+      <a class="cta" href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%20%D7%93%D7%95%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%9C%D7%A9%D7%9E%D7%95%D7%A2%20%D7%A4%D7%A8%D7%98%D7%99%D7%9D%20%D7%A2%D7%9C%20%D7%9E%D7%A1%D7%A2%208%20%D7%94%D7%96%D7%94%D7%95%D7%99%D7%95%D7%AA%20%D7%95%D7%9C%D7%A7%D7%91%D7%95%D7%A2%20%D7%A9%D7%99%D7%97%D7%AA%20%D7%94%D7%AA%D7%90%D7%9E%D7%94" target="_blank" rel="noopener">לקביעת שיחת התאמה בוואטסאפ</a>
+    </div>
+  </section>
+
+  <div class="spacer-l"></div>
+  <div class="signature">דוד אינגבר <span class="role">| טיפול ואימון רגשי</span></div>
+  <div class="spacer-m"></div>
+  <div class="disclaimer">התוכנית היא כלי ללמידה ולתרגול ואינה תחליף לאבחון או לטיפול פסיכיאטרי במקרה של מצב חירום נפשי. במקרה של מצוקה קשה יש לפנות לגורם מקצועי מתאים או לקו הסיוע בטלפון 1201.</div>
+
+</main>
+
+<div class="sticky-cta">
+  <a class="cta" href="#fit">לקביעת שיחת התאמה</a>
+</div>
+
+</body>
+</html>
