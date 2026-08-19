@@ -97,18 +97,14 @@
     .hero-copy{position:relative;z-index:2}
     .hero-copy h1{font-size:clamp(44px,6.4vw,76px);max-width:650px}
     .hero-copy .lead{max-width:610px}
-    .hero-visual{position:relative;min-height:420px;display:grid;place-items:center;isolation:isolate}
-    .hero-visual:before{content:"";position:absolute;width:85%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 60% 38%,rgba(255,253,248,.95),rgba(220,232,228,.72) 45%,rgba(167,95,70,.10) 72%,transparent 73%);filter:drop-shadow(0 24px 35px rgba(41,68,62,.12));z-index:-1}
-    .trust-map{width:100%;max-width:390px;overflow:visible;filter:drop-shadow(0 16px 20px rgba(41,68,62,.10))}
-    .trust-map .loop{fill:none;stroke:var(--rust);stroke-width:8;stroke-linecap:round;opacity:.78}
-    .trust-map .path{fill:none;stroke:var(--sage-dark);stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
-    .trust-map .soft{fill:none;stroke:var(--sage);stroke-width:3;stroke-linecap:round;opacity:.42}
-    .trust-map .dot{fill:#efc39c;stroke:var(--white);stroke-width:5}
-    .visual-note{position:absolute;bottom:30px;right:50%;transform:translateX(50%);width:max-content;max-width:90%;padding:10px 16px;border:1px solid rgba(41,68,62,.10);border-radius:999px;background:rgba(255,253,248,.82);backdrop-filter:blur(10px);color:var(--sage-dark);font-size:14px;font-weight:700;box-shadow:0 10px 30px rgba(41,68,62,.10)}
+    .hero-visual{position:relative;min-height:440px;border-radius:26px;overflow:hidden;background:#e9dfcf;box-shadow:0 24px 50px rgba(41,68,62,.16)}
+    .hero-photo{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:55% center;transform:scale(1.015)}
+    .hero-visual:after{content:"";position:absolute;inset:0;background:linear-gradient(180deg,transparent 45%,rgba(24,40,36,.40));pointer-events:none}
+    .visual-note{position:absolute;z-index:2;bottom:22px;right:22px;left:22px;padding:12px 15px;border:1px solid rgba(255,255,255,.30);border-radius:15px;background:rgba(255,253,248,.76);backdrop-filter:blur(12px);color:var(--sage-dark);font-size:14px;font-weight:750;text-align:center;box-shadow:0 10px 30px rgba(24,40,36,.16)}
     footer{padding:0 18px max(22px,env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:12px}
     .hidden{display:none!important}
-    @media (max-width:760px){.hero-card{grid-template-columns:1fr;gap:12px}.hero-visual{min-height:260px;order:-1}.trust-map{max-width:280px}.visual-note{bottom:5px}.hero-copy{text-align:center}.hero-copy .lead{font-size:19px}.hero-copy h1{font-size:clamp(38px,12vw,57px);letter-spacing:-1.4px}.hero-copy .badge{margin-bottom:18px}}
-    @media (max-width:520px){.topbar{padding-inline:14px}.brand{font-size:12px}main{padding-top:12px}.card{border-radius:24px}.question-wrap{min-height:500px}.count{display:none}.hero-card{padding:24px 21px 27px}.hero-visual{min-height:225px}.trust-map{max-width:235px}.visual-note{font-size:12px;padding:8px 12px}.hero-copy .lead{margin-bottom:20px}}
+    @media (max-width:760px){.hero-card{grid-template-columns:1fr;gap:22px}.hero-visual{min-height:300px;order:-1}.hero-photo{object-position:center 56%}.hero-copy{text-align:center}.hero-copy .lead{font-size:19px}.hero-copy h1{font-size:clamp(38px,12vw,57px);letter-spacing:-1.4px}.hero-copy .badge{margin-bottom:18px}}
+    @media (max-width:520px){.topbar{padding-inline:14px}.brand{font-size:12px}main{padding-top:12px}.card{border-radius:24px}.question-wrap{min-height:500px}.count{display:none}.hero-card{padding:18px 18px 27px}.hero-visual{min-height:270px;border-radius:19px}.visual-note{bottom:14px;right:14px;left:14px;font-size:12px;padding:9px 11px}.hero-copy .lead{margin-bottom:20px}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
@@ -128,13 +124,7 @@
           <p class="micro">לא נשמרות תשובות ואין כאן אבחון רפואי או נפשי.</p>
         </div>
         <div class="hero-visual" aria-hidden="true">
-          <svg class="trust-map" viewBox="0 0 420 420" role="img">
-            <path class="soft" d="M70 90C138 28 288 40 348 122C408 205 353 333 255 369"/>
-            <path class="soft" d="M52 286C88 360 177 395 258 368"/>
-            <path class="loop" d="M106 209C106 135 206 113 245 172C283 229 205 290 158 244C120 207 154 158 198 169C243 180 247 245 203 267"/>
-            <path class="path" d="M204 267C232 303 274 313 308 290C341 267 352 226 337 191"/>
-            <circle class="dot" cx="337" cy="191" r="15"/>
-          </svg>
+          <img class="hero-photo" alt="" loading="eager" decoding="async" data-image-source="assets/self-trust-hero.b64">
           <div class="visual-note">מהסחרור הפנימי אל בחירה ואמון</div>
         </div>
       </div>
@@ -228,6 +218,8 @@
   <footer>הבדיקה מיועדת להתבוננות עצמית ואינה מחליפה ייעוץ, אבחון או טיפול מקצועי.</footer>
 </div>
 <script>
+  const heroPhoto=document.querySelector('[data-image-source]');
+  if(heroPhoto){fetch(heroPhoto.dataset.imageSource).then(r=>r.text()).then(data=>{heroPhoto.src=`data:image/webp;base64,${data.trim()}`}).catch(()=>{});}
   const questions = [
     { text:"כשעולה מחשבה מפחידה, אני מנסה לשכנע את עצמי שהיא לא נכונה או להחליף אותה במחשבה אחרת.", weights:{fighter:2, checker:0, firefighter:0}},
     { text:"כשאני מרגיש שינוי בגוף, אני בודק דופק, נשימה, תחושה או סימן אחר כדי לוודא שאני בסדר.", weights:{fighter:0, checker:2, firefighter:0}},
