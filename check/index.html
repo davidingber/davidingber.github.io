@@ -103,17 +103,24 @@
     .visual-note{position:absolute;z-index:2;bottom:22px;right:22px;left:22px;padding:12px 15px;border:1px solid rgba(255,255,255,.30);border-radius:15px;background:rgba(255,253,248,.76);backdrop-filter:blur(12px);color:var(--sage-dark);font-size:14px;font-weight:750;text-align:center;box-shadow:0 10px 30px rgba(24,40,36,.16)}
     footer{padding:0 18px max(22px,env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:12px}
     .hidden{display:none!important}
+    .skip-link{position:fixed;z-index:200;top:8px;right:8px;transform:translateY(-150%);background:#fff;color:#172522;padding:10px 14px;border-radius:10px}.skip-link:focus{transform:none}
+    :focus-visible{outline:3px solid #b7684d;outline-offset:3px}
+    .a11y-toggle{position:fixed;z-index:100;left:18px;bottom:18px;width:52px;height:52px;border:0;border-radius:50%;background:#173f38;color:#fff;font-size:23px;box-shadow:0 12px 32px rgba(23,63,56,.28)}
+    .a11y-panel{position:fixed;z-index:101;left:18px;bottom:80px;width:min(320px,calc(100vw - 36px));padding:18px;background:#fffdf8;color:#172522;border:1px solid rgba(23,37,34,.16);border-radius:18px;box-shadow:0 22px 70px rgba(23,37,34,.22)}
+    .a11y-panel[hidden]{display:none}.a11y-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:12px}.a11y-head strong{font-size:19px}.a11y-close{border:0;background:transparent;font-size:24px}.a11y-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}.a11y-actions button{border:1px solid rgba(23,37,34,.16);border-radius:11px;padding:11px 8px;background:#f6f1e8;color:#172522;font-weight:700}.a11y-links{margin:13px 0 0;font-size:13px;text-align:center}.a11y-links a{color:#29443e}.footer-links{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:8px}.footer-links a{color:inherit}
+    body.a11y-large{font-size:125%}body.a11y-contrast{background:#000!important;color:#fff!important}body.a11y-contrast .card,body.a11y-contrast .topbar,body.a11y-contrast .a11y-panel{background:#000!important;color:#fff!important;border-color:#fff!important}body.a11y-contrast p,body.a11y-contrast .lead,body.a11y-contrast .copy,body.a11y-contrast .micro{color:#fff!important}body.a11y-contrast .a11y-actions button{background:#000;color:#fff;border-color:#fff}body.a11y-underline a{text-decoration:underline!important;text-decoration-thickness:2px!important}body.a11y-reduce *,body.a11y-reduce *:before,body.a11y-reduce *:after{animation:none!important;transition:none!important;scroll-behavior:auto!important}
     @media (max-width:760px){.hero-card{grid-template-columns:1fr;gap:22px}.hero-visual{min-height:300px;order:-1}.hero-photo{object-position:center 56%}.hero-copy{text-align:center}.hero-copy .lead{font-size:19px}.hero-copy h1{font-size:clamp(38px,12vw,57px);letter-spacing:-1.4px}.hero-copy .badge{margin-bottom:18px}}
     @media (max-width:520px){.topbar{padding-inline:14px}.brand{font-size:12px}main{padding-top:12px}.card{border-radius:24px}.question-wrap{min-height:500px}.count{display:none}.hero-card{padding:18px 18px 27px}.hero-visual{min-height:270px;border-radius:19px}.visual-note{bottom:14px;right:14px;left:14px;font-size:12px;padding:9px 11px}.hero-copy .lead{margin-bottom:20px}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
 <body>
+<a class="skip-link" href="#main-content">דילוג לתוכן המרכזי</a>
 <div class="app">
   <header class="topbar">
     <div class="topline"><span class="brand">דוד אינגבר</span><div class="progress"><i id="bar"></i></div><span class="count" id="count">1 מתוך 8</span></div>
   </header>
-  <main>
+  <main id="main-content">
     <section class="screen active hero-screen" data-step="1">
       <div class="card hero-card">
         <div class="hero-copy">
@@ -215,8 +222,10 @@
       </div>
     </section>
   </main>
-  <footer>הבדיקה מיועדת להתבוננות עצמית ואינה מחליפה ייעוץ, אבחון או טיפול מקצועי.</footer>
+  <footer>הבדיקה מיועדת להתבוננות עצמית ואינה מחליפה ייעוץ, אבחון או טיפול מקצועי.<div class="footer-links"><a href="/privacy/">מדיניות פרטיות</a><a href="/accessibility/">הצהרת נגישות</a></div></footer>
 </div>
+<button class="a11y-toggle" type="button" aria-label="פתיחת תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">♿</button>
+<aside class="a11y-panel" id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות" hidden><div class="a11y-head"><strong>אפשרויות נגישות</strong><button class="a11y-close" type="button" aria-label="סגירת תפריט נגישות">×</button></div><div class="a11y-actions"><button type="button" data-a11y="large">הגדלת טקסט</button><button type="button" data-a11y="contrast">ניגודיות גבוהה</button><button type="button" data-a11y="underline">הדגשת קישורים</button><button type="button" data-a11y="reduce">עצירת תנועה</button><button type="button" data-a11y="reset" style="grid-column:1/-1">איפוס התאמות</button></div><p class="a11y-links"><a href="/accessibility/">להצהרת הנגישות המלאה</a></p></aside>
 <script>
   const heroPhoto=document.querySelector('[data-image-source]');
   if(heroPhoto){fetch(heroPhoto.dataset.imageSource).then(r=>r.text()).then(data=>{heroPhoto.src=`data:image/webp;base64,${data.trim()}`}).catch(()=>{});}
@@ -243,6 +252,15 @@
   function renderResults(){const grid=document.getElementById('resultGrid');grid.innerHTML='';const allZero=answers.every(v=>v===0);const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);document.getElementById('resultIntro').textContent=allZero?'לא זיהינו דפוס שחוזר לעיתים קרובות. ייתכן שהתגובות שלך משתנות לפי המצב, או שהחרדה אינה מפעילה כרגע צורך קבוע בבדיקה, מאבק או כיבוי.':'אצל רוב האנשים מופיע יותר מדפוס אחד. הראשון הוא הבולט כרגע, לא תווית קבועה על מי שאתה.';const visible=allZero?sorted.slice(0,1):sorted.filter(([,v])=>v>0).slice(0,3);visible.forEach(([key],i)=>{const d=document.createElement('div');d.className='result '+(i===0&&!allZero?'top':'');d.innerHTML=`<div class="result-label">${allZero?'שווה להמשיך לשים לב':i===0?'הדפוס הבולט':'דפוס נוסף'}</div><h3>${patterns[key].title}</h3><p>${patterns[key].text}</p>`;grid.appendChild(d)})}
   document.getElementById('restart').onclick=()=>{qIndex=0;answers=[];scores={fighter:0,checker:0,firefighter:0};show(1)};
   window.addEventListener('error',()=>{});
+  const a11yToggle=document.querySelector('.a11y-toggle'),a11yPanel=document.querySelector('.a11y-panel');
+  const a11yKeys=['large','contrast','underline','reduce'];
+  function applyA11y(){a11yKeys.forEach(k=>document.body.classList.toggle(`a11y-${k}`,localStorage.getItem(`a11y-${k}`)==='1'))}
+  applyA11y();
+  function closeA11y(){a11yPanel.hidden=true;a11yToggle.setAttribute('aria-expanded','false');a11yToggle.focus()}
+  a11yToggle.onclick=()=>{a11yPanel.hidden=!a11yPanel.hidden;a11yToggle.setAttribute('aria-expanded',String(!a11yPanel.hidden));if(!a11yPanel.hidden)a11yPanel.querySelector('button').focus()};
+  document.querySelector('.a11y-close').onclick=closeA11y;
+  document.querySelectorAll('[data-a11y]').forEach(b=>b.onclick=()=>{const k=b.dataset.a11y;if(k==='reset')a11yKeys.forEach(x=>localStorage.removeItem(`a11y-${x}`));else localStorage.setItem(`a11y-${k}`,document.body.classList.contains(`a11y-${k}`)?'0':'1');applyA11y()});
+  document.addEventListener('keydown',e=>{if(e.key==='Escape'&&!a11yPanel.hidden)closeA11y()});
 </script>
 </body>
 </html>
