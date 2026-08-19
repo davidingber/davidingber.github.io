@@ -82,6 +82,12 @@
     .final .lead,.final .copy{color:rgba(255,255,255,.82)}
     .final .btn-primary{background:#efc39c;color:#203630}
     .final .btn-primary:hover{background:#f6d1b0}
+    .next-options{display:grid;gap:14px;margin-top:25px}
+    .next-option{padding:19px;border:1px solid rgba(255,255,255,.17);border-radius:19px;background:rgba(255,255,255,.06)}
+    .next-option h3{margin:0 0 7px;font-size:20px}
+    .next-option p{margin:0 0 15px;color:rgba(255,255,255,.75);line-height:1.55}
+    .final .btn-secondary{display:block;width:100%;padding:15px 18px;border:1px solid rgba(255,255,255,.38);border-radius:16px;background:transparent;color:var(--white);text-align:center;font-size:16px;font-weight:800;text-decoration:none}
+    .final .btn-secondary:hover{background:rgba(255,255,255,.09)}
     footer{padding:0 18px max(22px,env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:12px}
     .hidden{display:none!important}
     @media (max-width:520px){.topbar{padding-inline:14px}.brand{font-size:12px}main{padding-top:12px}.card{border-radius:24px}.question-wrap{min-height:500px}.count{display:none}}
@@ -170,10 +176,21 @@
 
     <section class="screen" data-step="8">
       <div class="card final">
-        <span class="badge">השלב הבא · 90 השניות הראשונות</span>
-        <h2>לא צריך לנצח את החרדה. צריך לדעת איך לא להדליק עליה שריפה נוספת.</h2>
-        <p class="lead">״90 השניות הראשונות״ ילמד אותך מה לעשות מהרגע שבו המחשבה או התחושה קופצת, בלי לבדוק את עצמך, בלי להילחם ובלי להתחיל מרדף אחרי רגיעה.</p>
-        <button class="btn btn-primary" id="offerBtn">לפרטים על 90 השניות הראשונות</button>
+        <span class="badge">השלב הבא · לבחור איך להמשיך</span>
+        <h2>לא צריך להישאר עם התובנה לבד.</h2>
+        <p class="lead">עכשיו כשזיהית מה קורה אצלך מיד אחרי שהחרדה עולה, אפשר להתחיל לבנות תגובה אחרת. אין בך משהו שצריך לתקן. יש בך יכולת שאפשר לחזור לסמוך עליה.</p>
+        <div class="next-options">
+          <div class="next-option">
+            <h3>אני רוצה עזרה אישית עכשיו</h3>
+            <p>תהליך 1:1 שמותאם לדפוסים, לקצב ולחיים שלך.</p>
+            <a class="btn btn-primary" href="https://davidingber.github.io/">לבדיקת התאמה לליווי אישי</a>
+          </div>
+          <div class="next-option">
+            <h3>מעדיפ/ה לעבור את הדרך בקבוצה</h3>
+            <p>חוזרים לסמוך על עצמנו — תהליך קבוצתי בן 8 שבועות.</p>
+            <a class="btn-secondary" href="https://davidingber.github.io/masa8/landing/">להצטרפות לרשימת ההמתנה</a>
+          </div>
+        </div>
         <p class="micro" style="color:rgba(255,255,255,.62)">דוד אינגבר · חוזרים לסמוך על עצמנו</p>
       </div>
     </section>
@@ -181,7 +198,6 @@
   <footer>הבדיקה מיועדת להתבוננות עצמית ואינה מחליפה ייעוץ, אבחון או טיפול מקצועי.</footer>
 </div>
 <script>
-  const FRONT_OFFER_URL = "#";
   const questions = [
     { text:"כשעולה מחשבה מפחידה, אני מנסה לשכנע את עצמי שהיא לא נכונה או להחליף אותה במחשבה אחרת.", weights:{fighter:2, checker:0, firefighter:0}},
     { text:"כשאני מרגיש שינוי בגוף, אני בודק דופק, נשימה, תחושה או סימן אחר כדי לוודא שאני בסדר.", weights:{fighter:0, checker:2, firefighter:0}},
@@ -204,7 +220,6 @@
   function selectAnswer(value,weights,button){document.querySelectorAll('.answer').forEach(b=>b.disabled=true);button.classList.add('selected');answers[qIndex]=value;Object.keys(scores).forEach(k=>scores[k]+=value*weights[k]);setTimeout(()=>{if(qIndex<questions.length-1){qIndex++;renderQuestion()}else show(6)},240)}
   function renderResults(){const grid=document.getElementById('resultGrid');grid.innerHTML='';const allZero=answers.every(v=>v===0);const sorted=Object.entries(scores).sort((a,b)=>b[1]-a[1]);document.getElementById('resultIntro').textContent=allZero?'לא זיהינו דפוס שחוזר לעיתים קרובות. ייתכן שהתגובות שלך משתנות לפי המצב, או שהחרדה אינה מפעילה כרגע צורך קבוע בבדיקה, מאבק או כיבוי.':'אצל רוב האנשים מופיע יותר מדפוס אחד. הראשון הוא הבולט כרגע, לא תווית קבועה על מי שאתה.';const visible=allZero?sorted.slice(0,1):sorted.filter(([,v])=>v>0).slice(0,3);visible.forEach(([key],i)=>{const d=document.createElement('div');d.className='result '+(i===0&&!allZero?'top':'');d.innerHTML=`<div class="result-label">${allZero?'שווה להמשיך לשים לב':i===0?'הדפוס הבולט':'דפוס נוסף'}</div><h3>${patterns[key].title}</h3><p>${patterns[key].text}</p>`;grid.appendChild(d)})}
   document.getElementById('restart').onclick=()=>{qIndex=0;answers=[];scores={fighter:0,checker:0,firefighter:0};show(1)};
-  document.getElementById('offerBtn').onclick=()=>{if(FRONT_OFFER_URL==='#'){alert('הפרטים על ״90 השניות הראשונות״ יעלו בקרוב.');return}location.href=FRONT_OFFER_URL};
   window.addEventListener('error',()=>{});
 </script>
 </body>
