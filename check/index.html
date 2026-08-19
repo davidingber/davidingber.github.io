@@ -8,6 +8,9 @@
   <meta property="og:title" content="בדיקת 5 הדקות | דוד אינגבר" />
   <meta property="og:description" content="בדיקה קצרה שתעזור לך לזהות מה קורה מיד אחרי שהחרדה עולה." />
   <title>בדיקת 5 הדקות | דוד אינגבר</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Heebo:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
   <style>
     :root {
       --paper:#f6f1e8; --paper-2:#eee6d8; --ink:#172522; --muted:#66726f;
@@ -88,9 +91,24 @@
     .next-option p{margin:0 0 15px;color:rgba(255,255,255,.75);line-height:1.55}
     .final .btn-secondary{display:block;width:100%;padding:15px 18px;border:1px solid rgba(255,255,255,.38);border-radius:16px;background:transparent;color:var(--white);text-align:center;font-size:16px;font-weight:800;text-decoration:none}
     .final .btn-secondary:hover{background:rgba(255,255,255,.09)}
+    .hero-screen{width:min(100%,960px)}
+    .hero-card{display:grid;grid-template-columns:minmax(0,1.1fr) minmax(270px,.9fr);align-items:center;gap:clamp(28px,5vw,64px);padding:clamp(30px,5vw,60px);background:linear-gradient(135deg,rgba(255,253,248,.98),rgba(245,239,227,.92))}
+    .hero-card:before{width:310px;height:310px;left:auto;right:-155px;top:-190px;border-color:rgba(167,95,70,.12)}
+    .hero-copy{position:relative;z-index:2}
+    .hero-copy h1{font-size:clamp(44px,6.4vw,76px);max-width:650px}
+    .hero-copy .lead{max-width:610px}
+    .hero-visual{position:relative;min-height:420px;display:grid;place-items:center;isolation:isolate}
+    .hero-visual:before{content:"";position:absolute;width:85%;aspect-ratio:1;border-radius:50%;background:radial-gradient(circle at 60% 38%,rgba(255,253,248,.95),rgba(220,232,228,.72) 45%,rgba(167,95,70,.10) 72%,transparent 73%);filter:drop-shadow(0 24px 35px rgba(41,68,62,.12));z-index:-1}
+    .trust-map{width:100%;max-width:390px;overflow:visible;filter:drop-shadow(0 16px 20px rgba(41,68,62,.10))}
+    .trust-map .loop{fill:none;stroke:var(--rust);stroke-width:8;stroke-linecap:round;opacity:.78}
+    .trust-map .path{fill:none;stroke:var(--sage-dark);stroke-width:10;stroke-linecap:round;stroke-linejoin:round}
+    .trust-map .soft{fill:none;stroke:var(--sage);stroke-width:3;stroke-linecap:round;opacity:.42}
+    .trust-map .dot{fill:#efc39c;stroke:var(--white);stroke-width:5}
+    .visual-note{position:absolute;bottom:30px;right:50%;transform:translateX(50%);width:max-content;max-width:90%;padding:10px 16px;border:1px solid rgba(41,68,62,.10);border-radius:999px;background:rgba(255,253,248,.82);backdrop-filter:blur(10px);color:var(--sage-dark);font-size:14px;font-weight:700;box-shadow:0 10px 30px rgba(41,68,62,.10)}
     footer{padding:0 18px max(22px,env(safe-area-inset-bottom));text-align:center;color:var(--muted);font-size:12px}
     .hidden{display:none!important}
-    @media (max-width:520px){.topbar{padding-inline:14px}.brand{font-size:12px}main{padding-top:12px}.card{border-radius:24px}.question-wrap{min-height:500px}.count{display:none}}
+    @media (max-width:760px){.hero-card{grid-template-columns:1fr;gap:12px}.hero-visual{min-height:260px;order:-1}.trust-map{max-width:280px}.visual-note{bottom:5px}.hero-copy{text-align:center}.hero-copy .lead{font-size:19px}.hero-copy h1{font-size:clamp(38px,12vw,57px);letter-spacing:-1.4px}.hero-copy .badge{margin-bottom:18px}}
+    @media (max-width:520px){.topbar{padding-inline:14px}.brand{font-size:12px}main{padding-top:12px}.card{border-radius:24px}.question-wrap{min-height:500px}.count{display:none}.hero-card{padding:24px 21px 27px}.hero-visual{min-height:225px}.trust-map{max-width:235px}.visual-note{font-size:12px;padding:8px 12px}.hero-copy .lead{margin-bottom:20px}}
     @media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important;scroll-behavior:auto!important}}
   </style>
 </head>
@@ -100,13 +118,25 @@
     <div class="topline"><span class="brand">דוד אינגבר</span><div class="progress"><i id="bar"></i></div><span class="count" id="count">1 מתוך 8</span></div>
   </header>
   <main>
-    <section class="screen active" data-step="1">
-      <div class="card">
-        <span class="badge">אבחון עצמי · כ־5 דקות</span>
-        <h1>מה קורה אצלך <span class="accent">מיד אחרי</span> שהחרדה עולה?</h1>
-        <p class="lead">בדיקה קצרה שתעזור לך לזהות אם אתה נלחם במחשבה, בודק את עצמך או מנסה לכבות את החרדה במהירות.</p>
-        <button class="btn btn-primary" data-next>מתחילים</button>
-        <p class="micro">לא נשמרות תשובות ואין כאן אבחון רפואי או נפשי.</p>
+    <section class="screen active hero-screen" data-step="1">
+      <div class="card hero-card">
+        <div class="hero-copy">
+          <span class="badge">אבחון עצמי · כ־5 דקות</span>
+          <h1>מה קורה אצלך <span class="accent">מיד אחרי</span> שהחרדה עולה?</h1>
+          <p class="lead">בדיקה קצרה שתעזור לך לזהות אם אתה נלחם במחשבה, בודק את עצמך או מנסה לכבות את החרדה במהירות.</p>
+          <button class="btn btn-primary" data-next>מתחילים</button>
+          <p class="micro">לא נשמרות תשובות ואין כאן אבחון רפואי או נפשי.</p>
+        </div>
+        <div class="hero-visual" aria-hidden="true">
+          <svg class="trust-map" viewBox="0 0 420 420" role="img">
+            <path class="soft" d="M70 90C138 28 288 40 348 122C408 205 353 333 255 369"/>
+            <path class="soft" d="M52 286C88 360 177 395 258 368"/>
+            <path class="loop" d="M106 209C106 135 206 113 245 172C283 229 205 290 158 244C120 207 154 158 198 169C243 180 247 245 203 267"/>
+            <path class="path" d="M204 267C232 303 274 313 308 290C341 267 352 226 337 191"/>
+            <circle class="dot" cx="337" cy="191" r="15"/>
+          </svg>
+          <div class="visual-note">מהסחרור הפנימי אל בחירה ואמון</div>
+        </div>
       </div>
     </section>
 
