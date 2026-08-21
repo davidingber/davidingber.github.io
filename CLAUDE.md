@@ -4,7 +4,9 @@ Personal site and marketing funnels for David Ingber (דוד אינגבר), an e
 
 ## Business strategy — read this before any funnel/panel/course/landing-page work
 
-`strategy/business-strategy.md` is the source-of-truth business strategy (audience, the 3 marketing panels, the 8-week flagship group program curriculum, pricing, objections, KPIs), distilled from an external strategist's Google Doc. **Read it before building or editing anything under `panel/`, or before discussing David's funnels, courses, pricing, or the group program.** Don't invent funnel structure or product names (e.g. there is no "90 השניות הראשונות" — that name doesn't exist in the real strategy) — follow that file, and re-read the source Google Doc (fileId noted at the top of the strategy file) if it's been a while, since David edits it directly.
+`strategy/business-strategy.md` is the source-of-truth business strategy (audience, the 3 marketing panels, the 8-week flagship group program curriculum, pricing, objections, KPIs), distilled from an external strategist's Google Doc. **Read it before building or editing anything under `panel/` or `anxiety-wave/`, or before discussing David's funnels, courses, pricing, or the group program.** Don't invent funnel structure or product names — follow that file, and re-read the source Google Doc (fileId noted at the top of the strategy file) if it's been a while, since David edits it directly.
+
+**`anxiety-wave/` runs under a separate, later, dedicated Google Doc** (`fileId: 1EJDQaiuKudO0nv7x7swkwFGg5iYviS52sCkAHDB18Y0`, linked from `strategy/business-strategy.md`'s "עדכון מאוחר יותר" section) that supersedes the older names for that funnel specifically: magnet "כשהגל עולה", group program "חוזרים לסמוך על עצמנו" everywhere, no links to "the app", every program CTA goes to the program's own landing page. That doc also holds the canonical ad/landing/email copy for `anxiety-wave/` — read it before rewriting any copy there instead of inventing new wording. `panel/` (older build, different names — see below) is unaffected and still governed by the strategy doc referenced above; don't mix the two.
 
 ## Site structure
 
