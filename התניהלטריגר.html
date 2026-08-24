@@ -534,9 +534,11 @@ const state = {
   gender:null, channel:null, emotion:'', before:6, after:null,
   resources:[], bodySpot:null, voiceDir:null,
   voiceQ:{speed:null, dist:null, vol:null},
-  voiceText:'', voiceTypes:[], voiceRec:null, voiceName:null,
+  voiceText:'', voiceTypes:[], voiceRec:null, voiceName:null, userClip:null,
   trigPic:null, idealPic:null, voicePic:null, feelPic:null,
 };
+try{ state.userClip = localStorage.getItem('swish-userclip') || null; }catch(e){}
+function hasUserClip(){ return state.userClip && state.userClip.length>40; }
 try{ state.gender = localStorage.getItem('swish-gender') || null; }catch(e){}
 
 /* gendered text */
@@ -737,8 +739,10 @@ function pickVoice(){
 }
 try{ state.voiceName = localStorage.getItem('swish-voice') || null; }catch(e){}
 function speak(text){
-  /* prefer embedded human clips; fall back to the browser voice */
   const t=(text||sentence());
+  /* the client's own recording wins for the full compassionate sentence */
+  if(hasUserClip() && /אני כאן/.test(t)){ playClip(state.userClip).catch(()=>{}); return; }
+  /* otherwise prefer embedded human clips; fall back to the browser voice */
   const parts=t.split(/(?<=\.)\s+/).map(s=>s.trim()).filter(Boolean);
   if(parts.some(p=>clipFor(p))){ speakSeq(t); return; }
   if(!('speechSynthesis' in window)) return;
@@ -976,6 +980,56 @@ function sparkles(container, n){
 }
 
 /* ---------- prominent voice input: record OR type ---------- */
+/* ---------- client records the compassionate (ideal-self) voice ---------- */
+function makeCompassionRecorder(container){
+  const card=h('div','card voicecard');
+  card.innerHTML='<h2>🎙 '+g('רוצה להקליט את הקול החומל בקולך?','רוצה להקליט את הקול החומל בקולך?')+' <span class="muted small">(רשות)</span></h2>'
+    +'<p class="muted small" style="margin-top:0">'+g('הקלט','הקליטי')+' את המשפט — וזה מה שתשמע/י מהאני האידיאלי בסוויש, בקול שלך.</p>'
+    +'<div class="bubble on" style="margin:6px auto;max-width:none">"'+sentence()+'"</div>';
+  const row=h('div','vin-row'); row.style.justifyContent='center';
+  const recBox=h('div','vin-big');
+  const micBtn=h('button','mic-btn','🎤'); micBtn.type='button'; micBtn.setAttribute('aria-label','הקלטת הקול החומל');
+  const recLabel=h('div',null,'<b>הקלטה</b>');
+  const recStatus=h('div','muted', hasUserClip()?'הוקלט ✓':'לחצו כדי להקליט');
+  recBox.appendChild(micBtn); recBox.appendChild(recLabel); recBox.appendChild(recStatus);
+  row.appendChild(recBox);
+  const played=h('div','vin-played'+(hasUserClip()?'':' hidden'));
+  const playBtn=h('button','btn ghost','▶ השמעה'); playBtn.type='button'; playBtn.style.padding='6px 14px';
+  const delBtn=h('button','btn ghost','🗑 מחיקה'); delBtn.type='button'; delBtn.style.padding='6px 14px';
+  played.appendChild(playBtn); played.appendChild(delBtn);
+  card.appendChild(row); card.appendChild(played);
+  container.appendChild(card);
+
+  let rec=null, chunks=[], stream=null, timer=null, secs=0, prev=null;
+  const supported = !!(navigator.mediaDevices && navigator.mediaDevices.getUserMedia && window.MediaRecorder);
+  if(!supported){ micBtn.disabled=true; micBtn.style.opacity='.5'; recStatus.textContent='לא נתמך בדפדפן זה'; }
+  function stopStream(){ if(stream){ stream.getTracks().forEach(t=>t.stop()); stream=null; } }
+  async function start(){
+    try{ stream=await navigator.mediaDevices.getUserMedia({audio:true}); }
+    catch(e){ recStatus.textContent='אין הרשאת מיקרופון'; return; }
+    chunks=[]; let mime='';
+    ['audio/webm','audio/mp4','audio/ogg'].forEach(m=>{ if(!mime && window.MediaRecorder.isTypeSupported && MediaRecorder.isTypeSupported(m)) mime=m; });
+    rec = mime ? new MediaRecorder(stream,{mimeType:mime}) : new MediaRecorder(stream);
+    rec.ondataavailable=e=>{ if(e.data && e.data.size) chunks.push(e.data); };
+    rec.onstop=()=>{
+      const blob=new Blob(chunks,{type:rec.mimeType||'audio/webm'});
+      const fr=new FileReader();
+      fr.onload=()=>{
+        state.userClip=fr.result; played.classList.remove('hidden'); recStatus.textContent='הוקלט ✓';
+        try{ localStorage.setItem('swish-userclip', state.userClip); }catch(e){}
+      };
+      fr.readAsDataURL(blob); stopStream();
+    };
+    rec.start(); secs=0; recStatus.textContent='מקליט… 0ש׳';
+    micBtn.classList.add('rec'); micBtn.textContent='⏹';
+    timer=setInterval(()=>{ secs++; recStatus.textContent='מקליט… '+secs+'ש׳'; if(secs>=12) stop(); },1000);
+  }
+  function stop(){ if(rec&&rec.state!=='inactive'){try{rec.stop();}catch(e){}} clearInterval(timer); micBtn.classList.remove('rec'); micBtn.textContent='🎤'; }
+  micBtn.addEventListener('click',()=>{ audio(); if(rec&&rec.state==='recording') stop(); else start(); });
+  playBtn.addEventListener('click',()=>{ if(!state.userClip) return; try{if(prev)prev.pause();}catch(e){} prev=new Audio(state.userClip); prev.play().catch(()=>{}); });
+  delBtn.addEventListener('click',()=>{ state.userClip=null; try{localStorage.removeItem('swish-userclip');}catch(e){} played.classList.add('hidden'); recStatus.textContent='לחצו כדי להקליט'; });
+}
+
 function makeVoiceInput(container){
   const card=h('div','card voicecard');
   card.innerHTML='<h2>🎙 מה הקול השלילי אומר?</h2>'
@@ -1688,8 +1742,12 @@ function buildVoiceSceneStage(){
     bubble.classList.add('on');
     if(!o.silent) chime(0.14);
     flyWords();
-    if(!o.silent) await speakOne(part);
-    else await wait(Math.max(450,d*0.35));
+    /* the client's own compassionate recording plays on the first round;
+       otherwise the per-round phrase (embedded clip or browser voice) */
+    if(!o.silent){
+      if(hasUserClip()){ if((o.index||0)===0) await playClip(state.userClip).catch(()=>{}); else await wait(Math.max(400,d*0.3)); }
+      else await speakOne(part);
+    } else await wait(Math.max(450,d*0.35));
     await wait(150);
     /* 5. auditory reset: a wave sound replaces everything */
     if(!o.silent) waveSound(Math.min(1.6,0.6+d/2000),0.18);
@@ -2072,6 +2130,9 @@ function idealStep(ch){
       sBtn.addEventListener('click',()=>speak());
       s.appendChild(bub); s.appendChild(sBtn);
       el.appendChild(s);
+
+      /* let the client record the compassionate voice in their own voice */
+      makeCompassionRecorder(el);
 
       if(needBox){
         const c3=h('div','card center');
