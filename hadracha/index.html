@@ -97,16 +97,21 @@ p+p{margin-top:.85em}
 
 /* mockup */
 .mock-wrap{display:flex;justify-content:center;padding:10px 0 6px}
-.mock{position:relative;width:min(100%,460px)}
-.mock-laptop{background:var(--ink);border-radius:14px 14px 4px 4px;padding:14px 14px 34px;box-shadow:var(--shadow)}
-.mock-laptop::after{content:"";display:block;height:8px;background:var(--ink-deep);border-radius:0 0 8px 8px;margin:0 -14px -34px}
-.mock-screen{background:var(--bg-soft);border-radius:8px;padding:26px 20px;text-align:center;min-height:200px;display:flex;flex-direction:column;justify-content:center;gap:10px}
-.mock-screen .m-eyebrow{font-size:11px;letter-spacing:.06em;color:var(--gold);font-weight:700;text-transform:uppercase}
-.mock-screen h3{font-family:var(--font-head);font-size:1.25rem;color:var(--ink);line-height:1.3}
-.mock-screen .m-sub{font-size:.92rem;color:var(--ink-faint)}
-.mock-icons{display:flex;justify-content:center;gap:22px;margin-top:16px}
-.mock-icons svg{width:30px;height:30px;color:var(--gold)}
+.mock-wrap img{width:100%;max-width:640px;border-radius:var(--radius);box-shadow:var(--shadow)}
 .mock-caption{text-align:center;color:var(--ink-faint);font-size:.94rem;margin-top:20px}
+
+/* cycle diagram */
+.cycle-wrap{display:flex;justify-content:center;margin:26px 0}
+.cycle-wrap img{width:100%;max-width:560px;border-radius:var(--radius-sm);background:#fff;box-shadow:var(--shadow-sm)}
+
+/* lesson icon */
+.lesson .icon-badge{position:relative;flex:0 0 auto;width:56px;height:56px}
+.lesson .icon-badge img{width:56px;height:56px;border-radius:50%}
+.lesson .icon-badge .num{position:absolute;bottom:-6px;left:-6px;width:26px;height:26px;font-size:.8rem;box-shadow:0 2px 8px rgba(20,43,32,0.3)}
+
+/* testimonial screenshots */
+.quote-shot{max-width:280px;margin:0 auto;border-radius:var(--radius-sm);box-shadow:var(--shadow-sm);display:block}
+.quotes-grid{display:flex;flex-wrap:wrap;gap:20px;justify-content:center;align-items:flex-start;margin-bottom:20px}
 
 .copy-block{max-width:60ch;margin:0 auto}
 .copy-block p{color:var(--ink-soft)}
@@ -146,6 +151,8 @@ p+p{margin-top:.85em}
 .about{display:flex;flex-direction:column;gap:14px;max-width:640px;margin:0 auto}
 .about .lead-name{color:var(--ink);font-weight:700}
 .method-name{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:1.1rem}
+.about-photo{display:flex;justify-content:center;margin-bottom:6px}
+.about-photo img{width:132px;height:132px;border-radius:50%;object-fit:cover;border:4px solid var(--bg-soft);box-shadow:var(--shadow)}
 
 .signature{text-align:center;margin-top:6px;color:var(--ink-faint);font-size:.98rem;font-weight:600}
 .signature .role{color:var(--ink-faint);font-weight:400}
@@ -217,22 +224,9 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 
   <section class="reveal" style="animation-delay:0ms">
     <div class="mock-wrap">
-      <div class="mock">
-        <div class="mock-laptop">
-          <div class="mock-screen">
-            <span class="m-eyebrow">על המסך</span>
-            <h3>מה לעשות כשהחרדה עולה</h3>
-            <p class="m-sub">הדרכה קצרה + תרגול מונחה לרגע האמת</p>
-          </div>
-        </div>
-        <div class="mock-icons" aria-hidden="true">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="6" y="2" width="12" height="19" rx="2"/><line x1="10" y1="18" x2="14" y2="18"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><path d="M4 12v-1a8 8 0 0 1 16 0v1"/><rect x="2" y="12" width="5" height="7" rx="2"/><rect x="17" y="12" width="5" height="7" rx="2"/></svg>
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><rect x="3" y="4" width="18" height="12" rx="2"/><line x1="8" y1="20" x2="16" y2="20"/><line x1="12" y1="16" x2="12" y2="20"/></svg>
-        </div>
-      </div>
+      <img src="img/mockup.jpg" alt="ההדרכה 'מה לעשות כשהחרדה עולה' על מסך מחשב וטלפון, עם תרגול מונחה קצר שלוקח 5 דקות" loading="lazy" width="1400" height="933">
     </div>
-    <p class="mock-caption">הדרכה + תרגול מונחה — במחשב, בטלפון או באוזניות, איפה שנוח לך.<br>עזרה ראשונה לרגע שבו החרדה עולה, לא עוד קורס ארוך.</p>
+    <p class="mock-caption">עזרה ראשונה לרגע שבו החרדה עולה — לא עוד קורס ארוך.</p>
   </section>
 
   <div class="spacer-l"></div>
@@ -253,6 +247,9 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
         <li>לחפש סימן שאתה חוזר לעצמך</li>
       </ul>
       <p class="center muted" style="max-width:60ch;margin:0 auto">ולפעמים דווקא שם מתחיל הסיבוב שמגדיל את כל האירוע.</p>
+      <div class="cycle-wrap">
+        <img src="img/cycle.jpg" alt="מעגל החרדה: תחושה בגוף, מחשבה, בדיקה, ניסיון להירגע, ועוד תשומת לב לחרדה — וחוזר חלילה" loading="lazy" width="1200" height="800">
+      </div>
       <div class="highlight">ההדרכה הזאת נועדה בדיוק לרגע הזה. לא כדי להבטיח שהחרדה תיעלם בתוך שתי דקות — אלא כדי לעזור לך לדעת איך סוף סוף לפגוש אותה אחרת כשהיא מגיעה.</div>
     </div>
   </section>
@@ -264,21 +261,21 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <div class="spacer-s"></div>
     <div class="lessons">
       <div class="lesson reveal" style="animation-delay:0ms">
-        <div class="num">1</div>
+        <div class="icon-badge"><img src="img/icon-sensation.png" alt="" width="56" height="56"><div class="num">1</div></div>
         <div>
           <h3>מה קורה בדקות הראשונות שבהן החרדה עולה</h3>
           <p>תבין למה לפעמים התחושה הראשונית היא רק החלק הראשון, ומה שקורה אחריה הוא זה שהופך אותה לאירוע הרבה יותר גדול.</p>
         </div>
       </div>
       <div class="lesson reveal" style="animation-delay:60ms">
-        <div class="num">2</div>
+        <div class="icon-badge"><img src="img/icon-trap.png" alt="" width="56" height="56"><div class="num">2</div></div>
         <div>
           <h3>לזהות את "מלכודת ההרגעה"</h3>
           <p>הרגע שבו אתה מתחיל לבדוק: "זה כבר יורד?", "אני נרגע?", "למה אני עדיין מרגיש את זה?" ותגלה למה דווקא המרדף אחרי ההקלה יכול להשאיר את תשומת הלב שלך נעולה על החרדה.</p>
         </div>
       </div>
       <div class="lesson reveal" style="animation-delay:120ms">
-        <div class="num">3</div>
+        <div class="icon-badge"><img src="img/icon-regulate.png" alt="" width="56" height="56"><div class="num">3</div></div>
         <div>
           <h3>מה לעשות במקום להיכנס מיד למאבק</h3>
           <p>תקבל דרך פשוטה להגיב למה שקורה — בלי לנסות לנצח את הגוף, בלי להתווכח עם כל מחשבה, ובלי להפוך את ההרגעה לתנאי לכך שתוכל להמשיך.</p>
@@ -286,7 +283,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
         </div>
       </div>
       <div class="lesson reveal" style="animation-delay:180ms">
-        <div class="num">4</div>
+        <div class="icon-badge"><img src="img/icon-choice.png" alt="" width="56" height="56"><div class="num">4</div></div>
         <div>
           <h3>השאלה שמחזירה אותך מהחרדה אל החיים</h3>
           <p>במקום שכל תשומת הלב תהיה על "איך אני גורם לזה לעבור?" — נלמד להעביר את מרכז הכובד לשאלה אחרת: "מה הייתי רוצה לעשות עכשיו, גם אם החרדה נמצאת כאן?"</p>
@@ -294,7 +291,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
         </div>
       </div>
       <div class="lesson reveal" style="animation-delay:240ms">
-        <div class="num">5</div>
+        <div class="icon-badge"><img src="img/icon-practice.png" alt="" width="56" height="56"><div class="num">5</div></div>
         <div>
           <h3>תרגול מונחה לרגע שבו החרדה כבר שם</h3>
           <p>בסוף ההדרכה תקבל גם תרגול קצר שאפשר לחזור אליו ברגעים שבהם הכול מתחיל לעלות. המטרה שלו אינה "להעלים" את החרדה, אלא לעזור לך להתמצא במה שקורה, ליצור מעט מרחק מהבהלה סביב התחושה, ולבחור את הצעד הבא שלך.</p>
@@ -356,9 +353,12 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <div class="spacer-s"></div>
     <div class="quotes">
       <div class="quote reveal" style="animation-delay:0ms">"היא חזרה לנהוג, והפסיקה להיות חרדה מלעשות טעויות."</div>
-      <div class="quote reveal" style="animation-delay:60ms">"הגעתי לתהליך במהלכו של משבר, בו הבנתי שהחרדות מונעות ממני להגשים את המטרות שלי, ושיש פער בין איך שאני רוצה לחיות ולחוות את החיים לבין איך שאני חיה היום. הטיפול העניק לי חופש ועצמאות — פחד הנהיגה שהיה לי במשך שנים נעלם לאט לאט, והיום אני נוהגת באופן יומיומי."</div>
-      <div class="quote reveal" style="animation-delay:120ms">"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</div>
-      <div class="quote reveal" style="animation-delay:180ms">"אני לאט לאט מצליחה לעשות יותר דברים שפעם היו מלחיצים אותי, כמו לרדת לבד לסופר כשאמא שלי מחכה לי באוטו, או לעשות סיבוב באופניים כמה רחובות ליד הבית. גם כשאני מרגישה תחושה לא נעימה — אני יודעת לקבל את זה ולהיות בחמלה, ולא להגיע למצב של לחץ והתקף חרדה."</div>
+      <div class="quote reveal" style="animation-delay:60ms">"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</div>
+    </div>
+    <div class="spacer-m"></div>
+    <div class="quotes-grid">
+      <img class="quote-shot reveal" style="animation-delay:120ms" src="img/testimonial-1.jpg" alt="הודעת וואטסאפ מלקוחה: הטיפול העניק לי חופש ועצמאות, פחד הנהיגה שהיה לי במשך שנים נעלם לאט לאט והיום אני נוהגת באופן יומיומי" loading="lazy" width="700" height="1142">
+      <img class="quote-shot reveal" style="animation-delay:180ms" src="img/testimonial-2.jpg" alt="הודעת וואטסאפ מלקוחה: לאט לאט מצליחה לעשות יותר דברים שפעם היו מלחיצים אותי, ויודעת לקבל תחושה לא נעימה בחמלה בלי להגיע להתקף חרדה" loading="lazy" width="700" height="803">
     </div>
     <div class="highlight" style="margin-top:26px">המטרה היא לא להפוך לאדם שלעולם לא מרגיש חרדה. המטרה היא שהחרדה תפסיק להיות זו שקובעת לך מה אתה מסוגל לעשות.</div>
     <div class="cta-wrap">
@@ -370,6 +370,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 
   <section class="section-alt" style="margin:0 -20px">
     <div style="max-width:60ch;margin:0 auto;padding:0 20px" class="about">
+      <div class="about-photo"><img src="img/david.jpg" alt="דוד אינגבר" loading="lazy" width="132" height="132"></div>
       <h2 class="center">מי אני ולמה בניתי את התהליך הזה?</h2>
       <p>אם עוד לא יצא לנו להכיר, נעים מאוד. אני <span class="lead-name">דוד אינגבר</span>, מטפל רגשי כבר 6 שנים, עם מעל 1,300 שעות ליווי אחד על אחד בעבודה עם חרדה, טראומה, מחשבות טורדניות, חרדת בריאות והימנעויות.</p>
       <p>אבל הגישה שלי לא נולדה רק מהקליניקה. היא התחילה גם ממני. לפני 6 שנים התחלתי לפחד מהתחושות שלי, מהמחשבות שלי, ובעיקר מהאפשרות שלא אצליח להתמודד כשהחרדה תעלה. רציתי לדעת איך לעזור לעצמי, אז הלכתי ללמוד LI-CBT. זה נתן לי כלים והבנה. אבל בשלב מסוים קלטתי משהו: הפכתי ללוחם טוב יותר, אבל עדיין חייתי בתוך מלחמה.</p>
