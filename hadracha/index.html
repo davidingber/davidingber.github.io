@@ -9,6 +9,13 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="מה לעשות כשהחרדה עולה | הדרכה חינמית">
 <meta property="og:description" content="בלי להכריח את עצמך להירגע. בלי להילחם בכל מחשבה. בלי לזכור עשר טכניקות דווקא כשהראש הכי מוצף. הדרכה קצרה + תרגול מונחה לרגע האמת.">
+<meta property="og:image" content="https://davidingber.github.io/hadracha/img/mockup.jpg">
+<meta property="og:url" content="https://davidingber.github.io/hadracha/">
+<meta name="twitter:card" content="summary_large_image">
+<meta name="twitter:title" content="מה לעשות כשהחרדה עולה | הדרכה חינמית">
+<meta name="twitter:description" content="הדרכה קצרה + תרגול מונחה לרגע האמת: מה לעשות בדקות הראשונות שבהן החרדה עולה.">
+<meta name="twitter:image" content="https://davidingber.github.io/hadracha/img/mockup.jpg">
+<link rel="canonical" href="https://davidingber.github.io/hadracha/">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -25,6 +32,7 @@
   --gold:#A9761B;
   --gold-soft:#E0BE72;
   --gold-tint:#F7EFDD;
+  --gold-deep:#7E5A16;
   --radius:20px;
   --radius-sm:13px;
   --shadow:0 16px 46px rgba(20,43,32,0.12);
@@ -114,9 +122,10 @@ p+p{margin-top:.85em}
 .quotes-grid{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:flex-start;margin-bottom:20px}
 .testimonial-card{max-width:280px}
 .testimonial-card figcaption{font-weight:700;color:var(--ink);font-size:.98rem;line-height:1.5;margin-bottom:12px;text-align:center}
-.quote-shot-btn{appearance:none;border:none;padding:0;margin:0;background:none;cursor:pointer;display:block;width:100%;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm);position:relative}
-.quote-shot-btn:hover .quote-shot-expand,.quote-shot-btn:focus-visible .quote-shot-expand{opacity:1}
-.quote-shot-expand{position:absolute;inset:auto 0 0 0;padding:10px;background:linear-gradient(0deg,rgba(20,43,32,0.82),transparent);color:#fff;font-size:.82rem;font-weight:600;opacity:0;transition:opacity .18s var(--ease)}
+.quote-shot-btn{appearance:none;border:1px solid var(--line);padding:0;margin:0;background:var(--bg-soft);cursor:pointer;display:block;width:100%;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm)}
+.quote-shot-btn:hover,.quote-shot-btn:focus-visible{box-shadow:var(--shadow)}
+.quote-shot-expand{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;color:var(--gold-deep);font-size:.82rem;font-weight:600;border-top:1px solid var(--line)}
+.quote-shot-expand svg{width:14px;height:14px;flex:0 0 auto}
 
 .lightbox{position:fixed;inset:0;z-index:200;background:rgba(20,30,25,0.88);display:flex;align-items:center;justify-content:center;padding:40px 20px}
 .lightbox[hidden]{display:none}
@@ -150,6 +159,7 @@ p+p{margin-top:.85em}
 }
 .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(169,118,27,0.16)}
 .field input::placeholder{color:var(--ink-faint)}
+.field input[type="email"]{direction:ltr;text-align:right}
 .hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden}
 .error-msg{display:none;color:#8a3b1f;background:#f6e3d6;border-radius:10px;padding:10px 14px;font-size:.92rem;margin-top:12px}
 .error-msg.show{display:block}
@@ -197,7 +207,7 @@ p+p{margin-top:.85em}
 .a11y-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .a11y-actions button{border:1px solid var(--line);border-radius:10px;padding:10px 6px;background:var(--bg);color:var(--ink);font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font-body)}
 .a11y-links{margin:12px 0 0;font-size:12px;text-align:center}
-.a11y-links a{color:var(--gold)}
+.a11y-links a{color:var(--gold-deep)}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 body.a11y-large{font-size:120%}
 body.a11y-contrast{background:#000!important;color:#fff!important}
@@ -373,14 +383,14 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
         <figcaption>"הטיפול העניק לי חופש ועצמאות — פחד הנהיגה שהיה לי במשך שנים נעלם לאט לאט, והיום אני נוהגת באופן יומיומי."</figcaption>
         <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-1.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
           <img class="quote-shot" src="img/testimonial-1.jpg" alt="הודעת וואטסאפ מלקוחה על הטיפול והחזרה לנהיגה יומיומית" loading="lazy" width="760" height="1012">
-          <span class="quote-shot-expand">להצגת ההודעה המלאה</span>
+          <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
         </button>
       </figure>
       <figure class="testimonial-card reveal" style="animation-delay:180ms">
         <figcaption>"לאט לאט מצליחה לעשות יותר דברים שפעם היו מלחיצים אותי, ויודעת לקבל תחושה לא נעימה בחמלה בלי להגיע להתקף חרדה."</figcaption>
         <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-2.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
           <img class="quote-shot" src="img/testimonial-2.jpg" alt="הודעת וואטסאפ מלקוחה על ההתקדמות ההדרגתית וההתמודדות בחמלה" loading="lazy" width="760" height="871">
-          <span class="quote-shot-expand">להצגת ההודעה המלאה</span>
+          <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
         </button>
       </figure>
     </div>
