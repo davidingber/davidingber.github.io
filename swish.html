@@ -59,6 +59,8 @@ p{margin:.5em 0}
 .goodmsg{background:var(--sage-soft);border:1px solid var(--sage);border-radius:16px;padding:12px 16px;margin:10px 0;font-weight:700;color:var(--sage-deep)}
 button{font:inherit;color:inherit;cursor:pointer;border:none;background:none;-webkit-tap-highlight-color:transparent}
 input,textarea,select{font:inherit;color:var(--ink)}
+.ic{width:1.15em;height:1.15em;vertical-align:-0.2em;margin-inline-end:.42em;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+.ic.solid{fill:currentColor;stroke:none}
 button:focus-visible,input:focus-visible{outline:3px solid var(--gold-deep);outline-offset:2px;border-radius:12px}
 .btn{
   display:inline-flex;align-items:center;justify-content:center;gap:8px;
@@ -290,6 +292,7 @@ input[type=range]::-moz-range-thumb{width:26px;height:26px;border-radius:50%;bac
   box-shadow:0 4px 12px rgba(245,184,64,.5);transition:transform .15s,background .2s;
 }
 .mic-btn:hover{transform:scale(1.06)}
+.mic-btn .ic{width:30px;height:30px;margin:0;stroke-width:1.9}
 .mic-btn.rec{background:#E5484D;color:#fff;animation:recpulse 1s ease-in-out infinite}
 @keyframes recpulse{0%,100%{box-shadow:0 0 0 0 rgba(229,72,77,.55)}50%{box-shadow:0 0 0 12px rgba(229,72,77,0)}}
 .vin-time{font-variant-numeric:tabular-nums;font-weight:800;color:#E5484D}
@@ -579,6 +582,27 @@ footer{margin-top:36px;text-align:center;color:var(--muted);font-size:.85rem}
 const $ = s => document.querySelector(s);
 const wait = ms => new Promise(r=>setTimeout(r,ms));
 function h(tag, cls, html){const e=document.createElement(tag); if(cls)e.className=cls; if(html!=null)e.innerHTML=html; return e;}
+/* clean line-icons (inherit the button's text colour) — replace emoji in UI labels */
+const ICON_PATHS={
+  mic:'<rect x="9" y="2" width="6" height="12" rx="3"/><path d="M5 11a7 7 0 0 0 14 0"/><path d="M12 18v3"/>',
+  play:'<path d="M7 4.5v15l12-7.5z"/>',
+  stop:'<rect x="6" y="6" width="12" height="12" rx="2.5"/>',
+  trash:'<path d="M4 7h16"/><path d="M9 7V4h6v3"/><path d="M6.5 7l1 12.5A1.5 1.5 0 0 0 9 21h6a1.5 1.5 0 0 0 1.5-1.5L17.5 7"/>',
+  camera:'<path d="M3 8.5A1.5 1.5 0 0 1 4.5 7h2L8 5h8l1.5 2h2A1.5 1.5 0 0 1 21 8.5v9A1.5 1.5 0 0 1 19.5 19h-15A1.5 1.5 0 0 1 3 17.5z"/><circle cx="12" cy="13" r="3.4"/>',
+  brush:'<path d="M3 21c2.8 0 4.5-1.7 4.5-3.6A1.9 1.9 0 0 0 5.6 15.5C3.7 15.5 3 17.4 3 21z"/><path d="M8.5 15.5 18.5 5.5a2.6 2.6 0 0 1 3.6 3.6L12 19"/>',
+  sound:'<path d="M4 9.5v5h3.5L12 18V6L7.5 9.5z"/><path d="M16 9a4 4 0 0 1 0 6"/><path d="M18.8 6.5a8 8 0 0 1 0 11"/>',
+  soundlow:'<path d="M4 9.5v5h3.5L12 18V6L7.5 9.5z"/><path d="M16 10a3 3 0 0 1 0 4"/>',
+  headphones:'<path d="M4 13a8 8 0 0 1 16 0"/><rect x="3" y="13" width="4.2" height="7" rx="2"/><rect x="16.8" y="13" width="4.2" height="7" rx="2"/>',
+  away:'<path d="M21 12H5"/><path d="M11 6 5 12l6 6"/>',
+  slow:'<circle cx="12" cy="12" r="9"/><path d="M12 7.5V12l3 2"/>',
+  swap:'<path d="M7 8 3 12l4 4"/><path d="M3 12h18"/><path d="M17 8l4 4-4 4"/>',
+  shrink:'<circle cx="10.5" cy="10.5" r="6.5"/><path d="M20 20l-5-5"/><path d="M8 10.5h5"/>',
+  move:'<path d="M12 3v18"/><path d="M8.5 6.5 12 3l3.5 3.5"/><path d="M8.5 17.5 12 21l3.5-3.5"/>',
+  palette:'<path d="M12 3a9 9 0 1 0 0 18c1.4 0 2-.9 2-1.9 0-1-.8-1.6-1.8-1.6H11a2 2 0 0 1 0-4h3.2A4.8 4.8 0 0 0 19 8.7C19 5.3 15.8 3 12 3z"/><circle cx="8" cy="11" r="1"/><circle cx="12" cy="8" r="1"/><circle cx="16" cy="11.5" r="1"/>',
+  wind:'<path d="M3 8h10a2.6 2.6 0 1 0-2.6-2.6"/><path d="M3 12h14a2.6 2.6 0 1 1-2.6 2.6"/><path d="M3 16h7"/>',
+  box:'<path d="M3.5 8 12 4l8.5 4-8.5 4z"/><path d="M3.5 8v8L12 20l8.5-4V8"/><path d="M12 12v8"/>'
+};
+function icon(name){ return '<svg class="ic" viewBox="0 0 24 24" aria-hidden="true">'+(ICON_PATHS[name]||'')+'</svg>'; }
 const reduceMotion = matchMedia('(prefers-reduced-motion: reduce)').matches;
 
 const CH_NAMES = {visual:'ראייה — תמונה', voice:'שמיעה — קול', feeling:'תחושה בגוף'};
@@ -1017,19 +1041,19 @@ function sparkles(container, n){
 /* ---------- client records the compassionate (ideal-self) voice ---------- */
 function makeCompassionRecorder(container){
   const card=h('div','card voicecard');
-  card.innerHTML='<h2>🎙 '+g('רוצה להקליט את הקול החומל בקולך?','רוצה להקליט את הקול החומל בקולך?')+' <span class="muted small">(רשות)</span></h2>'
+  card.innerHTML='<h2>'+icon('mic')+g('רוצה להקליט את הקול החומל בקולך?','רוצה להקליט את הקול החומל בקולך?')+' <span class="muted small">(רשות)</span></h2>'
     +'<p class="muted small" style="margin-top:0">'+g('הקלט','הקליטי')+' את המשפט — וזה מה שתשמע/י מהאני האידיאלי בסוויש, בקול שלך.</p>'
     +'<div class="bubble on" style="margin:6px auto;max-width:none">"'+sentence()+'"</div>';
   const row=h('div','vin-row'); row.style.justifyContent='center';
   const recBox=h('div','vin-big');
-  const micBtn=h('button','mic-btn','🎤'); micBtn.type='button'; micBtn.setAttribute('aria-label','הקלטת הקול החומל');
+  const micBtn=h('button','mic-btn',icon('mic')); micBtn.type='button'; micBtn.setAttribute('aria-label','הקלטת הקול החומל');
   const recLabel=h('div',null,'<b>הקלטה</b>');
   const recStatus=h('div','muted', hasUserClip()?'הוקלט ✓':'לחצו כדי להקליט');
   recBox.appendChild(micBtn); recBox.appendChild(recLabel); recBox.appendChild(recStatus);
   row.appendChild(recBox);
   const played=h('div','vin-played'+(hasUserClip()?'':' hidden'));
-  const playBtn=h('button','btn ghost','▶ השמעה'); playBtn.type='button'; playBtn.style.padding='6px 14px';
-  const delBtn=h('button','btn ghost','🗑 מחיקה'); delBtn.type='button'; delBtn.style.padding='6px 14px';
+  const playBtn=h('button','btn ghost',icon('play')+'השמעה'); playBtn.type='button'; playBtn.style.padding='6px 14px';
+  const delBtn=h('button','btn ghost',icon('trash')+'מחיקה'); delBtn.type='button'; delBtn.style.padding='6px 14px';
   played.appendChild(playBtn); played.appendChild(delBtn);
   card.appendChild(row); card.appendChild(played);
   container.appendChild(card);
@@ -1055,10 +1079,10 @@ function makeCompassionRecorder(container){
       fr.readAsDataURL(blob); stopStream();
     };
     rec.start(); secs=0; recStatus.textContent='מקליט… 0ש׳';
-    micBtn.classList.add('rec'); micBtn.textContent='⏹';
+    micBtn.classList.add('rec'); micBtn.innerHTML=icon('stop');
     timer=setInterval(()=>{ secs++; recStatus.textContent='מקליט… '+secs+'ש׳'; if(secs>=12) stop(); },1000);
   }
-  function stop(){ if(rec&&rec.state!=='inactive'){try{rec.stop();}catch(e){}} clearInterval(timer); micBtn.classList.remove('rec'); micBtn.textContent='🎤'; }
+  function stop(){ if(rec&&rec.state!=='inactive'){try{rec.stop();}catch(e){}} clearInterval(timer); micBtn.classList.remove('rec'); micBtn.innerHTML=icon('mic'); }
   micBtn.addEventListener('click',()=>{ audio(); if(rec&&rec.state==='recording') stop(); else start(); });
   playBtn.addEventListener('click',()=>{ if(!state.userClip) return; try{if(prev)prev.pause();}catch(e){} prev=new Audio(state.userClip); prev.play().catch(()=>{}); });
   delBtn.addEventListener('click',()=>{ state.userClip=null; try{localStorage.removeItem('swish-userclip');}catch(e){} played.classList.add('hidden'); recStatus.textContent='לחצו כדי להקליט'; });
@@ -1066,19 +1090,19 @@ function makeCompassionRecorder(container){
 
 function makeVoiceInput(container){
   const card=h('div','card voicecard');
-  card.innerHTML='<h2>🎙 מה הקול השלילי אומר?</h2>'
+  card.innerHTML='<h2>'+icon('mic')+'מה הקול השלילי אומר?</h2>'
     +'<p class="muted small" style="margin-top:0">'+g('הקלט','הקליטי')+' את הקול, או '+g('כתוב','כתבי')+' מה הוא אומר — זה בדיוק מה שיישמע בסוויש.</p>';
   const row=h('div','vin-row');
 
   /* record box */
   const recBox=h('div','vin-big');
-  const micBtn=h('button','mic-btn','🎤'); micBtn.type='button'; micBtn.setAttribute('aria-label','הקלטה');
+  const micBtn=h('button','mic-btn',icon('mic')); micBtn.type='button'; micBtn.setAttribute('aria-label','הקלטה');
   const recLabel=h('div',null,'<b>הקלטה</b>');
   const recStatus=h('div','muted','לחצו כדי להקליט');
   recBox.appendChild(micBtn); recBox.appendChild(recLabel); recBox.appendChild(recStatus);
   const played=h('div','vin-played hidden');
-  const playBtn=h('button','btn ghost','▶ השמעה'); playBtn.type='button'; playBtn.style.padding='6px 14px';
-  const delBtn=h('button','btn ghost','🗑 מחיקה'); delBtn.type='button'; delBtn.style.padding='6px 14px';
+  const playBtn=h('button','btn ghost',icon('play')+'השמעה'); playBtn.type='button'; playBtn.style.padding='6px 14px';
+  const delBtn=h('button','btn ghost',icon('trash')+'מחיקה'); delBtn.type='button'; delBtn.style.padding='6px 14px';
   played.appendChild(playBtn); played.appendChild(delBtn);
 
   const orBox=h('div','vin-or','או');
@@ -1123,14 +1147,14 @@ function makeVoiceInput(container){
     };
     rec.start();
     secs=0; recStatus.textContent='מקליט… 0ש׳';
-    micBtn.classList.add('rec'); micBtn.textContent='⏹';
+    micBtn.classList.add('rec'); micBtn.innerHTML=icon('stop');
     recLabel.innerHTML='<b class="vin-time">מקליט…</b>';
     timer=setInterval(()=>{ secs++; recStatus.textContent='מקליט… '+secs+'ש׳'; if(secs>=15) stop(); },1000);
   }
   function stop(){
     if(rec && rec.state!=='inactive'){ try{rec.stop();}catch(e){} }
     clearInterval(timer);
-    micBtn.classList.remove('rec'); micBtn.textContent='🎤';
+    micBtn.classList.remove('rec'); micBtn.innerHTML=icon('mic');
     recLabel.innerHTML='<b>הקלטה</b>';
   }
   micBtn.addEventListener('click',()=>{ audio(); if(rec && rec.state==='recording') stop(); else start(); });
@@ -1167,7 +1191,7 @@ function makePicEditor(container, opts){
   const clr=h('button','btn ghost','נקה הכל'); clr.type='button'; clr.style.padding='6px 14px';
   toolbar.appendChild(er); toolbar.appendChild(clr);
   /* photo upload */
-  const upLabel=h('label','btn ghost pe-upload','📷 העלאת תמונה'); upLabel.style.padding='6px 14px';
+  const upLabel=h('label','btn ghost pe-upload',icon('camera')+'העלאת תמונה'); upLabel.style.padding='6px 14px';
   const upInp=document.createElement('input'); upInp.type='file'; upInp.accept='image/*'; upInp.style.display='none';
   upLabel.appendChild(upInp);
   toolbar.appendChild(upLabel);
@@ -1679,7 +1703,7 @@ function buildVoiceSceneStage(){
     +'<div class="vs-you">'+neutralCharSVG(120)+'<span class="vs-you-label">'+g('אתה','את')+'</span></div>'
     +'<div class="vs-src" style="left:'+Math.min(78,Math.max(22,entry.x))+'%;top:'+entry.y+'%;'
       +(entry.y<12?'transform:translate(-50%,45%);':'')
-      +'">🔊 '+((state.voiceText||'').trim() ? ('"'+state.voiceText.trim()+'"') : (state.emotion?('הקול השלילי — '+state.emotion):'הקול השלילי'))+'</div>'
+      +'">'+icon('sound')+((state.voiceText||'').trim() ? ('"'+state.voiceText.trim()+'"') : (state.emotion?('הקול השלילי — '+state.emotion):'הקול השלילי'))+'</div>'
     +(srcPic?('<div class="vs-srcpic" style="left:'+Math.min(78,Math.max(22,entry.x))+'%;top:'+Math.min(58,Math.max(20,entry.y+16))+'%">'+srcPic+'</div>'):'')
     +'<div class="vs-comet"><div class="tail"></div></div>'
     +'<div class="vs-impact" style="left:60%"></div>'
@@ -1860,7 +1884,7 @@ function triggerStep(ch){
 
       if(ch==='visual'){
         const cD=h('div','card');
-        cD.innerHTML='<h2>🖌 '+g('צייר','ציירי')+' או '+g('העלה','העלי')+' את תמונת הטריגר <span class="muted small">(רשות)</span></h2>'
+        cD.innerHTML='<h2>'+icon('brush')+g('צייר','ציירי')+' או '+g('העלה','העלי')+' את תמונת הטריגר <span class="muted small">(רשות)</span></h2>'
           +'<p class="muted small">אפשר לצייר, להוסיף אייקונים, או <b>להעלות תמונה אמיתית</b> (📷) — התמונה שלך תופיע בסוויש.</p>';
         makePicEditor(cD,{
           emojis:['😨','😢','😡','😖','🌩','⚡','🔥','💔','🖤','👤'],
@@ -1895,7 +1919,7 @@ function triggerStep(ch){
         el.appendChild(c);
 
         const cD=h('div','card');
-        cD.innerHTML='<h2>🖌 '+g('צייר','ציירי')+' את הקול <span class="muted small">(רשות)</span></h2>'
+        cD.innerHTML='<h2>'+icon('brush')+g('צייר','ציירי')+' את הקול <span class="muted small">(רשות)</span></h2>'
           +'<p class="muted small">'+g('צייר','ציירי')+' את מסלול הקול, את הריצוד שלו, את הצבע שלו ואת המקור שממנו הוא מגיע — הציור יופיע בסוויש ויצנח יחד עם הקול.</p>';
         makePicEditor(cD,{
           emojis:['🔊','📢','🗣','👤','⚡','〰️','🌀','❗','😖','🖤'],
@@ -1910,7 +1934,7 @@ function triggerStep(ch){
         el.appendChild(c);
 
         const cD=h('div','card');
-        cD.innerHTML='<h2>🖌 '+g('צייר','ציירי')+' את התחושה <span class="muted small">(רשות)</span></h2>'
+        cD.innerHTML='<h2>'+icon('brush')+g('צייר','ציירי')+' את התחושה <span class="muted small">(רשות)</span></h2>'
           +'<p class="muted small">איפה היא יושבת? איזה צבע יש לה? איזו צורה? — הציור יופיע בסוויש ויידחק החוצה יחד עם התחושה.</p>';
         makePicEditor(cD,{
           emojis:['🌀','🔥','🧊','⚡','🪨','⚫','💜','😖','🌩','💔'],
@@ -1961,10 +1985,10 @@ function controlTestStep(ch){
           fw.style.filter='blur('+(dist*1.2)+'px) grayscale('+Math.min(1,(dist+size)*0.2)+')';
           fw.style.opacity=String(Math.max(0.3,1-dist*0.17));
         }
-        const bFar=h('button','btn ghost','⬅ הרחק את התמונה'); bFar.type='button';
+        const bFar=h('button','btn ghost',icon('away')+'הרחק את התמונה'); bFar.type='button';
         bFar.addEventListener('click',()=>{ dist=Math.min(4,dist+1); apply(); swishSound(0.4,0.15); });
         row.appendChild(bFar);
-        const bSmall=h('button','btn ghost','🔍 הקטן אותה'); bSmall.type='button';
+        const bSmall=h('button','btn ghost',icon('shrink')+'הקטן אותה'); bSmall.type='button';
         bSmall.addEventListener('click',()=>{ size=Math.min(4,size+1); apply(); popSound(0.12); });
         row.appendChild(bSmall);
         const rst=h('button','btn ghost','⟲ החזר'); rst.type='button';
@@ -2016,14 +2040,14 @@ function controlTestStep(ch){
           return true;
         }
         if(hasRec){
-          const hint=h('p','muted small','🎧 '+g('נסה','נסי')+' — '+g('תשמע','תשמעי')+' איך ההקלטה שלך משתנה:');
+          const hint=h('p','muted small',icon('headphones')+g('נסה','נסי')+' — '+g('תשמע','תשמעי')+' איך ההקלטה שלך משתנה:');
           hint.style.textAlign='center'; hint.style.width='100%'; hint.style.margin='0';
           row.appendChild(hint);
         }
-        [['⬅ הרחק את הקול',{vol:0.05},()=>{far=Math.min(4,far+1);},0],
-         ['🐢 האט אותו',{slow:true,vol:0.09},()=>{slow=Math.min(4,slow+1);},0],
-         ['🔉 הנמך עוצמה',{vol:0.04},()=>{soft=Math.min(4,soft+1);},0],
-         ['↔ שנה כיוון',{pan:0.9,vol:0.09},()=>{panned=panned>0?-0.9:0.9;},null],
+        [[icon('away')+'הרחק את הקול',{vol:0.05},()=>{far=Math.min(4,far+1);},0],
+         [icon('slow')+'האט אותו',{slow:true,vol:0.09},()=>{slow=Math.min(4,slow+1);},0],
+         [icon('soundlow')+'הנמך עוצמה',{vol:0.04},()=>{soft=Math.min(4,soft+1);},0],
+         [icon('swap')+'שנה כיוון',{pan:0.9,vol:0.09},()=>{panned=panned>0?-0.9:0.9;},null],
         ].forEach(([label,opts,bump,pan])=>{
           const b=h('button','btn ghost',label); b.type='button';
           b.addEventListener('click',()=>{
@@ -2056,10 +2080,10 @@ function controlTestStep(ch){
         figbox.appendChild(mark);
         illus.appendChild(bb);
         const baseX = drawn ? '50%' : spot.x+'%';
-        [['🔍 הקטן אותה',()=>{ mark.style.transform=(drawn?'translate(-50%,-50%) ':'')+'scale(0.5)'; }],
-         ['↕ הזז אותה',()=>{const s2=BODY_SPOTS[(BODY_SPOTS.indexOf(spot)+3)%BODY_SPOTS.length]; mark.style.left=(drawn?'50%':s2.x+'%'); mark.style.top=s2.y+'%';}],
-         ['🎨 שנה צבע',()=>{ if(drawn){ mark.style.filter='hue-rotate(160deg)'; } else { mark.style.background='radial-gradient(circle at 35% 30%, #7EC7E8, #2E6E8E)'; mark.style.boxShadow='0 0 14px rgba(80,150,190,.6)'; } }],
-         ['💨 פחות דחוסה',()=>{mark.style.opacity='0.4';mark.style.filter=(mark.style.filter||'')+' blur(3px)';}],
+        [[icon('shrink')+'הקטן אותה',()=>{ mark.style.transform=(drawn?'translate(-50%,-50%) ':'')+'scale(0.5)'; }],
+         [icon('move')+'הזז אותה',()=>{const s2=BODY_SPOTS[(BODY_SPOTS.indexOf(spot)+3)%BODY_SPOTS.length]; mark.style.left=(drawn?'50%':s2.x+'%'); mark.style.top=s2.y+'%';}],
+         [icon('palette')+'שנה צבע',()=>{ if(drawn){ mark.style.filter='hue-rotate(160deg)'; } else { mark.style.background='radial-gradient(circle at 35% 30%, #7EC7E8, #2E6E8E)'; mark.style.boxShadow='0 0 14px rgba(80,150,190,.6)'; } }],
+         [icon('wind')+'פחות דחוסה',()=>{mark.style.opacity='0.4';mark.style.filter=(mark.style.filter||'')+' blur(3px)';}],
         ].forEach(([label,fn])=>{
           const b=h('button','btn ghost',label); b.type='button';
           b.addEventListener('click',()=>{ fn(); popSound(0.1); });
@@ -2151,7 +2175,7 @@ function idealStep(ch){
       el.appendChild(cM);
 
       const cD=h('div','card');
-      cD.innerHTML='<h2>🖌 '+g('צייר','ציירי')+' או '+g('העלה','העלי')+' את תמונת האני האידיאלי <span class="muted small">(רשות)</span></h2>'
+      cD.innerHTML='<h2>'+icon('brush')+g('צייר','ציירי')+' או '+g('העלה','העלי')+' את תמונת האני האידיאלי <span class="muted small">(רשות)</span></h2>'
         +'<p class="muted small">אפשר לצייר, להוסיף אייקונים, או <b>להעלות תמונה</b> (📷). '+(ch==='visual'
           ? 'התמונה שלך היא זו שתקפוץ מהקופסה ותכסה את הטריגר.'
           : 'התמונה שלך תופיע בסוויש במקום הדמות המצוירת.')+'</p>';
@@ -2165,7 +2189,7 @@ function idealStep(ch){
       const s=h('div','card center');
       s.innerHTML='<h2 style="font-size:1.1rem">והוא אומר לך:</h2>';
       const bub=h('div','bubble on'); bub.style.margin='4px auto'; bub.textContent='"'+sentence()+'"';
-      const sBtn=h('button','btn ghost','🔊 '+g('שמע','שמעי')+' את הקול שלו'); sBtn.type='button'; sBtn.style.marginTop='10px';
+      const sBtn=h('button','btn ghost',icon('sound')+g('שמע','שמעי')+' את הקול שלו'); sBtn.type='button'; sBtn.style.marginTop='10px';
       sBtn.addEventListener('click',()=>speak());
       s.appendChild(bub); s.appendChild(sBtn);
       el.appendChild(s);
@@ -2175,7 +2199,7 @@ function idealStep(ch){
 
       if(needBox){
         const c3=h('div','card center');
-        c3.innerHTML='<h2 style="font-size:1.1rem">עכשיו — '+g('הכנס','הכניסי')+' את הדמות לקופסה 📦</h2>'
+        c3.innerHTML='<h2 style="font-size:1.1rem">עכשיו — '+g('הכנס','הכניסי')+' את הדמות לקופסה</h2>'
           +'<p class="muted small">משם היא תקפוץ בסוויש!</p>';
         const pk=h('div','packbox');
         const fw=h('div','figwrap');
@@ -2223,7 +2247,7 @@ function swishStep(ch){
       (async()=>{ sw.setCounter('הדגמה 👀'); await sw.round(2600,700,{silent:true}); sw.setCounter(''); })();
 
       const row=h('div','btnrow');
-      const b=h('button','btn big','▶ '+g('התחל','התחילי')+' 10 סבבים'); b.type='button';
+      const b=h('button','btn big',icon('play')+g('התחל','התחילי')+' 10 סבבים'); b.type='button';
       row.appendChild(b); el.appendChild(row);
 
       /* 1000x */
