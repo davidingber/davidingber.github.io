@@ -125,7 +125,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <p class="audio-label">אפשר גם להאזין לתרגול המונחה בנפרד:</p>
     <div class="audio-wrap">
       <audio id="practiceAudio" controls preload="metadata">
-        <source src="practice.mp3" type="audio/mpeg">
+        <source src="practice.m4a" type="audio/mp4">
       </audio>
       <div class="audio-placeholder" id="audioPlaceholder">
         <span class="audio-ic" aria-hidden="true">🎧</span>
@@ -191,9 +191,8 @@ var VIDEO_EMBED_URL = "PASTE_YOUR_VIDEO_EMBED_URL_HERE";
 
 <script>
 /*
- * קובץ השמע של התרגול המונחה: כדי להעלות אותו, בתיקיית hadracha/ באתר (ב-GitHub)
- * הוסף קובץ בשם practice.mp3 בדיוק (Add file → Upload files).
- * עד שהקובץ לא קיים בנתיב הזה, יוצג פלייסהולדר במקום הנגן — לא תיבה שבורה.
+ * קובץ השמע של התרגול המונחה: hadracha/practice.m4a (הועלה).
+ * להחלפה: בתיקיית hadracha/ באתר (ב-GitHub) העלה קובץ חדש באותו שם בדיוק (Add file → Upload files).
  */
 (function () {
   var audio = document.getElementById('practiceAudio');
