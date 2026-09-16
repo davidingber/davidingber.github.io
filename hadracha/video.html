@@ -68,12 +68,14 @@ h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp
 .video-placeholder .play-ic{width:56px;height:56px;border-radius:50%;background:rgba(224,190,114,0.18);border:1.5px solid rgba(224,190,114,0.45);display:grid;place-items:center;font-size:1.3rem;color:var(--gold-soft)}
 .video-placeholder p{font-size:.98rem;color:rgba(255,255,255,.8);max-width:30ch}
 .video-caption{color:var(--ink-faint);font-size:.94rem;margin-top:12px}
-.audio-card{margin-top:26px;text-align:right}
-.audio-label{font-weight:600;color:var(--ink);margin-bottom:10px}
-.audio-wrap{background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius-sm);padding:16px 18px;box-shadow:var(--shadow-sm)}
+.audio-card{margin-top:28px;text-align:right;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:24px 22px;box-shadow:var(--shadow-sm)}
+.audio-head{display:flex;gap:14px;align-items:flex-start;margin-bottom:16px}
+.audio-badge{flex:0 0 auto;width:44px;height:44px;border-radius:50%;background:var(--gold-tint);border:1.5px solid rgba(169,118,27,0.32);display:grid;place-items:center;font-size:1.15rem}
+.audio-title{font-family:var(--font-head);font-size:1.1rem;font-weight:700;color:var(--ink);margin-bottom:4px}
+.audio-desc{color:var(--ink-soft);font-size:.94rem}
 .audio-wrap audio{width:100%;display:none}
-.audio-placeholder{display:flex;align-items:center;gap:10px;color:var(--ink-faint);font-size:.95rem}
-.audio-placeholder .audio-ic{font-size:1.3rem}
+.audio-placeholder{display:flex;align-items:center;gap:10px;color:var(--ink-faint);font-size:.92rem;margin:0}
+.audio-placeholder .audio-ic{font-size:1.2rem}
 .highlight{background:var(--gold-tint);border:1px solid rgba(169,118,27,0.3);border-inline-start:4px solid var(--gold);border-radius:var(--radius-sm);padding:20px 22px;color:var(--ink);font-weight:600;font-size:1.02rem;line-height:1.6;max-width:60ch;margin:32px auto 0;text-align:right}
 .spacer-l{height:40px}
 .signature{margin-top:8px;color:var(--ink-faint);font-size:.98rem;font-weight:600}
@@ -97,7 +99,7 @@ h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
 body.a11y-large{font-size:120%}
 body.a11y-contrast{background:#000!important;color:#fff!important}
-body.a11y-contrast .highlight,body.a11y-contrast .a11y-panel,body.a11y-contrast .audio-wrap{background:#000!important;color:#fff!important;border-color:#fff!important}
+body.a11y-contrast .highlight,body.a11y-contrast .a11y-panel,body.a11y-contrast .audio-card{background:#000!important;color:#fff!important;border-color:#fff!important}
 body.a11y-underline a{text-decoration:underline!important}
 body.a11y-reduce *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 
@@ -122,13 +124,19 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
   </div>
 
   <div class="audio-card reveal" style="animation-delay:200ms">
-    <p class="audio-label">אפשר גם להאזין לתרגול המונחה בנפרד:</p>
+    <div class="audio-head">
+      <span class="audio-badge" aria-hidden="true">🎧</span>
+      <div>
+        <div class="audio-title">תרגול מונחה בנפרד</div>
+        <p class="audio-desc">אותו תרגול, כקובץ שמע — נוח להאזנה בלי המסך.</p>
+      </div>
+    </div>
     <div class="audio-wrap">
       <audio id="practiceAudio" controls preload="metadata">
         <source src="practice.m4a" type="audio/mp4">
       </audio>
       <div class="audio-placeholder" id="audioPlaceholder">
-        <span class="audio-ic" aria-hidden="true">🎧</span>
+        <span class="audio-ic" aria-hidden="true">▶</span>
         <span>קובץ השמע של התרגול יופיע כאן</span>
       </div>
     </div>
