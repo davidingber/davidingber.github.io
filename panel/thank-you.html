@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>קיבלנו. עכשיו תורך | דוד אינגבר</title>
-<meta name="description" content="ההרשמה נקלטה. לפני הבדיקה של מלכודת ההרגעה, יש הדרכה קצרה שכדאי לצפות בה.">
+<meta name="description" content="ההרשמה נקלטה. עכשיו אפשר להתחיל את הבדיקה של מלכודת ההרגעה.">
 <meta name="theme-color" content="#F4F1EA">
 <meta name="robots" content="noindex">
 <style>
@@ -61,9 +61,9 @@ body::before {
 .check svg { width: 28px; height: 28px; }
 h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.2; font-weight: 700; text-wrap: balance; }
 .sub { font-size: 1.12rem; color: var(--ink-soft); margin-top: 16px; max-width: 42ch; margin-inline: auto; }
-.video-teaser { display: block; margin-top: 34px; text-align: right; text-decoration: none; color: inherit; }
-.video-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: var(--ink); transition: transform 0.18s var(--ease), box-shadow 0.18s var(--ease); }
-.video-teaser:hover .video-wrap { transform: translateY(-2px); box-shadow: 0 16px 44px rgba(60, 52, 36, 0.16); }
+.video-card { margin-top: 34px; text-align: right; }
+.video-wrap { position: relative; width: 100%; aspect-ratio: 16 / 9; border-radius: var(--radius); overflow: hidden; box-shadow: var(--shadow); background: var(--ink); }
+.video-wrap iframe { position: absolute; inset: 0; width: 100%; height: 100%; border: 0; }
 .video-placeholder {
   position: absolute; inset: 0; display: flex; flex-direction: column; align-items: center; justify-content: center; gap: 10px;
   background: linear-gradient(160deg, var(--sage-deep), #2f4038);
@@ -91,23 +91,23 @@ h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.2; font-weight: 700; 
   <div class="check reveal" style="animation-delay:0ms" aria-hidden="true">
     <svg viewBox="0 0 24 24" fill="none" stroke="#4E6A5A" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round"><polyline points="20 6 9 17 4 12"></polyline></svg>
   </div>
-  <h1 class="reveal" style="animation-delay:60ms" id="greeting">מעולה. אתה בפנים.</h1>
-  <p class="sub reveal" style="animation-delay:120ms">לפני שאתה ניגש לבדיקה של מלכודת ההרגעה, יש לי בשבילך הדרכה קצרה בווידאו: <strong>מה לעשות כשהחרדה עולה</strong>. היא לוקחת כמה דקות, ומסבירה בדיוק מה עומד לקרות עכשיו ולמה זה חשוב.</p>
+  <h1 class="reveal" style="animation-delay:60ms" id="greeting">מעולה. זה בדרך אליך.</h1>
+  <p class="sub reveal" style="animation-delay:120ms">לפני שאתה מתחיל בבדיקה, צפה בסרטון הקצר הזה. אני מסביר בו על מה שעומד לקרות עכשיו, ועל הדרך שאני מלווה בה אנשים הרחק מעבר לרגע הזה.</p>
 
-  <a class="video-teaser reveal" style="animation-delay:160ms" href="video-guide.html" aria-label="לצפייה בהדרכה המלאה">
-    <div class="video-wrap">
-      <div class="video-placeholder">
+  <div class="video-card reveal" style="animation-delay:160ms">
+    <div class="video-wrap" id="videoWrap">
+      <div class="video-placeholder" id="videoPlaceholder">
         <div class="play-ic" aria-hidden="true">▶</div>
-        <p>ההדרכה של דוד מחכה לך כאן</p>
+        <p>הווידאו של דוד יופיע כאן</p>
       </div>
     </div>
-    <p class="video-caption">לחץ כדי לפתוח את ההדרכה המלאה</p>
-  </a>
+    <p class="video-caption">דוד מסביר על הבדיקה שעברת, ועל תוכניות הדגל שהוא מלווה בהן.</p>
+  </div>
 
   <div class="card reveal" style="animation-delay:180ms">
-    <h2>מה לעשות כשהחרדה עולה</h2>
-    <p>לפני שתיגש לבדיקה עצמה, כדאי שתצפה בהדרכה הקצרה שהכנתי במיוחד בשבילך. אחריה תדע בדיוק למה אתה עדיין מפחד מהפעם הבאה, גם כשההתקף כבר נגמר מזמן.</p>
-    <a class="cta arrow" href="video-guide.html">לצפייה בהדרכה עכשיו</a>
+    <h2>הצעד הבא</h2>
+    <p>לחץ על הכפתור כדי להתחיל עכשיו. בתוך כמה דקות תדע בדיוק אילו מהדפוסים האלה קיימים אצלך, ומה זה אומר.</p>
+    <a class="cta arrow" href="malchodet-hargaa.html">להתחיל את הבדיקה עכשיו</a>
   </div>
 
   <p class="note">בדוק גם את תיבת הדואר שלך. בימים הקרובים אשלח לך עוד כמה דברים שיעזרו לך להבין מה קורה לך בדיוק, ואיך להגיב אחרת בפעם הבאה.</p>
@@ -117,15 +117,28 @@ h1 { font-size: clamp(1.8rem, 6vw, 2.5rem); line-height: 1.2; font-weight: 700; 
 </main>
 
 <script>
+/*
+ * הדבק כאן קישור embed לסרטון של דוד (מסביר על הבדיקה ועל תוכניות הדגל).
+ * יוטיוב: https://www.youtube.com/embed/VIDEO_ID
+ * וימאו:  https://player.vimeo.com/video/VIDEO_ID
+ * עד שתדביק קישור אמיתי, יוצג פלייסהולדר במקום הסרטון.
+ */
+var VIDEO_EMBED_URL = "PASTE_YOUR_VIDEO_EMBED_URL_HERE";
+
 (function () {
   try {
     var params = new URLSearchParams(location.search);
     var name = (params.get('name') || '').trim();
     if (name) {
       var el = document.getElementById('greeting');
-      el.textContent = 'מעולה, ' + name + '. אתה בפנים.';
+      el.textContent = 'מעולה, ' + name + '. זה בדרך אליך.';
     }
   } catch (e) { /* no-op */ }
+
+  if (VIDEO_EMBED_URL && VIDEO_EMBED_URL.indexOf('PASTE_YOUR') !== 0) {
+    var wrap = document.getElementById('videoWrap');
+    wrap.innerHTML = '<iframe src="' + VIDEO_EMBED_URL + '" title="דוד אינגבר" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+  }
 })();
 </script>
 
