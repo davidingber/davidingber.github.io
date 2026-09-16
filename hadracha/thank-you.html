@@ -43,6 +43,7 @@ body{
   min-height:100vh;
   -webkit-font-smoothing:antialiased;
   overflow-x:hidden;
+  padding-bottom:84px;
 }
 body::before{
   content:"";
@@ -57,6 +58,7 @@ body::before{
 .stage{position:relative;z-index:1;max-width:var(--content);margin:0 auto;padding:64px 20px 60px;text-align:center}
 .reveal{opacity:0;transform:translateY(10px);animation:rise .55s var(--ease) forwards}
 @keyframes rise{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+.eyebrow{display:inline-flex;align-items:center;gap:8px;font-size:13px;font-weight:600;letter-spacing:.03em;color:var(--ink);background:var(--gold-tint);border:1px solid rgba(169,118,27,0.32);padding:8px 16px;border-radius:999px;margin-bottom:18px}
 .check{width:64px;height:64px;border-radius:50%;margin:0 auto 22px;background:var(--gold-tint);border:1.5px solid rgba(169,118,27,0.32);display:grid;place-items:center;color:var(--ink);font-size:1.6rem}
 h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp(1.8rem,6vw,2.5rem);line-height:1.24;text-wrap:balance}
 .sub{font-size:1.12rem;color:var(--ink-soft);margin-top:16px;max-width:44ch;margin-inline:auto}
@@ -79,6 +81,12 @@ h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp
 .signature .role{color:var(--ink-faint);font-weight:400}
 .footer-legal{display:flex;justify-content:center;gap:14px;flex-wrap:wrap;margin-top:16px;font-size:13px}
 .footer-legal a{color:var(--ink-faint)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(20,43,32,0.1)}
+.sticky-cta .cta{margin:0}
+@media (min-width:761px){.sticky-cta{display:none}body{padding-bottom:0}}
+
 @media (max-width:390px){body{font-size:16px}.stage{padding:44px 16px 44px}.card{padding:22px 18px}}
 @media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
 </style>
@@ -86,6 +94,7 @@ h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp
 <body>
 <main class="stage">
   <div class="check reveal" style="animation-delay:0ms" aria-hidden="true">✓</div>
+  <div class="reveal" style="animation-delay:20ms"><span class="eyebrow">קיבלת גישה</span></div>
   <h1 class="reveal" style="animation-delay:60ms" id="greeting">מעולה. ההדרכה מחכה לך.</h1>
   <p class="sub reveal" style="animation-delay:120ms">לפני שאתה נכנס, כדאי לדעת: המטרה כאן היא לא להעלים את החרדה תוך שתי דקות, אלא לתת לך דרך אחרת להיות איתה כשהיא מגיעה.</p>
 
@@ -111,6 +120,10 @@ h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp
   <div class="signature">דוד אינגבר <span class="role">| חוזרים לסמוך על עצמנו</span></div>
   <p class="footer-legal"><a href="/privacy/">מדיניות פרטיות</a><a href="/accessibility/">הצהרת נגישות</a></p>
 </main>
+
+<div class="sticky-cta">
+  <a href="video.html" class="cta arrow">לפתיחת ההדרכה עכשיו</a>
+</div>
 
 <script>
 (function () {
