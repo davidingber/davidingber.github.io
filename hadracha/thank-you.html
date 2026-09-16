@@ -62,7 +62,7 @@ h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp
 .sub{font-size:1.12rem;color:var(--ink-soft);margin-top:16px;max-width:44ch;margin-inline:auto}
 .video-card{margin-top:34px;text-align:right}
 .video-wrap{position:relative;width:100%;aspect-ratio:16/9;border-radius:var(--radius);overflow:hidden;box-shadow:var(--shadow);background:var(--ink-deep)}
-.video-wrap video{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;display:none;background:#000}
+.video-wrap iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
 .video-placeholder{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;background:linear-gradient(160deg,var(--ink),var(--ink-deep));color:rgba(255,255,255,.92);text-align:center;padding:20px}
 .video-placeholder .play-ic{width:56px;height:56px;border-radius:50%;background:rgba(224,190,114,0.18);border:1.5px solid rgba(224,190,114,0.45);display:grid;place-items:center;font-size:1.3rem;color:var(--gold-soft)}
 .video-placeholder p{font-size:.98rem;color:rgba(255,255,255,.8);max-width:30ch}
@@ -90,10 +90,7 @@ h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp
   <p class="sub reveal" style="animation-delay:120ms">לפני שאתה נכנס, כדאי לדעת: המטרה כאן היא לא להעלים את החרדה תוך שתי דקות, אלא לתת לך דרך אחרת להיות איתה כשהיא מגיעה.</p>
 
   <div class="video-card reveal" style="animation-delay:160ms">
-    <div class="video-wrap">
-      <video id="welcomeVideo" controls preload="metadata" playsinline>
-        <source src="welcome.mp4" type="video/mp4">
-      </video>
+    <div class="video-wrap" id="videoWrap">
       <div class="video-placeholder" id="welcomePlaceholder">
         <div class="play-ic" aria-hidden="true">▶</div>
         <p>סרטון קבלת הפנים של דוד יופיע כאן</p>
@@ -130,17 +127,16 @@ h1{font-family:var(--font-head);color:var(--ink);font-weight:700;font-size:clamp
 
 <script>
 /*
- * סרטון קבלת הפנים: קובץ ה-mp4 עצמו לא נמצא כאן.
- * כדי להעלות אותו: בתיקיית hadracha/ באתר (ב-GitHub) הוסף קובץ בשם welcome.mp4 בדיוק (Add file → Upload files).
- * עד שהקובץ לא קיים בנתיב הזה, יוצג פלייסהולדר במקום הסרטון — לא תיבה שבורה.
+ * סרטון קבלת הפנים של דוד, מיוטיוב.
+ * להחלפה: הדבק קישור embed חדש כאן (יוטיוב: https://www.youtube.com/embed/VIDEO_ID , וימאו: https://player.vimeo.com/video/VIDEO_ID).
  */
+var VIDEO_EMBED_URL = "https://www.youtube.com/embed/UHfT56a6WIw";
+
 (function () {
-  var video = document.getElementById('welcomeVideo');
-  var placeholder = document.getElementById('welcomePlaceholder');
-  video.addEventListener('loadedmetadata', function () {
-    video.style.display = 'block';
-    placeholder.style.display = 'none';
-  });
+  if (VIDEO_EMBED_URL && VIDEO_EMBED_URL.indexOf('PASTE_YOUR') !== 0) {
+    var wrap = document.getElementById('videoWrap');
+    wrap.innerHTML = '<iframe src="' + VIDEO_EMBED_URL + '" title="דוד אינגבר" allow="autoplay; fullscreen; picture-in-picture" allowfullscreen></iframe>';
+  }
 })();
 </script>
 
