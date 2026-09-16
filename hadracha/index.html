@@ -163,9 +163,6 @@ p+p{margin-top:.85em}
 .hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden}
 .error-msg{display:none;color:#8a3b1f;background:#f6e3d6;border-radius:10px;padding:10px 14px;font-size:.92rem;margin-top:12px}
 .error-msg.show{display:block}
-.success{display:none;text-align:center}
-.success.show{display:block}
-.success .check{width:56px;height:56px;border-radius:50%;background:var(--ink);color:var(--gold-soft);font-size:1.6rem;display:flex;align-items:center;justify-content:center;margin:0 auto 16px}
 
 .quotes{display:flex;flex-direction:column;gap:16px;max-width:680px;margin:0 auto}
 .quote{background:var(--bg-soft);border:1px solid var(--line);border-inline-start:4px solid var(--gold-soft);border-radius:var(--radius-sm);padding:20px 22px;font-size:.98rem;color:var(--ink-soft);font-style:italic;line-height:1.7}
@@ -359,12 +356,6 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
       <div class="error-msg" id="errorMsg">משהו לא עבד. אפשר לנסות שוב.</div>
     </form>
 
-    <div class="success" id="successMsg">
-      <div class="check">✓</div>
-      <h3>נרשמת בהצלחה</h3>
-      <p class="muted">ההדרכה בדרך אליך למייל. אם היא לא מגיעה תוך כמה דקות, כדאי לבדוק גם בתיקיית הספאם.</p>
-    </div>
-
     <p class="cta-note">בלי טלפון. בלי שאלון התאמה. ובלי צורך לדבר עם אף אחד כדי לקבל אותה.</p>
   </section>
 
@@ -456,7 +447,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
  * ===== Lead capture config =====
  * שלב 1: פתח Google Sheet חדש → Extensions > Apps Script → הדבק את הקוד מ-panel/README.md → Deploy כ-Web app.
  * שלב 2: העתק את כתובת ה-/exec שקיבלת והדבק אותה כאן במקום המחרוזת למטה.
- * עד שהכתובת לא תוחלף, הטופס עדיין ישמור את הליד מקומית (localStorage) כגיבוי ויציג אישור על המסך.
+ * עד שהכתובת לא תוחלף, הטופס עדיין ישמור את הליד מקומית (localStorage) כגיבוי ויעביר את המשתמש לדף התודה כרגיל.
  */
 var SHEET_WEBAPP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
 
@@ -464,8 +455,6 @@ var SHEET_WEBAPP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
   var form = document.getElementById('leadForm');
   var btn = document.getElementById('submitBtn');
   var err = document.getElementById('errorMsg');
-  var success = document.getElementById('successMsg');
-
   function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
 
   form.addEventListener('submit', function (e) {
@@ -504,15 +493,14 @@ var SHEET_WEBAPP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
       localStorage.setItem('leads', JSON.stringify(stored));
     } catch (e) { /* no-op */ }
 
-    function showSuccess() {
-      form.style.display = 'none';
-      document.querySelector('.cta-note').style.display = 'none';
-      success.classList.add('show');
+    function goToThankYou() {
+      var q = new URLSearchParams({ name: name }).toString();
+      location.href = 'thank-you.html?' + q;
     }
 
     if (!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.indexOf('PASTE_YOUR') === 0) {
       // עדיין לא חובר Google Sheet — לא חוסמים את המשתמש, רק ממשיכים
-      showSuccess();
+      goToThankYou();
       return;
     }
 
@@ -521,9 +509,9 @@ var SHEET_WEBAPP_URL = "PASTE_YOUR_GOOGLE_APPS_SCRIPT_WEB_APP_URL_HERE";
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
-    }).then(showSuccess).catch(function () {
+    }).then(goToThankYou).catch(function () {
       // גם אם הרשת נכשלה, הליד כבר נשמר מקומית — לא עוצרים את המשתמש
-      showSuccess();
+      goToThankYou();
     });
   });
 })();
