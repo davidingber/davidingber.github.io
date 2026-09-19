@@ -9,7 +9,15 @@
   </style>
 </head>
 <body><main id="main">
-  <p><a href="https://davidingber.github.io/">חזרה לאתר</a></p>
+  <p><a href="https://davidingber.github.io/" id="backLink">חזרה לאתר</a></p>
+  <script>
+    (function () {
+      var link = document.getElementById('backLink');
+      if (document.referrer && document.referrer.indexOf(location.host) > -1) {
+        link.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
+      }
+    })();
+  </script>
   <h1>מדיניות פרטיות</h1>
   <p class="meta">עודכן לאחרונה: 19 באוגוסט 2026</p>
   <div class="notice">המדיניות חלה על האתר הראשי של דוד אינגבר, על “בדיקת 5 הדקות” ועל דפי “מסע 8 הזהויות”.</div>

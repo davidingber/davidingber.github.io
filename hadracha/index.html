@@ -139,8 +139,7 @@ p+p{margin-top:1em}
 .highlight{background:var(--gold-tint);border:1px solid rgba(169,118,27,0.3);border-inline-start:4px solid var(--gold);border-radius:var(--radius-sm);padding:20px 22px;color:var(--ink);font-weight:600;font-size:1.04rem;line-height:1.6;max-width:60ch;margin:26px auto 0}
 .hero-lead{font-size:1.08rem;color:var(--ink-soft);font-weight:400;line-height:1.6;max-width:50ch;margin:0 auto}
 .hero-benefit{font-size:1.05rem;color:var(--gold-deep);font-weight:600;margin-top:14px}
-.hero-proof{display:flex;align-items:center;justify-content:center;gap:8px;max-width:46ch;margin:18px auto 0;color:var(--ink-soft);font-size:.9rem;font-style:italic;line-height:1.5}
-.hero-proof svg{width:18px;height:18px;flex:0 0 auto;color:var(--gold);stroke-width:2}
+.hero-proof{max-width:440px;margin:26px auto 0;text-align:right}
 .hero h1{margin-top:18px}
 
 .lessons{display:flex;flex-direction:column;gap:22px;max-width:680px;margin:0 auto}
@@ -175,6 +174,7 @@ p+p{margin-top:1em}
 .quotes{display:flex;flex-direction:column;gap:16px;max-width:680px;margin:0 auto}
 .quote{background:var(--bg-soft);border:1px solid var(--line);border-inline-start:4px solid var(--gold-soft);border-radius:var(--radius-sm);padding:20px 22px;font-size:.98rem;color:var(--ink-soft);line-height:1.7}
 .quote p{font-style:italic;margin:0}
+.quote-title{font-weight:700!important;font-style:normal!important;color:var(--ink)!important;font-size:1rem!important;margin-bottom:8px!important}
 .quote-attr{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.82rem;font-weight:600;font-style:normal;color:var(--gold-deep)}
 .quote-avatar{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--gold-tint);display:flex;align-items:center;justify-content:center}
 .quote-avatar svg{width:14px;height:14px;color:var(--gold-deep)}
@@ -251,9 +251,10 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <div class="cta-wrap reveal" style="animation-delay:240ms">
       <a href="#formSection" class="cta">שלחו לי את ההדרכה בחינם</a>
     </div>
-    <div class="hero-proof reveal" style="animation-delay:260ms">
-      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
-      <span>"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</span>
+    <div class="quote hero-proof reveal" style="animation-delay:260ms">
+      <p class="quote-title">יצאה מהבית וחזרה לעבוד — תוך 4 מפגשים בלבד</p>
+      <p>"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</p>
+      <div class="quote-attr"><span class="quote-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg></span>לקוחה אמיתית · מתוך שיחת מעקב</div>
     </div>
   </section>
 
@@ -399,10 +400,12 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <div class="spacer-s"></div>
     <div class="quotes">
       <div class="quote reveal" style="animation-delay:0ms">
+        <p class="quote-title">חזרה לנהוג בלי הפחד מטעויות</p>
         <p>"היא חזרה לנהוג, והפסיקה להיות חרדה מלעשות טעויות."</p>
         <div class="quote-attr"><span class="quote-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg></span>לקוחה אמיתית · מתוך שיחת מעקב</div>
       </div>
       <div class="quote reveal" style="animation-delay:60ms">
+        <p class="quote-title">יצאה מהבית וחזרה לעבוד — תוך 4 מפגשים בלבד</p>
         <p>"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</p>
         <div class="quote-attr"><span class="quote-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg></span>לקוחה אמיתית · מתוך שיחת מעקב</div>
       </div>
