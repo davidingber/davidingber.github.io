@@ -138,6 +138,9 @@ p+p{margin-top:1em}
 .escalate li{background:var(--bg-soft);border:1px solid var(--line);border-radius:999px;padding:8px 16px;font-size:.92rem;color:var(--ink-soft)}
 .highlight{background:var(--gold-tint);border:1px solid rgba(169,118,27,0.3);border-inline-start:4px solid var(--gold);border-radius:var(--radius-sm);padding:20px 22px;color:var(--ink);font-weight:600;font-size:1.04rem;line-height:1.6;max-width:60ch;margin:26px auto 0}
 .hero-lead{font-size:1.08rem;color:var(--ink-soft);font-weight:400;line-height:1.6;max-width:50ch;margin:0 auto}
+.hero-benefit{font-size:1.05rem;color:var(--gold-deep);font-weight:600;margin-top:14px}
+.hero-proof{display:flex;align-items:center;justify-content:center;gap:8px;max-width:46ch;margin:18px auto 0;color:var(--ink-soft);font-size:.9rem;font-style:italic;line-height:1.5}
+.hero-proof svg{width:18px;height:18px;flex:0 0 auto;color:var(--gold);stroke-width:2}
 .hero h1{margin-top:18px}
 
 .lessons{display:flex;flex-direction:column;gap:22px;max-width:680px;margin:0 auto}
@@ -162,12 +165,19 @@ p+p{margin-top:1em}
 .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(169,118,27,0.16)}
 .field input::placeholder{color:var(--ink-faint)}
 .field input[type="email"]{direction:ltr;text-align:right}
+.whats-included{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
+.whats-included-item{display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:.86rem;font-weight:600;color:var(--ink-soft)}
+.whats-included-item svg{width:16px;height:16px;flex:0 0 auto;color:var(--gold-deep)}
 .hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden}
 .error-msg{display:none;color:#8a3b1f;background:#f6e3d6;border-radius:10px;padding:10px 14px;font-size:.92rem;margin-top:12px}
 .error-msg.show{display:block}
 
 .quotes{display:flex;flex-direction:column;gap:16px;max-width:680px;margin:0 auto}
-.quote{background:var(--bg-soft);border:1px solid var(--line);border-inline-start:4px solid var(--gold-soft);border-radius:var(--radius-sm);padding:20px 22px;font-size:.98rem;color:var(--ink-soft);font-style:italic;line-height:1.7}
+.quote{background:var(--bg-soft);border:1px solid var(--line);border-inline-start:4px solid var(--gold-soft);border-radius:var(--radius-sm);padding:20px 22px;font-size:.98rem;color:var(--ink-soft);line-height:1.7}
+.quote p{font-style:italic;margin:0}
+.quote-attr{display:flex;align-items:center;gap:8px;margin-top:12px;font-size:.82rem;font-weight:600;font-style:normal;color:var(--gold-deep)}
+.quote-avatar{flex:0 0 auto;width:24px;height:24px;border-radius:50%;background:var(--gold-tint);display:flex;align-items:center;justify-content:center}
+.quote-avatar svg{width:14px;height:14px;color:var(--gold-deep)}
 
 .about{display:flex;flex-direction:column;gap:18px;max-width:640px;margin:0 auto}
 .about .lead-name{color:var(--ink);font-weight:700}
@@ -190,7 +200,8 @@ p+p{margin-top:1em}
 .footer-wa a{color:var(--ink-soft);font-weight:600}
 
 /* sticky mobile CTA */
-.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(20,43,32,0.1)}
+.sticky-cta{position:fixed;left:0;right:0;bottom:0;z-index:50;background:var(--bg);border-top:1px solid var(--line);padding:10px 16px calc(10px + env(safe-area-inset-bottom));box-shadow:0 -8px 24px rgba(20,43,32,0.1);transform:translateY(110%);transition:transform .25s var(--ease)}
+.sticky-cta.show{transform:translateY(0)}
 .sticky-cta .cta{margin:0}
 @media (min-width:761px){.sticky-cta{display:none}body{padding-bottom:0}}
 
@@ -230,6 +241,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <div class="spacer-s"></div>
     <p class="hero-lead reveal" style="animation-delay:60ms">אם גם אצלך החרדה מתחילה מדופק, סחרחורת, או מחשבה אחת קטנה שמיד שולחת את הראש לסרט…</p>
     <h1 class="reveal" style="animation-delay:120ms">בהדרכה קצרה וממוקדת תדע מה לעשות בדקות הראשונות של החרדה, כדי לא להיכנס לסחרור גדול יותר.</h1>
+    <p class="hero-benefit reveal" style="animation-delay:140ms">כדי שהחרדה תפסיק להכתיב לך מה אתה מסוגל לעשות.</p>
     <ul class="no-list reveal" style="animation-delay:160ms">
       <li>בלי להכריח את עצמך להירגע</li>
       <li>בלי להילחם בכל מחשבה</li>
@@ -238,6 +250,10 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <p class="tag-line reveal" style="animation-delay:200ms">כולל תרגול מונחה שאפשר לחזור אליו גם ברגע האמת.</p>
     <div class="cta-wrap reveal" style="animation-delay:240ms">
       <a href="#formSection" class="cta">שלחו לי את ההדרכה בחינם</a>
+    </div>
+    <div class="hero-proof reveal" style="animation-delay:260ms">
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><path d="M9 12l2 2 4-4"/><circle cx="12" cy="12" r="9"/></svg>
+      <span>"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</span>
     </div>
   </section>
 
@@ -359,6 +375,21 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     </form>
 
     <p class="cta-note">בלי טלפון. בלי שאלון התאמה. ובלי צורך לדבר עם אף אחד כדי לקבל אותה.</p>
+
+    <div class="whats-included">
+      <div class="whats-included-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 19.5A2.5 2.5 0 0 1 6.5 17H20"/><path d="M6.5 2H20v20H6.5A2.5 2.5 0 0 1 4 19.5v-15A2.5 2.5 0 0 1 6.5 2z"/></svg>
+        <span>הדרכה קצרה</span>
+      </div>
+      <div class="whats-included-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><path d="M4 12v-1a8 8 0 0 1 16 0v1"/><rect x="2" y="12" width="5" height="7" rx="2"/><rect x="17" y="12" width="5" height="7" rx="2"/></svg>
+        <span>תרגול מונחה</span>
+      </div>
+      <div class="whats-included-item">
+        <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 3"/></svg>
+        <span>כ-5 דקות</span>
+      </div>
+    </div>
   </section>
 
   <div class="spacer-l"></div>
@@ -367,8 +398,14 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <h2 class="center">אפשר ללמוד להגיב אחרת לחרדה</h2>
     <div class="spacer-s"></div>
     <div class="quotes">
-      <div class="quote reveal" style="animation-delay:0ms">"היא חזרה לנהוג, והפסיקה להיות חרדה מלעשות טעויות."</div>
-      <div class="quote reveal" style="animation-delay:60ms">"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</div>
+      <div class="quote reveal" style="animation-delay:0ms">
+        <p>"היא חזרה לנהוג, והפסיקה להיות חרדה מלעשות טעויות."</p>
+        <div class="quote-attr"><span class="quote-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg></span>לקוחה אמיתית · מתוך שיחת מעקב</div>
+      </div>
+      <div class="quote reveal" style="animation-delay:60ms">
+        <p>"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</p>
+        <div class="quote-attr"><span class="quote-avatar" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8"><circle cx="12" cy="8" r="4"/><path d="M4 20c0-4 3.5-7 8-7s8 3 8 7"/></svg></span>לקוחה אמיתית · מתוך שיחת מעקב</div>
+      </div>
     </div>
     <div class="spacer-m"></div>
     <div class="quotes-grid">
@@ -404,10 +441,8 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <div style="max-width:60ch;margin:0 auto;padding:0 20px" class="about">
       <div class="about-photo"><img src="img/david.jpg" alt="דוד אינגבר" loading="lazy" width="560" height="560"></div>
       <h2 class="center">מי אני ולמה בניתי את התהליך הזה?</h2>
-      <p>אם עוד לא יצא לנו להכיר, נעים מאוד. אני <span class="lead-name">דוד אינגבר</span>, מטפל רגשי כבר 6 שנים, עם מעל 1,300 שעות ליווי אחד על אחד בעבודה עם חרדה, טראומה, מחשבות טורדניות, חרדת בריאות והימנעויות.</p>
-      <p>אבל הגישה שלי לא נולדה רק מהקליניקה. היא התחילה גם ממני. לפני 6 שנים התחלתי לפחד מהתחושות שלי, מהמחשבות שלי, ובעיקר מהאפשרות שלא אצליח להתמודד כשהחרדה תעלה. רציתי לדעת איך לעזור לעצמי, אז הלכתי ללמוד LI-CBT. זה נתן לי כלים והבנה. אבל בשלב מסוים קלטתי משהו: הפכתי ללוחם טוב יותר, אבל עדיין חייתי בתוך מלחמה.</p>
-      <p>משם הגעתי ל-ACT, מיינדפולנס, NLP, טראנס ועבודה עם הגוף. המאבק פחת, אבל היה חסר לי החיבור למה שמתחת לחרדה. ואז התחבר לי החלק שהיה חסר: הורות עצמית מיטיבה. לא להיבלע בחרדה, אבל גם לא להילחם בה או להתעלם ממנה — אלא להבין: יש בי חלק שמפחד, אבל הוא לא כל מי שאני. ואם הוא לא כל מי שאני, יש בי גם חלק שיכול להקשיב לו, להרגיע אותו, להציב לו גבול, ועדיין לבחור איך לחיות.</p>
-      <p>משם חיברתי את כל מה שלמדתי למתודה אחת: <span class="method-name">"חוזרים לסמוך על עצמנו"</span> — לא כדי ללמד אותך להילחם טוב יותר בחרדה, אלא כדי לעזור לך להבין אותה, לפגוש אותה אחרת, ולחזור לסמוך על עצמך גם כשהיא שם.</p>
+      <p>אם עוד לא יצא לנו להכיר, נעים מאוד. אני <span class="lead-name">דוד אינגבר</span>, מטפל רגשי כבר 6 שנים, עם מעל <strong style="color:var(--ink)">1,300 שעות</strong> ליווי אחד על אחד בעבודה עם חרדה, טראומה, מחשבות טורדניות, חרדת בריאות והימנעויות.</p>
+      <p>הגישה שלי לא נולדה רק מהקליניקה — היא התחילה גם ממני, מהפחד שלי מהתחושות ומהמחשבות שלי. הלכתי ללמוד LI-CBT וזה נתן לי כלים, אבל הפכתי ללוחם טוב יותר ועדיין חייתי בתוך מלחמה. משם הגעתי ל-ACT, מיינדפולנס, NLP, טראנס ועבודה עם הגוף, עד שהתחבר לי החלק שבאמת היה חסר: <strong style="color:var(--ink)">הורות עצמית מיטיבה</strong> — לא להיבלע בחרדה ולא להילחם בה, אלא להבין שיש בי חלק שמפחד, ויש בי גם חלק שיודע להקשיב לו ולבחור איך לחיות. משם נולדה המתודה: <span class="method-name">"חוזרים לסמוך על עצמנו"</span>.</p>
       <div class="cta-wrap">
         <a href="#formSection" class="cta">אני רוצה לקבל את ההדרכה</a>
       </div>
@@ -427,7 +462,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
   <p class="footer-legal"><a href="/privacy/">מדיניות פרטיות</a><a href="/accessibility/">הצהרת נגישות</a></p>
 </footer>
 
-<div class="sticky-cta">
+<div class="sticky-cta" id="stickyCta">
   <a href="#formSection" class="cta">שלחו לי את ההדרכה בחינם</a>
 </div>
 
@@ -537,6 +572,19 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
   closeBtn.addEventListener('click', close);
   lightbox.addEventListener('click', function (e) { if (e.target === lightbox) close(); });
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !lightbox.hidden) close(); });
+})();
+
+(function () {
+  // Sticky mobile CTA: stay hidden while the hero's own CTA or the form is
+  // already on screen, so it never sits duplicated right under either one.
+  var sticky = document.getElementById('stickyCta');
+  var heroCta = document.querySelector('.hero .cta-wrap');
+  var formSection = document.getElementById('formSection');
+  if (!sticky || !heroCta || !formSection || !('IntersectionObserver' in window)) return;
+  var heroVisible = true, formVisible = false;
+  function update() { sticky.classList.toggle('show', !heroVisible && !formVisible); }
+  new IntersectionObserver(function (entries) { heroVisible = entries[0].isIntersecting; update(); }, { threshold: 0 }).observe(heroCta);
+  new IntersectionObserver(function (entries) { formVisible = entries[0].isIntersecting; update(); }, { threshold: 0 }).observe(formSection);
 })();
 
 (function () {
