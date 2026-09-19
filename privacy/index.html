@@ -9,7 +9,7 @@
   </style>
 </head>
 <body><main id="main">
-  <p><a href="https://davidingber.github.io/">חזרה לאתר</a></p>
+  <p><a href="https://davidingber.github.io/" id="backLink">חזרה לאתר</a></p>
   <h1>מדיניות פרטיות</h1>
   <p class="meta">עודכן לאחרונה: 19 באוגוסט 2026</p>
   <div class="notice">המדיניות חלה על האתר הראשי של דוד אינגבר, על “בדיקת 5 הדקות” ועל דפי “מסע 8 הזהויות”.</div>
@@ -24,4 +24,14 @@
   <h2>זכויותיך</h2><p>בהתאם לחוק הגנת הפרטיות, ניתן לפנות בבקשה לעיין במידע אישי המוחזק על אודותיך או לבקש לתקנו אם אינו נכון, שלם, ברור או מעודכן. ניתן גם לבקש מחיקה או הפסקת שימוש, והבקשה תיבחן בהתאם לדין ולחובות השמירה החלות.</p>
   <h2>מידע רגיש וקטינים</h2><p>אין למסור דרך טופס או הודעה פתוחה מידע רפואי מפורט שאינו נחוץ לפנייה הראשונית. האתר אינו מיועד לאיסוף מידע מקטינים ללא מעורבות הורה או אפוטרופוס מתאים.</p>
   <h2>שינויים במדיניות</h2><p>המדיניות עשויה להתעדכן עקב שינוי בשירותים או בדין. מועד העדכון האחרון יוצג בראש העמוד.</p>
-</main><footer>דוד אינגבר · טיפול ואימון רגשי</footer></body></html>
+</main><footer>דוד אינגבר · טיפול ואימון רגשי</footer>
+<script>
+(function () {
+  try {
+    if (document.referrer && new URL(document.referrer).origin === location.origin) {
+      document.getElementById('backLink').href = document.referrer;
+    }
+  } catch (e) { /* no-op, keep default homepage link */ }
+})();
+</script>
+</body></html>
