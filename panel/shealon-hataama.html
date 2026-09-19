@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>שאלון התאמה | חוזרים לסמוך על עצמנו · דוד אינגבר</title>
+<meta name="description" content="לפני שאנחנו מדברים, כמה שאלות שיעזרו לנו להבין ביחד אם 'חוזרים לסמוך על עצמנו' הוא באמת הצעד הנכון בשבילך עכשיו.">
+<meta name="theme-color" content="#FFFDF8">
+<meta property="og:type" content="website">
+<meta property="og:title" content="שאלון התאמה | חוזרים לסמוך על עצמנו">
+<meta property="og:description" content="לפני שאנחנו מדברים, כמה שאלות שיעזרו לנו להבין ביחד אם התהליך באמת מתאים לך.">
+<link rel="canonical" href="https://davidingber.github.io/panel/shealon-hataama.html">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+:root{
+  --bg:#FFFDF8;
+  --bg-soft:#FBF6EA;
+  --bg-deep:#F5EEE0;
+  --ink:#1B3A2C;
+  --ink-deep:#142B20;
+  --ink-soft:#4A5A50;
+  --ink-faint:#5C6E63;
+  --line:#E7EFE5;
+  --gold:#A9761B;
+  --gold-soft:#E0BE72;
+  --gold-tint:#F7EFDD;
+  --gold-deep:#7E5A16;
+  --radius:20px;
+  --radius-sm:13px;
+  --shadow:0 16px 46px rgba(20,43,32,0.12);
+  --shadow-sm:0 6px 20px rgba(20,43,32,0.08);
+  --content:640px;
+  --ease:cubic-bezier(0.22,0.61,0.36,1);
+  --font-head:"Frank Ruhl Libre",Georgia,"Times New Roman",serif;
+  --font-body:"Heebo","Segoe UI",Arial,sans-serif;
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{
+  background:var(--bg);
+  color:var(--ink-soft);
+  font-family:var(--font-body);
+  font-size:17px;
+  line-height:1.75;
+  -webkit-font-smoothing:antialiased;
+  overflow-x:hidden;
+  padding-bottom:74px;
+}
+body::before{
+  content:"";
+  position:fixed;
+  inset:0;
+  background:
+    radial-gradient(1100px 640px at 100% -8%, rgba(169,118,27,0.09), transparent 60%),
+    radial-gradient(900px 560px at -8% 105%, rgba(27,58,44,0.08), transparent 55%);
+  pointer-events:none;
+  z-index:0;
+}
+.stage{position:relative;z-index:1;max-width:var(--content);margin:0 auto;padding:64px 20px 20px}
+.progress-rail{position:fixed;top:0;left:0;right:0;height:4px;background:var(--bg-deep);z-index:99}
+.progress-rail-fill{height:100%;width:0%;background:linear-gradient(90deg,var(--gold-soft),var(--gold));transition:width .15s linear}
+.reveal{opacity:0;transform:translateY(12px);animation:rise .6s var(--ease) forwards}
+@keyframes rise{from{opacity:0;transform:translateY(16px)}to{opacity:1;transform:translateY(0)}}
+h1,h2,h3{font-family:var(--font-head);color:var(--ink);font-weight:700;text-wrap:balance}
+h1{font-size:clamp(1.7rem,5.6vw,2.3rem);line-height:1.28;letter-spacing:-0.01em}
+h2{font-size:1.2rem;line-height:1.4;margin-bottom:6px}
+p+p{margin-top:.85em}
+.muted{color:var(--ink-faint)}
+.center{text-align:center}
+.eyebrow{display:inline-flex;align-items:center;gap:10px;font-size:12px;font-weight:700;letter-spacing:.16em;color:var(--gold-deep)}
+.eyebrow::after{content:"";width:32px;height:1px;background:var(--gold)}
+.hero .sub{font-size:1.05rem;color:var(--ink-soft);margin-top:16px;max-width:48ch;line-height:1.65}
+.hero .no-pressure{margin-top:14px;font-size:.98rem}
+.hero .no-pressure strong{color:var(--ink)}
+.mark{background:linear-gradient(180deg,transparent 60%,rgba(224,190,114,.55) 60%)}
+
+.spacer-s{height:14px}
+.spacer-m{height:26px}
+.spacer-l{height:42px}
+
+/* question list — editorial dividers, not stacked cards */
+.q{border-bottom:1px solid var(--line);padding:34px 0;margin-bottom:0}
+.q:last-of-type{border-bottom:none}
+.q .qnum{font-family:var(--font-head);font-weight:700;font-size:2.5rem;line-height:1;color:transparent;-webkit-text-stroke:1.3px var(--gold);flex:0 0 auto}
+.q .qhead{display:flex;align-items:baseline;gap:16px;margin-bottom:4px}
+.q .qhead h2{margin:0}
+.q .qof{color:var(--gold-deep);font-size:.76rem;font-weight:700;letter-spacing:.1em;margin:0 0 6px 66px;display:block}
+.q .qhint{color:var(--ink-faint);font-size:.9rem;margin:2px 0 14px 66px}
+.q .qnote{color:var(--ink-faint);font-size:.88rem;margin-top:12px;line-height:1.6}
+
+.options{display:flex;flex-direction:column;gap:9px;margin-top:2px}
+.opt{display:flex;align-items:flex-start;gap:10px;background:var(--bg);border:1.5px solid var(--line);border-radius:12px;padding:12px 14px;cursor:pointer;transition:border-color .15s var(--ease),background .15s var(--ease);font-size:.98rem;color:var(--ink-soft)}
+.opt:hover{border-color:var(--gold-soft)}
+.opt input{margin-top:3px;flex:0 0 auto;accent-color:var(--gold-deep);width:18px;height:18px}
+.opt.checked{border-color:var(--gold);background:var(--gold-tint);color:var(--ink)}
+.other-field{margin-top:8px}
+.other-field input{width:100%;font-family:inherit;font-size:.96rem;padding:11px 14px;border-radius:10px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink)}
+.other-field input:focus{outline:none;border-color:var(--gold)}
+
+textarea{width:100%;font-family:inherit;font-size:1rem;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);resize:vertical;min-height:96px;line-height:1.6;transition:border-color .2s var(--ease)}
+textarea:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(169,118,27,0.16)}
+textarea::placeholder{color:var(--ink-faint)}
+
+.field{margin-bottom:14px}
+.field label{display:block;font-size:.9rem;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
+.field input{width:100%;font-family:inherit;font-size:1.02rem;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);transition:border-color .2s var(--ease)}
+.field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(169,118,27,0.16)}
+.field input[type="email"],.field input[type="tel"]{direction:ltr;text-align:right}
+.hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden}
+
+.highlight{background:var(--gold-tint);border:1px solid rgba(169,118,27,0.3);border-inline-start:4px solid var(--gold);border-radius:var(--radius-sm);padding:16px 18px;color:var(--ink);font-weight:600;font-size:.98rem;line-height:1.6;margin:8px 0 16px}
+
+.cta{appearance:none;border:none;cursor:pointer;font-family:var(--font-body);font-size:1.08rem;font-weight:700;width:100%;min-height:58px;padding:16px 26px;border-radius:15px;background:linear-gradient(180deg,var(--gold-soft),var(--gold));color:var(--ink-deep);box-shadow:0 12px 28px rgba(169,118,27,0.32);transition:transform .18s var(--ease),box-shadow .18s var(--ease);text-decoration:none;display:inline-flex;align-items:center;justify-content:center;gap:10px}
+.cta:hover{transform:translateY(-2px);box-shadow:0 16px 34px rgba(169,118,27,0.4)}
+.cta:active{transform:translateY(0)}
+.cta:disabled{opacity:.65;cursor:default;transform:none}
+.cta-note{font-size:.86rem;color:var(--ink-faint);text-align:center;margin-top:14px;line-height:1.6}
+.error-msg{display:none;color:#8a3b1f;background:#f6e3d6;border-radius:10px;padding:10px 14px;font-size:.92rem;margin-top:12px}
+.error-msg.show{display:block}
+
+.final-note{max-width:52ch;margin:0 auto;text-align:center;color:var(--ink-soft)}
+.final-note p{margin-top:.7em}
+
+.success{display:none;text-align:center;background:var(--bg-soft);border:1px solid var(--line);border-top:4px solid var(--gold);border-radius:var(--radius);padding:44px 26px 38px;box-shadow:var(--shadow)}
+.success.show{display:block;animation:rise .5s var(--ease) forwards}
+.success .check{width:60px;height:60px;margin:0 auto 18px;border-radius:50%;background:linear-gradient(180deg,var(--gold-soft),var(--gold));display:flex;align-items:center;justify-content:center;box-shadow:0 10px 24px rgba(169,118,27,0.32)}
+.success .check svg{width:28px;height:28px}
+.success h2{margin-bottom:12px}
+.success p{color:var(--ink-soft);max-width:44ch;margin-inline:auto}
+.success .wa{display:inline-block;margin-top:18px;color:var(--gold-deep);font-weight:600;text-decoration:underline}
+
+.signature{text-align:center;margin-top:6px;color:var(--ink-faint);font-size:.98rem;font-weight:600}
+.signature .role{color:var(--ink-faint);font-weight:400}
+
+.footer{text-align:center;padding:38px 20px;color:var(--ink-faint);font-size:.92rem;position:relative;z-index:1}
+.footer-legal{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:12px}
+.footer-legal a{color:var(--ink-faint)}
+
+/* accessibility widget */
+.a11y-toggle{position:fixed;z-index:100;left:18px;bottom:18px;width:52px;height:52px;border:0;border-radius:50%;background:var(--ink);color:#fff;font-size:23px;box-shadow:0 12px 32px rgba(20,43,32,0.32);cursor:pointer}
+.a11y-panel{position:fixed;z-index:101;left:18px;bottom:80px;width:min(300px,calc(100vw - 36px));padding:16px;background:var(--bg-soft);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 70px rgba(20,43,32,0.24);text-align:right}
+.a11y-panel[hidden]{display:none}
+.a11y-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.a11y-head strong{font-size:17px}
+.a11y-close{border:0;background:transparent;font-size:22px;cursor:pointer;color:var(--ink)}
+.a11y-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.a11y-actions button{border:1px solid var(--line);border-radius:10px;padding:10px 6px;background:var(--bg);color:var(--ink);font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font-body)}
+.a11y-links{margin:12px 0 0;font-size:12px;text-align:center}
+.a11y-links a{color:var(--gold-deep)}
+:focus-visible{outline:3px solid var(--gold);outline-offset:3px}
+body.a11y-large{font-size:120%}
+body.a11y-contrast{background:#000!important;color:#fff!important}
+body.a11y-contrast *{background:#000!important;color:#fff!important;border-color:#fff!important}
+body.a11y-underline a{text-decoration:underline!important}
+body.a11y-reduce *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+
+@media (max-width:390px){
+  body{font-size:16px}
+  .stage{padding:38px 16px 10px}
+  .q{padding:20px 16px}
+}
+@media (prefers-reduced-motion:reduce){*,*::before,*::after{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<div class="progress-rail"><div class="progress-rail-fill" id="progressFill"></div></div>
+<main class="stage">
+
+  <section class="hero">
+    <div class="reveal" style="animation-delay:0ms"><span class="eyebrow">שאלון התאמה · חוזרים לסמוך על עצמנו</span></div>
+    <div class="spacer-s"></div>
+    <h1 class="reveal" style="animation-delay:60ms">לפני שאנחנו מדברים, חשוב לי להבין קצת יותר <span class="mark">מה עובר עליך היום</span>.</h1>
+    <p class="sub reveal" style="animation-delay:120ms">אין פה תשובות נכונות. אתה גם לא צריך להוכיח שאתה "סובל מספיק" כדי להתאים.</p>
+    <p class="sub no-pressure reveal" style="animation-delay:160ms">המטרה של השאלון היא להבין <strong>איפה החרדה פוגשת אותך בחיים</strong>, מה כבר ניסית, ומה היית רוצה שייראה אחרת. אם נראה שיש התאמה ראשונית, נמשיך לשיחת התאמה ונבדוק יחד אם התהליך באמת נכון עבורך.</p>
+  </section>
+
+  <div class="spacer-l"></div>
+
+  <form id="fitForm" novalidate>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">1</span><h2>מה הכי מתאר את מה שאתה חווה היום?</h2></div>
+      <p class="qof">שאלה 1 מתוך 11</p>
+      <p class="qhint">אפשר לבחור יותר מאפשרות אחת.</p>
+      <div class="options" data-group="q1_symptoms">
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="התקפי חרדה או פחד מההתקף הבא"><span>התקפי חרדה או פחד מההתקף הבא</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="פחד מתחושות בגוף"><span>פחד מתחושות בגוף</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="חרדת בריאות"><span>חרדת בריאות</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="מחשבות טורדניות"><span>מחשבות טורדניות</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="פחד לאבד שליטה"><span>פחד לאבד שליטה</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="קושי להתרחק מהבית"><span>קושי להתרחק מהבית</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="קושי בנסיעות או במקומות מסוימים"><span>קושי בנסיעות או במקומות מסוימים</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="פחד להישאר לבד"><span>פחד להישאר לבד</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="הימנעויות בגלל החרדה"><span>הימנעויות בגלל החרדה</span></label>
+        <label class="opt"><input type="checkbox" name="q1_symptoms" value="צורך לבדוק שוב ושוב שאני בסדר"><span>צורך לבדוק שוב ושוב שאני בסדר</span></label>
+      </div>
+      <div class="other-field"><input type="text" name="q1_other" placeholder="משהו אחר?"></div>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">2</span><h2>מה קורה לך בדרך כלל ברגע שהחרדה מתחילה לעלות?</h2></div>
+      <p class="qof">שאלה 2 מתוך 11</p>
+      <p class="qhint">מה קורה בגוף, מה הראש אומר, ומה אתה מוצא את עצמך עושה?</p>
+      <textarea name="q2_experience" placeholder="תשובה קצרה..."></textarea>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">3</span><h2>מה החרדה כבר גורמת לך לעשות פחות ממה שהיית רוצה?</h2></div>
+      <p class="qof">שאלה 3 מתוך 11</p>
+      <div class="options" data-group="q3_avoidance">
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="לנסוע"><span>לנסוע</span></label>
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="לצאת מהבית"><span>לצאת מהבית</span></label>
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="להיפגש עם אנשים"><span>להיפגש עם אנשים</span></label>
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="להישאר לבד"><span>להישאר לבד</span></label>
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="לעבוד בנחת"><span>לעבוד בנחת</span></label>
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="להתאמן"><span>להתאמן</span></label>
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="לטייל"><span>לטייל</span></label>
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="ללכת לאירועים"><span>ללכת לאירועים</span></label>
+        <label class="opt"><input type="checkbox" name="q3_avoidance" value="להיות ספונטני"><span>להיות ספונטני</span></label>
+      </div>
+      <div class="other-field"><input type="text" name="q3_other" placeholder="משהו אחר?"></div>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">4</span><h2>מה כבר ניסית עד היום?</h2></div>
+      <p class="qof">שאלה 4 מתוך 11</p>
+      <div class="options" data-group="q4_tried">
+        <label class="opt"><input type="checkbox" name="q4_tried" value="טיפול רגשי"><span>טיפול רגשי</span></label>
+        <label class="opt"><input type="checkbox" name="q4_tried" value="CBT"><span>CBT</span></label>
+        <label class="opt"><input type="checkbox" name="q4_tried" value="ACT / מיינדפולנס"><span>ACT / מיינדפולנס</span></label>
+        <label class="opt"><input type="checkbox" name="q4_tried" value="טיפול תרופתי"><span>טיפול תרופתי</span></label>
+        <label class="opt"><input type="checkbox" name="q4_tried" value="נשימות / מדיטציות / הרפיה"><span>נשימות / מדיטציות / הרפיה</span></label>
+        <label class="opt"><input type="checkbox" name="q4_tried" value="חשיפות"><span>חשיפות</span></label>
+        <label class="opt"><input type="checkbox" name="q4_tried" value="NLP"><span>NLP</span></label>
+        <label class="opt"><input type="checkbox" name="q4_tried" value="ספרים / סרטונים / קורסים"><span>ספרים / סרטונים / קורסים</span></label>
+        <label class="opt"><input type="checkbox" name="q4_tried" value="עדיין לא ניסיתי תהליך מסודר"><span>עדיין לא ניסיתי תהליך מסודר</span></label>
+      </div>
+      <div class="other-field"><input type="text" name="q4_other" placeholder="משהו אחר?"></div>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">5</span><h2>ומה הרגשת שהיה חסר במה שכבר ניסית?</h2></div>
+      <p class="qof">שאלה 5 מתוך 11</p>
+      <div class="options" data-group="q5_missing">
+        <label class="opt"><input type="checkbox" name="q5_missing" value="הבנתי הרבה, אבל ברגע האמת זה לא עזר לי מספיק"><span>הבנתי הרבה, אבל ברגע האמת זה לא עזר לי מספיק</span></label>
+        <label class="opt"><input type="checkbox" name="q5_missing" value="קיבלתי כלים, אבל הרגשתי תלוי בהם"><span>קיבלתי כלים, אבל הרגשתי תלוי בהם</span></label>
+        <label class="opt"><input type="checkbox" name="q5_missing" value="דיברתי הרבה אבל החיים עצמם לא השתנו מספיק"><span>דיברתי הרבה אבל החיים עצמם לא השתנו מספיק</span></label>
+        <label class="opt"><input type="checkbox" name="q5_missing" value="היה לי קשה ליישם לבד"><span>היה לי קשה ליישם לבד</span></label>
+        <label class="opt"><input type="checkbox" name="q5_missing" value="הרגשתי שלא באמת מבינים מה אני עובר"><span>הרגשתי שלא באמת מבינים מה אני עובר</span></label>
+        <label class="opt"><input type="checkbox" name="q5_missing" value="זה היה מציף מדי"><span>זה היה מציף מדי</span></label>
+        <label class="opt"><input type="checkbox" name="q5_missing" value="הרגשתי שעבדנו רק על הסימפטום"><span>הרגשתי שעבדנו רק על הסימפטום</span></label>
+      </div>
+      <div class="other-field"><input type="text" name="q5_other" placeholder="משהו אחר?"></div>
+      <p class="qnote">אם ניסית כבר דברים ולא קיבלת את מה שחיפשת, זה לא בהכרח אומר שאין מה לעשות. לפעמים פשוט צריך לעבוד על המעגל מזווית אחרת.</p>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">6</span><h2>איזה משפט הכי קרוב למה שעובר לך בראש היום?</h2></div>
+      <p class="qof">שאלה 6 מתוך 11</p>
+      <div class="options" data-group="q6_selftalk">
+        <label class="opt"><input type="checkbox" name="q6_selftalk" value="אני מפחד שזה יקרה שוב"><span>"אני מפחד שזה יקרה שוב"</span></label>
+        <label class="opt"><input type="checkbox" name="q6_selftalk" value="אני לא בטוח שאצליח להתמודד"><span>"אני לא בטוח שאצליח להתמודד"</span></label>
+        <label class="opt"><input type="checkbox" name="q6_selftalk" value="אני לא סומך על הגוף שלי"><span>"אני לא סומך על הגוף שלי"</span></label>
+        <label class="opt"><input type="checkbox" name="q6_selftalk" value="אני לא סומך על המחשבות שלי"><span>"אני לא סומך על המחשבות שלי"</span></label>
+        <label class="opt"><input type="checkbox" name="q6_selftalk" value="ניסיתי כבר כל כך הרבה"><span>"ניסיתי כבר כל כך הרבה"</span></label>
+        <label class="opt"><input type="checkbox" name="q6_selftalk" value="אולי אני פשוט כזה"><span>"אולי אני פשוט כזה"</span></label>
+        <label class="opt"><input type="checkbox" name="q6_selftalk" value="אני רק רוצה לחזור להיות אני"><span>"אני רק רוצה לחזור להיות אני"</span></label>
+      </div>
+      <div class="other-field"><input type="text" name="q6_other" placeholder="משהו אחר?"></div>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">7</span><h2>אם בעוד 8 שבועות משהו באמת היה מתחיל להשתנות...</h2></div>
+      <p class="qof">שאלה 7 מתוך 11</p>
+      <p class="qhint">מה הדבר הראשון שהיית רוצה לחזור לעשות? נסיעה? יציאה? להישאר לבד? להתאמן? לטייל? להיות יותר נוכח עם האנשים שאתה אוהב?</p>
+      <textarea name="q7_vision" placeholder="תשובה קצרה..."></textarea>
+      <p class="qnote">זו שאלה חשובה. כי בתהליך אנחנו לא רוצים למדוד רק כמה חרדה הייתה. אנחנו רוצים לבדוק גם: מה חזר להיות שלך.</p>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">8</span><h2>עד כמה אתה מוכן לעבוד בהדרגה גם בין המפגשים?</h2></div>
+      <p class="qof">שאלה 8 מתוך 11</p>
+      <div class="options" data-group="q8_readiness">
+        <label class="opt"><input type="radio" name="q8_readiness" value="אני מוכן ורוצה לעבוד"><span>אני מוכן ורוצה לעבוד</span></label>
+        <label class="opt"><input type="radio" name="q8_readiness" value="אני רוצה, אבל יש בי גם פחד"><span>אני רוצה, אבל יש בי גם פחד</span></label>
+        <label class="opt"><input type="radio" name="q8_readiness" value="אני עדיין לא בטוח"><span>אני עדיין לא בטוח</span></label>
+        <label class="opt"><input type="radio" name="q8_readiness" value="אני מחפש כרגע בעיקר משהו שירגיע אותי בלי שאצטרך לתרגל"><span>אני מחפש כרגע בעיקר משהו שירגיע אותי בלי שאצטרך לתרגל</span></label>
+      </div>
+      <p class="qnote">אם בחרת "אני רוצה, אבל מפחד" — זה לא פוסל אותך. פחד יכול להיות חלק מהדרך. השאלה היא אם יש בך נכונות להתחיל.</p>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">9</span><h2>איך אתה מרגיש לגבי תהליך קבוצתי?</h2></div>
+      <p class="qof">שאלה 9 מתוך 11</p>
+      <div class="options" data-group="q9_group">
+        <label class="opt"><input type="radio" name="q9_group" value="דווקא יעזור לי לדעת שאני לא היחיד"><span>דווקא יעזור לי לדעת שאני לא היחיד</span></label>
+        <label class="opt"><input type="radio" name="q9_group" value="זה קצת מלחיץ אותי, אבל אני פתוח לזה"><span>זה קצת מלחיץ אותי, אבל אני פתוח לזה</span></label>
+        <label class="opt"><input type="radio" name="q9_group" value="אני לא בטוח איך ארגיש בקבוצה"><span>אני לא בטוח איך ארגיש בקבוצה</span></label>
+        <label class="opt"><input type="radio" name="q9_group" value="אני מעדיף כרגע רק תהליך פרטני"><span>אני מעדיף כרגע רק תהליך פרטני</span></label>
+      </div>
+      <p class="qnote">לכל משתתף בתהליך יש גם פגישת 1:1 אישית איתי, כך שלא כל דבר צריך להיפתח מול הקבוצה.</p>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">10</span><h2>חשוב לי לבדוק גם את זה כדי להבין אם המסגרת מתאימה ובטוחה עבורך כרגע</h2></div>
+      <p class="qof">שאלה 10 מתוך 11</p>
+      <p class="qhint">האם אתה נמצא כרגע במצב נפשי או רפואי חריף, או במסגרת טיפולית שדורשת לדעתך מענה שונה מתהליך קבוצתי?</p>
+      <div class="options" data-group="q10_safety">
+        <label class="opt"><input type="radio" name="q10_safety" value="לא"><span>לא</span></label>
+        <label class="opt"><input type="radio" name="q10_safety" value="כן"><span>כן</span></label>
+        <label class="opt"><input type="radio" name="q10_safety" value="אני לא בטוח"><span>אני לא בטוח</span></label>
+      </div>
+      <div class="other-field" id="q10DetailsWrap" style="display:none">
+        <textarea name="q10_details" placeholder="אפשר לכתוב בכמה מילים..."></textarea>
+      </div>
+    </div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <div class="qhead"><span class="qnum">11</span><h2>שאלה אחרונה</h2></div>
+      <p class="qof">שאלה 11 מתוך 11</p>
+      <p class="qhint">אם שום דבר לא ישתנה בחצי השנה הקרובה, מה אתה חושש שתמשיך להפסיד בגלל החרדה?</p>
+      <textarea name="q11_cost" placeholder="תשובה קצרה..."></textarea>
+    </div>
+
+    <div class="spacer-m"></div>
+
+    <div class="q reveal" style="animation-delay:0ms">
+      <h2 style="margin-bottom:14px">פרטים לשיחת התאמה</h2>
+      <div class="field">
+        <label for="lf-name">שם מלא</label>
+        <input id="lf-name" name="full_name" type="text" placeholder="השם שלך" autocomplete="name" required>
+      </div>
+      <div class="field">
+        <label for="lf-phone">טלפון</label>
+        <input id="lf-phone" name="phone" type="tel" placeholder="050-0000000" autocomplete="tel" required>
+      </div>
+      <div class="field">
+        <label for="lf-email">מייל</label>
+        <input id="lf-email" name="email" type="email" placeholder="you@example.com" autocomplete="email" required>
+      </div>
+      <div class="field">
+        <label for="lf-age">גיל</label>
+        <input id="lf-age" name="age" type="number" min="12" max="120" placeholder="גיל" inputmode="numeric">
+      </div>
+      <!-- honeypot — hidden from real visitors, spam bots tend to fill every field -->
+      <div class="hp" aria-hidden="true">
+        <label for="lf-website">Website</label>
+        <input id="lf-website" name="website" type="text" tabindex="-1" autocomplete="off">
+      </div>
+    </div>
+
+    <div class="final-note reveal" style="animation-delay:0ms">
+      <p>לפני שאתה שולח: מילוי השאלון לא מחייב אותך להצטרף. אם נראה שיש התאמה ראשונית, נדבר. נבין קצת יותר לעומק איפה אתה נמצא, ונבדוק אם "חוזרים לסמוך על עצמנו" הוא באמת הצעד הנכון עבורך.</p>
+      <p>המטרה היא לא להכניס כל אחד לתהליך. המטרה היא לוודא שיש התאמה אמיתית משני הצדדים.</p>
+    </div>
+
+    <div class="spacer-m"></div>
+
+    <button type="submit" class="cta" id="submitBtn">שליחת השאלון ובדיקת התאמה</button>
+    <div class="error-msg" id="errorMsg"></div>
+    <p class="cta-note">הפרטים שלך נשמרים באופן פרטי ולא יועברו לגורם שלישי. לפרטים נוספים ראו <a href="/privacy/" style="color:var(--gold-deep)">מדיניות הפרטיות</a>.</p>
+
+  </form>
+
+  <div class="success" id="successBox">
+    <div class="check"><svg viewBox="0 0 24 24" fill="none" stroke="#142B20" stroke-width="2.5" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg></div>
+    <h2>תודה שהקדשת לזה את הזמן</h2>
+    <p>קיבלתי את התשובות שלך ואני אעבור עליהן בעצמי. אני אחזור אליך בכל מקרה — אם יש התאמה ראשונית נקבע שיחת התאמה קצרה, ואם לא, אכתוב לך גם את זה.</p>
+    <a class="wa" href="https://wa.me/972559930227" target="_blank" rel="noopener">יש שאלה בינתיים? אפשר לכתוב לי בוואטסאפ</a>
+  </div>
+
+  <div class="spacer-l"></div>
+  <div class="signature center">דוד אינגבר <span class="role">| חוזרים לסמוך על עצמנו</span></div>
+
+</main>
+
+<footer class="footer">
+  דוד אינגבר | חוזרים לסמוך על עצמנו
+  <p class="footer-legal"><a href="/privacy/">מדיניות פרטיות</a><a href="/accessibility/">הצהרת נגישות</a></p>
+</footer>
+
+<button class="a11y-toggle" type="button" aria-label="פתיחת תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">♿</button>
+<aside class="a11y-panel" id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות" hidden>
+  <div class="a11y-head"><strong>אפשרויות נגישות</strong><button class="a11y-close" type="button" aria-label="סגירת תפריט נגישות">×</button></div>
+  <div class="a11y-actions">
+    <button type="button" data-a11y="large">הגדלת טקסט</button>
+    <button type="button" data-a11y="contrast">ניגודיות גבוהה</button>
+    <button type="button" data-a11y="underline">הדגשת קישורים</button>
+    <button type="button" data-a11y="reduce">עצירת תנועה</button>
+    <button type="button" data-a11y="reset" style="grid-column:1/-1">איפוס התאמות</button>
+  </div>
+  <p class="a11y-links"><a href="/accessibility/">להצהרת הנגישות המלאה</a></p>
+</aside>
+
+<script>
+/*
+ * ===== Lead capture config =====
+ * שלב 1: פתח Google Sheet חדש → Extensions > Apps Script → הדבק את הקוד מ-panel/README.md → Deploy כ-Web app.
+ * שלב 2: העתק את כתובת ה-/exec שקיבלת והדבק אותה כאן במקום המחרוזת למטה.
+ * עד שהכתובת לא תוחלף, הטופס עדיין ישמור את התשובות מקומית (localStorage) כגיבוי ויציג את מסך התודה כרגיל.
+ */
+var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzQoWUpr9MaaYTfD2W4hk2g60qh7jtjdGimZk3ZNm41OXLoZktMV7kqnOMaDMTruwUgXw/exec";
+
+// scroll progress bar across the form
+(function () {
+  var fill = document.getElementById('progressFill');
+  var form = document.getElementById('fitForm');
+  function update() {
+    if (!form || form.style.display === 'none') { fill.style.width = '100%'; return; }
+    var rect = form.getBoundingClientRect();
+    var formTop = rect.top + window.scrollY;
+    var formHeight = form.offsetHeight;
+    var viewed = window.scrollY + window.innerHeight * 0.6 - formTop;
+    var pct = Math.max(0, Math.min(100, (viewed / formHeight) * 100));
+    fill.style.width = pct + '%';
+  }
+  window.addEventListener('scroll', update, { passive: true });
+  window.addEventListener('resize', update);
+  update();
+})();
+
+// checked-state styling for checkbox/radio option rows
+document.querySelectorAll('.opt input').forEach(function (input) {
+  function sync() {
+    if (input.type === 'radio') {
+      document.querySelectorAll('input[name="' + input.name + '"]').forEach(function (sibling) {
+        sibling.closest('.opt').classList.toggle('checked', sibling.checked);
+      });
+    } else {
+      input.closest('.opt').classList.toggle('checked', input.checked);
+    }
+  }
+  input.addEventListener('change', sync);
+});
+
+// show/hide the optional details field for the safety question
+(function () {
+  var wrap = document.getElementById('q10DetailsWrap');
+  document.querySelectorAll('input[name="q10_safety"]').forEach(function (input) {
+    input.addEventListener('change', function () {
+      wrap.style.display = (input.value === 'לא') ? 'none' : 'block';
+    });
+  });
+})();
+
+(function () {
+  var form = document.getElementById('fitForm');
+  var btn = document.getElementById('submitBtn');
+  var err = document.getElementById('errorMsg');
+  var successBox = document.getElementById('successBox');
+
+  function isValidEmail(v) { return /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(v); }
+  function checkedValues(name) {
+    return Array.from(document.querySelectorAll('input[name="' + name + '"]:checked')).map(function (i) { return i.value; }).join('; ');
+  }
+  function radioValue(name) {
+    var el = document.querySelector('input[name="' + name + '"]:checked');
+    return el ? el.value : '';
+  }
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    err.classList.remove('show');
+
+    var fullName = form.full_name.value.trim();
+    var phone = form.phone.value.trim();
+    var email = form.email.value.trim();
+    var honeypot = form.website.value.trim();
+
+    if (honeypot) { return; } // כנראה בוט — נבלום בשקט
+
+    if (!fullName || !phone || !isValidEmail(email)) {
+      err.textContent = 'צריך שם מלא, טלפון, ומייל תקין כדי שנוכל ליצור קשר.';
+      err.classList.add('show');
+      (!fullName ? form.full_name : !phone ? form.phone : form.email).focus();
+      return;
+    }
+
+    btn.disabled = true;
+    btn.textContent = 'שולח...';
+
+    var params = new URLSearchParams(location.search);
+    var payload = {
+      full_name: fullName,
+      phone: phone,
+      email: email,
+      age: form.age.value.trim(),
+      q1_symptoms: checkedValues('q1_symptoms'),
+      q1_other: form.q1_other.value.trim(),
+      q2_experience: form.q2_experience.value.trim(),
+      q3_avoidance: checkedValues('q3_avoidance'),
+      q3_other: form.q3_other.value.trim(),
+      q4_tried: checkedValues('q4_tried'),
+      q4_other: form.q4_other.value.trim(),
+      q5_missing: checkedValues('q5_missing'),
+      q5_other: form.q5_other.value.trim(),
+      q6_selftalk: checkedValues('q6_selftalk'),
+      q6_other: form.q6_other.value.trim(),
+      q7_vision: form.q7_vision.value.trim(),
+      q8_readiness: radioValue('q8_readiness'),
+      q9_group: radioValue('q9_group'),
+      q10_safety: radioValue('q10_safety'),
+      q10_details: form.q10_details.value.trim(),
+      q11_cost: form.q11_cost.value.trim(),
+      source: 'shealon-hataama',
+      utm_source: params.get('utm_source') || '',
+      utm_medium: params.get('utm_medium') || '',
+      utm_campaign: params.get('utm_campaign') || '',
+      timestamp: new Date().toISOString()
+    };
+
+    try {
+      var stored = JSON.parse(localStorage.getItem('fit_questionnaire_leads') || '[]');
+      stored.push(payload);
+      localStorage.setItem('fit_questionnaire_leads', JSON.stringify(stored));
+    } catch (e) { /* no-op */ }
+
+    function showSuccess() {
+      form.style.display = 'none';
+      successBox.classList.add('show');
+      successBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
+      var fill = document.getElementById('progressFill');
+      if (fill) fill.style.width = '100%';
+    }
+
+    if (!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.indexOf('PASTE_YOUR') === 0) {
+      // עדיין לא חובר Google Sheet — לא חוסמים את המשתמש, רק ממשיכים
+      showSuccess();
+      return;
+    }
+
+    fetch(SHEET_WEBAPP_URL, {
+      method: 'POST',
+      mode: 'no-cors',
+      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+      body: JSON.stringify(payload)
+    }).then(showSuccess).catch(function () {
+      // גם אם הרשת נכשלה, התשובות כבר נשמרו מקומית — לא עוצרים את המשתמש
+      showSuccess();
+    });
+  });
+})();
+
+(function () {
+  var toggle = document.querySelector('.a11y-toggle'), panel = document.getElementById('a11y-panel');
+  var keys = ['large', 'contrast', 'underline', 'reduce'];
+  function apply() { keys.forEach(function (k) { document.body.classList.toggle('a11y-' + k, localStorage.getItem('a11y-' + k) === '1'); }); }
+  apply();
+  function close() { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); toggle.focus(); }
+  toggle.onclick = function () {
+    panel.hidden = !panel.hidden;
+    toggle.setAttribute('aria-expanded', String(!panel.hidden));
+    if (!panel.hidden) panel.querySelector('button').focus();
+  };
+  panel.querySelector('.a11y-close').onclick = close;
+  document.querySelectorAll('[data-a11y]').forEach(function (b) {
+    b.onclick = function () {
+      var k = b.dataset.a11y;
+      if (k === 'reset') keys.forEach(function (x) { localStorage.removeItem('a11y-' + x); });
+      else localStorage.setItem('a11y-' + k, document.body.classList.contains('a11y-' + k) ? '0' : '1');
+      apply();
+    };
+  });
+  document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) close(); });
+})();
+</script>
+
+</body>
+</html>

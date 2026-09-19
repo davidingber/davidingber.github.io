@@ -10,6 +10,14 @@
 </head>
 <body><main id="main">
   <p><a href="https://davidingber.github.io/" id="backLink">חזרה לאתר</a></p>
+  <script>
+    (function () {
+      var link = document.getElementById('backLink');
+      if (document.referrer && document.referrer.indexOf(location.host) > -1) {
+        link.addEventListener('click', function (e) { e.preventDefault(); history.back(); });
+      }
+    })();
+  </script>
   <h1>הצהרת נגישות</h1>
   <p class="meta">עודכן לאחרונה: 19 באוגוסט 2026</p>
   <div class="notice">דוד אינגבר רואה חשיבות במתן שירות שוויוני ונגיש ופועל לשיפור הנגישות של השירותים הדיגיטליים.</div>
@@ -20,14 +28,4 @@
   <h2>הסדרי נגישות בשירות</h2><p>הדפים מציעים מידע ושירותים מקוונים. הם אינם מציגים קבלת קהל במקום פיזי. לתיאום התאמה בשיחה או בשירות ניתן לפנות מראש.</p>
   <h2>פנייה בנושא נגישות</h2><p>אחראי לפניות נגישות: דוד אינגבר. ניתן לפנות ב־<a href="https://wa.me/972559930227">WhatsApp במספר 055-993-0227</a>. בפנייה מומלץ לציין את כתובת העמוד, תיאור הקושי, המכשיר והדפדפן שבהם נעשה שימוש. נעשה מאמץ לתת מענה ופתרון מתאים בהקדם.</p>
   <h2>בדיקות ועדכונים</h2><p>הנגישות נבדקת כחלק מתהליך הפיתוח ומתעדכנת בעת שינוי מהותי באתר. אם התגלתה אי־התאמה, ניתן לדווח באמצעות פרטי הקשר לעיל.</p>
-</main><footer>דוד אינגבר · טיפול ואימון רגשי</footer>
-<script>
-(function () {
-  try {
-    if (document.referrer && new URL(document.referrer).origin === location.origin) {
-      document.getElementById('backLink').href = document.referrer;
-    }
-  } catch (e) { /* no-op, keep default homepage link */ }
-})();
-</script>
-</body></html>
+</main><footer>דוד אינגבר · טיפול ואימון רגשי</footer></body></html>
