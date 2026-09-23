@@ -369,7 +369,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <h2>תודה שהקדשת לזה את הזמן</h2>
     <p>קיבלתי את התשובות שלך ואני אעבור עליהן בעצמי. אני אחזור אליך בכל מקרה — אם יש התאמה ראשונית נקבע שיחת התאמה קצרה, ואם לא, אכתוב לך גם את זה.</p>
     <p style="margin-top:20px;font-size:.92rem;color:var(--ink-faint)">זה השלב האחרון: בחר זמן פנוי והשאר פרטים לאישור, ונקבע שיחה קצרה וללא עלות — שבה נבדוק יחד איך התהליך מתאים לך בדיוק, ותוכל לשאול כל שאלה נוספת שחשובה לך לפני ההצטרפות ל"חוזרים לסמוך על עצמנו".</p>
-    <div class="calendly-inline-widget" data-url="https://calendly.com/davidiingber/meet-with-me?hide_gdpr_banner=1&background_color=fffdf8&text_color=1b3a2c&primary_color=a9761b" style="min-width:260px;height:650px;margin-top:16px;border-radius:16px;overflow:hidden;border:1px solid var(--line)"></div>
+    <div id="calendlyWidget" style="min-width:260px;height:650px;margin-top:16px;border-radius:16px;overflow:hidden;border:1px solid var(--line)"></div>
     <a class="wa" href="https://wa.me/972559930227" target="_blank" rel="noopener">יש שאלה בינתיים? אפשר לכתוב לי בוואטסאפ</a>
   </div>
 
@@ -519,12 +519,27 @@ document.querySelectorAll('.opt input').forEach(function (input) {
       localStorage.setItem('fit_questionnaire_leads', JSON.stringify(stored));
     } catch (e) { /* no-op */ }
 
+    function initCalendlyWidget(tries) {
+      tries = tries || 0;
+      if (window.Calendly) {
+        window.Calendly.initInlineWidget({
+          url: 'https://calendly.com/davidiingber/meet-with-me?hide_gdpr_banner=1&background_color=fffdf8&text_color=1b3a2c&primary_color=a9761b',
+          parentElement: document.getElementById('calendlyWidget'),
+          prefill: { name: fullName, email: email }
+        });
+      } else if (tries < 20) {
+        // widget.js נטען async — ממתינים לו עד חצי שנייה לפני שמוותרים
+        setTimeout(function () { initCalendlyWidget(tries + 1); }, 100);
+      }
+    }
+
     function showSuccess() {
       form.style.display = 'none';
       successBox.classList.add('show');
       successBox.scrollIntoView({ behavior: 'smooth', block: 'start' });
       var fill = document.getElementById('progressFill');
       if (fill) fill.style.width = '100%';
+      initCalendlyWidget();
     }
 
     // מציגים הצלחה מיד — התשובות כבר נשמרו מקומית, ואין סיבה להשאיר את המשתמש מחכה
@@ -568,7 +583,7 @@ document.querySelectorAll('.opt input').forEach(function (input) {
 })();
 </script>
 
-<script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script src="https://assets.calendly.com/assets/external/widget.js" data-auto-load="false" async></script>
 <script>
 (function () {
   window.addEventListener('message', function (e) {
