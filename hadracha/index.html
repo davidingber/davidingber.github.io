@@ -122,6 +122,7 @@ p+p{margin-top:1em}
 .quotes-grid{display:flex;flex-wrap:wrap;gap:28px;justify-content:center;align-items:flex-start;margin-bottom:20px}
 .testimonial-card{max-width:280px}
 .testimonial-card figcaption{font-weight:700;color:var(--ink);font-size:.98rem;line-height:1.5;margin-bottom:12px;text-align:center}
+.quote-title{font-weight:700;color:var(--ink);font-size:1rem;line-height:1.45;margin-bottom:12px;text-align:center}
 .quote-shot-btn{appearance:none;border:1px solid var(--line);padding:0;margin:0;background:var(--bg-soft);cursor:pointer;display:block;width:100%;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm)}
 .quote-shot-btn:hover,.quote-shot-btn:focus-visible{box-shadow:var(--shadow)}
 .quote-shot-expand{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;color:var(--gold-deep);font-size:.82rem;font-weight:600;border-top:1px solid var(--line)}
@@ -164,6 +165,9 @@ p+p{margin-top:1em}
 .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(169,118,27,0.16)}
 .field input::placeholder{color:var(--ink-faint)}
 .field input[type="email"]{direction:ltr;text-align:right}
+.consent-field{margin-bottom:16px}
+.consent-label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.86rem;color:var(--ink-soft);line-height:1.5}
+.consent-label input{flex:0 0 auto;width:18px;height:18px;margin-top:2px;accent-color:var(--gold)}
 .whats-included{display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-top:18px;padding-top:18px;border-top:1px solid var(--line)}
 .whats-included-item{display:flex;align-items:center;gap:6px;background:var(--bg);border:1px solid var(--line);border-radius:999px;padding:7px 14px;font-size:.86rem;font-weight:600;color:var(--ink-soft)}
 .whats-included-item svg{width:16px;height:16px;flex:0 0 auto;color:var(--gold-deep)}
@@ -202,9 +206,11 @@ p+p{margin-top:1em}
 @media (min-width:761px){.sticky-cta{display:none}body{padding-bottom:0}}
 
 /* accessibility widget */
+.skip-link{position:absolute;z-index:200;top:-60px;right:12px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:8px;font-weight:700;transition:top .15s var(--ease)}
+.skip-link:focus{top:12px}
 .a11y-toggle{position:fixed;z-index:100;left:18px;bottom:18px;width:52px;height:52px;border:0;border-radius:50%;background:var(--ink);color:#fff;font-size:23px;box-shadow:0 12px 32px rgba(20,43,32,0.32);cursor:pointer}
 @media (max-width:760px){.a11y-toggle{bottom:90px}}
-.a11y-panel{position:fixed;z-index:101;left:18px;bottom:80px;width:min(300px,calc(100vw - 36px));padding:16px;background:var(--bg-soft);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 70px rgba(20,43,32,0.24);text-align:right}
+.a11y-panel{position:fixed;z-index:101;left:18px;bottom:80px;width:min(320px,calc(100vw - 36px));max-height:min(560px,calc(100vh - 110px));overflow-y:auto;padding:16px;background:var(--bg-soft);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 70px rgba(20,43,32,0.24);text-align:right}
 @media (max-width:760px){.a11y-panel{bottom:152px}}
 .a11y-panel[hidden]{display:none}
 .a11y-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
@@ -212,12 +218,19 @@ p+p{margin-top:1em}
 .a11y-close{border:0;background:transparent;font-size:22px;cursor:pointer;color:var(--ink)}
 .a11y-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
 .a11y-actions button{border:1px solid var(--line);border-radius:10px;padding:10px 6px;background:var(--bg);color:var(--ink);font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font-body)}
-.a11y-links{margin:12px 0 0;font-size:12px;text-align:center}
+.a11y-actions button[aria-pressed="true"]{background:var(--ink);color:#fff;border-color:var(--ink)}
+.a11y-contact{margin:12px 0 0;padding-top:12px;border-top:1px solid var(--line);font-size:12px;text-align:center;color:var(--ink-soft)}
+.a11y-contact a{color:var(--gold-deep);font-weight:700}
+.a11y-links{margin:8px 0 0;font-size:12px;text-align:center}
 .a11y-links a{color:var(--gold-deep)}
 :focus-visible{outline:3px solid var(--gold);outline-offset:3px}
-body.a11y-large{font-size:120%}
+:root{--a11y-scale:1}
+body{font-size:calc(17px * var(--a11y-scale))}
 body.a11y-contrast{background:#000!important;color:#fff!important}
-body.a11y-contrast .card,body.a11y-contrast .lesson,body.a11y-contrast .quote,body.a11y-contrast .form-card,body.a11y-contrast .a11y-panel,body.a11y-contrast .mock-screen{background:#000!important;color:#fff!important;border-color:#fff!important}
+body.a11y-contrast .card,body.a11y-contrast .lesson,body.a11y-contrast .testimonial-card,body.a11y-contrast .hero-proof,body.a11y-contrast .form-card,body.a11y-contrast .a11y-panel,body.a11y-contrast .mock-screen{background:#000!important;color:#fff!important;border-color:#fff!important}
+body.a11y-grayscale{filter:grayscale(100%)}
+body.a11y-readable-font,body.a11y-readable-font *{font-family:Arial,"Segoe UI",sans-serif!important}
+body.a11y-headings h1,body.a11y-headings h2,body.a11y-headings h3{background:#fff59d;color:#1b3a2c!important;box-shadow:0 0 0 3px #1b3a2c;padding:2px 8px;display:inline-block}
 body.a11y-underline a{text-decoration:underline!important}
 body.a11y-reduce *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
 
@@ -230,7 +243,8 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 </style>
 </head>
 <body>
-<main class="stage">
+<a href="#main" class="skip-link">דלג לתוכן הראשי</a>
+<main class="stage" id="main">
 
   <section class="hero">
     <div class="reveal" style="animation-delay:0ms"><span class="eyebrow">הדרכה חינמית · תרגול מונחה לרגע האמת</span></div>
@@ -247,8 +261,12 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
     <div class="cta-wrap reveal" style="animation-delay:240ms">
       <a href="#formSection" class="cta">שלחו לי את ההדרכה בחינם</a>
     </div>
-    <div class="quote hero-proof reveal" style="animation-delay:260ms">
-      <p>"לדוד היקר! בסיומה של תקופה איתך אני רוצה להודות לך מכל ליבי על השינוי המטורף שחוללת אצלי. הגעתי אליך מבולבל, מיואש, חרד ומפוחד, ותוך כמה טיפולים מצאתי את עצמי קונה בחזרה את הרוגע, ובעצם קונה את חיי בחזרה. למדתי בצורה פשוטה ביותר איך להתמודד עם המצבים שחוויתי, ולאט לאט הם נעלמו מחיי. הכנסת לי את הדרך החדשה בצורה נעימה וברורה, והכל בהרגשה טובה והרגעה, וליווי צמוד לאורך כל התקופה. תודה רבה רבה ❤️"</p>
+    <div class="hero-proof reveal" style="animation-delay:260ms">
+      <p class="quote-title">הגיע מבולבל, חרד ומפוחד — וקנה בחזרה את השקט ואת החיים שלו</p>
+      <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-3.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+        <img class="quote-shot" src="img/testimonial-3.jpg" alt="הודעת תודה מלקוח על השינוי שחל אצלו בטיפול" loading="lazy" width="760" height="654">
+        <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
+      </button>
     </div>
   </section>
 
@@ -365,6 +383,12 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
         <label for="lf-website">Website</label>
         <input id="lf-website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
+      <div class="consent-field">
+        <label class="consent-label">
+          <input type="checkbox" id="lf-consent" name="consent">
+          <span>אשמח לקבל ממך גם עדכונים ותכנים נוספים במייל. בלי ספאם, ואפשר להסיר בכל רגע.</span>
+        </label>
+      </div>
       <button type="submit" class="cta" id="submitBtn">כן, שלחו לי את ההדרכה</button>
       <div class="error-msg" id="errorMsg">משהו לא עבד. אפשר לנסות שוב.</div>
     </form>
@@ -391,18 +415,6 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 
   <section>
     <h2 class="center">אפשר ללמוד להגיב אחרת לחרדה</h2>
-    <div class="spacer-s"></div>
-    <div class="quotes">
-      <div class="quote reveal" style="animation-delay:0ms">
-        <p>"היא חזרה לנהוג, והפסיקה להיות חרדה מלעשות טעויות."</p>
-      </div>
-      <div class="quote reveal" style="animation-delay:60ms">
-        <p>"היא חזרה לצאת מהבית ולעבוד, גם כשהתחושה עדיין שם, תוך 4 מפגשים."</p>
-      </div>
-      <div class="quote reveal" style="animation-delay:120ms">
-        <p>"היי בוס, שמחתי מאוד על התהליך איתך. תאמת, בהתחלה הייתי סקפטי כי חשבתי שזה יהיה עוד טיפול. בפועל, הוא הפך אותי מהבחור הכפוף והחסר ביטחון לבחור הזקוף ומלא ביטחון עצמי. הוא נתן לי דרך להתמודד עם פחדים, לדעת לא לברוח מהם אלא לעמוד מולם. לא לברוח מהחרדה ולנסות להילחם בה, אלא לקבל אותה באהבה, לתת לה להיות, ותכף היא תלך כבר לבד, לדעת שהיא פה בשבילי. תודה ענקית על כל זה, באמת שהיה לי כיף לא מובן מאליו. תמשיך בעשייה מבורכת, להיות שליח ה'."</p>
-      </div>
-    </div>
     <div class="spacer-m"></div>
     <div class="quotes-grid">
       <figure class="testimonial-card reveal" style="animation-delay:180ms">
@@ -416,6 +428,27 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
         <figcaption>"לאט לאט מצליחה לעשות יותר דברים שפעם היו מלחיצים אותי, ויודעת לקבל תחושה לא נעימה בחמלה בלי להגיע להתקף חרדה."</figcaption>
         <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-2.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
           <img class="quote-shot" src="img/testimonial-2.jpg" alt="הודעת וואטסאפ מלקוחה על ההתקדמות ההדרגתית וההתמודדות בחמלה" loading="lazy" width="760" height="871">
+          <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
+        </button>
+      </figure>
+      <figure class="testimonial-card reveal" style="animation-delay:300ms">
+        <p class="quote-title">מהבחור הכפוף והחסר ביטחון, לבחור הזקוף ומלא ביטחון עצמי</p>
+        <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-4.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+          <img class="quote-shot" src="img/testimonial-4.jpg" alt="הודעת וואטסאפ מלקוח על התהליך ועל החזרה לביטחון עצמי" loading="lazy" width="760" height="644">
+          <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
+        </button>
+      </figure>
+      <figure class="testimonial-card reveal" style="animation-delay:360ms">
+        <p class="quote-title">מתהליך שלפעמים היה מדהים, למי שהיום בטוח בעצמו ולא מפחד ממה שיגיע</p>
+        <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-5.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+          <img class="quote-shot" src="img/testimonial-5.jpg" alt="הודעת וואטסאפ מלקוח על סיום התהליך ועל הביטחון העצמי שרכש" loading="lazy" width="760" height="1131">
+          <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
+        </button>
+      </figure>
+      <figure class="testimonial-card reveal" style="animation-delay:420ms">
+        <p class="quote-title">מלראות איפה התחילה, ללמוד להאמין בעצמה וביכולות שרכשה</p>
+        <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-6.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+          <img class="quote-shot" src="img/testimonial-6.jpg" alt="הודעת וואטסאפ מלקוחה על התהליך ועל הביטחון העצמי שרכשה" loading="lazy" width="760" height="492">
           <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
         </button>
       </figure>
@@ -466,12 +499,17 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 <aside class="a11y-panel" id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות" hidden>
   <div class="a11y-head"><strong>אפשרויות נגישות</strong><button class="a11y-close" type="button" aria-label="סגירת תפריט נגישות">×</button></div>
   <div class="a11y-actions">
-    <button type="button" data-a11y="large">הגדלת טקסט</button>
-    <button type="button" data-a11y="contrast">ניגודיות גבוהה</button>
-    <button type="button" data-a11y="underline">הדגשת קישורים</button>
-    <button type="button" data-a11y="reduce">עצירת תנועה</button>
-    <button type="button" data-a11y="reset" style="grid-column:1/-1">איפוס התאמות</button>
+    <button type="button" data-a11y-size="up" aria-label="הגדלת טקסט">הגדלת טקסט A+</button>
+    <button type="button" data-a11y-size="down" aria-label="הקטנת טקסט">הקטנת טקסט A-</button>
+    <button type="button" data-a11y="contrast" aria-pressed="false">ניגודיות גבוהה</button>
+    <button type="button" data-a11y="grayscale" aria-pressed="false">גווני אפור</button>
+    <button type="button" data-a11y="readable-font" aria-pressed="false">פונט קריא</button>
+    <button type="button" data-a11y="underline" aria-pressed="false">הדגשת קישורים</button>
+    <button type="button" data-a11y="headings" aria-pressed="false">הדגשת כותרות</button>
+    <button type="button" data-a11y="reduce" aria-pressed="false">עצירת תנועה</button>
+    <button type="button" data-a11y="reset" style="grid-column:1/-1">איפוס כל ההתאמות</button>
   </div>
+  <p class="a11y-contact">בעיה בנגישות? דוד אינגבר, אחראי הנגישות, זמין ב־<a href="https://wa.me/972559930227">WhatsApp</a>.</p>
   <p class="a11y-links"><a href="/accessibility/">להצהרת הנגישות המלאה</a></p>
 </aside>
 
@@ -497,6 +535,7 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
     var name = form.name.value.trim();
     var email = form.email.value.trim();
     var honeypot = form.website.value.trim();
+    var consent = form.consent.checked;
 
     if (honeypot) { return; } // כנראה בוט — נבלום בשקט
     if (!isValidEmail(email)) {
@@ -513,6 +552,7 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
     var payload = {
       name: name,
       email: email,
+      marketing_consent: consent ? 'yes' : 'no',
       source: 'hadracha-landing',
       utm_source: params.get('utm_source') || '',
       utm_medium: params.get('utm_medium') || '',
@@ -585,9 +625,22 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
 
 (function () {
   var toggle = document.querySelector('.a11y-toggle'), panel = document.getElementById('a11y-panel');
-  var keys = ['large', 'contrast', 'underline', 'reduce'];
-  function apply() { keys.forEach(function (k) { document.body.classList.toggle('a11y-' + k, localStorage.getItem('a11y-' + k) === '1'); }); }
+  var keys = ['contrast', 'grayscale', 'readable-font', 'underline', 'headings', 'reduce'];
+  var sizeSteps = [1, 1.12, 1.25, 1.4];
+
+  function apply() {
+    keys.forEach(function (k) {
+      var on = localStorage.getItem('a11y-' + k) === '1';
+      document.body.classList.toggle('a11y-' + k, on);
+      var btn = panel.querySelector('[data-a11y="' + k + '"]');
+      if (btn) btn.setAttribute('aria-pressed', String(on));
+    });
+    var step = parseInt(localStorage.getItem('a11y-size-step'), 10);
+    if (isNaN(step) || step < 0 || step >= sizeSteps.length) step = 0;
+    document.documentElement.style.setProperty('--a11y-scale', sizeSteps[step]);
+  }
   apply();
+
   function close() { panel.hidden = true; toggle.setAttribute('aria-expanded', 'false'); toggle.focus(); }
   toggle.onclick = function () {
     panel.hidden = !panel.hidden;
@@ -595,14 +648,31 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
     if (!panel.hidden) panel.querySelector('button').focus();
   };
   panel.querySelector('.a11y-close').onclick = close;
+
   document.querySelectorAll('[data-a11y]').forEach(function (b) {
     b.onclick = function () {
       var k = b.dataset.a11y;
-      if (k === 'reset') keys.forEach(function (x) { localStorage.removeItem('a11y-' + x); });
-      else localStorage.setItem('a11y-' + k, document.body.classList.contains('a11y-' + k) ? '0' : '1');
+      if (k === 'reset') {
+        keys.forEach(function (x) { localStorage.removeItem('a11y-' + x); });
+        localStorage.removeItem('a11y-size-step');
+      } else {
+        localStorage.setItem('a11y-' + k, document.body.classList.contains('a11y-' + k) ? '0' : '1');
+      }
       apply();
     };
   });
+
+  document.querySelectorAll('[data-a11y-size]').forEach(function (b) {
+    b.onclick = function () {
+      var step = parseInt(localStorage.getItem('a11y-size-step'), 10);
+      if (isNaN(step)) step = 0;
+      step += b.dataset.a11ySize === 'up' ? 1 : -1;
+      step = Math.max(0, Math.min(sizeSteps.length - 1, step));
+      localStorage.setItem('a11y-size-step', String(step));
+      apply();
+    };
+  });
+
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) close(); });
 })();
 </script>
