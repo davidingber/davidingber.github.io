@@ -527,9 +527,11 @@ document.querySelectorAll('.opt input').forEach(function (input) {
       if (fill) fill.style.width = '100%';
     }
 
+    // מציגים הצלחה מיד — התשובות כבר נשמרו מקומית, ואין סיבה להשאיר את המשתמש מחכה
+    // לתשובת השרת (שיכולה לפעמים להתעכב) לפני שהוא רואה את הלוח לקביעת שיחה.
+    showSuccess();
+
     if (!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.indexOf('PASTE_YOUR') === 0) {
-      // עדיין לא חובר Google Sheet — לא חוסמים את המשתמש, רק ממשיכים
-      showSuccess();
       return;
     }
 
@@ -538,10 +540,7 @@ document.querySelectorAll('.opt input').forEach(function (input) {
       mode: 'no-cors',
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
-    }).then(showSuccess).catch(function () {
-      // גם אם הרשת נכשלה, התשובות כבר נשמרו מקומית — לא עוצרים את המשתמש
-      showSuccess();
-    });
+    }).catch(function () { /* גם אם הרשת נכשלה, התשובות כבר נשמרו מקומית */ });
   });
 })();
 
