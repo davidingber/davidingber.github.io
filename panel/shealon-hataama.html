@@ -569,6 +569,15 @@ document.querySelectorAll('.opt input').forEach(function (input) {
 </script>
 
 <script src="https://assets.calendly.com/assets/external/widget.js" async></script>
+<script>
+(function () {
+  window.addEventListener('message', function (e) {
+    if (e.data && e.data.event === 'calendly.event_scheduled') {
+      window.location.href = 'shealon-thank-you.html';
+    }
+  });
+})();
+</script>
 
 </body>
 </html>
