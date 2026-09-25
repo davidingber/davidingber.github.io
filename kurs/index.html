@@ -97,11 +97,6 @@ strong{color:var(--ink)}
 .hero-over span{color:var(--gold-soft)}
 .hero h1{max-width:28ch;margin:34px auto 0;color:var(--on-dark);font-size:clamp(1.35rem,4.6vw,1.95rem);line-height:1.45;font-weight:500}
 .hero h1 .h1-main{display:block;color:var(--gold-soft);font-size:clamp(2.1rem,7.6vw,3.4rem);line-height:1.15;font-weight:900;margin-bottom:14px;letter-spacing:-.01em}
-.hero-lead{max-width:46ch;margin:26px auto 0;font-size:1.06rem}
-.thoughts{display:flex;flex-direction:column;align-items:center;gap:10px;margin:22px auto 0}
-.thought{font-family:var(--font-head);font-style:italic;color:var(--on-dark);font-size:1.12rem;background:rgba(255,255,255,0.05);border:1px solid rgba(224,190,114,0.22);padding:8px 20px;border-radius:999px;opacity:0;animation:rise .7s var(--ease) forwards}
-.thought:nth-child(2){margin-inline-start:48px}
-.thought:nth-child(3){margin-inline-end:36px}
 .no-list{list-style:none;display:flex;flex-direction:column;gap:8px;max-width:48ch;margin:22px auto 0;text-align:right}
 .no-list li{position:relative;padding-inline-start:28px}
 .no-list li::before{content:"✕";position:absolute;inset-inline-start:0;top:0;color:var(--gold-soft);font-weight:700;font-size:.85rem}
@@ -378,7 +373,7 @@ body.a11y-readable-font,body.a11y-readable-font *{font-family:Arial,"Segoe UI",s
 body.a11y-headings h1,body.a11y-headings h2,body.a11y-headings h3{background:#fff59d;color:#1b3a2c!important;box-shadow:0 0 0 3px #1b3a2c;padding:2px 8px;display:inline-block}
 body.a11y-underline a{text-decoration:underline!important}
 body.a11y-reduce *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
-body.a11y-reduce .in-view,body.a11y-reduce .reveal,body.a11y-reduce .thought{opacity:1!important;transform:none!important}
+body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform:none!important}
 
 @media (min-width:720px){
   .flows{grid-template-columns:1fr}
@@ -389,14 +384,13 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal,body.a11y-reduce .thought{opa
   body{font-size:calc(16px * var(--a11y-scale))}
   .band{padding:60px 16px}
   .hero{padding:52px 16px 80px}
-  .thought:nth-child(2),.thought:nth-child(3){margin-inline:0}
   .about-head{flex-direction:column;text-align:center}
   .letter{padding:30px 20px}
   .order{padding:26px 18px}
 }
 @media (prefers-reduced-motion:reduce){
   *,*::before,*::after{animation:none!important;transition:none!important}
-  .in-view,.reveal,.thought{opacity:1!important;transform:none!important}
+  .in-view,.reveal{opacity:1!important;transform:none!important}
 }
 </style>
 </head>
@@ -411,20 +405,13 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal,body.a11y-reduce .thought{opa
       <div class="reveal"><span class="eyebrow">קורס דיגיטלי קצר ומעשי · דוד אינגבר</span></div>
       <p class="hero-over reveal" style="animation-delay:80ms"><span>ההתקף נגמר.</span> אז למה אתה עדיין חי בפחד ממנו?</p>
 
-      <p class="hero-lead reveal" style="animation-delay:240ms">אם אתה כבר מכיר את הרגע הזה שבו תחושה קטנה בגוף הופכת בתוך שניות ל־</p>
-      <div class="thoughts" aria-label="המחשבות שעולות">
-        <span class="thought" style="animation-delay:420ms">"מה קורה לי?"</span>
-        <span class="thought" style="animation-delay:720ms">"זה מתחיל שוב?"</span>
-        <span class="thought" style="animation-delay:1020ms">"ומה אם אני לא אצליח לעצור את זה?"</span>
-      </div>
-
-      <h1 class="reveal" style="animation-delay:600ms"><span class="h1-main">איך להפסיק לפחד מהתקף החרדה הבא,</span>ללמוד לזהות את הסחרור כשהוא מתחיל ולהגיב אחרת לתחושות, בלי להילחם בהן ובלי לחכות שהן ייעלמו כדי להמשיך לחיות.</h1>
-      <ul class="no-list reveal" style="animation-delay:700ms">
+      <h1 class="reveal" style="animation-delay:160ms"><span class="h1-main">איך להפסיק לפחד מהתקף החרדה הבא,</span>ללמוד לזהות את הסחרור כשהוא מתחיל ולהגיב אחרת לתחושות, בלי להילחם בהן ובלי לחכות שהן ייעלמו כדי להמשיך לחיות.</h1>
+      <ul class="no-list reveal" style="animation-delay:240ms">
         <li>בלי לנסות להירגע בכוח.</li>
         <li>בלי לחפש עוד כלי שיציל אותך ברגע האמת.</li>
         <li>ובלי לתת לפחד מההתקף הבא להתחיל לנהל אותך עוד לפני שהוא בכלל הגיע.</li>
       </ul>
-      <div class="cta-wrap reveal" style="animation-delay:800ms" id="heroCta">
+      <div class="cta-wrap reveal" style="animation-delay:320ms" id="heroCta">
         <a href="#order" class="cta">אני רוצה להפסיק לפחד מההתקף הבא <span class="arrow">←</span></a>
         <p class="cta-note">87 ₪ במחיר השקה · גישה מיידית · גישה לשנה</p>
       </div>
