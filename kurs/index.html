@@ -9,7 +9,7 @@
 <meta property="og:type" content="website">
 <meta property="og:title" content="ההתקף נגמר. אז למה אתה עדיין חי בפחד ממנו?">
 <meta property="og:description" content="איך להפסיק לפחד מהתקף החרדה הבא — קורס דיגיטלי קצר ומעשי של דוד אינגבר. 87 ₪ במחיר השקה.">
-<meta property="og:image" content="https://davidingber.github.io/hadracha/img/david.jpg">
+<meta property="og:image" content="https://davidingber.github.io/kurs/img/mockup.webp">
 <meta property="og:url" content="https://davidingber.github.io/kurs/">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="canonical" href="https://davidingber.github.io/kurs/">
@@ -190,34 +190,8 @@ strong{color:var(--ink)}
 
 /* ---------- product reveal + CSS mockup ---------- */
 .reveal-name{font-family:var(--font-head);font-size:clamp(1.9rem,6.4vw,2.8rem);line-height:1.2;color:var(--ink);font-weight:900;margin:8px 0 14px}
-.device-stage{position:relative;max-width:620px;margin:40px auto 10px;padding-bottom:30px}
-.laptop{position:relative;margin:0 auto;width:88%}
-.laptop-screen{background:var(--ink-night);border-radius:14px 14px 0 0;padding:10px;border:1px solid #2b4436}
-.screen{background:linear-gradient(160deg,var(--ink-deep),#1f4533);border-radius:6px;aspect-ratio:16/10;padding:5% 6%;display:flex;flex-direction:column;gap:6%;overflow:hidden;position:relative}
-.screen-top{display:flex;justify-content:space-between;align-items:center;font-size:clamp(8px,1.7vw,11px);color:var(--gold-soft);letter-spacing:.04em}
-.screen-title{font-family:var(--font-head);color:var(--on-dark);font-size:clamp(12px,3vw,20px);line-height:1.2;font-weight:700}
-.screen-body{display:grid;grid-template-columns:1.35fr 1fr;gap:5%;flex:1}
-.player{background:rgba(0,0,0,0.28);border-radius:6px;display:flex;align-items:center;justify-content:center;position:relative;border:1px solid rgba(224,190,114,0.18)}
-.player::before{content:"";width:18%;aspect-ratio:1;border-radius:50%;background:var(--gold-soft);box-shadow:0 0 0 6px rgba(224,190,114,0.18)}
-.player::after{content:"";position:absolute;border-style:solid;border-width:6px 0 6px 10px;border-color:transparent transparent transparent var(--ink-deep);margin-left:3px}
-.player .bar{position:absolute;left:8%;right:8%;bottom:9%;height:3px;border-radius:3px;background:rgba(255,255,255,0.15)}
-.player .bar i{display:block;height:100%;width:38%;border-radius:3px;background:var(--gold-soft)}
-.modules{display:flex;flex-direction:column;gap:6%}
-.modules span{flex:1;display:flex;align-items:center;gap:6%;padding:0 7%;border-radius:4px;background:rgba(255,255,255,0.06);color:var(--on-dark-soft);font-size:clamp(5.5px,1.2vw,9.5px);white-space:nowrap;overflow:hidden}
-.modules span b{color:var(--gold-soft);font-weight:700}
-.modules span.on{background:rgba(224,190,114,0.18);color:var(--on-dark)}
-.laptop-base{height:14px;background:linear-gradient(180deg,#d9d2c3,#b9b1a1);border-radius:0 0 14px 14px;width:112%;margin-inline-start:-6%;position:relative}
-.laptop-base::before{content:"";position:absolute;top:0;left:42%;right:42%;height:5px;background:#a79f90;border-radius:0 0 6px 6px}
-.phone{position:absolute;bottom:0;left:0;width:27%;background:var(--ink-night);border-radius:18px;padding:6px;border:1px solid #2b4436;box-shadow:var(--shadow)}
-.phone-screen{border-radius:13px;aspect-ratio:9/18;background:linear-gradient(170deg,#23493a,var(--ink-deep));padding:14% 10%;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:9%;text-align:center}
-.phone-screen .wave{width:80%;height:22%}
-.phone-screen small{font-size:clamp(6px,1.3vw,9px);color:var(--gold-soft);line-height:1.3}
-.phone-screen strong{font-family:var(--font-head);font-size:clamp(7px,1.7vw,11px);color:var(--on-dark);line-height:1.25}
-.sheet{position:absolute;bottom:14px;right:0;width:22%;aspect-ratio:1/1.35;background:#fff;border-radius:6px;box-shadow:var(--shadow);padding:5%;transform:rotate(4deg);border:1px solid var(--line)}
-.sheet i{display:block;height:5%;border-radius:2px;background:var(--line);margin-bottom:8%}
-.sheet i:first-child{background:var(--gold-soft);width:60%;height:7%}
-.sheet i:nth-child(3){width:80%}
-.sheet i:nth-child(5){width:70%}
+.mock-wrap{margin:36px auto 6px;max-width:720px}
+.mock-wrap img{display:block;width:100%;height:auto;border-radius:var(--radius);box-shadow:var(--shadow)}
 .first-win{margin-top:30px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow-sm)}
 .first-win .big{font-family:var(--font-head);font-size:1.5rem;color:var(--gold-deep);font-weight:900;display:block;margin:4px 0 10px}
 .first-win ul{list-style:none;display:flex;flex-direction:column;gap:8px;margin-top:14px}
@@ -601,35 +575,8 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <p class="reveal-name">איך להפסיק לפחד מהתקף החרדה הבא</p>
       <p>קורס דיגיטלי קצר ומעשי שיעזור לך להבין את הסחרור, לזהות מה מעצים אותו וללמוד תגובה אחרת כשהתחושות מתחילות.</p>
 
-      <!-- course mockup (built in CSS; swap for a real mockup image when one exists) -->
-      <div class="device-stage" role="img" aria-label="הקורס 'איך להפסיק לפחד מהתקף החרדה הבא' על מחשב נייד וטלפון, עם דף עבודה">
-        <div class="laptop">
-          <div class="laptop-screen">
-            <div class="screen">
-              <div class="screen-top"><span>דוד אינגבר</span><span>שיעור 3 מתוך 4</span></div>
-              <div class="screen-title">איך להפסיק לפחד מהתקף החרדה הבא</div>
-              <div class="screen-body">
-                <div class="player"><div class="bar"><i></i></div></div>
-                <div class="modules">
-                  <span><b>✓</b>שיעור פתיחה</span>
-                  <span><b>✓</b>לזהות את המעגל</span>
-                  <span><b>✓</b>מה מחזק את הפחד</span>
-                  <span class="on"><b>▶</b>כשהתחושה מתחילה</span>
-                  <span><b>4</b>לתרגל עם דוד</span>
-                </div>
-              </div>
-            </div>
-          </div>
-          <div class="laptop-base"></div>
-        </div>
-        <div class="phone">
-          <div class="phone-screen">
-            <small>בונוס</small>
-            <svg class="wave" viewBox="0 0 100 30" fill="none" stroke="#E0BE72" stroke-width="2" stroke-linecap="round" aria-hidden="true"><path d="M2 15 Q14 3 26 15 T50 15 T74 15 T98 15"/><path d="M2 22 Q14 14 26 22 T50 22 T74 22 T98 22" opacity=".4"/></svg>
-            <strong>טראנס להרפיית הגוף</strong>
-          </div>
-        </div>
-        <div class="sheet" aria-hidden="true"><i></i><i></i><i></i><i></i><i></i><i></i></div>
+      <div class="mock-wrap">
+        <img src="img/mockup.webp" alt="הקורס 'איך להפסיק לפחד מהתקף החרדה הבא' על מחשב נייד וטלפון: רשימת השיעורים, סרטון עם דוד, הטראנס להרפיית הגוף ודפי עבודה" width="1536" height="1024">
       </div>
     </div>
 
