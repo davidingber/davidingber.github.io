@@ -93,15 +93,15 @@ strong{color:var(--ink)}
   -webkit-mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0 60V30C200 0 400 0 600 26S1000 58 1200 30V60Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;
           mask:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1200 60' preserveAspectRatio='none'%3E%3Cpath d='M0 60V30C200 0 400 0 600 26S1000 58 1200 30V60Z'/%3E%3C/svg%3E") center/100% 100% no-repeat;
 }
-.hero-over{font-family:var(--font-head);font-size:clamp(1.15rem,3.6vw,1.45rem);color:var(--gold-soft);letter-spacing:.02em;margin-top:22px}
-.hero h1{color:var(--on-dark);font-size:clamp(2rem,7vw,3.15rem);line-height:1.2;margin-top:6px}
+.hero-over{font-family:var(--font-head);font-size:clamp(1.1rem,3.4vw,1.35rem);color:var(--on-dark);line-height:1.5;margin-top:22px}
+.hero-over span{color:var(--gold-soft)}
+.hero h1{max-width:28ch;margin:34px auto 0;color:var(--on-dark);font-size:clamp(1.35rem,4.6vw,1.95rem);line-height:1.45;font-weight:500}
+.hero h1 .h1-main{display:block;color:var(--gold-soft);font-size:clamp(2.1rem,7.6vw,3.4rem);line-height:1.15;font-weight:900;margin-bottom:14px;letter-spacing:-.01em}
 .hero-lead{max-width:46ch;margin:26px auto 0;font-size:1.06rem}
 .thoughts{display:flex;flex-direction:column;align-items:center;gap:10px;margin:22px auto 0}
 .thought{font-family:var(--font-head);font-style:italic;color:var(--on-dark);font-size:1.12rem;background:rgba(255,255,255,0.05);border:1px solid rgba(224,190,114,0.22);padding:8px 20px;border-radius:999px;opacity:0;animation:rise .7s var(--ease) forwards}
 .thought:nth-child(2){margin-inline-start:48px}
 .thought:nth-child(3){margin-inline-end:36px}
-.hero-promise{max-width:52ch;margin:30px auto 0;color:var(--on-dark);font-size:1.12rem;font-weight:500;line-height:1.65}
-.hero-promise strong{color:var(--gold-soft);font-weight:600}
 .no-list{list-style:none;display:flex;flex-direction:column;gap:8px;max-width:48ch;margin:22px auto 0;text-align:right}
 .no-list li{position:relative;padding-inline-start:28px}
 .no-list li::before{content:"✕";position:absolute;inset-inline-start:0;top:0;color:var(--gold-soft);font-weight:700;font-size:.85rem}
@@ -409,8 +409,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal,body.a11y-reduce .thought{opa
   <header class="band hero">
     <div class="wrap">
       <div class="reveal"><span class="eyebrow">קורס דיגיטלי קצר ומעשי · דוד אינגבר</span></div>
-      <p class="hero-over reveal" style="animation-delay:80ms">ההתקף נגמר.</p>
-      <h1 class="reveal" style="animation-delay:160ms">אז למה אתה עדיין חי בפחד ממנו?</h1>
+      <p class="hero-over reveal" style="animation-delay:80ms"><span>ההתקף נגמר.</span> אז למה אתה עדיין חי בפחד ממנו?</p>
 
       <p class="hero-lead reveal" style="animation-delay:240ms">אם אתה כבר מכיר את הרגע הזה שבו תחושה קטנה בגוף הופכת בתוך שניות ל־</p>
       <div class="thoughts" aria-label="המחשבות שעולות">
@@ -419,7 +418,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal,body.a11y-reduce .thought{opa
         <span class="thought" style="animation-delay:1020ms">"ומה אם אני לא אצליח לעצור את זה?"</span>
       </div>
 
-      <p class="hero-promise reveal" style="animation-delay:600ms"><strong>איך להפסיק לפחד מהתקף החרדה הבא</strong>, ללמוד לזהות את הסחרור כשהוא מתחיל ולהגיב אחרת לתחושות, בלי להילחם בהן ובלי לחכות שהן ייעלמו כדי להמשיך לחיות.</p>
+      <h1 class="reveal" style="animation-delay:600ms"><span class="h1-main">איך להפסיק לפחד מהתקף החרדה הבא,</span>ללמוד לזהות את הסחרור כשהוא מתחיל ולהגיב אחרת לתחושות, בלי להילחם בהן ובלי לחכות שהן ייעלמו כדי להמשיך לחיות.</h1>
       <ul class="no-list reveal" style="animation-delay:700ms">
         <li>בלי לנסות להירגע בכוח.</li>
         <li>בלי לחפש עוד כלי שיציל אותך ברגע האמת.</li>
