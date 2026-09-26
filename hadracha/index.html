@@ -385,8 +385,8 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
       </div>
       <div class="consent-field">
         <label class="consent-label">
-          <input type="checkbox" id="lf-consent" name="consent">
-          <span>אשמח לקבל ממך גם עדכונים ותכנים נוספים במייל. בלי ספאם, ואפשר להסיר בכל רגע.</span>
+          <input type="checkbox" id="lf-consent" name="consent" required>
+          <span>אני מאשר/ת לקבל מיילים, בלי ספאם ועם אפשרות להסרה.</span>
         </label>
       </div>
       <button type="submit" class="cta" id="submitBtn">כן, שלחו לי את ההדרכה</button>
@@ -544,6 +544,12 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
       form.email.focus();
       return;
     }
+    if (!consent) {
+      err.textContent = 'צריך לאשר קבלת מיילים כדי להמשיך.';
+      err.classList.add('show');
+      form.consent.focus();
+      return;
+    }
 
     btn.disabled = true;
     btn.textContent = 'רגע...';
@@ -566,26 +572,18 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
       localStorage.setItem('leads', JSON.stringify(stored));
     } catch (e) { /* no-op */ }
 
-    function goToThankYou() {
-      var q = new URLSearchParams({ name: name }).toString();
-      location.href = 'thank-you.html?' + q;
+    // שולחים לגיליון ברקע בלי לחכות לתשובה — כדי שהמעבר לדף התודה יהיה מיידי
+    if (SHEET_WEBAPP_URL && SHEET_WEBAPP_URL.indexOf('PASTE_YOUR') !== 0) {
+      fetch(SHEET_WEBAPP_URL, {
+        method: 'POST',
+        mode: 'no-cors',
+        headers: { 'Content-Type': 'text/plain;charset=utf-8' },
+        body: JSON.stringify(payload)
+      }).catch(function () { /* הליד כבר נשמר מקומית כגיבוי */ });
     }
 
-    if (!SHEET_WEBAPP_URL || SHEET_WEBAPP_URL.indexOf('PASTE_YOUR') === 0) {
-      // עדיין לא חובר Google Sheet — לא חוסמים את המשתמש, רק ממשיכים
-      goToThankYou();
-      return;
-    }
-
-    fetch(SHEET_WEBAPP_URL, {
-      method: 'POST',
-      mode: 'no-cors',
-      headers: { 'Content-Type': 'text/plain;charset=utf-8' },
-      body: JSON.stringify(payload)
-    }).then(goToThankYou).catch(function () {
-      // גם אם הרשת נכשלה, הליד כבר נשמר מקומית — לא עוצרים את המשתמש
-      goToThankYou();
-    });
+    var q = new URLSearchParams({ name: name }).toString();
+    location.href = 'thank-you.html?' + q;
   });
 })();
 
