@@ -2,6 +2,9 @@
 <html lang="he" dir="rtl">
 <head>
 <meta charset="UTF-8">
+  <!-- Meta Pixel -->
+  <script>!function(f,b,e,v,n,t,s){if(f.fbq)return;n=f.fbq=function(){n.callMethod?n.callMethod.apply(n,arguments):n.queue.push(arguments)};if(!f._fbq)f._fbq=n;n.push=n;n.loaded=!0;n.version='2.0';n.queue=[];t=b.createElement(e);t.async=!0;t.src=v;s=b.getElementsByTagName(e)[0];s.parentNode.insertBefore(t,s)}(window,document,'script','https://connect.facebook.net/en_US/fbevents.js');fbq('init','1469339275039488');fbq('track','PageView');fbq('track','ViewContent');</script>
+  <noscript><img height="1" width="1" style="display:none" src="https://www.facebook.com/tr?id=1469339275039488&ev=PageView&noscript=1"/></noscript>
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>איך להפסיק לפחד מהתקף החרדה הבא | קורס דיגיטלי · דוד אינגבר</title>
 <meta name="description" content="קורס דיגיטלי קצר ומעשי: להבין את הסחרור, לזהות מה מעצים אותו וללמוד תגובה אחרת כשהתחושות מתחילות. 10 פרקים קצרים, דפי עבודה, תרגול, טראנס ו־3 טכניקות ויסות. 87 ₪ במחיר השקה.">
@@ -1099,6 +1102,7 @@ function buildPaymentUrl(d) {
       fetch(SHEET_WEBAPP_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }).catch(function () {});
     }
 
+    try { if (window.fbq) fbq('track', 'InitiateCheckout', { value: 87, currency: 'ILS' }); } catch (x) { /* no-op */ }
     setTimeout(function () {
       if (isSet(PAYMENT_URL)) {
         location.href = buildPaymentUrl(payload);
