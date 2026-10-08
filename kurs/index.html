@@ -1043,10 +1043,14 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
  *   כל עוד נשאר PASTE_YOUR..., הטופס שומר את ההזמנה ופותח וואטסאפ לדוד עם פרטי הרכישה, כדי שלא יאבד אף קונה.
  * SHEET_WEBAPP_URL — Apps Script Web App לגיליון "רוכשים - איך להפסיק לפחד מהתקף החרדה הבא"
  *   (אותו קוד כמו ב-panel/README.md). לא להשתמש בכתובת של גיליון הלידים של hadracha/.
+ * CHECKOUT_API_URL — כתובת ה-Web App של kurs/apps-script/Code.gs (הוראות: kurs/apps-script/README.md).
+ *   כשהיא מוגדרת, השרת יוצר דף תשלום אישי ב-Sumit עם השם/מייל/טלפון כבר מלאים, ורושם את ההזמנה בגיליון
+ *   (ואז SHEET_WEBAPP_URL לא נחוץ). אם השרת לא עונה, הקונה עובר ל-PAYMENT_URL הרגיל — אף קונה לא הולך לאיבוד.
  */
 // Sumit payment page. Keep it without "?cartid=..." — that's a single cart session, not the page itself.
 var PAYMENT_URL = "https://pay.sumit.co.il/2lli6b/145zzqa/";
 var SHEET_WEBAPP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+var CHECKOUT_API_URL = "PASTE_YOUR_CHECKOUT_WEB_APP_URL_HERE";
 var WA_NUMBER = "972559930227";
 
 function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
@@ -1057,6 +1061,19 @@ function buildPaymentUrl(d) {
   u.searchParams.set('email', d.email);
   u.searchParams.set('phone', d.phone);
   return u.toString();
+}
+
+// Asks the checkout server for a personal Sumit payment page (details pre-filled).
+// Falls back to the plain PAYMENT_URL on any error or after 12 seconds.
+function goToPersonalPaymentPage(payload) {
+  var done = false;
+  function go(url) { if (done) return; done = true; location.href = url; }
+  var fallback = isSet(PAYMENT_URL) ? buildPaymentUrl(payload) : 'https://wa.me/' + WA_NUMBER;
+  setTimeout(function () { go(fallback); }, 12000);
+  fetch(CHECKOUT_API_URL, { method: 'POST', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) })
+    .then(function (r) { return r.json(); })
+    .then(function (r) { go(r && r.ok && r.url ? r.url : fallback); })
+    .catch(function () { go(fallback); });
 }
 
 (function () {
@@ -1083,7 +1100,7 @@ function buildPaymentUrl(d) {
     var payload = {
       name: name, email: email, phone: phone,
       marketing_consent: form.consent.checked ? 'yes' : 'no',
-      product: 'kurs-lo-lefached', price: 87,
+      product: 'kurs-lo-lefached', price: 87, bump: false,
       source: 'kurs-sales-page',
       utm_source: params.get('utm_source') || '',
       utm_medium: params.get('utm_medium') || '',
@@ -1095,6 +1112,10 @@ function buildPaymentUrl(d) {
       stored.push(payload);
       localStorage.setItem('kurs-orders', JSON.stringify(stored));
     } catch (x) { /* no-op */ }
+    if (isSet(CHECKOUT_API_URL)) {
+      goToPersonalPaymentPage(payload);
+      return;
+    }
     if (isSet(SHEET_WEBAPP_URL)) {
       fetch(SHEET_WEBAPP_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }).catch(function () {});
     }
