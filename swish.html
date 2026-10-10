@@ -818,21 +818,9 @@ function pickVoice(){
 try{ state.voiceName = localStorage.getItem('swish-voice') || null; }catch(e){}
 function speak(text){
   const t=(text||sentence());
-  /* the client's own recording wins for the full compassionate sentence */
-  if(hasUserClip() && /אני כאן/.test(t)){ playClip(state.userClip).catch(()=>{}); return; }
-  /* otherwise prefer embedded human clips; fall back to the browser voice */
-  const parts=t.split(/(?<=\.)\s+/).map(s=>s.trim()).filter(Boolean);
-  if(parts.some(p=>clipFor(p))){ speakSeq(t); return; }
-  if(!('speechSynthesis' in window)) return;
-  speechSynthesis.cancel();
-  const v=pickVoice();
-  parts.forEach((p)=>{
-    const u=new SpeechSynthesisUtterance(p);
-    u.lang='he-IL'; u.rate=0.9; u.pitch = state.gender==='f' ? 1.18 : 0.85;
-    u.volume=1;
-    if(v) u.voice=v;
-    speechSynthesis.speak(u);
-  });
+  /* automated narration removed (embedded + browser voice) — the ideal self
+     speaks via the on-screen bubble; only the client's OWN recording plays aloud */
+  if(hasUserClip() && /אני כאן/.test(t)){ playClip(state.userClip).catch(()=>{}); }
 }
 /* the negative voice speaks the user's word, harshly */
 function speakNeg(text){
@@ -913,18 +901,8 @@ function negVoiceStop(handle, dieSec){
   else if('speechSynthesis' in window){ try{ speechSynthesis.cancel(); }catch(e){} }
 }
 function speakAwait(text){
-  return new Promise(res=>{
-    if(!('speechSynthesis' in window)){ res(); return; }
-    speechSynthesis.cancel();
-    const u=new SpeechSynthesisUtterance(text);
-    u.lang='he-IL'; u.rate=0.9; u.pitch = state.gender==='f' ? 1.18 : 0.85;
-    const v=pickVoice(); if(v) u.voice=v;
-    let done=false;
-    const fin=()=>{ if(!done){ done=true; res(); } };
-    u.onend=fin; u.onerror=fin;
-    setTimeout(fin, 3500);
-    speechSynthesis.speak(u);
-  });
+  /* automated narration removed — no browser voice for the ideal-self words */
+  return Promise.resolve();
 }
 if('speechSynthesis' in window) speechSynthesis.getVoices();
 
@@ -1800,7 +1778,7 @@ function buildVoiceSceneStage(){
        otherwise the per-round phrase (embedded clip or browser voice) */
     if(!o.silent){
       if(hasUserClip()){ if((o.index||0)===0) await playClip(state.userClip).catch(()=>{}); else await wait(Math.max(400,d*0.3)); }
-      else await speakOne(part);
+      else await wait(Math.max(450,d*0.35));
     } else await wait(Math.max(450,d*0.35));
     await wait(150);
     /* 5. auditory reset: a wave sound replaces everything */
@@ -2182,9 +2160,7 @@ function idealStep(ch){
       const s=h('div','card center');
       s.innerHTML='<h2 style="font-size:1.1rem">והוא אומר לך:</h2>';
       const bub=h('div','bubble on'); bub.style.margin='4px auto'; bub.textContent='"'+sentence()+'"';
-      const sBtn=h('button','btn ghost',icon('sound')+g('שמע','שמעי')+' את הקול שלו'); sBtn.type='button'; sBtn.style.marginTop='10px';
-      sBtn.addEventListener('click',()=>speak());
-      s.appendChild(bub); s.appendChild(sBtn);
+      s.appendChild(bub);
       el.appendChild(s);
 
       /* let the client record the compassionate voice in their own voice */
