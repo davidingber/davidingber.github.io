@@ -25,3 +25,7 @@ Personal site and marketing funnels for David Ingber (דוד אינגבר), an e
 - No shared header/footer/nav component exists; each page is self-contained.
 - Contact CTA site-wide: WhatsApp deep link `https://wa.me/972559930227`.
 - New funnel/campaign pages (landing pages, ad-driven pages) intentionally have no site navigation — that's a deliberate conversion-rate choice, not an oversight.
+
+## Working with David
+
+- Don't ask for confirmation at each step — just do what David asked. Only stop to ask first when an action is irreversible or could cause harm to David or someone else (David's explicit standing instruction, 10.10.2026).
