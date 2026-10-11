@@ -1,0 +1,15 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash",
+      "Edit",
+      "Write",
+      "Read",
+      "Glob",
+      "Grep",
+      "mcp__higgsfield_ai__sandbox_exec",
+      "mcp__higgsfield_ai__media_upload",
+      "mcp__higgsfield_ai__media_confirm"
+    ]
+  }
+}
