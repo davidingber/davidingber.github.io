@@ -6,7 +6,8 @@
  * את המפתחות שומרים ב-Project Settings ← Script properties (לא בקוד):
  *     RM_CLIENT_ID, RM_CLIENT_SECRET, RM_USER_TOKEN, RM_LIST_ID
  * RM_LIST_ID: מגנט 123625 · שאלון ליד פרימיום 123627 · קורס/שאלון באק 123628
- * RM_REQUIRE_CONSENT: "yes" במגנט ובקורס (מוסיפים רק מי שאישר דיוור); בשאלון - לא להגדיר.
+ * RM_REQUIRE_CONSENT: "yes" בשלושת הדפים (מוסיפים רק מי שסימן את תיבת אישור הדיוור; הדפים שולחים marketing_consent).
+ * אחרי כל שינוי בקוד: Deploy ← Manage deployments ← ✎ ← New version. בהרצה הראשונה צריך לאשר הרשאת שליחה החוצה (הרצת testResponder).
  */
 var RM_BASE_ = 'https://graph.responder.live/v2';
 
