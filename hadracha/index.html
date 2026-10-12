@@ -396,10 +396,6 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
       <div class="error-msg" id="errorMsg">משהו לא עבד. אפשר לנסות שוב.</div>
     </form>
 
-    <!-- טופס רב מסר מוסתר (רשימה 123625). הדף ממלא אותו ולוחץ "שליחה" בשם המבקר; רב מסר מוסיף את הנמען לרשימה. -->
-    <div id="rmFormHost" style="position:absolute;left:-9999px;top:auto;width:1px;height:1px;overflow:hidden" aria-hidden="true">
-      <script src="//form2.ravpage.co.il/d8691d17b50620b3a434fcffc63348576ACCF17B"></script>
-    </div>
 
     <p class="cta-note">בלי טלפון. בלי שאלון התאמה. ובלי צורך לדבר עם אף אחד כדי לקבל אותה.</p>
 
@@ -595,33 +591,10 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
     var redirected = false;
     function go() { if (redirected) return; redirected = true; location.href = thanksUrl; }
 
-    // שליחה לרב מסר דרך הטופס המוסתר שלהם (מוגן reCAPTCHA, אי אפשר לחקות ישירות).
-    // אם משהו לא נטען/לא נמצא — מעבר לדף התודה אחרי 3 שניות; הליד כבר שמור בגיליון וב-localStorage.
-    var sent = submitToResponder(name, email);
-    setTimeout(go, sent ? 3000 : 600);
+    // הרשימה ברב מסר מתעדכנת מצד Apps Script (hadracha/responder-forward.gs) אחרי שהליד נכתב לגיליון.
+    setTimeout(go, 400);
   });
 
-  function setVal(el, v) {
-    var proto = el.tagName === 'TEXTAREA' ? HTMLTextAreaElement.prototype : HTMLInputElement.prototype;
-    var setter = Object.getOwnPropertyDescriptor(proto, 'value');
-    if (setter && setter.set) setter.set.call(el, v); else el.value = v;
-    ['input', 'change', 'blur'].forEach(function (t) { el.dispatchEvent(new Event(t, { bubbles: true })); });
-  }
-  function submitToResponder(name, email) {
-    try {
-      var host = document.getElementById('rmFormHost');
-      var nameEl = host.querySelector('[name="fields[13_Fixed]"]');
-      var emailEl = host.querySelector('[name="fields[1_Fixed]"]');
-      if (!emailEl) return false;
-      if (nameEl) setVal(nameEl, name);
-      setVal(emailEl, email);
-      var rmForm = emailEl.closest('form');
-      var rmBtn = (rmForm || host).querySelector('button[type="submit"], input[type="submit"], button');
-      if (!rmBtn) return false;
-      rmBtn.click();
-      return true;
-    } catch (e) { return false; }
-  }
 })();
 
 (function () {
