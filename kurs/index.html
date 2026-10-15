@@ -1044,12 +1044,13 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
  * PAYMENT_URL — קישור לדף התשלום המאובטח (משולם / Grow / iCount / Cardcom וכו').
  *   אם ספק התשלום תומך בפרמטרים למילוי מראש, אפשר להוסיף אותם ב-buildPaymentUrl למטה.
  *   כל עוד נשאר PASTE_YOUR..., הטופס שומר את ההזמנה ופותח וואטסאפ לדוד עם פרטי הרכישה, כדי שלא יאבד אף קונה.
- * SHEET_WEBAPP_URL — Apps Script Web App לגיליון "רוכשים - איך להפסיק לפחד מהתקף החרדה הבא"
- *   (אותו קוד כמו ב-panel/README.md). לא להשתמש בכתובת של גיליון הלידים של hadracha/.
+ * SHEET_WEBAPP_URL — אותו Apps Script Web App של hadracha/ (גיליון "לידים - מה לעשות כשהחרדה עולה").
+ *   הסקריפט מזהה payload.product === 'kurs-lo-lefached' ושומר בלשונית "קורס" + מוסיף לרשימת הפרונט ברב מסר (123628).
+ *   מי שממלא את הטופס נכנס לרשימה, ואז הדף מעביר לדף התשלום.
  */
 // Sumit payment page. Keep it without "?cartid=..." — that's a single cart session, not the page itself.
 var PAYMENT_URL = "https://pay.sumit.co.il/2lli6b/145zzqa/";
-var SHEET_WEBAPP_URL = "PASTE_YOUR_WEB_APP_URL_HERE";
+var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6JIssnhGygsVjx9FCyCVecEmgdLLrUenWKl4KoIvmDCIo1vTwvHByA/exec";
 var WA_NUMBER = "972559930227";
 
 function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
