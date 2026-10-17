@@ -13,7 +13,7 @@
 <meta name="theme-color" content="#142B20">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@400;500;700;900&family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Heebo:wght@300;400;500;600;700;800&display=swap" rel="stylesheet">
 <style>
 :root{
   --bg:#FFFDF8;
@@ -22,21 +22,21 @@
   --ink:#1B3A2C;
   --ink-deep:#142B20;
   --ink-night:#0F2219;
-  --ink-soft:#4A5A50;
-  --ink-faint:#5C6E63;
+  --ink-soft:#364439;
+  --ink-faint:#46564C;
   --line:#E7EFE5;
   --gold:#A9761B;
   --gold-soft:#E0BE72;
   --gold-tint:#F7EFDD;
-  --gold-deep:#7E5A16;
+  --gold-deep:#6E4E10;
   --on-dark:#EDE6D6;
-  --on-dark-soft:#B9C4BA;
+  --on-dark-soft:#D5DDD6;
   --radius:20px;
   --radius-sm:13px;
   --shadow:0 16px 46px rgba(20,43,32,0.12);
   --shadow-sm:0 6px 20px rgba(20,43,32,0.08);
   --ease:cubic-bezier(0.22,0.61,0.36,1);
-  --font-head:"Frank Ruhl Libre",Georgia,"Times New Roman",serif;
+  --font-head:"Heebo","Segoe UI",Arial,sans-serif;
   --font-body:"Heebo","Segoe UI",Arial,sans-serif;
   --a11y-scale:1;
 }
@@ -44,7 +44,7 @@
 html{scroll-behavior:smooth}
 body{
   background:var(--bg);color:var(--ink-soft);font-family:var(--font-body);
-  font-size:calc(17px * var(--a11y-scale));line-height:1.75;
+  font-size:calc(18px * var(--a11y-scale));line-height:1.8;
   -webkit-font-smoothing:antialiased;overflow-x:hidden;padding-bottom:74px;
 }
 img{max-width:100%}
@@ -91,14 +91,14 @@ strong{color:var(--ink)}
 .cta:disabled{opacity:.65;cursor:default;transform:none}
 .cta .arrow{font-size:1.2em;line-height:1}
 .cta-wrap{max-width:440px;margin:30px auto 0}
-.cta-note{font-size:.88rem;color:var(--ink-faint);text-align:center;margin-top:12px}
+.cta-note{font-size:.95rem;color:var(--ink-faint);text-align:center;margin-top:12px}
 
 /* ---------- lessons ---------- */
 .lessons{display:flex;flex-direction:column;gap:18px}
 .lesson{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:26px 24px;box-shadow:var(--shadow-sm);position:relative;overflow:hidden}
 .lesson::before{content:attr(data-n);letter-spacing:-.04em;position:absolute;inset-inline-end:14px;top:-18px;font-family:var(--font-head);font-weight:900;font-size:6.2rem;color:var(--gold-tint);line-height:1;pointer-events:none;z-index:0}
 .lesson>*{position:relative;z-index:1}
-.lesson-tag{display:inline-block;font-size:.8rem;font-weight:700;color:var(--gold-deep);background:var(--gold-tint);padding:3px 12px;border-radius:999px;margin-bottom:10px}
+.lesson-tag{display:inline-block;font-size:.88rem;font-weight:700;color:var(--gold-deep);background:var(--gold-tint);padding:3px 12px;border-radius:999px;margin-bottom:10px}
 .lesson h3{margin-bottom:6px}
 .lesson .lede{font-weight:600;color:var(--ink);font-size:1rem;margin-bottom:10px}
 .lesson p{font-size:.98rem}
@@ -112,7 +112,8 @@ strong{color:var(--ink)}
 .shift .to{background:var(--gold-tint);color:var(--ink);font-weight:600}
 .shift .to::before{content:"אלא: ";font-weight:700;color:var(--gold-deep)}
 .bonus{background:var(--ink-deep);border:1px solid var(--ink-deep);color:var(--on-dark-soft);box-shadow:var(--shadow)}
-.bonus::before{content:"✦";color:rgba(224,190,114,0.12);font-size:7rem;top:-10px}
+.bonus::before{content:none!important;display:none}
+.bonus-unused::before{content:"✦";color:rgba(224,190,114,0.12);font-size:7rem;top:-10px}
 .bonus-img{display:block;width:100%;height:auto;border-radius:var(--radius-sm);margin:4px 0 16px;box-shadow:0 12px 30px rgba(0,0,0,0.35)}
 .bonus ul.dots li{background:rgba(224,190,114,0.12);border-color:rgba(224,190,114,0.3);color:var(--on-dark)}
 .bonus h3{color:var(--on-dark)}
@@ -157,9 +158,9 @@ strong{color:var(--ink)}
 .faq details[open] summary::after{transform:rotate(45deg)}
 .faq .ans{padding:0 20px 20px;font-size:.98rem}
 
-.disclaimer{font-size:.84rem;color:var(--ink-faint);background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;padding:14px 16px;line-height:1.55;max-width:640px;margin:34px auto 0}
+.disclaimer{font-size:.92rem;color:var(--ink-faint);background:var(--bg-deep);border:1px solid var(--line);border-radius:12px;padding:14px 16px;line-height:1.55;max-width:640px;margin:34px auto 0}
 .footer{text-align:center;padding:36px 20px;color:var(--ink-faint);font-size:.92rem}
-.footer-wa{margin-top:10px;font-size:.86rem}
+.footer-wa{margin-top:10px;font-size:.92rem}
 .footer-wa a{color:var(--ink-soft);font-weight:600}
 .footer-legal{display:flex;justify-content:center;gap:16px;flex-wrap:wrap;margin-top:12px}
 .footer-legal a{color:var(--ink-faint)}
@@ -224,14 +225,14 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 }
 
 /* ---------- testimonials ---------- */
-.proof-label{text-align:center;font-size:.86rem;color:var(--ink-faint);margin-bottom:16px}
+.proof-label{text-align:center;font-size:.92rem;color:var(--ink-faint);margin-bottom:16px}
 .quotes-grid{display:flex;flex-wrap:wrap;gap:26px;justify-content:center;align-items:flex-start}
 .testimonial-card{max-width:290px;width:100%}
 .quote-title{font-weight:700;color:var(--ink);font-size:1rem;line-height:1.45;margin-bottom:12px;text-align:center}
 .quote-shot{width:100%;height:auto;display:block}
 .quote-shot-btn{appearance:none;border:1px solid var(--line);padding:0;margin:0;background:var(--bg-soft);cursor:pointer;display:block;width:100%;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm)}
 .quote-shot-btn:hover,.quote-shot-btn:focus-visible{box-shadow:var(--shadow)}
-.quote-shot-expand{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;color:var(--gold-deep);font-size:.82rem;font-weight:600;border-top:1px solid var(--line)}
+.quote-shot-expand{display:flex;align-items:center;justify-content:center;gap:6px;padding:10px;color:var(--gold-deep);font-size:.92rem;font-weight:600;border-top:1px solid var(--line)}
 .quote-shot-expand svg{width:14px;height:14px}
 .lightbox{position:fixed;inset:0;z-index:200;background:rgba(20,30,25,0.88);display:flex;align-items:center;justify-content:center;padding:40px 20px}
 .lightbox[hidden]{display:none}
@@ -251,7 +252,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 .progress-label{font-family:var(--font-head);color:var(--gold-soft);font-size:1.02rem;font-weight:700;margin-bottom:10px}
 .progress-bar{height:12px;border-radius:999px;background:rgba(255,255,255,0.12);overflow:hidden}
 .progress-bar span{display:block;height:100%;width:99%;border-radius:999px;background:linear-gradient(90deg,var(--gold),var(--gold-soft))}
-.progress-steps{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:.8rem;color:var(--on-dark-soft)}
+.progress-steps{display:flex;justify-content:space-between;gap:8px;margin-top:10px;font-size:.92rem;color:var(--on-dark-soft)}
 .progress-steps .done{color:var(--gold-soft)}
 .progress-steps .now{color:var(--on-dark);font-weight:700}
 .up-hero{background:linear-gradient(180deg,var(--ink-deep),var(--ink-night));text-align:center;padding:34px 20px 84px;position:relative;overflow:hidden}
@@ -261,7 +262,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 .up-hero h1{color:var(--on-dark);font-size:clamp(1.5rem,5.2vw,2.2rem);line-height:1.4;font-weight:700;max-width:24ch;margin:20px auto 0}
 .up-hero h1 em{font-style:normal;color:var(--gold-soft)}
 .up-photo{width:128px;height:128px;border-radius:50%;object-fit:cover;border:3px solid var(--gold-soft);display:block;margin:0 auto;box-shadow:0 12px 34px rgba(0,0,0,0.4)}
-.up-from{font-family:var(--font-head);font-style:italic;color:var(--on-dark-soft);margin-top:14px;line-height:1.6}
+.up-from{font-family:var(--font-head);color:var(--on-dark-soft);margin-top:14px;line-height:1.6}
 .up-from b{color:var(--on-dark);font-style:normal}
 .up-hero .lead{max-width:34ch;margin:22px auto 0;color:var(--on-dark-soft)}
 .one-time{display:inline-block;margin-top:20px;font-size:.88rem;font-weight:700;color:var(--ink-deep);background:var(--gold-soft);padding:7px 16px;border-radius:999px}
@@ -288,12 +289,15 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 .about-head img{width:112px;height:112px;border-radius:50%;object-fit:cover;border:3px solid var(--gold-soft);flex:0 0 auto}
 .about-head h2{margin:0}
 .parts{margin:22px 0;padding:22px 24px;border-radius:var(--radius);background:rgba(255,255,255,0.04);border:1px solid rgba(224,190,114,0.25);font-family:var(--font-head);font-size:1.12rem;color:var(--on-dark);line-height:1.7}
-.creds{list-style:none;display:flex;flex-direction:column;gap:10px;margin:20px 0}
-.creds li{position:relative;padding-inline-start:26px;color:var(--on-dark-soft)}
-.creds li::before{content:"✦";position:absolute;inset-inline-start:0;top:0;color:var(--gold-soft)}
 .price-lead{font-family:var(--font-head);font-size:1.25rem;color:var(--ink);font-weight:700;text-align:center;margin-bottom:6px}
-.pay-note{font-size:.84rem;color:var(--ink-faint);text-align:center;margin-top:12px}
-.no-thanks{display:block;text-align:center;margin:18px auto 0;background:none;border:0;cursor:pointer;font-family:var(--font-body);font-size:.9rem;color:var(--ink-faint);text-decoration:underline;padding:8px}
+.pay-note{font-size:.92rem;color:var(--ink-faint);text-align:center;margin-top:12px}
+.pay-marks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin-top:16px}
+.pay-lock{display:inline-flex;align-items:center;gap:6px;width:100%;justify-content:center;font-weight:700;color:var(--ink);font-size:.95rem}
+.pay-lock svg{width:18px;height:18px;color:var(--gold-deep)}
+.pay-chip{border:1.5px solid var(--ink-faint);border-radius:8px;padding:5px 12px;font-weight:700;font-size:.9rem;color:var(--ink);background:#fff;letter-spacing:.02em}
+.pay-dark .pay-lock{color:var(--on-dark)}
+.pay-dark .pay-lock svg{color:var(--gold-soft)}
+.no-thanks{display:block;text-align:center;margin:18px auto 0;background:none;border:0;cursor:pointer;font-family:var(--font-body);font-size:.95rem;color:var(--ink-faint);text-decoration:underline;padding:8px}
 .band-dark .no-thanks{color:var(--on-dark-soft)}
 .band-deep .no-list li::before{color:var(--gold)}
 .closed{text-align:center;padding:90px 20px}
@@ -324,7 +328,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <p class="up-from">מאת: <b>דוד אינגבר</b><br>אליך: שהרגע קיבלת החלטה חשובה</p>
       <h1>רגע לפני שנסיים: יש לי משהו חשוב להגיד לך <em>על מה שמסתתר מאחורי החרדה</em></h1>
       <p class="lead">בדיוק עכשיו ההזמנה שלך לקורס "איך להפסיק לפחד מהתקף החרדה הבא" נקלטת. ולפני שאתה ממשיך, אני רוצה להציע לך משהו שלא תראה בשום מקום אחר באתר.</p>
-      <span class="one-time">הצעה חד־פעמית, רק בדף הזה</span>
+      <span class="one-time">הצעה חד פעמית, רק בדף הזה</span>
     </div>
   </header>
 
@@ -347,7 +351,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <p>"מה לא בסדר איתי?"</p>
         <p>"אחרים מסתדרים, אז למה לא אני?"</p>
       </div>
-      <p>זה לא אתה "נגד החרדה" יותר. זה אתה נגד עצמך.</p>
+      <p>ואז החרדה כבר לא הקושי היחיד. נוספה לה מלחמה בתוכך.</p>
     </div>
   </section>
 
@@ -368,8 +372,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
   <!-- ===== THE OFFER ===== -->
   <section class="band" id="offer-main">
     <div class="wrap in-view">
-      <div class="center"><span class="eyebrow">קורס דיגיטלי לשיפור הערך העצמי והמצב הרגשי</span></div>
-      <h2 class="center" style="margin-top:16px">הגיע הזמן לשחרר את הביקורת העצמית וללמוד לאהוב את עצמך</h2>
+      <h2 class="center">הגיע הזמן לשחרר את הביקורת העצמית וללמוד לאהוב את עצמך</h2>
       <p class="center">אז הכנתי לך את הצעד הבא:</p>
 
       <img class="course-img" src="img/mockup-compassion.webp" alt="הקורס 'מביקורת לחמלה' על מחשב נייד ובקופסה: כלים מעשיים לשינוי דפוסי חשיבה ובניית יחס פנימי חומל יותר" width="1400" height="788">
@@ -384,8 +387,8 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       </div>
 
       <div class="cta-wrap">
-        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי <span class="arrow">←</span></a>
-        <p class="cta-note">180 ₪ · הצעה חד־פעמית ללקוחות הקורס</p>
+        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
+        <p class="cta-note">180 ₪ · הצעה חד פעמית ללקוחות הקורס</p>
       </div>
     </div>
   </section>
@@ -394,7 +397,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
   <section class="band band-soft" id="lessons">
     <div class="wrap in-view">
       <p class="kicker center">מה בפנים</p>
-      <h2 class="center">5 שיעורים. מסלול אחד מביקורת לחמלה.</h2>
+      <h2 class="center">5 שיעורים בדרך מביקורת לחמלה</h2>
       <ol class="lesson-list">
         <li><b>שיעור 1</b> מבוא ופרוטוקול מביקורת לחמלה</li>
         <li><b>שיעור 2</b> מי הם הרגשות שלך?</li>
@@ -402,6 +405,26 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <li><b>שיעור 4</b> לנהל את הילד הפנימי שבך</li>
         <li><b>שיעור 5</b> כלים להעצמת החמלה</li>
       </ol>
+    </div>
+  </section>
+
+  <!-- ===== BONUSES ===== -->
+  <section class="band">
+    <div class="wrap in-view">
+      <p class="kicker center">ובנוסף</p>
+      <h2 class="center">2 בונוסים כלולים במחיר</h2>
+      <div class="lessons">
+        <article class="lesson bonus" data-n="">
+          <span class="lesson-tag">בונוס 1</span>
+          <h3>שינוי קוגניטיבי</h3>
+          <p class="lede">כלי מעשי לזיהוי ושינוי מחשבות מקטינות.</p>
+        </article>
+        <article class="lesson bonus" data-n="">
+          <span class="lesson-tag">בונוס 2</span>
+          <h3>חשיפה מבוקרת לפחד</h3>
+          <p class="lede">צעדים מדורגים לבניית ביטחון והתמודדות אמיתית.</p>
+        </article>
+      </div>
     </div>
   </section>
 
@@ -427,7 +450,6 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <img src="../hadracha/img/david.jpg" alt="דוד אינגבר" loading="lazy" width="560" height="560">
         <div>
           <h2>דוד אינגבר</h2>
-          <p style="color:var(--gold-soft);font-family:var(--font-head)">מטפל בחרדות, מצב רוח וערך עצמי ירוד</p>
         </div>
       </div>
       <p>הגישה שלי לא נולדה רק בקליניקה. היא התחילה ממני.</p>
@@ -439,12 +461,6 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         ויש בי גם חלק שיכול להקשיב לו, בחמלה.
       </div>
       <p>את מה שלמדתי בדרך הזו אני מלמד בקורס "מביקורת לחמלה".</p>
-      <ul class="creds">
-        <li>מטפל מוסמך על ידי מכללת וינגייט לטיפול בכלל סוגי החרדות, ערך עצמי ודיכאון קל ובינוני, בגישת LI-CBT.</li>
-        <li>מטפל בפוסט־טראומה בגישת NLP לפי פרוטוקול מבוסס מחקר, מטעם מכון אדלר.</li>
-        <li>מאסטר ב-NLP.</li>
-        <li>מטפל בתרפיה בתנועות עיניים (EMP) בחרדה, מצב רוח ירוד וטראומה.</li>
-      </ul>
     </div>
   </section>
 
@@ -490,7 +506,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           </button>
         </figure>
         <figure class="testimonial-card">
-          <p class="quote-title">"היום החרדה כבר לא שולטת בי ברמה היום־יומית"</p>
+          <p class="quote-title">"היום החרדה כבר לא שולטת בי ברמה היומיומית"</p>
           <button type="button" class="quote-shot-btn" data-lightbox-src="img/compassion-testimonial-6.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
             <img class="quote-shot" src="img/compassion-testimonial-6.jpg" alt="הודעת וואטסאפ ממטופלת על כך שהחרדה כבר לא שולטת בה ברמה היומיומית" loading="lazy" width="900" height="848">
             <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
@@ -526,6 +542,8 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>5 שיעורים בווידאו, מפרוטוקול מביקורת לחמלה ועד כלים להעצמת החמלה</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>כלים לניהול מחשבות ולוויסות רגשות ותחושות</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>שיח פנימי חומל ומקדם, שאפשר ליישם כבר מהיום</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>בונוס: שינוי קוגניטיבי, כלי מעשי לזיהוי ושינוי מחשבות מקטינות</li>
+          <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>בונוס: חשיפה מבוקרת לפחד, צעדים מדורגים לבניית ביטחון</li>
           <li><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M20 6 9 17l-5-5"/></svg>גישה לשנה</li>
         </ul>
         <div class="price-row">
@@ -533,9 +551,13 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <p class="price-q">המחיר שלך, רק בדף הזה:</p>
           <div class="price">180<small>₪</small></div>
           <div class="cta-wrap" style="margin-top:20px">
-            <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי <span class="arrow">←</span></a>
+            <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
           </div>
-          <p class="pay-note">תשלום מאובטח · הגישה נשלחת למייל</p>
+          <p class="pay-note">הגישה נשלחת למייל מיד אחרי התשלום</p>
+          <div class="pay-marks" aria-label="אמצעי תשלום">
+            <span class="pay-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</span>
+            <span class="pay-chip">VISA</span><span class="pay-chip">Mastercard</span><span class="pay-chip">ישראכרט</span><span class="pay-chip">כאל</span><span class="pay-chip">דיינרס</span><span class="pay-chip">PayPal</span>
+          </div>
           <button type="button" class="no-thanks js-decline">לא תודה, אני לא מעוניין לנצל את ההזמנה</button>
         </div>
       </div>
@@ -559,14 +581,18 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
   <!-- ===== FINAL ===== -->
   <section class="band band-dark final" id="final">
     <div class="wrap in-view">
-      <h2>הצעה אחת, בדף אחד</h2>
+      <h2>רגע לפני שאתה סוגר את הדף</h2>
       <p>ההצעה במחיר הזה מוצגת לך רק כאן, כלקוח הקורס, ורק לזמן מוגבל.</p>
       <p class="timer-big" style="margin-top:12px">נסגרת בעוד <b class="js-clock">15:00</b></p>
       <p class="final-price" style="margin-top:14px">מביקורת לחמלה · 180 ₪</p>
       <div class="cta-wrap">
-        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי <span class="arrow">←</span></a>
+        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
       </div>
       <button type="button" class="no-thanks js-decline">לא תודה, אני לא מעוניין לנצל את ההזמנה</button>
+      <div class="pay-marks pay-dark" aria-label="אמצעי תשלום">
+            <span class="pay-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</span>
+            <span class="pay-chip">VISA</span><span class="pay-chip">Mastercard</span><span class="pay-chip">ישראכרט</span><span class="pay-chip">כאל</span><span class="pay-chip">דיינרס</span><span class="pay-chip">PayPal</span>
+          </div>
     </div>
   </section>
 
@@ -596,7 +622,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 
 <div class="sticky-cta" id="stickyCta">
   <span class="sp">180 ₪</span>
-  <a href="#" class="cta js-buy">אני רוצה להתחיל <span class="arrow">←</span></a>
+  <a href="#" class="cta js-buy">אני רוצה להתחיל</a>
 </div>
 
 <button class="a11y-toggle" type="button" aria-label="פתיחת תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">♿</button>
@@ -613,7 +639,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
     <button type="button" data-a11y="reduce" aria-pressed="false">עצירת תנועה</button>
     <button type="button" data-a11y="reset" style="grid-column:1/-1">איפוס כל ההתאמות</button>
   </div>
-  <p class="a11y-contact">בעיה בנגישות? דוד אינגבר, אחראי הנגישות, זמין ב־<a href="https://wa.me/972559930227">WhatsApp</a>.</p>
+  <p class="a11y-contact">בעיה בנגישות? דוד אינגבר, אחראי הנגישות, זמין ב-<a href="https://wa.me/972559930227">WhatsApp</a>.</p>
   <p class="a11y-links"><a href="/accessibility/">להצהרת הנגישות המלאה</a></p>
 </aside>
 
