@@ -98,8 +98,8 @@ strong{color:var(--ink)}
 }
 .hero-over{font-family:var(--font-head);font-size:clamp(1.1rem,3.4vw,1.35rem);color:var(--on-dark);line-height:1.5;margin-top:22px}
 .hero-over span{color:var(--gold-soft)}
-.hero h1{max-width:28ch;margin:34px auto 0;color:var(--on-dark);font-size:clamp(1.35rem,4.6vw,1.95rem);line-height:1.45;font-weight:500}
-.hero h1 .h1-main{display:block;color:var(--gold-soft);font-size:clamp(2.1rem,7.6vw,3.4rem);line-height:1.15;font-weight:900;margin-bottom:14px;letter-spacing:-.01em}
+.hero h1{max-width:28ch;margin:22px auto 0;color:var(--on-dark);font-size:clamp(1.35rem,4.6vw,1.95rem);line-height:1.45;font-weight:500}
+.hero h1 .h1-main{display:block;color:var(--gold-soft);font-size:clamp(1.9rem,6.8vw,3.1rem);line-height:1.2;font-weight:900;margin-bottom:14px;letter-spacing:-.01em}
 .no-list{list-style:none;display:flex;flex-direction:column;gap:8px;max-width:48ch;margin:22px auto 0;text-align:right}
 .no-list li{position:relative;padding-inline-start:28px}
 .no-list li::before{content:"✕";position:absolute;inset-inline-start:0;top:0;color:var(--gold-soft);font-weight:700;font-size:.85rem}
@@ -329,6 +329,25 @@ strong{color:var(--ink)}
 .sticky-cta .cta{min-height:50px;font-size:1rem;padding:12px 16px}
 @media (min-width:761px){.sticky-cta{display:none}body{padding-bottom:0}}
 
+
+/* ---------- conversion pass: hero proof, chapters accordion, bigger proof on mobile ---------- */
+.hero-sub{max-width:34ch;margin:12px auto 0;color:var(--on-dark-soft);font-size:1.02rem}
+.hero .cta-wrap{margin-top:26px}
+.hero-proof{display:flex;flex-direction:column;gap:12px;max-width:520px;margin:28px auto 0;text-align:right}
+.hero-quote{appearance:none;display:flex;align-items:center;gap:14px;width:100%;padding:12px 14px;border-radius:var(--radius-sm);border:1px solid rgba(224,190,114,0.35);background:rgba(255,255,255,0.06);color:var(--on-dark);cursor:pointer;font-family:inherit;text-align:right}
+.hero-quote:hover,.hero-quote:focus-visible{background:rgba(255,255,255,0.1)}
+.hero-quote img{flex:0 0 64px;width:64px;height:64px;border-radius:10px;object-fit:cover;object-position:top;border:1px solid rgba(224,190,114,0.4)}
+.hq-text{display:flex;flex-direction:column;gap:4px}
+.hq-q{font-weight:600;font-size:.98rem;line-height:1.5;color:var(--on-dark)}
+.hq-by{font-size:.82rem;color:var(--gold-soft)}
+.hero .no-list{margin-top:26px}
+.about-cred{font-size:.92rem;color:var(--gold-soft);margin:-10px 0 20px}
+.chapters-more>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:12px 22px;border-radius:15px;border:2px solid var(--gold);color:var(--ink);font-weight:700;background:var(--bg)}
+.chapters-more>summary::-webkit-details-marker{display:none}
+.chapters-more>summary::after{content:"+";font-size:1.3rem;line-height:1;color:var(--gold-deep)}
+.chapters-more[open]>summary{display:none}
+@media (max-width:600px){.testimonial-card{max-width:none}}
+
 /* ---------- accessibility widget ---------- */
 .skip-link{position:absolute;z-index:300;top:-60px;right:12px;background:var(--ink);color:#fff;padding:12px 20px;border-radius:8px;font-weight:700;transition:top .15s var(--ease)}
 .skip-link:focus{top:12px}
@@ -385,22 +404,31 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
   <header class="band hero">
     <div class="wrap">
       <div class="reveal"><span class="eyebrow">קורס דיגיטלי קצר ומעשי · דוד אינגבר</span></div>
-      <p class="hero-over reveal" style="animation-delay:80ms"><span>ההתקף נגמר.</span> אז למה אתה עדיין חי בפחד ממנו?</p>
-
-      <h1 class="reveal" style="animation-delay:160ms"><span class="h1-main">איך להפסיק לפחד מהתקף החרדה הבא,</span>ללמוד לזהות את הסחרור כשהוא מתחיל ולהגיב אחרת לתחושות, בלי להילחם בהן ובלי לחכות שהן ייעלמו כדי להמשיך לחיות.</h1>
-      <ul class="no-list reveal" style="animation-delay:240ms">
-        <li>בלי לנסות להירגע בכוח.</li>
-        <li>בלי לחפש עוד כלי שיציל אותך ברגע האמת.</li>
-        <li>ובלי לתת לפחד מההתקף הבא להתחיל לנהל אותך עוד לפני שהוא בכלל הגיע.</li>
-      </ul>
-      <div class="mock-wrap hero-mock reveal" style="animation-delay:300ms">
-        <img src="img/mockup-v3.webp" alt="הקורס 'איך להפסיק לפחד מהתקף החרדה הבא' על מחשב נייד וטלפון: 10 פרקי הקורס, סרטון עם דוד והטראנס להרפיית הגוף" width="1536" height="1024" fetchpriority="high">
-      </div>
+      <h1 class="reveal" style="animation-delay:80ms"><span class="h1-main">סובל מהתקפי חרדה? כך מפסיקים לפחד מההתקף הבא</span>בלי להילחם בתחושות ובלי לחכות שהן ייעלמו.</h1>
+      <p class="hero-over reveal" style="animation-delay:160ms"><span>ההתקף נגמר.</span> אז למה אתה עדיין חי בפחד ממנו?</p>
+      <p class="hero-sub reveal" style="animation-delay:200ms">ללמוד לזהות את הסחרור כשהוא מתחיל ולהגיב אחרת לתחושות, כדי להמשיך לחיות.</p>
       <div class="cta-wrap reveal" style="animation-delay:320ms" id="heroCta">
         <a href="#order" class="cta">אני רוצה להפסיק לפחד מההתקף הבא <span class="arrow">←</span></a>
         <p class="cta-note">87 ₪ במחיר השקה · גישה מיידית · גישה לשנה</p>
       </div>
-    </div>
+      <div class="hero-proof reveal" style="animation-delay:340ms">
+        <button type="button" class="hero-quote" data-lightbox-src="img/testimonial-panic-1.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+          <img src="img/testimonial-panic-1.jpg" alt="הודעת וואטסאפ ממטופלת ששחררה את הפחד מהתקף פאניקה" width="64" height="64" loading="eager">
+          <span class="hq-text"><span class="hq-q">"שחררתי את הפחד מלקבל התקף פאניקה… ברגע שזה קרה הרגשתי שהכל בסדר"</span><span class="hq-by">מהודעה של מטופלת · להודעה המלאה</span></span>
+        </button>
+        <button type="button" class="hero-quote" data-lightbox-src="img/testimonial-panic-2.png" aria-label="הצגת ההודעה המלאה בהגדלה">
+          <img src="img/testimonial-panic-2.png" alt="הודעת סיכום תהליך ממטופלת על התמודדות עם התקפי חרדה" width="64" height="64" loading="eager">
+          <span class="hq-text"><span class="hq-q">"להתמודד מול התקפי חרדה קשים לבד, ועוד דברים קטנים שבכלל לא חשבתי שלעולם אצליח לעשות"</span><span class="hq-by">מהודעה של מטופלת · להודעה המלאה</span></span>
+        </button>
+      </div>
+      <ul class="no-list reveal" style="animation-delay:380ms">
+        <li>בלי לנסות להירגע בכוח.</li>
+        <li>בלי לחפש עוד כלי שיציל אותך ברגע האמת.</li>
+        <li>ובלי לתת לפחד מההתקף הבא להתחיל לנהל אותך עוד לפני שהוא בכלל הגיע.</li>
+      </ul>
+      <div class="mock-wrap hero-mock reveal" style="animation-delay:420ms">
+        <img src="img/mockup-v3.webp" alt="הקורס 'איך להפסיק לפחד מהתקף החרדה הבא' על מחשב נייד וטלפון: 10 פרקי הקורס, סרטון עם דוד והטראנס להרפיית הגוף" width="1536" height="1024" fetchpriority="high">
+      </div>
   </header>
 
   <!-- ===== PAIN 1 ===== -->
@@ -429,6 +457,11 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <p>"מה אם אני אשתגע?"</p>
         <p>"מה אם אני לא אצליח להתמודד?"</p>
       </div>
+    </div>
+  </section>
+
+  <section class="band band-soft">
+    <div class="wrap in-view">
       <div class="beats">
         <p>ופתאום התחושה עצמה היא כבר לא הדבר היחיד שמפחיד אותך.</p>
         <p class="punch">אתה מפחד מהתגובה שלך אליה.</p>
@@ -438,7 +471,13 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <div class="gap"></div>
         <p>כי אולי ההתקף עדיין לא הגיע.</p>
         <p><strong>אבל אתה כבר מתכונן אליו.</strong></p>
-        <div class="gap"></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="band band-dark">
+    <div class="wrap in-view">
+      <div class="beats">
         <p>והדבר הכי מתסכל?</p>
         <p>לפעמים ההתקף עצמו כבר נגמר.</p>
         <p>אבל משהו נשאר.</p>
@@ -465,24 +504,6 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <div class="quote-brain"><small>מה שהמוח לומד</small>"טוב שנמנעתי. כנראה שבאמת היה ממה לפחד."</div>
       <p class="center"><strong>וזה בדיוק המקום שבו המעגל ממשיך.</strong></p>
 
-      <div style="height:34px"></div>
-      <p class="proof-label">מהודעות של מטופלים שעבדו איתי</p>
-      <div class="quotes-grid">
-        <figure class="testimonial-card">
-          <p class="quote-title">"שחררתי את הפחד מלקבל התקף פאניקה… ברגע שזה קרה הרגשתי שהכל בסדר ולא יקרה שום דבר גרוע"</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-panic-1.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="img/testimonial-panic-1.jpg" alt="הודעת וואטסאפ ממטופלת ששחררה את הפחד מהתקף פאניקה לפני מצגת מול המנכ"ל" loading="lazy" width="738" height="911">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
-          </button>
-        </figure>
-        <figure class="testimonial-card">
-          <p class="quote-title">"להתמודד מול התקפי חרדה קשים לבד, ועוד דברים קטנים שבכלל לא חשבתי שלעולם אצליח לעשות"</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="img/testimonial-panic-2.png" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="img/testimonial-panic-2.png" alt="הודעת סיכום תהליך ממטופלת על התמודדות לבד עם התקפי חרדה קשים וחזרה לנסיעות, עבודה ואירועים" loading="lazy" width="1013" height="770">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
-          </button>
-        </figure>
-      </div>
     </div>
   </section>
 
@@ -501,7 +522,12 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       </ul>
       <p>ואולי חלק מהדברים האלה אפילו עזרו.</p>
       <p>הבעיה היא לא שהם "לא עובדים".<br><strong>הבעיה מתחילה כשהביטחון שלך תלוי בהם.</strong></p>
-      <p style="margin-top:1em">כשהמחשבה היא:</p>
+    </div>
+  </section>
+
+  <section class="band band-soft">
+    <div class="wrap in-view">
+      <p>כשהמחשבה היא:</p>
       <div class="condition">
         <p>"אם אני אצליח להירגע, אני אהיה בסדר."</p>
         <p>"אם התחושה תרד, אני אוכל להמשיך."</p>
@@ -521,6 +547,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <img src="../hadracha/img/david.jpg" alt="דוד אינגבר" loading="lazy" width="560" height="560">
         <h2>אני מכיר את המקום הזה גם מהצד השני של השולחן</h2>
       </div>
+      <p class="about-cred">דוד אינגבר · מטפל מוסמך בחרדה בגישת LI-CBT (מכללת וינגייט) · מאסטר ב-NLP</p>
       <p>אם עוד לא הספקנו להכיר, נעים מאוד, קוראים לי <strong>דוד</strong>.</p>
       <p>אבל הגישה שלי לחרדה לא נולדה רק מהקליניקה.<br>היא התחילה גם ממני.</p>
       <p>לפני 6 שנים התחלתי לפחד מהתחושות שלי. מהמחשבות שלי. ובעיקר מהאפשרות שלא אצליח להתמודד כשהחרדה תעלה.</p>
@@ -643,7 +670,10 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <ul class="dots"><li>בדיקות</li><li>ניסיונות להירגע</li><li>חיפוש ודאות</li><li>הימנעות</li><li>ניסיון לסלק תחושות או מחשבות</li></ul>
         </article>
 
-        <article class="lesson in-view" data-n="4">
+        <details class="chapters-more">
+          <summary>הצג את שאר 7 הפרקים</summary>
+          <div class="lessons" style="margin-top:18px">
+        <article class="lesson" data-n="4">
           <span class="lesson-tag">פרק 4</span>
           <h3>התגובה החדשה</h3>
           <p class="lede">ללמוד את המנגנון: תיוג ← הסכמה ← צפייה ← ויסות ← פעולה.</p>
@@ -653,37 +683,37 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           </div>
         </article>
 
-        <article class="lesson in-view" data-n="5">
+        <article class="lesson" data-n="5">
           <span class="lesson-tag">פרק 5</span>
           <h3>יומן התקפי החרדה</h3>
           <p class="lede">להפסיק לנחש כמה התקפים יש וכמה הם חזקים, ולהתחיל לראות מה באמת קורה.</p>
         </article>
 
-        <article class="lesson in-view" data-n="6">
+        <article class="lesson" data-n="6">
           <span class="lesson-tag">פרק 6</span>
           <h3>להפסיק להפנט את עצמך</h3>
           <p class="lede">לזהות את עיוותי החשיבה שמחזקים את הפחד מההתקף הבא.</p>
         </article>
 
-        <article class="lesson in-view" data-n="7">
+        <article class="lesson" data-n="7">
           <span class="lesson-tag">פרק 7</span>
           <h3>לנקות את המיכל הרגשי</h3>
           <p class="lede">לזהות את החרדה כשהיא עדיין קטנה, ולא לחכות שהיא תגיע לשיא.</p>
         </article>
 
-        <article class="lesson in-view" data-n="8">
+        <article class="lesson" data-n="8">
           <span class="lesson-tag">פרק 8</span>
           <h3>למלא את הגוף בחוסן</h3>
           <p class="lede">לא רק לפרוק סטרס, אלא גם להכניס יותר הנאה, תנועה, חיבור והכרת תודה.</p>
         </article>
 
-        <article class="lesson in-view" data-n="9">
+        <article class="lesson" data-n="9">
           <span class="lesson-tag">פרק 9</span>
           <h3>להרחיב את המיכל הרגשי ולנטרל טריגרים</h3>
           <p class="lede">להכיר את מה שמפעיל אותך, להפחית עומסים מיותרים ולהגדיל בהדרגה את היכולת לשאת אי־נוחות.</p>
         </article>
 
-        <article class="lesson in-view" data-n="10">
+        <article class="lesson" data-n="10">
           <span class="lesson-tag">פרק 10</span>
           <h3>המטרה האמיתית</h3>
           <p class="lede">לא לחפש פתרון לכל חרדה, אלא להפסיק לפחד מהחרדה, לסמוך על עצמך ולחזור לחיים.</p>
@@ -692,6 +722,9 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
             <div class="to">"גם אם זה יקרה, אני יודע יותר טוב מה לעשות."</div>
           </div>
         </article>
+
+          </div>
+        </details>
 
         <p class="and-more in-view">ובנוסף, 2 בונוסים...</p>
 
@@ -713,6 +746,10 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <ul class="dots"><li>מיינדפולנס</li><li>הרפיית ג'ייקובסון</li><li>נשימה סרעפתית</li></ul>
           <p>לא כתנאי לכך שתהיה בסדר, ולא כדי שהביטחון שלך יהיה תלוי בהן. אלא כעוד דרך לעזור לגוף לחזור לאיזון, בזמן שאתה ממשיך לחיות.</p>
         </article>
+      </div>
+      <div class="cta-wrap in-view">
+        <a href="#order" class="cta">אני רוצה להפסיק לפחד מההתקף הבא <span class="arrow">←</span></a>
+        <p class="cta-note">87 ₪ במחיר השקה · גישה מיידית · גישה לשנה</p>
       </div>
     </div>
   </section>
@@ -748,6 +785,10 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
             <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
           </button>
         </figure>
+      </div>
+      <div class="cta-wrap in-view" style="margin-top:36px">
+        <a href="#order" class="cta">אני רוצה להפסיק לפחד מההתקף הבא <span class="arrow">←</span></a>
+        <p class="cta-note">87 ₪ במחיר השקה · גישה מיידית · גישה לשנה</p>
       </div>
     </div>
   </section>
@@ -1121,7 +1162,7 @@ function buildPaymentUrl(d) {
   var closeBtn = document.getElementById('lightboxClose');
   var last = null;
   function close() { lightbox.hidden = true; img.src = ''; if (last) last.focus(); }
-  document.querySelectorAll('.quote-shot-btn').forEach(function (b) {
+  document.querySelectorAll('.quote-shot-btn, .hero-quote').forEach(function (b) {
     b.addEventListener('click', function () {
       last = b; img.src = b.dataset.lightboxSrc; img.alt = b.querySelector('img').alt;
       lightbox.hidden = false; closeBtn.focus();
