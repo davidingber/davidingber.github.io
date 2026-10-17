@@ -296,6 +296,9 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 .pay-box .price-q{margin-bottom:0}
 .pay-box .price{margin:4px 0 18px}
 .pay-box.pay-dark{border-color:var(--gold-soft)}
+.pay-dark .price-q{color:var(--on-dark-soft)}
+.pay-dark .price{color:var(--on-dark)}
+.pay-dark .price small{color:var(--gold-soft)}
 .no-thanks{display:block;text-align:center;margin:18px auto 0;background:none;border:0;cursor:pointer;font-family:var(--font-body);font-size:.95rem;color:var(--ink-faint);text-decoration:underline;padding:8px}
 .band-dark .no-thanks{color:var(--on-dark-soft)}
 .band-deep .no-list li::before{color:var(--gold)}
@@ -584,8 +587,9 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <h2>רגע לפני שאתה סוגר את הדף</h2>
       <p>ההצעה במחיר הזה מוצגת לך רק כאן, כלקוח הקורס, ורק לזמן מוגבל.</p>
       <p class="timer-big" style="margin-top:12px">נסגרת בעוד <b class="js-clock">15:00</b></p>
-      <p class="final-price" style="margin-top:14px">מביקורת לחמלה · 180 ₪</p>
       <div class="pay-box pay-dark">
+      <p class="price-q">מביקורת לחמלה, המחיר שלך רק בדף הזה:</p>
+      <div class="price">180<small>₪</small></div>
       <div class="cta-wrap">
         <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
       </div>
