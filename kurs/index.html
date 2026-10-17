@@ -341,6 +341,12 @@ strong{color:var(--ink)}
 .hq-q{font-weight:600;font-size:.98rem;line-height:1.5;color:var(--on-dark)}
 .hq-by{font-size:.82rem;color:var(--gold-soft)}
 .hero .no-list{margin-top:26px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 26px}
+.stat{background:rgba(255,255,255,0.04);border:1px solid rgba(224,190,114,0.25);border-radius:var(--radius-sm);padding:14px 12px;text-align:center;display:flex;flex-direction:column;gap:4px}
+.stat dt{font-family:var(--font-head);font-weight:900;font-size:clamp(1.7rem,6vw,2.1rem);line-height:1.1;color:var(--gold-soft);font-variant-numeric:tabular-nums;direction:ltr}
+.stat dd{font-size:.86rem;line-height:1.4;color:var(--on-dark-soft)}
+@media (min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}}
+body.a11y-contrast .stat{background:#000!important;border-color:#fff!important}
 .about-cred{font-size:.92rem;color:var(--gold-soft);margin:-10px 0 20px}
 .chapters-more>summary{list-style:none;cursor:pointer;display:flex;align-items:center;justify-content:center;gap:10px;min-height:54px;padding:12px 22px;border-radius:15px;border:2px solid var(--gold);color:var(--ink);font-weight:700;background:var(--bg)}
 .chapters-more>summary::-webkit-details-marker{display:none}
@@ -429,6 +435,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <div class="mock-wrap hero-mock reveal" style="animation-delay:420ms">
         <img src="img/mockup-v3.webp" alt="הקורס 'איך להפסיק לפחד מהתקף החרדה הבא' על מחשב נייד וטלפון: 10 פרקי הקורס, סרטון עם דוד והטראנס להרפיית הגוף" width="1536" height="1024" fetchpriority="high">
       </div>
+    </div>
   </header>
 
   <!-- ===== PAIN 1 ===== -->
@@ -548,6 +555,12 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <h2>אני מכיר את המקום הזה גם מהצד השני של השולחן</h2>
       </div>
       <p class="about-cred">דוד אינגבר · מטפל מוסמך בחרדה בגישת LI-CBT (מכללת וינגייט) · מאסטר ב-NLP</p>
+      <dl class="stats">
+        <div class="stat"><dt>6</dt><dd>שנות ניסיון בטיפול בחרדה וטראומה</dd></div>
+        <div class="stat"><dt>1,300+</dt><dd>שעות ליווי אחד על אחד</dd></div>
+        <div class="stat"><dt>150+</dt><dd>אנשים שכבר עברו את הדרך</dd></div>
+        <div class="stat"><dt>600+</dt><dd>שעות הכשרה מעשית</dd></div>
+      </dl>
       <p>אם עוד לא הספקנו להכיר, נעים מאוד, קוראים לי <strong>דוד</strong>.</p>
       <p>אבל הגישה שלי לחרדה לא נולדה רק מהקליניקה.<br>היא התחילה גם ממני.</p>
       <p>לפני 6 שנים התחלתי לפחד מהתחושות שלי. מהמחשבות שלי. ובעיקר מהאפשרות שלא אצליח להתמודד כשהחרדה תעלה.</p>
