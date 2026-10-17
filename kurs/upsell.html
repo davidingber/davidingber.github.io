@@ -240,6 +240,14 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 .lightbox-close{position:absolute;top:18px;left:18px;width:44px;height:44px;border-radius:50%;border:none;background:#fff;color:var(--ink);font-size:1.6rem;line-height:1;cursor:pointer}
 
 
+.quote-title{font-family:var(--font-head);font-size:1.3rem;line-height:1.5;font-weight:800;color:var(--ink);margin-bottom:14px}
+.testimonial-card{max-width:420px}
+.stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 26px}
+.stat{background:rgba(255,255,255,0.04);border:1px solid rgba(224,190,114,0.25);border-radius:var(--radius-sm);padding:14px 12px;text-align:center;display:flex;flex-direction:column;gap:4px}
+.stat dt{font-family:var(--font-head);font-weight:900;font-size:clamp(1.7rem,6vw,2.1rem);line-height:1.1;color:var(--gold-soft);font-variant-numeric:tabular-nums;direction:ltr}
+.stat dd{font-size:.86rem;line-height:1.4;color:var(--on-dark-soft)}
+@media (min-width:640px){.stats{grid-template-columns:repeat(4,1fr)}}
+
 /* ---------- upsell: progress header ---------- */
 .timer{margin-top:14px;font-size:.92rem;color:var(--on-dark-soft)}
 .timer b,.timer-big b{font-family:var(--font-head);font-variant-numeric:tabular-nums;color:var(--gold-soft);font-size:1.15em;direction:ltr;display:inline-block}
@@ -328,8 +336,8 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
     <div class="wrap">
       <img class="up-photo" src="../hadracha/img/david.jpg" alt="דוד אינגבר" width="560" height="560">
       <p class="up-from">מאת: <b>דוד אינגבר</b><br>אליך: שהרגע קיבלת החלטה חשובה</p>
-      <h1>רגע לפני שנסיים: יש לי משהו חשוב להגיד לך <em>על מה שמסתתר מאחורי החרדה</em></h1>
-      <p class="lead">בדיוק עכשיו ההזמנה שלך לקורס "איך להפסיק לפחד מהתקף החרדה הבא" נקלטת. ולפני שאתה ממשיך, אני רוצה להציע לך משהו שלא תראה בשום מקום אחר באתר.</p>
+      <h1>עשית את הצעד הראשון. הנה הצעד הבא, <em>במחיר מיוחד רק ללקוחות הקורס</em></h1>
+      <p class="lead">מביקורת לחמלה: קורס דיגיטלי שממשיך מהמקום שבו הקורס הראשון נעצר, ועוזר לך להפסיק להילחם בעצמך.</p>
       <span class="one-time">הצעה חד פעמית, רק בדף הזה</span>
     </div>
   </header>
@@ -389,7 +397,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       </div>
 
       <div class="cta-wrap">
-        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
+        <a href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%20%D7%93%D7%95%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%92%D7%9D%20%D7%90%D7%AA%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%20%22%D7%9E%D7%91%D7%99%D7%A7%D7%95%D7%A8%D7%AA%20%D7%9C%D7%97%D7%9E%D7%9C%D7%94%22%20(180%20%E2%82%AA)" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
         <p class="cta-note">180 ₪ · הצעה חד פעמית ללקוחות הקורס</p>
       </div>
     </div>
@@ -429,6 +437,10 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <p class="lede">צעדים מדורגים לבניית ביטחון והתמודדות אמיתית.</p>
         </article>
       </div>
+      <div class="cta-wrap in-view">
+        <a href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%20%D7%93%D7%95%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%92%D7%9D%20%D7%90%D7%AA%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%20%22%D7%9E%D7%91%D7%99%D7%A7%D7%95%D7%A8%D7%AA%20%D7%9C%D7%97%D7%9E%D7%9C%D7%94%22%20(180%20%E2%82%AA)" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
+        <p class="cta-note">180 ₪ · הצעה חד פעמית ללקוחות הקורס</p>
+      </div>
     </div>
   </section>
 
@@ -456,6 +468,12 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <h2>דוד אינגבר</h2>
         </div>
       </div>
+      <dl class="stats">
+        <div class="stat"><dt>6</dt><dd>שנות ניסיון בטיפול בחרדה וטראומה</dd></div>
+        <div class="stat"><dt>1,300+</dt><dd>שעות ליווי אחד על אחד</dd></div>
+        <div class="stat"><dt>150+</dt><dd>אנשים שכבר עברו את הדרך</dd></div>
+        <div class="stat"><dt>600+</dt><dd>שעות הכשרה מעשית</dd></div>
+      </dl>
       <p>הגישה שלי לא נולדה רק בקליניקה. היא התחילה ממני.</p>
       <p>לפני 6 שנים התחלתי לפחד מהתחושות שלי, מהמחשבות שלי, ובעיקר מהאפשרות שלא אצליח להתמודד כשהחרדה תעלה. הלכתי ללמוד, וקיבלתי כלים והבנה. אבל קלטתי ש<strong>הפכתי ללוחם טוב יותר, ועדיין חייתי בתוך מלחמה.</strong></p>
       <p>רק כשהפסקתי להילחם בעצמי והתחלתי להיות ההורה המיטיב של עצמי, משהו השתנה:</p>
@@ -531,6 +549,10 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           </button>
         </figure>
       </div>
+      <div class="cta-wrap in-view">
+        <a href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%20%D7%93%D7%95%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%92%D7%9D%20%D7%90%D7%AA%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%20%22%D7%9E%D7%91%D7%99%D7%A7%D7%95%D7%A8%D7%AA%20%D7%9C%D7%97%D7%9E%D7%9C%D7%94%22%20(180%20%E2%82%AA)" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
+        <p class="cta-note">180 ₪ · הצעה חד פעמית ללקוחות הקורס</p>
+      </div>
     </div>
   </section>
 
@@ -557,7 +579,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <div class="price">180<small>₪</small></div>
             
           <div class="cta-wrap">
-            <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
+            <a href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%20%D7%93%D7%95%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%92%D7%9D%20%D7%90%D7%AA%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%20%22%D7%9E%D7%91%D7%99%D7%A7%D7%95%D7%A8%D7%AA%20%D7%9C%D7%97%D7%9E%D7%9C%D7%94%22%20(180%20%E2%82%AA)" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
           </div>
           <p class="pay-note">הגישה נשלחת למייל מיד אחרי התשלום</p>
           <button type="button" class="no-thanks js-decline">לא תודה, אני לא מעוניין לנצל את ההזמנה</button>
@@ -591,7 +613,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <p class="price-q">מביקורת לחמלה, המחיר שלך רק בדף הזה:</p>
       <div class="price">180<small>₪</small></div>
       <div class="cta-wrap">
-        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
+        <a href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%20%D7%93%D7%95%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%92%D7%9D%20%D7%90%D7%AA%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%20%22%D7%9E%D7%91%D7%99%D7%A7%D7%95%D7%A8%D7%AA%20%D7%9C%D7%97%D7%9E%D7%9C%D7%94%22%20(180%20%E2%82%AA)" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
       </div>
       <button type="button" class="no-thanks js-decline">לא תודה, אני לא מעוניין לנצל את ההזמנה</button>
       </div>
@@ -624,7 +646,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 
 <div class="sticky-cta" id="stickyCta">
   <span class="sp">180 ₪</span>
-  <a href="#" class="cta js-buy">אני רוצה להתחיל</a>
+  <a href="https://wa.me/972559930227?text=%D7%94%D7%99%D7%99%20%D7%93%D7%95%D7%93%2C%20%D7%90%D7%A0%D7%99%20%D7%A8%D7%95%D7%A6%D7%94%20%D7%92%D7%9D%20%D7%90%D7%AA%20%D7%94%D7%A7%D7%95%D7%A8%D7%A1%20%22%D7%9E%D7%91%D7%99%D7%A7%D7%95%D7%A8%D7%AA%20%D7%9C%D7%97%D7%9E%D7%9C%D7%94%22%20(180%20%E2%82%AA)" class="cta js-buy">אני רוצה להתחיל</a>
 </div>
 
 <button class="a11y-toggle" type="button" aria-label="פתיחת תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">♿</button>
