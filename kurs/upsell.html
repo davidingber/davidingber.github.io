@@ -291,12 +291,9 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 .parts{margin:22px 0;padding:22px 24px;border-radius:var(--radius);background:rgba(255,255,255,0.04);border:1px solid rgba(224,190,114,0.25);font-family:var(--font-head);font-size:1.12rem;color:var(--on-dark);line-height:1.7}
 .price-lead{font-family:var(--font-head);font-size:1.25rem;color:var(--ink);font-weight:700;text-align:center;margin-bottom:6px}
 .pay-note{font-size:.92rem;color:var(--ink-faint);text-align:center;margin-top:12px}
-.pay-marks{display:flex;flex-wrap:wrap;justify-content:center;align-items:center;gap:8px;margin-top:16px}
-.pay-lock{display:inline-flex;align-items:center;gap:6px;width:100%;justify-content:center;font-weight:700;color:var(--ink);font-size:.95rem}
-.pay-lock svg{width:18px;height:18px;color:var(--gold-deep)}
-.pay-chip{border:1.5px solid var(--ink-faint);border-radius:8px;padding:5px 12px;font-weight:700;font-size:.9rem;color:var(--ink);background:#fff;letter-spacing:.02em}
-.pay-dark .pay-lock{color:var(--on-dark)}
-.pay-dark .pay-lock svg{color:var(--gold-soft)}
+.pay-box{border:3px dashed var(--ink);border-radius:14px;padding:22px 16px 14px;margin-top:20px}
+.pay-box .cta-wrap{margin-top:0}
+.pay-box.pay-dark{border-color:var(--gold-soft)}
 .no-thanks{display:block;text-align:center;margin:18px auto 0;background:none;border:0;cursor:pointer;font-family:var(--font-body);font-size:.95rem;color:var(--ink-faint);text-decoration:underline;padding:8px}
 .band-dark .no-thanks{color:var(--on-dark-soft)}
 .band-deep .no-list li::before{color:var(--gold)}
@@ -550,15 +547,13 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <p class="timer-big">ההצעה נסגרת בעוד <b class="js-clock">15:00</b></p>
           <p class="price-q">המחיר שלך, רק בדף הזה:</p>
           <div class="price">180<small>₪</small></div>
-          <div class="cta-wrap" style="margin-top:20px">
+          <div class="pay-box">
+          <div class="cta-wrap">
             <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
           </div>
           <p class="pay-note">הגישה נשלחת למייל מיד אחרי התשלום</p>
-          <div class="pay-marks" aria-label="אמצעי תשלום">
-            <span class="pay-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</span>
-            <span class="pay-chip">VISA</span><span class="pay-chip">Mastercard</span><span class="pay-chip">ישראכרט</span><span class="pay-chip">כאל</span><span class="pay-chip">דיינרס</span><span class="pay-chip">PayPal</span>
-          </div>
           <button type="button" class="no-thanks js-decline">לא תודה, אני לא מעוניין לנצל את ההזמנה</button>
+          </div>
         </div>
       </div>
     </div>
@@ -585,14 +580,12 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <p>ההצעה במחיר הזה מוצגת לך רק כאן, כלקוח הקורס, ורק לזמן מוגבל.</p>
       <p class="timer-big" style="margin-top:12px">נסגרת בעוד <b class="js-clock">15:00</b></p>
       <p class="final-price" style="margin-top:14px">מביקורת לחמלה · 180 ₪</p>
+      <div class="pay-box pay-dark">
       <div class="cta-wrap">
         <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
       </div>
       <button type="button" class="no-thanks js-decline">לא תודה, אני לא מעוניין לנצל את ההזמנה</button>
-      <div class="pay-marks pay-dark" aria-label="אמצעי תשלום">
-            <span class="pay-lock"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><rect x="4" y="11" width="16" height="10" rx="2"/><path d="M8 11V8a4 4 0 0 1 8 0v3"/></svg>תשלום מאובטח</span>
-            <span class="pay-chip">VISA</span><span class="pay-chip">Mastercard</span><span class="pay-chip">ישראכרט</span><span class="pay-chip">כאל</span><span class="pay-chip">דיינרס</span><span class="pay-chip">PayPal</span>
-          </div>
+      </div>
     </div>
   </section>
 
