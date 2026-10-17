@@ -112,7 +112,8 @@ strong{color:var(--ink)}
 .shift .to{background:var(--gold-tint);color:var(--ink);font-weight:600}
 .shift .to::before{content:"אלא: ";font-weight:700;color:var(--gold-deep)}
 .bonus{background:var(--ink-deep);border:1px solid var(--ink-deep);color:var(--on-dark-soft);box-shadow:var(--shadow)}
-.bonus::before{content:"✦";color:rgba(224,190,114,0.12);font-size:7rem;top:-10px}
+.bonus::before{content:none!important;display:none}
+.bonus-unused::before{content:"✦";color:rgba(224,190,114,0.12);font-size:7rem;top:-10px}
 .bonus-img{display:block;width:100%;height:auto;border-radius:var(--radius-sm);margin:4px 0 16px;box-shadow:0 12px 30px rgba(0,0,0,0.35)}
 .bonus ul.dots li{background:rgba(224,190,114,0.12);border-color:rgba(224,190,114,0.3);color:var(--on-dark)}
 .bonus h3{color:var(--on-dark)}
@@ -327,7 +328,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <p class="up-from">מאת: <b>דוד אינגבר</b><br>אליך: שהרגע קיבלת החלטה חשובה</p>
       <h1>רגע לפני שנסיים: יש לי משהו חשוב להגיד לך <em>על מה שמסתתר מאחורי החרדה</em></h1>
       <p class="lead">בדיוק עכשיו ההזמנה שלך לקורס "איך להפסיק לפחד מהתקף החרדה הבא" נקלטת. ולפני שאתה ממשיך, אני רוצה להציע לך משהו שלא תראה בשום מקום אחר באתר.</p>
-      <span class="one-time">הצעה חד־פעמית, רק בדף הזה</span>
+      <span class="one-time">הצעה חד פעמית, רק בדף הזה</span>
     </div>
   </header>
 
@@ -350,7 +351,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <p>"מה לא בסדר איתי?"</p>
         <p>"אחרים מסתדרים, אז למה לא אני?"</p>
       </div>
-      <p>זה לא אתה "נגד החרדה" יותר. זה אתה נגד עצמך.</p>
+      <p>ואז החרדה כבר לא הקושי היחיד. נוספה לה מלחמה בתוכך.</p>
     </div>
   </section>
 
@@ -386,8 +387,8 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       </div>
 
       <div class="cta-wrap">
-        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי <span class="arrow">←</span></a>
-        <p class="cta-note">180 ₪ · הצעה חד־פעמית ללקוחות הקורס</p>
+        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
+        <p class="cta-note">180 ₪ · הצעה חד פעמית ללקוחות הקורס</p>
       </div>
     </div>
   </section>
@@ -396,7 +397,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
   <section class="band band-soft" id="lessons">
     <div class="wrap in-view">
       <p class="kicker center">מה בפנים</p>
-      <h2 class="center">5 שיעורים. מסלול אחד מביקורת לחמלה.</h2>
+      <h2 class="center">5 שיעורים בדרך מביקורת לחמלה</h2>
       <ol class="lesson-list">
         <li><b>שיעור 1</b> מבוא ופרוטוקול מביקורת לחמלה</li>
         <li><b>שיעור 2</b> מי הם הרגשות שלך?</li>
@@ -505,7 +506,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           </button>
         </figure>
         <figure class="testimonial-card">
-          <p class="quote-title">"היום החרדה כבר לא שולטת בי ברמה היום־יומית"</p>
+          <p class="quote-title">"היום החרדה כבר לא שולטת בי ברמה היומיומית"</p>
           <button type="button" class="quote-shot-btn" data-lightbox-src="img/compassion-testimonial-6.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
             <img class="quote-shot" src="img/compassion-testimonial-6.jpg" alt="הודעת וואטסאפ ממטופלת על כך שהחרדה כבר לא שולטת בה ברמה היומיומית" loading="lazy" width="900" height="848">
             <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
@@ -550,7 +551,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <p class="price-q">המחיר שלך, רק בדף הזה:</p>
           <div class="price">180<small>₪</small></div>
           <div class="cta-wrap" style="margin-top:20px">
-            <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי <span class="arrow">←</span></a>
+            <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
           </div>
           <p class="pay-note">הגישה נשלחת למייל מיד אחרי התשלום</p>
           <div class="pay-marks" aria-label="אמצעי תשלום">
@@ -580,12 +581,12 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
   <!-- ===== FINAL ===== -->
   <section class="band band-dark final" id="final">
     <div class="wrap in-view">
-      <h2>הצעה אחת, בדף אחד</h2>
+      <h2>רגע לפני שאתה סוגר את הדף</h2>
       <p>ההצעה במחיר הזה מוצגת לך רק כאן, כלקוח הקורס, ורק לזמן מוגבל.</p>
       <p class="timer-big" style="margin-top:12px">נסגרת בעוד <b class="js-clock">15:00</b></p>
       <p class="final-price" style="margin-top:14px">מביקורת לחמלה · 180 ₪</p>
       <div class="cta-wrap">
-        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי <span class="arrow">←</span></a>
+        <a href="#" class="cta js-buy">כן! אני רוצה ללמוד לאהוב את עצמי</a>
       </div>
       <button type="button" class="no-thanks js-decline">לא תודה, אני לא מעוניין לנצל את ההזמנה</button>
       <div class="pay-marks pay-dark" aria-label="אמצעי תשלום">
@@ -621,7 +622,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 
 <div class="sticky-cta" id="stickyCta">
   <span class="sp">180 ₪</span>
-  <a href="#" class="cta js-buy">אני רוצה להתחיל <span class="arrow">←</span></a>
+  <a href="#" class="cta js-buy">אני רוצה להתחיל</a>
 </div>
 
 <button class="a11y-toggle" type="button" aria-label="פתיחת תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">♿</button>
@@ -638,7 +639,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
     <button type="button" data-a11y="reduce" aria-pressed="false">עצירת תנועה</button>
     <button type="button" data-a11y="reset" style="grid-column:1/-1">איפוס כל ההתאמות</button>
   </div>
-  <p class="a11y-contact">בעיה בנגישות? דוד אינגבר, אחראי הנגישות, זמין ב־<a href="https://wa.me/972559930227">WhatsApp</a>.</p>
+  <p class="a11y-contact">בעיה בנגישות? דוד אינגבר, אחראי הנגישות, זמין ב-<a href="https://wa.me/972559930227">WhatsApp</a>.</p>
   <p class="a11y-links"><a href="/accessibility/">להצהרת הנגישות המלאה</a></p>
 </aside>
 
