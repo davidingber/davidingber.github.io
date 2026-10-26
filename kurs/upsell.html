@@ -705,6 +705,8 @@ function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
     });
   });
   function closeOffer(expired) {
+    // Timer ran out: send the visitor to the "no thanks" welcome page (replace, so Back doesn't loop).
+    if (expired && isSet(NO_THANKS_URL)) { location.replace(NO_THANKS_URL); }
     document.getElementById('offer').hidden = true;
     document.getElementById('closed').hidden = false;
     if (expired) document.getElementById('closedTitle').textContent = 'ההצעה במחיר הזה הסתיימה, אבל ההזמנה שלך לקורס הראשון נשארת כמו שהיא';
