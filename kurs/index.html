@@ -906,7 +906,7 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
             <input id="of-website" name="website" type="text" tabindex="-1" autocomplete="off">
           </div>
           <label class="consent-label">
-            <input type="checkbox" id="of-consent" name="consent">
+            <input type="checkbox" id="of-consent" name="consent" required aria-required="true">
             <span>אני מאשר/ת לקבל מיילים, ללא ספאם. ניתן להסיר בכל עת.</span>
           </label>
           <div class="pay-box form-pay">
@@ -1154,6 +1154,7 @@ function buildPaymentUrl(d) {
     if (name.length < 2) return fail('איך קוראים לך? צריך שם כדי להפיק את הרכישה.', form.name);
     if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email)) return fail('צריך כתובת אימייל תקינה — לשם יישלחו פרטי הכניסה לקורס.', form.email);
     if (phone.replace(/\D/g, '').length < 9) return fail('צריך מספר טלפון תקין.', form.phone);
+    if (!form.consent.checked) return fail('צריך לאשר קבלת מיילים כדי להמשיך. לשם יישלחו פרטי הכניסה לקורס.', form.consent);
 
     btn.disabled = true;
     btn.textContent = 'מעבירים לתשלום מאובטח...';
