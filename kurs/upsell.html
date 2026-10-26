@@ -719,10 +719,14 @@ function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
   });
 
   // Countdown: per-visitor, starts on first visit and survives refresh (localStorage).
+  // A new purchase restarts it: Cardcom appends ?internaldealnumber=<id> to the return URL,
+  // so a different id than the stored one means a new buyer/deal and the full time is open again.
   // Add ?reset to the URL to restart it while testing.
-  var KEY = 'upsell-offer-start', total = OFFER_MINUTES * 60000, start = Date.now();
+  var KEY = 'upsell-offer-start', DEAL_KEY = 'upsell-offer-deal', total = OFFER_MINUTES * 60000, start = Date.now();
   try {
-    if (q.has('reset')) localStorage.removeItem(KEY);
+    var deal = q.get('internaldealnumber');
+    if (q.has('reset') || (deal && localStorage.getItem(DEAL_KEY) !== deal)) localStorage.removeItem(KEY);
+    if (deal) localStorage.setItem(DEAL_KEY, deal);
     var saved = parseInt(localStorage.getItem(KEY), 10);
     if (saved) start = saved; else localStorage.setItem(KEY, String(start));
   } catch (x) { /* no storage: timer restarts on refresh */ }
