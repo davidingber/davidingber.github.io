@@ -663,12 +663,11 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 <script>
 /*
  * ===== Upsell config =====
- * UPSELL_PAYMENT_URL — דף התשלום של הקורס "מביקורת לחמלה" (180 ₪) ב-Sumit.
+ * UPSELL_PAYMENT_URL — דף התשלום של הקורס "מביקורת לחמלה" (180 ₪) ב-Cardcom.
  *   כל עוד נשאר PASTE_YOUR..., הכפתור פותח וואטסאפ לדוד עם פרטי הרכישה, כדי שלא יאבד אף קונה.
- * NO_THANKS_URL — לאן להעביר מי שלוחץ "לא תודה" (למשל דף תודה/גישה לקורס הראשון).
- *   כל עוד נשאר PASTE_YOUR..., מוצגת הודעה קצרה באותו דף.
- * הדף הזה אמור להיות היעד של "אחרי תשלום" בדף התשלום של הקורס הראשון (87 ₪), ב-Sumit.
- * אם Sumit מעביר שם/מייל/טלפון בפרמטרים של ה-URL (?name=&email=&phone=), הם מועברים הלאה לדף התשלום.
+ * NO_THANKS_URL — לאן להעביר מי שלוחץ "לא תודה", או שהשעון נגמר בזמן שהוא בדף (לא בטעינה של הדף).
+ * הדף הזה אמור להיות היעד של "אחרי תשלום" בדף התשלום של הקורס הראשון (87 ₪), ב-Cardcom.
+ * אם מועברים שם/מייל/טלפון בפרמטרים של ה-URL (?name=&email=&phone=), הם מועברים הלאה לדף התשלום.
  */
 var UPSELL_PAYMENT_URL = "https://secure.cardcom.solutions/EA/EA5/BgIISBndUafSZoczzFlQ/PaymentSP";
 var NO_THANKS_URL = "https://davidingber.github.io/kurs/upsell-no-thanks.html";
@@ -704,9 +703,10 @@ function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
       }
     });
   });
-  function closeOffer(expired) {
-    // Timer ran out: send the visitor to the "no thanks" welcome page (replace, so Back doesn't loop).
-    if (expired && isSet(NO_THANKS_URL)) { location.replace(NO_THANKS_URL); }
+  function closeOffer(expired, stay) {
+    // Timer ran out while the visitor was on the page: send them to the "no thanks" welcome page
+    // (replace, so Back doesn't loop). Never redirect on page load: opening this link must show the offer.
+    if (expired && !stay && isSet(NO_THANKS_URL)) { location.replace(NO_THANKS_URL); return; }
     document.getElementById('offer').hidden = true;
     document.getElementById('closed').hidden = false;
     if (expired) document.getElementById('closedTitle').textContent = 'ההצעה במחיר הזה הסתיימה, אבל ההזמנה שלך לקורס הראשון נשארת כמו שהיא';
@@ -724,18 +724,25 @@ function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
   // A new purchase restarts it: Cardcom appends ?internaldealnumber=<id> to the return URL,
   // so a different id than the stored one means a new buyer/deal and the full time is open again.
   // Add ?reset to the URL to restart it while testing.
-  var KEY = 'upsell-offer-start', DEAL_KEY = 'upsell-offer-deal', total = OFFER_MINUTES * 60000, start = Date.now();
+  var KEY = 'upsell-offer-start', DEAL_KEY = 'upsell-offer-deal', total = OFFER_MINUTES * 60000, start = Date.now(), closedOnLoad = false;
   try {
     var deal = q.get('internaldealnumber');
-    if (q.has('reset') || (deal && localStorage.getItem(DEAL_KEY) !== deal)) localStorage.removeItem(KEY);
+    var sameDeal = !!deal && localStorage.getItem(DEAL_KEY) === deal;
+    if (q.has('reset') || (deal && !sameDeal)) localStorage.removeItem(KEY);
     if (deal) localStorage.setItem(DEAL_KEY, deal);
     var saved = parseInt(localStorage.getItem(KEY), 10);
-    if (saved) start = saved; else localStorage.setItem(KEY, String(start));
+    if (saved && Date.now() - saved >= total) {
+      // Timer from an earlier visit already ran out. A direct visit to the link (no deal number)
+      // starts a fresh timer; only the very same Cardcom deal coming back after expiry stays closed.
+      if (sameDeal) { closedOnLoad = true; saved = 0; start = Date.now() - total; }
+      else { saved = 0; localStorage.removeItem(KEY); }
+    }
+    if (saved) start = saved; else if (!closedOnLoad) localStorage.setItem(KEY, String(start));
   } catch (x) { /* no storage: timer restarts on refresh */ }
   var clocks = document.querySelectorAll('.js-clock');
   function tick() {
     var left = total - (Date.now() - start);
-    if (left <= 0) { clearInterval(iv); closeOffer(true); return; }
+    if (left <= 0) { clearInterval(iv); closeOffer(true, closedOnLoad); return; }
     var s = Math.ceil(left / 1000), txt = String(Math.floor(s / 60)).padStart(2, '0') + ':' + String(s % 60).padStart(2, '0');
     clocks.forEach(function (c) { c.textContent = txt; });
   }
