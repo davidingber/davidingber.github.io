@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>שרים את המשפט — הורה צוחקת</title>
+<title>שרים את המשפט</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -57,7 +57,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 <body>
 <main>
   <h1>שרים את המשפט</h1>
-  <p class="lead">כותבים או מקליטים משפט — והוא נשמע בליווי מלא על מנגינת הורה קצבית, עם תופים, מחיאות כפיים, צחוקים וצהלולים ברקע, עם מילים שזזות על המסך כמו בקריוקי.</p>
+  <p class="lead">כותבים או מקליטים משפט — והוא נשמע בליווי מלא על מנגינה של שיר ילדים, עם תופים, מחיאות כפיים, צחוקים וצהלולים ברקע, עם מילים שזזות על המסך כמו בקריוקי.</p>
 
   <section class="card" aria-label="הזנת המשפט">
     <div class="tabs" role="tablist">
@@ -80,7 +80,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 
   <section class="card">
     <label for="song">שיר</label>
-    <select id="song"><option value="hora">הורה צוחקת</option></select>
+    <select id="song"><option value="yonatan">יונתן הקטן</option><option value="hora">הורה צוחקת</option></select>
     <div class="row">
       <button class="btn" id="btn-play" type="button">▶ שירו לי!</button>
       <button class="btn alt" id="btn-stop" type="button" disabled>⏹ עצירה</button>
@@ -131,6 +131,20 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
    notes: [midiNote, beats]. Chords: one entry per bar (root midi, major triad).
    To fix or add a melody, only edit this table. */
 var SONGS={
+  yonatan:{
+    title:'יונתן הקטן',
+    bpm:112,
+    // notes from David (C major): 8 lines, 2 bars each. Rhythm assumed: quarter notes, held last note of each half-line
+    notes:[[67,1],[64,1],[64,2],[65,1],[62,1],[62,2],
+           [60,1],[62,1],[64,1],[65,1],[67,1],[67,1],[67,2],
+           [67,1],[64,1],[64,2],[65,1],[62,1],[62,2],
+           [60,1],[64,1],[67,1],[67,1],[72,4],
+           [62,1],[62,1],[62,1],[62,1],[62,1],[64,1],[65,2],
+           [64,1],[64,1],[64,1],[64,1],[64,1],[65,1],[67,2],
+           [67,1],[64,1],[64,2],[65,1],[62,1],[62,2],
+           [60,1],[64,1],[67,1],[67,1],[60,4]],
+    chords:[[48,4],[55,4],[48,4],[48,4],[48,4],[55,4],[48,4],[48,4],[55,4],[55,4],[48,4],[48,4],[48,4],[55,4],[48,4],[48,4]]
+  },
   hora:{
     title:'הורה צוחקת',
     bpm:132,
