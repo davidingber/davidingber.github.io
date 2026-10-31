@@ -193,21 +193,19 @@ function parseWords(str){
   return out;
 }
 
-/* ---------- Timeline: assign each syllable a melody note ---------- */
-function buildTimeline(words,song){
-  var beat=60/song.bpm,t=0,i=0,syl=[];
-  words.forEach(function(w){
-    w.first=i;
-    for(var k=0;k<w.n;k++){
-      var nt=song.notes[i%song.notes.length];
-      syl.push({start:t,dur:nt[1]*beat,midi:nt[0]});
-      t+=nt[1]*beat;i++;
+/* ---------- Timeline: the sentence repeats until the whole song is sung ---------- */
+function buildTimeline(base,song){
+  var beat=60/song.bpm,M=song.notes.length,words=[],syl=[],t=0,i=0;
+  if(!base.length)return {words:words,syl:syl,total:0,beat:beat};
+  while(i<M){
+    for(var j=0;j<base.length&&i<M;j++){
+      var n=Math.min(base[j].n,M-i),w={text:base[j].text,n:n,first:i};
+      for(var k=0;k<n;k++){var nt=song.notes[i];syl.push({start:t,dur:nt[1]*beat,midi:nt[0]});t+=nt[1]*beat;i++}
+      w.last=i-1;w.start=syl[w.first].start;w.end=syl[w.last].start+syl[w.last].dur;
+      words.push(w);
     }
-    w.last=i-1;
-    w.start=syl[w.first].start;
-    w.end=syl[w.last].start+syl[w.last].dur;
-  });
-  return {syl:syl,total:t,beat:beat};
+  }
+  return {words:words,syl:syl,total:t,beat:beat};
 }
 
 /* ---------- Pitch & segmentation for the recording ---------- */
@@ -313,14 +311,14 @@ function renderMix(song,tl,vocalSlices,vocalBuf){
     var d=vocalBuf.getChannelData(0),peak=0;
     for(var i=0;i<d.length;i+=16)peak=Math.max(peak,Math.abs(d[i]));
     var norm=peak>0?0.9/peak:1;
-    var f0s=vocalSlices.map(function(s,k){return detectF0(d,vocalBuf.sampleRate,(s.a+s.b)/2|0)});
+    var f0s=vocalSlices.map(function(s){return detectF0(d,vocalBuf.sampleRate,(s.a+s.b)/2|0)});
     var valid=f0s.filter(Boolean).sort(function(a,b){return a-b}),medF=valid.length?valid[valid.length>>1]:150;
     var tm=tl.syl.map(function(s){return hz(s.midi)}).sort(function(a,b){return a-b})[tl.syl.length>>1];
     var oct=Math.pow(2,Math.round(Math.log(medF/tm)/Math.LN2));
     var prev=medF;
-    vocalSlices.forEach(function(s,k){
-      var f=f0s[k]||prev;prev=f;
-      var sy=tl.syl[k],rate=Math.max(0.5,Math.min(2.2,hz(sy.midi)*oct/f));
+    tl.syl.forEach(function(sy,k){
+      var si=k%vocalSlices.length,s=vocalSlices[si],f=f0s[si]||prev;prev=f;
+      var rate=Math.max(0.5,Math.min(2.2,hz(sy.midi)*oct/f));
       var L=(s.b-s.a)/vocalBuf.sampleRate,use=Math.min(L,sy.dur*rate*0.95),playDur=use/rate;
       var src=oc.createBufferSource(),gn=oc.createGain();
       src.buffer=vocalBuf;src.playbackRate.value=rate;
@@ -365,7 +363,7 @@ function draw(words,lines,t,title){
   cx.fillText('david-ingber',W/2,H-50);
 }
 function idleDraw(){
-  var words=parseWords($('sentence').value),song=SONGS[$('song').value],tl=buildTimeline(words,song),lines=layoutLines(words);
+  var song=SONGS[$('song').value],words=buildTimeline(parseWords($('sentence').value),song).words,lines=layoutLines(words);
   draw(words,lines,-1,song.title);
 }
 
@@ -385,13 +383,13 @@ function stop(){
 }
 
 async function prepare(){
-  var words=parseWords($('sentence').value);
-  if(!words.length){setStatus('כתבו או הקלידו משפט קודם.');return null}
-  var song=SONGS[$('song').value],tl=buildTimeline(words,song);
+  var base=parseWords($('sentence').value);
+  if(!base.length){setStatus('כתבו או הקלידו משפט קודם.');return null}
+  var song=SONGS[$('song').value],tl=buildTimeline(base,song),words=tl.words;
   var useVoice=(mode==='voice');
   if(useVoice&&!recBuffer){setStatus('קודם צריך להקליט משפט.');return null}
-  var slices=null;
-  if(useVoice)slices=segment(recBuffer,tl.syl.length);
+  var baseSyl=base.reduce(function(a,w){return a+w.n},0);
+  var slices=useVoice?segment(recBuffer,baseSyl):null;
   setStatus('מכינים את השיר…');
   var mix=await renderMix(song,tl,slices,useVoice?recBuffer:null);
   return {words:words,song:song,tl:tl,mix:mix,lines:layoutLines(words),useVoice:useVoice};
