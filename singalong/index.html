@@ -4,7 +4,7 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex">
-<title>שרים את המשפט — יונתן הקטן</title>
+<title>שרים את המשפט — הורה צוחקת</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
@@ -57,7 +57,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 <body>
 <main>
   <h1>שרים את המשפט</h1>
-  <p class="lead">כותבים או מקליטים משפט — והוא נשמע בליווי מלא על המנגינה של "יונתן הקטן", עם מילים שזזות על המסך כמו בקריוקי.</p>
+  <p class="lead">כותבים או מקליטים משפט — והוא נשמע בליווי מלא על מנגינת הורה קצבית, עם תופים, מחיאות כפיים, צחוקים וצהלולים ברקע, עם מילים שזזות על המסך כמו בקריוקי.</p>
 
   <section class="card" aria-label="הזנת המשפט">
     <div class="tabs" role="tablist">
@@ -80,7 +80,7 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 
   <section class="card">
     <label for="song">שיר</label>
-    <select id="song"><option value="yonatan">יונתן הקטן</option></select>
+    <select id="song"><option value="hora">הורה צוחקת</option></select>
     <div class="row">
       <button class="btn" id="btn-play" type="button">▶ שירו לי!</button>
       <button class="btn alt" id="btn-stop" type="button" disabled>⏹ עצירה</button>
@@ -131,11 +131,14 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
    notes: [midiNote, beats]. Chords: one entry per bar (root midi, major triad).
    To fix or add a melody, only edit this table. */
 var SONGS={
-  yonatan:{
-    title:'יונתן הקטן',
-    bpm:108,
-    notes:[[67,1],[67,1],[64,2],[67,1],[67,1],[64,2],[69,1],[69,1],[67,1],[65,1],[64,1],[62,1],[60,2]],
-    chords:[48,48,53,48]
+  hora:{
+    title:'הורה צוחקת',
+    bpm:132,
+    // D freygish (Hijaz-flavoured) hora, 16 beats = 4 bars
+    notes:[[69,.5],[70,.5],[69,.5],[67,.5],[66,1],[63,.5],[62,.5],[63,1],[66,1],[67,2],
+           [69,.5],[70,.5],[69,.5],[67,.5],[66,1],[67,.5],[66,.5],[63,1],[62,3]],
+    // per bar: [root midi, third interval (4 major / 3 minor)]
+    chords:[[50,4],[55,3],[51,4],[50,4]]
   }
 };
 
@@ -235,7 +238,7 @@ function renderMix(song,tl,vocalSlices,vocalBuf){
   var sr=ac.sampleRate,tail=1.2,len=Math.ceil((tl.total+tail)*sr);
   var oc=new OfflineAudioContext(1,len,sr);
   var master=oc.createGain();master.gain.value=1;master.connect(oc.destination);
-  var acc=oc.createGain();acc.gain.value=vocalBuf?0.32:0.55;acc.connect(master);
+  var acc=oc.createGain();acc.gain.value=vocalBuf?0.3:0.5;acc.connect(master);
   var beat=tl.beat,totalBeats=Math.ceil(tl.total/beat)+2,nz=noise(oc,Math.floor(sr*0.2));
 
   function tone(freq,t,dur,type,g){
@@ -243,19 +246,54 @@ function renderMix(song,tl,vocalSlices,vocalBuf){
     gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(g,t+0.01);gn.gain.exponentialRampToValueAtTime(0.001,t+dur);
     o.connect(gn);gn.connect(acc);o.start(t);o.stop(t+dur+0.02);
   }
-  function kick(t){
-    var o=oc.createOscillator(),gn=oc.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(45,t+0.12);
-    gn.gain.setValueAtTime(0.9,t);gn.gain.exponentialRampToValueAtTime(0.001,t+0.2);o.connect(gn);gn.connect(acc);o.start(t);o.stop(t+0.22);
+  function hit(t,freq,q,g,dur,out){
+    var s=oc.createBufferSource(),f=oc.createBiquadFilter(),gn=oc.createGain();s.buffer=nz;f.type='bandpass';f.frequency.value=freq;f.Q.value=q;
+    gn.gain.setValueAtTime(g,t);gn.gain.exponentialRampToValueAtTime(0.001,t+dur);s.connect(f);f.connect(gn);gn.connect(out||acc);s.start(t);s.stop(t+dur+0.02);
   }
-  function hat(t){
-    var s=oc.createBufferSource(),f=oc.createBiquadFilter(),gn=oc.createGain();s.buffer=nz;f.type='highpass';f.frequency.value=7000;
-    gn.gain.setValueAtTime(0.25,t);gn.gain.exponentialRampToValueAtTime(0.001,t+0.05);s.connect(f);f.connect(gn);gn.connect(acc);s.start(t);s.stop(t+0.06);
+  function dum(t){
+    var o=oc.createOscillator(),gn=oc.createGain();o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(70,t+0.1);
+    gn.gain.setValueAtTime(1,t);gn.gain.exponentialRampToValueAtTime(0.001,t+0.22);o.connect(gn);gn.connect(acc);o.start(t);o.stop(t+0.24);
   }
+  var crowd=oc.createGain();crowd.gain.value=0.5;crowd.connect(master);
+  function laugh(t,base){
+    for(var k=0;k<5;k++){
+      var tt=t+k*0.17,o=oc.createOscillator(),f1=oc.createBiquadFilter(),f2=oc.createBiquadFilter(),gn=oc.createGain();
+      o.type='sawtooth';o.frequency.setValueAtTime(base*(1.15-k*0.04),tt);o.frequency.linearRampToValueAtTime(base*(0.9-k*0.04),tt+0.12);
+      f1.type='bandpass';f1.frequency.value=850;f1.Q.value=5;f2.type='bandpass';f2.frequency.value=1700;f2.Q.value=6;
+      gn.gain.setValueAtTime(0,tt);gn.gain.linearRampToValueAtTime(0.45*(1-k*0.12),tt+0.015);gn.gain.exponentialRampToValueAtTime(0.001,tt+0.14);
+      o.connect(f1);o.connect(f2);f1.connect(gn);f2.connect(gn);gn.connect(crowd);o.start(tt);o.stop(tt+0.16);
+      hit(tt,2500,1,0.12,0.1,crowd);
+    }
+  }
+  function ulu(t,base,dur){
+    var o=oc.createOscillator(),lfo=oc.createOscillator(),lg=oc.createGain(),f=oc.createBiquadFilter(),gn=oc.createGain();
+    o.type='sawtooth';o.frequency.value=base;lfo.frequency.value=8;lg.gain.value=base*0.28;lfo.connect(lg);lg.connect(o.frequency);
+    f.type='bandpass';f.frequency.value=base*1.6;f.Q.value=2.5;
+    gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(0.4,t+0.12);gn.gain.setValueAtTime(0.4,t+dur-0.2);gn.gain.linearRampToValueAtTime(0,t+dur);
+    o.connect(f);f.connect(gn);gn.connect(crowd);o.start(t);lfo.start(t);o.stop(t+dur);lfo.stop(t+dur);
+  }
+  function shout(t){hit(t,1100,3,0.7,0.28,crowd);tone(330,t,0.25,'sawtooth',0.0)}
+
   for(var bt=0;bt<totalBeats;bt++){
-    var t=bt*beat,bar=Math.floor(bt/4),root=song.chords[bar%song.chords.length],pos=bt%4;
-    if(pos===0||pos===2){kick(t);tone(hz(root-12+(pos===2?7:0)),t,beat*0.9,'triangle',0.55)}
-    else{hat(t);[0,4,7].forEach(function(iv){tone(hz(root+12+iv),t,beat*0.45,'square',0.07)})}
+    var t=bt*beat,bar=Math.floor(bt/4),ch=song.chords[bar%song.chords.length],root=ch[0],pos=bt%4;
+    // dum on 1 and 3, tak on the off beats, quick darbuka fills on the eighths
+    if(pos===0||pos===2)dum(t);else hit(t,3000,1.2,0.5,0.07);
+    hit(t+beat*0.5,4200,1.2,0.28,0.05);
+    if(pos===1||pos===3)hit(t,1500,0.8,0.7,0.09);               // hand clap on 2 and 4
+    // oom-pah bass + accordion-like off-beat stabs
+    tone(hz(root-12+(pos===2?7:0)),t,beat*0.8,'triangle',0.5);
+    [0,ch[1],7].forEach(function(iv){tone(hz(root+12+iv),t+beat*0.5,beat*0.4,'square',0.06)});
   }
+  // the crowd: laughter, ululation and shouts
+  var barSec=beat*4,nbars=Math.ceil(tl.total/barSec)+1;
+  for(var br=0;br<nbars;br++){
+    var bs=br*barSec;
+    if(br%4===0){shout(bs);ulu(bs+beat*0.5,880,Math.min(barSec*0.9,1.8))}
+    if(br%4===1)laugh(bs+beat*1.5,230+Math.random()*50);
+    if(br%4===2){laugh(bs+beat*0.5,300);laugh(bs+beat*1.1,210)}
+    if(br%4===3){ulu(bs+beat*2,980,1.3);shout(bs+beat*3.5)}
+  }
+  ulu(tl.total-0.1,920,1.1);laugh(tl.total,260);
 
   if(vocalBuf){
     var d=vocalBuf.getChannelData(0),peak=0;
