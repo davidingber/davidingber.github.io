@@ -1,0 +1,451 @@
+<!DOCTYPE html>
+<html lang="he" dir="rtl">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex">
+<title>שרים את המשפט — יונתן הקטן</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Frank+Ruhl+Libre:wght@500;700;900&family=Heebo:wght@400;500;700;800&display=swap" rel="stylesheet">
+<style>
+:root{--ink:#1B3A2C;--bg:#F6F1E6;--bg-soft:#FFFDF8;--line:#E2D8BF;--gold:#A9761B;--gold-light:#E0BE72;--gold-deep:#8A5F12;--font-body:'Heebo',system-ui,sans-serif;--font-head:'Frank Ruhl Libre',serif}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:var(--font-body);line-height:1.6}
+main{max-width:620px;margin:0 auto;padding:28px 18px 60px}
+h1{font-family:var(--font-head);font-size:34px;line-height:1.2;margin:0 0 8px;font-weight:900}
+.lead{margin:0 0 22px;font-size:17px;opacity:.85}
+.card{background:var(--bg-soft);border:1px solid var(--line);border-radius:18px;padding:18px;margin-bottom:16px}
+.tabs{display:flex;gap:8px;margin-bottom:14px}
+.tabs button{flex:1;padding:11px;border:1px solid var(--line);border-radius:12px;background:var(--bg);font:700 15px var(--font-body);color:var(--ink);cursor:pointer}
+.tabs button[aria-selected=true]{background:var(--ink);color:#fff;border-color:var(--ink)}
+label{display:block;font-weight:700;margin-bottom:6px}
+textarea{width:100%;min-height:92px;padding:12px;border:1px solid var(--line);border-radius:12px;font:500 18px var(--font-body);color:var(--ink);background:#fff;resize:vertical}
+select{width:100%;padding:11px;border:1px solid var(--line);border-radius:12px;font:500 16px var(--font-body);background:#fff;color:var(--ink)}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;padding:13px 20px;border:0;border-radius:999px;background:var(--gold);color:#fff;font:800 17px var(--font-body);cursor:pointer}
+.btn.alt{background:var(--ink)}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--ink)}
+.btn:disabled{opacity:.45;cursor:not-allowed}
+.row{display:flex;flex-wrap:wrap;gap:10px;margin-top:12px}
+.rec.on{background:#B3261E;animation:pulse 1s infinite}
+@keyframes pulse{50%{opacity:.6}}
+.status{min-height:24px;margin:10px 0 0;font-size:15px}
+.note{font-size:14px;opacity:.75;margin:10px 0 0}
+.stage{display:flex;justify-content:center;margin:6px 0 14px}
+canvas{width:min(340px,100%);height:auto;border-radius:18px;box-shadow:0 18px 50px rgba(20,43,32,.28);background:#1B3A2C}
+.dl a{color:var(--gold-deep);font-weight:800}
+.panel[hidden],[hidden]{display:none!important}
+footer{text-align:center;font-size:13px;opacity:.75;margin-top:30px}
+footer a{color:var(--gold-deep);margin:0 8px}
+.a11y-toggle{position:fixed;z-index:100;left:18px;bottom:18px;width:52px;height:52px;border:0;border-radius:50%;background:var(--ink);color:#fff;font-size:23px;box-shadow:0 12px 32px rgba(20,43,32,0.32);cursor:pointer}
+.a11y-panel{position:fixed;z-index:101;left:18px;bottom:80px;width:min(300px,calc(100vw - 36px));padding:16px;background:var(--bg-soft);color:var(--ink);border:1px solid var(--line);border-radius:16px;box-shadow:0 22px 70px rgba(20,43,32,0.24);text-align:right}
+.a11y-panel[hidden]{display:none}
+.a11y-head{display:flex;justify-content:space-between;align-items:center;margin-bottom:10px}
+.a11y-head strong{font-size:17px}
+.a11y-close{border:0;background:transparent;font-size:22px;cursor:pointer;color:var(--ink)}
+.a11y-actions{display:grid;grid-template-columns:1fr 1fr;gap:8px}
+.a11y-actions button{border:1px solid var(--line);border-radius:10px;padding:10px 6px;background:var(--bg);color:var(--ink);font-weight:700;font-size:13px;cursor:pointer;font-family:var(--font-body)}
+.a11y-links{margin:12px 0 0;font-size:12px;text-align:center}
+.a11y-links a{color:var(--gold-deep)}
+body.a11y-large{font-size:120%}
+body.a11y-contrast{background:#000!important;color:#fff!important}
+body.a11y-contrast .card,body.a11y-contrast .a11y-panel{background:#000!important;color:#fff!important;border-color:#fff!important}
+body.a11y-underline a{text-decoration:underline!important}
+body.a11y-reduce *{animation:none!important;transition:none!important;scroll-behavior:auto!important}
+</style>
+</head>
+<body>
+<main>
+  <h1>שרים את המשפט</h1>
+  <p class="lead">כותבים או מקליטים משפט — והוא נשמע בליווי מלא על המנגינה של "יונתן הקטן", עם מילים שזזות על המסך כמו בקריוקי.</p>
+
+  <section class="card" aria-label="הזנת המשפט">
+    <div class="tabs" role="tablist">
+      <button type="button" role="tab" id="tab-text" aria-selected="true">✍️ כתיבה</button>
+      <button type="button" role="tab" id="tab-voice" aria-selected="false">🎤 הקלטה</button>
+    </div>
+
+    <div id="voice-box" hidden>
+      <p class="note" style="margin-top:0">לוחצים על ההקלטה, אומרים את המשפט במקצב רגיל ובלי הפסקות ארוכות, ולוחצים שוב לעצירה. הקול שלכם יושר בעצמו.</p>
+      <div class="row" style="margin-top:6px">
+        <button class="btn rec" id="btn-rec" type="button">🎤 התחלת הקלטה</button>
+        <button class="btn ghost" id="btn-orig" type="button" disabled>▶ האזנה להקלטה</button>
+      </div>
+    </div>
+
+    <label for="sentence" style="margin-top:14px">המשפט</label>
+    <textarea id="sentence" placeholder="למשל: אני לא מספיק טוב">אני לא מספיק טוב</textarea>
+    <p class="note" id="voice-note" hidden>בהקלטה, המשפט נכתב אוטומטית (לא תמיד מדויק). אפשר לתקן אותו כאן. המספר והסדר של המילים צריכים להתאים למה שאמרתם.</p>
+  </section>
+
+  <section class="card">
+    <label for="song">שיר</label>
+    <select id="song"><option value="yonatan">יונתן הקטן</option></select>
+    <div class="row">
+      <button class="btn" id="btn-play" type="button">▶ שירו לי!</button>
+      <button class="btn alt" id="btn-stop" type="button" disabled>⏹ עצירה</button>
+      <button class="btn ghost" id="btn-save" type="button">⬇ שמירת סרטון</button>
+    </div>
+    <p class="status" id="status" role="status" aria-live="polite"></p>
+    <p class="note" id="text-note">בכתיבה, הקול שמקריא את המשפט הוא קול המכשיר ולכן הוא נשמע רק בנגינה ולא נכנס לקובץ הסרטון (הסרטון יכיל ליווי וקריוקי). לסרטון עם קול, עדיף להקליט.</p>
+    <p class="dl" id="dl" hidden></p>
+  </section>
+
+  <div class="stage"><canvas id="cv" width="540" height="960" aria-label="תצוגת קריוקי"></canvas></div>
+
+  <footer><a href="/privacy/">מדיניות פרטיות</a><a href="/accessibility/">הצהרת נגישות</a><br>ההקלטה נשארת בדפדפן שלכם ולא נשלחת לשום מקום.</footer>
+</main>
+
+<button class="a11y-toggle" type="button" aria-label="פתיחת תפריט נגישות" aria-expanded="false" aria-controls="a11y-panel">♿</button>
+<aside class="a11y-panel" id="a11y-panel" role="dialog" aria-label="אפשרויות נגישות" hidden>
+  <div class="a11y-head"><strong>אפשרויות נגישות</strong><button class="a11y-close" type="button" aria-label="סגירת תפריט נגישות">×</button></div>
+  <div class="a11y-actions">
+    <button type="button" data-a11y="large">הגדלת טקסט</button>
+    <button type="button" data-a11y="contrast">ניגודיות גבוהה</button>
+    <button type="button" data-a11y="underline">הדגשת קישורים</button>
+    <button type="button" data-a11y="reduce">עצירת תנועה</button>
+    <button type="button" data-a11y="reset" style="grid-column:1/-1">איפוס התאמות</button>
+  </div>
+  <p class="a11y-links"><a href="/accessibility/">להצהרת הנגישות המלאה</a></p>
+</aside>
+
+<script>
+(function(){
+  var toggle=document.querySelector('.a11y-toggle'),panel=document.getElementById('a11y-panel');
+  var keys=['large','contrast','underline','reduce'];
+  function apply(){keys.forEach(function(k){document.body.classList.toggle('a11y-'+k,localStorage.getItem('a11y-'+k)==='1')})}
+  apply();
+  function close(){panel.hidden=true;toggle.setAttribute('aria-expanded','false');toggle.focus()}
+  toggle.onclick=function(){panel.hidden=!panel.hidden;toggle.setAttribute('aria-expanded',String(!panel.hidden));if(!panel.hidden)panel.querySelector('button').focus()};
+  panel.querySelector('.a11y-close').onclick=close;
+  document.querySelectorAll('[data-a11y]').forEach(function(b){b.onclick=function(){var k=b.dataset.a11y;if(k==='reset')keys.forEach(function(x){localStorage.removeItem('a11y-'+x)});else localStorage.setItem('a11y-'+k,document.body.classList.contains('a11y-'+k)?'0':'1');apply()}});
+  document.addEventListener('keydown',function(e){if(e.key==='Escape'&&!panel.hidden)close()});
+})();
+</script>
+
+<script>
+(function(){
+'use strict';
+
+/* ---------- Songs ----------
+   notes: [midiNote, beats]. Chords: one entry per bar (root midi, major triad).
+   To fix or add a melody, only edit this table. */
+var SONGS={
+  yonatan:{
+    title:'יונתן הקטן',
+    bpm:108,
+    notes:[[67,1],[67,1],[64,2],[67,1],[67,1],[64,2],[69,1],[69,1],[67,1],[65,1],[64,1],[62,1],[60,2]],
+    chords:[48,48,53,48]
+  }
+};
+
+var $=function(id){return document.getElementById(id)};
+var cv=$('cv'),cx=cv.getContext('2d');
+var W=cv.width,H=cv.height;
+var ac=null,mode='text';
+var recBlob=null,recBuffer=null,recorder=null,recChunks=[],recStream=null,recog=null,recording=false;
+var current=null; // playback state
+
+function setStatus(s){$('status').textContent=s||''}
+function hz(m){return 440*Math.pow(2,(m-69)/12)}
+
+/* ---------- Tabs ---------- */
+function setMode(m){
+  mode=m;
+  $('tab-text').setAttribute('aria-selected',m==='text');
+  $('tab-voice').setAttribute('aria-selected',m==='voice');
+  $('voice-box').hidden=(m!=='voice');
+  $('voice-note').hidden=(m!=='voice');
+  $('text-note').hidden=(m!=='text');
+  setStatus('');
+}
+$('tab-text').onclick=function(){setMode('text')};
+$('tab-voice').onclick=function(){setMode('voice')};
+setMode('text');
+
+/* ---------- Words & syllables ---------- */
+function parseWords(str){
+  var out=[];
+  str.split(/\s+/).forEach(function(w){
+    w=w.replace(/[^א-ת֐-ׇA-Za-z0-9'"׳״\-]/g,'');
+    if(!w)return;
+    var letters=w.replace(/[^א-ת]/g,'').length||w.length;
+    var n=Math.max(1,Math.min(4,Math.round(letters/2)));
+    out.push({text:w,n:n});
+  });
+  return out;
+}
+
+/* ---------- Timeline: assign each syllable a melody note ---------- */
+function buildTimeline(words,song){
+  var beat=60/song.bpm,t=0,i=0,syl=[];
+  words.forEach(function(w){
+    w.first=i;
+    for(var k=0;k<w.n;k++){
+      var nt=song.notes[i%song.notes.length];
+      syl.push({start:t,dur:nt[1]*beat,midi:nt[0]});
+      t+=nt[1]*beat;i++;
+    }
+    w.last=i-1;
+    w.start=syl[w.first].start;
+    w.end=syl[w.last].start+syl[w.last].dur;
+  });
+  return {syl:syl,total:t,beat:beat};
+}
+
+/* ---------- Pitch & segmentation for the recording ---------- */
+function detectF0(d,sr,center){
+  var N=2048,s=Math.max(0,Math.min(d.length-N,center-N/2|0));
+  var minLag=Math.floor(sr/400),maxLag=Math.floor(sr/70);
+  var r0=0;for(var i=0;i<N;i++)r0+=d[s+i]*d[s+i];
+  if(r0<1e-6)return null;
+  var best=0,bestLag=0;
+  for(var lag=minLag;lag<=maxLag&&lag<N-1;lag++){
+    var r=0;for(var j=0;j<N-lag;j++)r+=d[s+j]*d[s+j+lag];
+    if(r>best){best=r;bestLag=lag}
+  }
+  if(!bestLag||best<0.3*r0)return null;
+  return sr/bestLag;
+}
+function segment(buf,S){
+  var d=buf.getChannelData(0),sr=buf.sampleRate,fr=Math.floor(sr*0.01);
+  var n=Math.floor(d.length/fr),rms=[],i,j;
+  for(i=0;i<n;i++){var e=0;for(j=0;j<fr;j++){var v=d[i*fr+j];e+=v*v}rms.push(Math.sqrt(e/fr))}
+  var sm=rms.map(function(_,k){var a=0,c=0;for(var q=-2;q<=2;q++){if(rms[k+q]!==undefined){a+=rms[k+q];c++}}return a/c});
+  var mx=Math.max.apply(null,sm)||1,thr=mx*0.1,first=0,last=n-1;
+  while(first<n&&sm[first]<thr)first++;
+  while(last>first&&sm[last]<thr)last--;
+  if(last-first<S*3){first=0;last=n-1}
+  var span=last-first+1,b=[first];
+  for(i=1;i<S;i++){
+    var c=first+Math.round(i*span/S),rad=Math.floor(0.3*span/S),m=c,mv=1e9;
+    for(j=c-rad;j<=c+rad;j++){if(sm[j]!==undefined&&sm[j]<mv){mv=sm[j];m=j}}
+    b.push(m);
+  }
+  b.push(last+1);
+  var slices=[];
+  for(i=0;i<S;i++)slices.push({a:b[i]*fr,b:Math.min(d.length,b[i+1]*fr)});
+  return slices;
+}
+
+/* ---------- Offline render: accompaniment (+ sung recording) ---------- */
+function noise(octx,len){var b=octx.createBuffer(1,len,octx.sampleRate),d=b.getChannelData(0);for(var i=0;i<len;i++)d[i]=Math.random()*2-1;return b}
+
+function renderMix(song,tl,vocalSlices,vocalBuf){
+  var sr=ac.sampleRate,tail=1.2,len=Math.ceil((tl.total+tail)*sr);
+  var oc=new OfflineAudioContext(1,len,sr);
+  var master=oc.createGain();master.gain.value=1;master.connect(oc.destination);
+  var acc=oc.createGain();acc.gain.value=vocalBuf?0.32:0.55;acc.connect(master);
+  var beat=tl.beat,totalBeats=Math.ceil(tl.total/beat)+2,nz=noise(oc,Math.floor(sr*0.2));
+
+  function tone(freq,t,dur,type,g){
+    var o=oc.createOscillator(),gn=oc.createGain();o.type=type;o.frequency.value=freq;
+    gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(g,t+0.01);gn.gain.exponentialRampToValueAtTime(0.001,t+dur);
+    o.connect(gn);gn.connect(acc);o.start(t);o.stop(t+dur+0.02);
+  }
+  function kick(t){
+    var o=oc.createOscillator(),gn=oc.createGain();o.frequency.setValueAtTime(140,t);o.frequency.exponentialRampToValueAtTime(45,t+0.12);
+    gn.gain.setValueAtTime(0.9,t);gn.gain.exponentialRampToValueAtTime(0.001,t+0.2);o.connect(gn);gn.connect(acc);o.start(t);o.stop(t+0.22);
+  }
+  function hat(t){
+    var s=oc.createBufferSource(),f=oc.createBiquadFilter(),gn=oc.createGain();s.buffer=nz;f.type='highpass';f.frequency.value=7000;
+    gn.gain.setValueAtTime(0.25,t);gn.gain.exponentialRampToValueAtTime(0.001,t+0.05);s.connect(f);f.connect(gn);gn.connect(acc);s.start(t);s.stop(t+0.06);
+  }
+  for(var bt=0;bt<totalBeats;bt++){
+    var t=bt*beat,bar=Math.floor(bt/4),root=song.chords[bar%song.chords.length],pos=bt%4;
+    if(pos===0||pos===2){kick(t);tone(hz(root-12+(pos===2?7:0)),t,beat*0.9,'triangle',0.55)}
+    else{hat(t);[0,4,7].forEach(function(iv){tone(hz(root+12+iv),t,beat*0.45,'square',0.07)})}
+  }
+
+  if(vocalBuf){
+    var d=vocalBuf.getChannelData(0),peak=0;
+    for(var i=0;i<d.length;i+=16)peak=Math.max(peak,Math.abs(d[i]));
+    var norm=peak>0?0.9/peak:1;
+    var f0s=vocalSlices.map(function(s,k){return detectF0(d,vocalBuf.sampleRate,(s.a+s.b)/2|0)});
+    var valid=f0s.filter(Boolean).sort(function(a,b){return a-b}),medF=valid.length?valid[valid.length>>1]:150;
+    var tm=tl.syl.map(function(s){return hz(s.midi)}).sort(function(a,b){return a-b})[tl.syl.length>>1];
+    var oct=Math.pow(2,Math.round(Math.log(medF/tm)/Math.LN2));
+    var prev=medF;
+    vocalSlices.forEach(function(s,k){
+      var f=f0s[k]||prev;prev=f;
+      var sy=tl.syl[k],rate=Math.max(0.5,Math.min(2.2,hz(sy.midi)*oct/f));
+      var L=(s.b-s.a)/vocalBuf.sampleRate,use=Math.min(L,sy.dur*rate*0.95),playDur=use/rate;
+      var src=oc.createBufferSource(),gn=oc.createGain();
+      src.buffer=vocalBuf;src.playbackRate.value=rate;
+      gn.gain.setValueAtTime(0,sy.start);gn.gain.linearRampToValueAtTime(norm,sy.start+0.01);
+      gn.gain.setValueAtTime(norm,sy.start+Math.max(0.01,playDur-0.03));gn.gain.linearRampToValueAtTime(0,sy.start+playDur);
+      src.connect(gn);gn.connect(master);
+      src.start(sy.start,s.a/vocalBuf.sampleRate,use);
+    });
+  }
+  return oc.startRendering();
+}
+
+/* ---------- Karaoke canvas ---------- */
+function layoutLines(words){
+  cx.font='800 56px Heebo, sans-serif';cx.direction='rtl';
+  var maxW=W-90,lines=[[]],cur=0,sp=24;
+  words.forEach(function(w){
+    w.w=cx.measureText(w.text).width;
+    if(lines[lines.length-1].length&&cur+sp+w.w>maxW){lines.push([]);cur=0}
+    var ln=lines[lines.length-1];
+    w.x=W-45-cur;w.line=lines.length-1;ln.push(w);cur+=w.w+sp;
+  });
+  return lines;
+}
+function draw(words,lines,t,title){
+  var g=cx.createLinearGradient(0,0,0,H);g.addColorStop(0,'#1B3A2C');g.addColorStop(1,'#10261C');
+  cx.fillStyle=g;cx.fillRect(0,0,W,H);
+  cx.direction='rtl';cx.textAlign='center';cx.fillStyle='#E0BE72';cx.font='700 30px Heebo, sans-serif';
+  cx.fillText('♪ '+title+' ♪',W/2,90);
+  if(!words.length)return;
+  var curW=0;words.forEach(function(w,i){if(t>=w.start)curW=i});
+  var perPage=4,page=Math.floor(words[curW].line/perPage),lh=118,y0=H/2-(perPage*lh)/2+70;
+  cx.textAlign='right';cx.font='800 56px Heebo, sans-serif';
+  words.forEach(function(w){
+    var ln=w.line-page*perPage;if(ln<0||ln>=perPage)return;
+    var y=y0+ln*lh,isCur=t>=w.start&&t<w.end,done=t>=w.end;
+    cx.fillStyle=done?'#E0BE72':(isCur?'#FFF3C4':'rgba(255,255,255,.55)');
+    if(isCur){cx.save();cx.translate(w.x-w.w/2,y);cx.scale(1.12,1.12);cx.textAlign='center';cx.fillText(w.text,0,0);cx.restore()}
+    else cx.fillText(w.text,w.x,y);
+  });
+  cx.fillStyle='rgba(255,255,255,.35)';cx.font='500 22px Heebo, sans-serif';cx.textAlign='center';
+  cx.fillText('david-ingber',W/2,H-50);
+}
+function idleDraw(){
+  var words=parseWords($('sentence').value),song=SONGS[$('song').value],tl=buildTimeline(words,song),lines=layoutLines(words);
+  draw(words,lines,-1,song.title);
+}
+
+/* ---------- Playback ---------- */
+function ensureAC(){
+  if(!ac)ac=new (window.AudioContext||window.webkitAudioContext)();
+  if(ac.state==='suspended')ac.resume();
+}
+function stop(){
+  if(!current)return;
+  var c=current;current=null;
+  try{c.src.stop()}catch(e){}
+  c.timers.forEach(clearTimeout);cancelAnimationFrame(c.raf);
+  if('speechSynthesis' in window)speechSynthesis.cancel();
+  if(c.recorder&&c.recorder.state!=='inactive')c.recorder.stop();
+  $('btn-stop').disabled=true;$('btn-play').disabled=false;$('btn-save').disabled=false;
+}
+
+async function prepare(){
+  var words=parseWords($('sentence').value);
+  if(!words.length){setStatus('כתבו או הקלידו משפט קודם.');return null}
+  var song=SONGS[$('song').value],tl=buildTimeline(words,song);
+  var useVoice=(mode==='voice');
+  if(useVoice&&!recBuffer){setStatus('קודם צריך להקליט משפט.');return null}
+  var slices=null;
+  if(useVoice)slices=segment(recBuffer,tl.syl.length);
+  setStatus('מכינים את השיר…');
+  var mix=await renderMix(song,tl,slices,useVoice?recBuffer:null);
+  return {words:words,song:song,tl:tl,mix:mix,lines:layoutLines(words),useVoice:useVoice};
+}
+
+async function play(withRecord){
+  stop();ensureAC();
+  $('btn-play').disabled=true;$('btn-save').disabled=true;$('dl').hidden=true;
+  var p=await prepare();
+  if(!p){$('btn-play').disabled=false;$('btn-save').disabled=false;return}
+  var src=ac.createBufferSource();src.buffer=p.mix;src.connect(ac.destination);
+  var rec=null,chunks=[],mime='';
+  if(withRecord){
+    var dest=ac.createMediaStreamDestination();src.connect(dest);
+    var stream=new MediaStream(cv.captureStream(30).getVideoTracks().concat(dest.stream.getAudioTracks()));
+    ['video/mp4;codecs=avc1.42E01E,mp4a.40.2','video/mp4','video/webm;codecs=vp9,opus','video/webm;codecs=vp8,opus','video/webm'].some(function(m){if(window.MediaRecorder&&MediaRecorder.isTypeSupported(m)){mime=m;return true}});
+    if(!window.MediaRecorder||!mime){setStatus('הדפדפן הזה לא תומך בשמירת סרטון. נסו כרום במחשב או באנדרואיד.');$('btn-play').disabled=false;$('btn-save').disabled=false;return}
+    rec=new MediaRecorder(stream,{mimeType:mime,videoBitsPerSecond:2500000});
+    rec.ondataavailable=function(e){if(e.data.size)chunks.push(e.data)};
+    rec.onstop=function(){
+      var ext=mime.indexOf('mp4')>-1?'mp4':'webm',url=URL.createObjectURL(new Blob(chunks,{type:mime.split(';')[0]}));
+      var dl=$('dl');dl.innerHTML='';var a=document.createElement('a');a.href=url;a.download='sing-along.'+ext;a.textContent='⬇ הסרטון מוכן — לחצו להורדה';dl.appendChild(a);dl.hidden=false;
+      setStatus('סיימנו!');
+    };
+    rec.start();
+  }
+  var t0=ac.currentTime+0.15,timers=[];
+  src.start(t0);
+  current={src:src,timers:timers,raf:0,recorder:rec};
+  $('btn-stop').disabled=false;setStatus('שרים…');
+
+  if(!p.useVoice&&'speechSynthesis' in window){
+    var hasHe=speechSynthesis.getVoices().some(function(v){return /^he|iw/i.test(v.lang)});
+    if(!hasHe&&speechSynthesis.getVoices().length)setStatus('שרים… (לא נמצא קול בעברית במכשיר, יתכן שהמילים לא ישמעו)');
+    p.words.forEach(function(w){
+      var sy=p.tl.syl[w.first],dur=w.end-w.start;
+      timers.push(setTimeout(function(){
+        var u=new SpeechSynthesisUtterance(w.text);u.lang='he-IL';
+        u.pitch=Math.max(0.1,Math.min(2,1+(sy.midi-62)/12*0.7));
+        u.rate=dur>1.1?0.6:dur>0.65?0.85:1.2;
+        speechSynthesis.speak(u);
+      },Math.max(0,(t0-ac.currentTime+w.start)*1000)));
+    });
+  }
+
+  (function loop(){
+    if(!current||current.src!==src)return;
+    var t=ac.currentTime-t0;
+    draw(p.words,p.lines,t,p.song.title);
+    if(t>=p.tl.total+0.8){
+      var r=current.recorder;current.timers.forEach(clearTimeout);current=null;
+      $('btn-stop').disabled=true;$('btn-play').disabled=false;$('btn-save').disabled=false;
+      if(r&&r.state!=='inactive')setTimeout(function(){r.stop()},400);else setStatus('');
+      return;
+    }
+    current.raf=requestAnimationFrame(loop);
+  })();
+}
+
+$('btn-play').onclick=function(){play(false)};
+$('btn-save').onclick=function(){play(true)};
+$('btn-stop').onclick=function(){stop();setStatus('')};
+$('sentence').addEventListener('input',function(){if(!current)idleDraw()});
+$('song').addEventListener('change',idleDraw);
+
+/* ---------- Recording (mic + live transcription) ---------- */
+$('btn-rec').onclick=async function(){
+  if(recording){stopRecording();return}
+  try{
+    stop();ensureAC();
+    recStream=await navigator.mediaDevices.getUserMedia({audio:{echoCancellation:true,noiseSuppression:true}});
+  }catch(e){setStatus('אין גישה למיקרופון. אפשרו אותה בהגדרות הדפדפן.');return}
+  recChunks=[];recorder=new MediaRecorder(recStream);
+  recorder.ondataavailable=function(e){if(e.data.size)recChunks.push(e.data)};
+  recorder.onstop=async function(){
+    recStream.getTracks().forEach(function(t){t.stop()});
+    recBlob=new Blob(recChunks,{type:recorder.mimeType||'audio/webm'});
+    try{recBuffer=await ac.decodeAudioData(await recBlob.arrayBuffer());$('btn-orig').disabled=false;setStatus('ההקלטה מוכנה. בדקו שהמשפט נכון ולחצו "שירו לי!".')}
+    catch(err){recBuffer=null;setStatus('לא הצלחנו לקרוא את ההקלטה, נסו שוב.')}
+  };
+  recorder.start();recording=true;
+  $('btn-rec').classList.add('on');$('btn-rec').textContent='⏹ עצירת הקלטה';setStatus('מקליטים…');
+  var SR=window.SpeechRecognition||window.webkitSpeechRecognition;
+  if(SR){
+    try{
+      recog=new SR();recog.lang='he-IL';recog.continuous=true;recog.interimResults=true;
+      recog.onresult=function(e){var s='';for(var i=0;i<e.results.length;i++)s+=e.results[i][0].transcript+' ';$('sentence').value=s.trim();idleDraw()};
+      recog.onerror=function(){};recog.start();
+    }catch(e){recog=null}
+  }else setStatus('מקליטים… (הדפדפן לא מתמלל אוטומטית, כתבו את המשפט בשדה למטה)');
+};
+function stopRecording(){
+  recording=false;
+  $('btn-rec').classList.remove('on');$('btn-rec').textContent='🎤 הקלטה מחדש';
+  try{if(recog)recog.stop()}catch(e){}
+  if(recorder&&recorder.state!=='inactive')recorder.stop();
+}
+$('btn-orig').onclick=function(){
+  if(!recBuffer)return;ensureAC();
+  var s=ac.createBufferSource();s.buffer=recBuffer;s.connect(ac.destination);s.start();
+};
+
+if('speechSynthesis' in window)speechSynthesis.getVoices();
+document.fonts&&document.fonts.ready.then(idleDraw);
+idleDraw();
+})();
+</script>
+</body>
+</html>
