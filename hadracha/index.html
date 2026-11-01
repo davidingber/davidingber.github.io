@@ -396,7 +396,6 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
       <div class="error-msg" id="errorMsg">משהו לא עבד. אפשר לנסות שוב.</div>
     </form>
 
-
     <p class="cta-note">בלי טלפון. בלי שאלון התאמה. ובלי צורך לדבר עם אף אחד כדי לקבל אותה.</p>
 
     <div class="whats-included">
@@ -587,14 +586,8 @@ var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6
     }
 
     var q = new URLSearchParams({ name: name }).toString();
-    var thanksUrl = 'thank-you.html?' + q;
-    var redirected = false;
-    function go() { if (redirected) return; redirected = true; location.href = thanksUrl; }
-
-    // הרשימה ברב מסר מתעדכנת מצד Apps Script (hadracha/responder-forward.gs) אחרי שהליד נכתב לגיליון.
-    setTimeout(go, 400);
+    location.href = 'thank-you.html?' + q;
   });
-
 })();
 
 (function () {

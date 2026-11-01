@@ -112,8 +112,6 @@ textarea::placeholder{color:var(--ink-faint)}
 .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(169,118,27,0.16)}
 .field input[type="email"],.field input[type="tel"]{direction:ltr;text-align:right}
 .hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden}
-.consent-label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.9rem;color:var(--ink-soft);line-height:1.5;margin-top:6px}
-.consent-label input{flex:0 0 auto;width:18px;height:18px;margin-top:2px;accent-color:var(--gold)}
 
 .highlight{background:var(--gold-tint);border:1px solid rgba(169,118,27,0.3);border-inline-start:4px solid var(--gold);border-radius:var(--radius-sm);padding:16px 18px;color:var(--ink);font-weight:600;font-size:.98rem;line-height:1.6;margin:8px 0 16px}
 
@@ -354,10 +352,6 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
         <label for="lf-website">Website</label>
         <input id="lf-website" name="website" type="text" tabindex="-1" autocomplete="off">
       </div>
-      <label class="consent-label">
-        <input type="checkbox" id="lf-consent" name="consent">
-        <span>אני מאשר/ת לקבל מיילים בנושא חרדה, ללא ספאם. ניתן להסיר בכל עת.</span>
-      </label>
     </div>
 
     <div class="final-note reveal" style="animation-delay:0ms">
@@ -515,7 +509,6 @@ document.querySelectorAll('.opt input').forEach(function (input) {
       q10_safety: radioValue('q10_safety'),
       q10_details: form.q10_details.value.trim(),
       q11_cost: form.q11_cost.value.trim(),
-      marketing_consent: form.consent.checked ? 'yes' : 'no',
       source: 'shealon-hataama',
       utm_source: params.get('utm_source') || '',
       utm_medium: params.get('utm_medium') || '',
