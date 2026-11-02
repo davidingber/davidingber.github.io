@@ -335,18 +335,14 @@ strong{color:var(--ink)}
 
 
 /* ---------- conversion pass: hero proof, chapters accordion, bigger proof on mobile ---------- */
+.hero-shots{display:grid;grid-template-columns:1fr;gap:16px;max-width:520px;margin:30px auto 0}
+@media (min-width:860px){.hero-shots{grid-template-columns:1fr 1fr;max-width:860px;align-items:start}}
+.hero-shot{appearance:none;display:block;width:100%;padding:0;margin:0;border:1px solid rgba(224,190,114,0.4);border-radius:var(--radius-sm);background:var(--bg-soft);cursor:pointer;overflow:hidden;font-family:inherit;box-shadow:0 14px 34px rgba(0,0,0,0.35)}
+.hero-shot img{display:block;width:100%;height:auto}
+.hs-by{display:block;padding:9px 12px;font-size:.84rem;font-weight:600;color:var(--gold-deep);background:var(--bg-soft);border-top:1px solid var(--line);text-align:center}
+.hero-shot:hover .hs-by,.hero-shot:focus-visible .hs-by{background:var(--gold-tint)}
 .hero-sub{max-width:34ch;margin:16px auto 0;color:var(--on-dark);font-size:1.15rem;font-weight:500;line-height:1.55}
-.hero-trust{display:flex;flex-wrap:wrap;justify-content:center;gap:6px 18px;margin:16px auto 0;font-size:.88rem;color:var(--on-dark-soft)}
-.hero-trust b{font-family:var(--font-head);font-weight:900;font-size:1.05rem;color:var(--gold-soft);margin-inline-start:3px;direction:ltr;unicode-bidi:isolate;display:inline-block}
 .hero .cta-wrap{margin-top:26px}
-.hero-proof{display:grid;grid-template-columns:1fr;gap:12px;max-width:520px;margin:28px auto 0;text-align:right}
-@media (min-width:760px){.hero-proof{grid-template-columns:1fr 1fr;max-width:820px}}
-.hero-quote{appearance:none;display:flex;align-items:center;gap:14px;width:100%;padding:12px 14px;border-radius:var(--radius-sm);border:1px solid rgba(224,190,114,0.35);background:rgba(255,255,255,0.06);color:var(--on-dark);cursor:pointer;font-family:inherit;text-align:right}
-.hero-quote:hover,.hero-quote:focus-visible{background:rgba(255,255,255,0.1)}
-.hero-quote img{flex:0 0 64px;width:64px;height:64px;border-radius:10px;object-fit:cover;object-position:top;border:1px solid rgba(224,190,114,0.4)}
-.hq-text{display:flex;flex-direction:column;gap:4px}
-.hq-q{font-weight:600;font-size:.98rem;line-height:1.5;color:var(--on-dark)}
-.hq-by{font-size:.82rem;color:var(--gold-soft)}
 .hero .no-list{margin-top:26px}
 .stats{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin:0 0 26px}
 .stat{background:rgba(255,255,255,0.04);border:1px solid rgba(224,190,114,0.25);border-radius:var(--radius-sm);padding:14px 12px;text-align:center;display:flex;flex-direction:column;gap:4px}
@@ -421,7 +417,6 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       <p class="hero-kicker reveal">מתמודדים עם התקפי חרדה?</p>
       <h1 class="reveal" style="animation-delay:80ms">ללמוד לזהות את הסחרור כשהוא מתחיל ולהגיב אחרת לתחושות</h1>
       <p class="hero-sub reveal" style="animation-delay:160ms">כדי שהפחד מההתקף הבא יפסיק לנהל את החיים.</p>
-      <p class="hero-trust reveal" style="animation-delay:200ms"><span><b>150+</b> אנשים עברו את הדרך</span><span><b>1,300+</b> שעות ליווי</span><span><b>15,000+</b> עוקבים</span></p>
       <ul class="no-list reveal" style="animation-delay:240ms">
         <li>בלי לנסות להירגע בכוח.</li>
         <li>בלי לחפש עוד כלי שיציל אותך ברגע האמת.</li>
@@ -431,22 +426,22 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <a href="#order" class="cta">אני רוצה להפסיק לפחד מההתקף הבא <span class="arrow">←</span></a>
         <p class="cta-note">87 ₪ במחיר השקה · גישה מיידית · גישה לשנה</p>
       </div>
-      <div class="hero-proof reveal" style="animation-delay:340ms">
-        <button type="button" class="hero-quote" data-lightbox-src="img/testimonial-panic-1.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-          <img src="img/testimonial-panic-1.jpg" alt="הודעת וואטסאפ ממטופלת ששחררה את הפחד מהתקף פאניקה" width="64" height="64" loading="eager">
-          <span class="hq-text"><span class="hq-q">"שחררתי את הפחד מלקבל התקף פאניקה… ברגע שזה קרה הרגשתי שהכל בסדר"</span><span class="hq-by">מהודעה של מטופלת · להודעה המלאה</span></span>
+      <div class="hero-shots reveal" style="animation-delay:340ms">
+        <button type="button" class="hero-shot" data-lightbox-src="img/testimonial-panic-1.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <img src="img/testimonial-panic-1.jpg" alt="הודעת וואטסאפ ממטופלת ששחררה את הפחד מהתקף פאניקה לפני מצגת מול המנכ"ל" width="738" height="911" loading="eager">
+          <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
         </button>
-        <button type="button" class="hero-quote" data-lightbox-src="img/testimonial-panic-2.png" aria-label="הצגת ההודעה המלאה בהגדלה">
-          <img src="img/testimonial-panic-2.png" alt="הודעת סיכום תהליך ממטופלת על התמודדות עם התקפי חרדה" width="64" height="64" loading="eager">
-          <span class="hq-text"><span class="hq-q">"להתמודד מול התקפי חרדה קשים לבד, ועוד דברים קטנים שבכלל לא חשבתי שלעולם אצליח לעשות"</span><span class="hq-by">מהודעה של מטופלת · להודעה המלאה</span></span>
+        <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-15.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <img src="../hadracha/img/testimonial-15.jpg" alt="הודעת וואטסאפ ממטופלת על כלים להתמודדות עם פחד וחרדה לאורך שנים" width="738" height="920" loading="eager">
+          <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
         </button>
-        <button type="button" class="hero-quote" data-lightbox-src="../hadracha/img/testimonial-14.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-          <img src="../hadracha/img/testimonial-14.jpg" alt="הודעת וואטסאפ ממטופלת על ירידה בשליטה של החרדה בחיי היום יום" width="64" height="64" loading="eager">
-          <span class="hq-text"><span class="hq-q">"היום החרדה כבר לא שולטת בי ברמה היום יומית, אני מצליחה לעשות הרבה יותר דברים שלא הצלחתי לעשות"</span><span class="hq-by">מהודעה של מטופלת · להודעה המלאה</span></span>
+        <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-14.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <img src="../hadracha/img/testimonial-14.jpg" alt="הודעת וואטסאפ ממטופלת על ירידה בשליטה של החרדה בחיי היום יום" width="1080" height="1017" loading="eager">
+          <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
         </button>
-        <button type="button" class="hero-quote" data-lightbox-src="../hadracha/img/testimonial-5.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-          <img src="../hadracha/img/testimonial-5.jpg" alt="הודעת וואטסאפ ממטופל על התמודדות קלה יותר עם החרדה" width="64" height="64" loading="eager">
-          <span class="hq-text"><span class="hq-q">"אפשר לי להתמודד עם החרדה בהרבה יותר קלילות… ולא מפחד ממה שיגיע"</span><span class="hq-by">מהודעה של מטופל · להודעה המלאה</span></span>
+        <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-5.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <img src="../hadracha/img/testimonial-5.jpg" alt="הודעת וואטסאפ ממטופל על התמודדות קלה יותר עם החרדה" width="760" height="1131" loading="eager">
+          <span class="hs-by">מהודעה של מטופל · להגדלה</span>
         </button>
       </div>
       <div class="mock-wrap hero-mock reveal" style="animation-delay:420ms">
@@ -1206,7 +1201,7 @@ function buildPaymentUrl(d) {
   var closeBtn = document.getElementById('lightboxClose');
   var last = null;
   function close() { lightbox.hidden = true; img.src = ''; if (last) last.focus(); }
-  document.querySelectorAll('.quote-shot-btn, .hero-quote').forEach(function (b) {
+  document.querySelectorAll('.quote-shot-btn, .hero-shot').forEach(function (b) {
     b.addEventListener('click', function () {
       last = b; img.src = b.dataset.lightboxSrc; img.alt = b.querySelector('img').alt;
       lightbox.hidden = false; closeBtn.focus();
