@@ -133,8 +133,8 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 var SONGS={
   yonatan:{
     title:'יונתן הקטן',
-    bpm:120,
-    backing:null, // optional: path to a real backing-track mp3 at the same bpm (see README note)
+    bpm:139.7, // measured from the backing track
+    backing:'audio/yonatan-backing.mp3', // real backing track; starts exactly on beat 1. Falls back to the built-in synth if missing
     // notes from David (C major): 8 lines, 2 bars each. Rhythm assumed: quarter notes, held last note of each half-line
     notes:[[67,1],[64,1],[64,2],[65,1],[62,1],[62,2],
            [60,1],[62,1],[64,1],[65,1],[67,1],[67,1],[67,2],
