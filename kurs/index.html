@@ -149,6 +149,7 @@ strong{color:var(--ink)}
 .proof-grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:460px;margin:0 auto 30px}
 @media (min-width:860px){.proof-grid{grid-template-columns:1fr 1fr;max-width:900px;align-items:start}}
 .proof-card{margin:0}
+.proof-grid>.proof-card:only-child{grid-column:1/-1;justify-self:center;width:100%;max-width:460px}
 .proof-band{padding-block:40px}
 .proof-grid:only-child{margin-bottom:0}
 .proof-card .quote-title{font-family:var(--font-head);font-size:1.08rem}
@@ -444,6 +445,16 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
         <button type="button" class="hero-shot" data-lightbox-src="img/proof-1.webp" aria-label="הצגת ההודעה בהגדלה">
           <span class="hs-head"><b>להכיר בפחד ולא להתנתק, גם כשיש התקף פאניקה</b><span>הצלחה להכיר בפחד בזמן התקף פאניקה, בזכות הכלי של התיוג.</span></span>
           <img src="img/proof-1.webp" alt="הודעת וואטסאפ ממטופלת על הצלחה להכיר בפחד בזמן התקף פאניקה ולא להתנתק, בזכות התיוג" width="734" height="557" loading="eager">
+          <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
+        </button>
+        <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-14.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <span class="hs-head"><b>החרדה כבר לא שולטת בחיי היום יום</b><span>הפרידה בין החיים לבין החרדה, עושה הרבה יותר דברים, ויש לה יותר מוטיבציה להתגבר על עוד פחדים.</span></span>
+          <img src="../hadracha/img/testimonial-14.jpg" alt="הודעת וואטסאפ ממטופלת על ירידה בשליטה של החרדה בחיי היום יום" width="1080" height="1017" loading="eager">
+          <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
+        </button>
+        <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-15.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <span class="hs-head"><b>עולה מדרגה בהתמודדות עם הפחד</b><span>אחרי שנים של חיים עם פחד, קיבלה כלים להכיל אותו, וזה נותן לה תקווה והרגשת נחת.</span></span>
+          <img src="../hadracha/img/testimonial-15.jpg" alt="הודעת וואטסאפ ממטופלת על כלים להתמודדות עם פחד וחרדה לאורך שנים" width="738" height="920" loading="eager">
           <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
         </button>
       </div>
@@ -1054,13 +1065,6 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
             <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
           </button>
         </figure>
-        <figure class="proof-card">
-          <p class="quote-title">החרדה כבר לא שולטת בחיי היום יום</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-14.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="../hadracha/img/testimonial-14.jpg" alt="הודעת וואטסאפ ממטופלת על ירידה בשליטה של החרדה בחיי היום יום" loading="lazy" width="1080" height="1017">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
-          </button>
-        </figure>
       </div>
     </div>
   </section>
@@ -1070,13 +1074,6 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
     <div class="wrap-wide in-view">
       <h2 class="center">אפשר ללמוד להגיב אחרת</h2>
       <div class="proof-grid">
-        <figure class="proof-card">
-          <p class="quote-title">עולה מדרגה בהתמודדות עם הפחד</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-15.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="../hadracha/img/testimonial-15.jpg" alt="הודעת וואטסאפ ממטופלת על כלים להתמודדות עם פחד וחרדה לאורך שנים" loading="lazy" width="738" height="920">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
-          </button>
-        </figure>
         <figure class="proof-card">
           <p class="quote-title">חיים שלמים עם חרדה, ופעם ראשונה לחשוב באופן שממזער אותה</p>
           <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-1.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
