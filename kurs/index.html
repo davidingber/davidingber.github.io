@@ -149,6 +149,8 @@ strong{color:var(--ink)}
 .proof-grid{display:grid;grid-template-columns:1fr;gap:18px;max-width:460px;margin:0 auto 30px}
 @media (min-width:860px){.proof-grid{grid-template-columns:1fr 1fr;max-width:900px;align-items:start}}
 .proof-card{margin:0}
+.proof-band{padding-block:40px}
+.proof-grid:only-child{margin-bottom:0}
 .proof-card .quote-title{font-family:var(--font-head);font-size:1.08rem}
 .quote-shot-btn{appearance:none;border:1px solid var(--line);padding:0;margin:0;background:var(--bg-soft);cursor:pointer;display:block;width:100%;border-radius:var(--radius-sm);overflow:hidden;box-shadow:var(--shadow-sm)}
 .quote-shot-btn:hover,.quote-shot-btn:focus-visible{box-shadow:var(--shadow)}
@@ -439,20 +441,10 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <img src="img/testimonial-panic-1.jpg" alt="הודעת וואטסאפ ממטופלת ששחררה את הפחד מהתקף פאניקה לפני מצגת מול המנכ"ל" width="738" height="911" loading="eager">
           <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
         </button>
-        <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-15.jpg" aria-label="הצגת ההודעה בהגדלה">
-          <span class="hs-head"><b>עולה מדרגה בהתמודדות עם הפחד</b><span>אחרי שנים של חיים עם פחד, קיבלה כלים להכיל אותו, וזה נותן לה תקווה והרגשת נחת.</span></span>
-          <img src="../hadracha/img/testimonial-15.jpg" alt="הודעת וואטסאפ ממטופלת על כלים להתמודדות עם פחד וחרדה לאורך שנים" width="738" height="920" loading="eager">
+        <button type="button" class="hero-shot" data-lightbox-src="img/proof-1.webp" aria-label="הצגת ההודעה בהגדלה">
+          <span class="hs-head"><b>להכיר בפחד ולא להתנתק, גם כשיש התקף פאניקה</b><span>הצלחה להכיר בפחד בזמן התקף פאניקה, בזכות הכלי של התיוג.</span></span>
+          <img src="img/proof-1.webp" alt="הודעת וואטסאפ ממטופלת על הצלחה להכיר בפחד בזמן התקף פאניקה ולא להתנתק, בזכות התיוג" width="734" height="557" loading="eager">
           <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
-        </button>
-        <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-14.jpg" aria-label="הצגת ההודעה בהגדלה">
-          <span class="hs-head"><b>החרדה כבר לא שולטת בחיי היום יום</b><span>הפרידה בין החיים לבין החרדה, עושה הרבה יותר דברים, ויש לה יותר מוטיבציה להתגבר על עוד פחדים.</span></span>
-          <img src="../hadracha/img/testimonial-14.jpg" alt="הודעת וואטסאפ ממטופלת על ירידה בשליטה של החרדה בחיי היום יום" width="1080" height="1017" loading="eager">
-          <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
-        </button>
-        <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-5.jpg" aria-label="הצגת ההודעה בהגדלה">
-          <span class="hs-head"><b>מתמודד בקלילות ולא מפחד ממה שיגיע</b><span>עושה היום דברים שחשש מהם קודם, ומרגיש הרבה יותר בנוח עם עצמו.</span></span>
-          <img src="../hadracha/img/testimonial-5.jpg" alt="הודעת וואטסאפ ממטופל על התמודדות קלה יותר עם החרדה" width="760" height="1131" loading="eager">
-          <span class="hs-by">מהודעה של מטופל · להגדלה</span>
         </button>
       </div>
       <div class="mock-wrap hero-mock reveal" style="animation-delay:420ms">
@@ -537,6 +529,21 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
     </div>
   </section>
 
+  <!-- proof -->
+  <section class="band proof-band">
+    <div class="wrap-wide in-view">
+      <div class="proof-grid">
+        <figure class="proof-card">
+          <p class="quote-title">מהפחד להשתמש במעלית לבד, להתנסות ראשונה לגמרי לבד</p>
+          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-16.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+            <img class="quote-shot" src="../hadracha/img/testimonial-16.jpg" alt="הודעת וואטסאפ ממטופלת על שימוש במעלית לבד בפעם הראשונה" loading="lazy" width="735" height="455">
+            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
+          </button>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== WHAT WAS MISSED ===== -->
   <section class="band">
     <div class="wrap in-view">
@@ -611,6 +618,28 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
     </div>
   </section>
 
+  <!-- proof -->
+  <section class="band proof-band">
+    <div class="wrap-wide in-view">
+      <div class="proof-grid">
+        <figure class="proof-card">
+          <p class="quote-title">תמיכה שעזרה לצאת מתקופה מסובכת בחיים</p>
+          <button type="button" class="quote-shot-btn" data-lightbox-src="img/proof-4.webp" aria-label="הצגת ההודעה המלאה בהגדלה">
+            <img class="quote-shot" src="img/proof-4.webp" alt="הודעת וואטסאפ ממטופל על תמיכה שעזרה לצאת מתקופה מסובכת בחיים" loading="lazy" width="820" height="386">
+            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
+          </button>
+        </figure>
+        <figure class="proof-card">
+          <p class="quote-title">לחבר בין הנפש לגוף ולהחליף את החשיבה</p>
+          <button type="button" class="quote-shot-btn" data-lightbox-src="img/proof-2.webp" aria-label="הצגת ההודעה המלאה בהגדלה">
+            <img class="quote-shot" src="img/proof-2.webp" alt="הודעת וואטסאפ ממטופל על התחברות בין הנפש לגוף והחלפת החשיבה" loading="lazy" width="820" height="576">
+            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
+          </button>
+        </figure>
+      </div>
+    </div>
+  </section>
+
   <!-- ===== MECHANISM ===== -->
   <section class="band band-soft">
     <div class="wrap in-view">
@@ -673,6 +702,21 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <li>"אפשר להגיב אחרת."</li>
           <li>"ואולי אין לי צורך לפחד כל כך מהפעם הבאה."</li>
         </ul>
+      </div>
+    </div>
+  </section>
+
+  <!-- proof -->
+  <section class="band proof-band">
+    <div class="wrap-wide in-view">
+      <div class="proof-grid">
+        <figure class="proof-card">
+          <p class="quote-title">מ"מבולבל, מיואש, חרד ומפוחד" ל"קונה בחזרה את הרוגע"</p>
+          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-3.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+            <img class="quote-shot" src="../hadracha/img/testimonial-3.jpg" alt="הודעת תודה ממטופל שהגיע חרד ומפוחד ולמד להתמודד עם המצבים שחווה" loading="lazy" width="760" height="654">
+            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
+          </button>
+        </figure>
       </div>
     </div>
   </section>
@@ -791,6 +835,15 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           <p class="lede">ללמד את תת המודע שהתסמין לא מעיד על סכנה.</p>
         </article>
       </div>
+      <div class="proof-grid" style="margin-top:34px">
+        <figure class="proof-card">
+          <p class="quote-title">להתמודד עם החרדה בקלילות ולעשות דברים שחששו מהם</p>
+          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-5.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+            <img class="quote-shot" src="../hadracha/img/testimonial-5.jpg" alt="הודעת וואטסאפ ממטופל על התמודדות קלה יותר עם החרדה" loading="lazy" width="760" height="1131">
+            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
+          </button>
+        </figure>
+      </div>
       <div class="cta-wrap pay-box in-view">
         <a href="#order" class="cta">אני רוצה להפסיק לפחד מההתקף הבא <span class="arrow">←</span></a>
         <p class="cta-note">87 ₪ במחיר השקה · גישה מיידית · גישה לשנה</p>
@@ -813,13 +866,12 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       </ol>
     </div>
     <div class="wrap-wide in-view" style="margin-top:36px">
-      <p class="proof-label">מהודעות של מטופלים שעבדו איתי</p>
-      <div class="quotes-grid">
-        <figure class="testimonial-card">
+      <div class="proof-grid">
+        <figure class="proof-card">
           <p class="quote-title">"יודעת לקבל תחושה לא נעימה בחמלה בלי להגיע להתקף חרדה"</p>
           <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-2.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="../hadracha/img/testimonial-2.jpg" alt="הודעת וואטסאפ מלקוחה על ההתקדמות ההדרגתית וההתמודדות בחמלה" loading="lazy" width="760" height="871">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
+            <img class="quote-shot" src="../hadracha/img/testimonial-2.jpg" alt="הודעת וואטסאפ ממטופלת על ההתקדמות ההדרגתית וההתמודדות בחמלה" loading="lazy" width="760" height="871">
+            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
           </button>
         </figure>
       </div>
@@ -991,26 +1043,10 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
     </div>
   </section>
 
-  <!-- ===== PROOF BEFORE FINAL CTA ===== -->
-  <section class="band band-soft">
+  <!-- proof -->
+  <section class="band proof-band">
     <div class="wrap-wide in-view">
-      <h2 class="center">אפשר ללמוד להגיב אחרת</h2>
-      <p class="proof-label">מהודעות של מטופלים שעבדו איתי</p>
       <div class="proof-grid">
-        <figure class="proof-card">
-          <p class="quote-title">להכיר בפחד ולא להתנתק, גם כשיש התקף פאניקה</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="img/proof-1.webp" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="img/proof-1.webp" alt="הודעת וואטסאפ ממטופלת על הצלחה להכיר בפחד בזמן התקף פאניקה ולא להתנתק, בזכות התיוג" loading="lazy" width="734" height="557">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
-          </button>
-        </figure>
-        <figure class="proof-card">
-          <p class="quote-title">לחבר בין הנפש לגוף ולהחליף את החשיבה</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="img/proof-2.webp" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="img/proof-2.webp" alt="הודעת וואטסאפ ממטופל על התחברות בין הנפש לגוף והחלפת החשיבה" loading="lazy" width="820" height="576">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
-          </button>
-        </figure>
         <figure class="proof-card">
           <p class="quote-title">יותר ביטחון עצמי וכלים להתמודד עם אתגרים</p>
           <button type="button" class="quote-shot-btn" data-lightbox-src="img/proof-3.webp" aria-label="הצגת ההודעה המלאה בהגדלה">
@@ -1019,33 +1055,33 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
           </button>
         </figure>
         <figure class="proof-card">
-          <p class="quote-title">תמיכה שעזרה לצאת מתקופה מסובכת בחיים</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="img/proof-4.webp" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="img/proof-4.webp" alt="הודעת וואטסאפ ממטופל על תמיכה שעזרה לצאת מתקופה מסובכת בחיים" loading="lazy" width="820" height="386">
+          <p class="quote-title">החרדה כבר לא שולטת בחיי היום יום</p>
+          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-14.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+            <img class="quote-shot" src="../hadracha/img/testimonial-14.jpg" alt="הודעת וואטסאפ ממטופלת על ירידה בשליטה של החרדה בחיי היום יום" loading="lazy" width="1080" height="1017">
             <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
           </button>
         </figure>
       </div>
-      <div class="quotes-grid">
-        <figure class="testimonial-card">
-          <p class="quote-title">מהפחד להשתמש במעלית לבד, להתנסות ראשונה לגמרי לבד</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-16.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="../hadracha/img/testimonial-16.jpg" alt="הודעת וואטסאפ מלקוחה על שימוש במעלית לבד בפעם הראשונה" loading="lazy" width="735" height="455">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
+    </div>
+  </section>
+
+  <!-- ===== PROOF BEFORE FINAL CTA ===== -->
+  <section class="band band-soft">
+    <div class="wrap-wide in-view">
+      <h2 class="center">אפשר ללמוד להגיב אחרת</h2>
+      <div class="proof-grid">
+        <figure class="proof-card">
+          <p class="quote-title">עולה מדרגה בהתמודדות עם הפחד</p>
+          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-15.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
+            <img class="quote-shot" src="../hadracha/img/testimonial-15.jpg" alt="הודעת וואטסאפ ממטופלת על כלים להתמודדות עם פחד וחרדה לאורך שנים" loading="lazy" width="738" height="920">
+            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
           </button>
         </figure>
-        <figure class="testimonial-card">
-          <p class="quote-title">"כל חיי חייתי עם החרדה ופעם ראשונה שלמדתי איך לחשוב באופן שממזער אותה"</p>
+        <figure class="proof-card">
+          <p class="quote-title">חיים שלמים עם חרדה, ופעם ראשונה לחשוב באופן שממזער אותה</p>
           <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-1.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="../hadracha/img/testimonial-1.jpg" alt="הודעת וואטסאפ מלקוחה על חיים שלמים עם חרדה ועל הכלים שקיבלה להתמודד איתה" loading="lazy" width="760" height="1012">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
-          </button>
-        </figure>
-        <figure class="testimonial-card">
-          <p class="quote-title">הגיע "מבולבל, מיואש, חרד ומפוחד", ומצא את עצמו "קונה בחזרה את הרוגע"</p>
-          <button type="button" class="quote-shot-btn" data-lightbox-src="../hadracha/img/testimonial-3.jpg" aria-label="הצגת ההודעה המלאה בהגדלה">
-            <img class="quote-shot" src="../hadracha/img/testimonial-3.jpg" alt="הודעת תודה מלקוח שהגיע חרד ומפוחד ולמד להתמודד עם המצבים שחווה" loading="lazy" width="760" height="654">
-            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להצגת ההודעה המלאה</span>
+            <img class="quote-shot" src="../hadracha/img/testimonial-1.jpg" alt="הודעת וואטסאפ ממטופלת על חיים שלמים עם חרדה ועל חזרה לנהיגה" loading="lazy" width="760" height="1012">
+            <span class="quote-shot-expand"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" aria-hidden="true"><circle cx="11" cy="11" r="7"/><line x1="21" y1="21" x2="16.65" y2="16.65"/></svg>להגדלה</span>
           </button>
         </figure>
       </div>
