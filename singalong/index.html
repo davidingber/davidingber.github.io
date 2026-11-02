@@ -133,7 +133,8 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
 var SONGS={
   yonatan:{
     title:'יונתן הקטן',
-    bpm:112,
+    bpm:120,
+    backing:null, // optional: path to a real backing-track mp3 at the same bpm (see README note)
     // notes from David (C major): 8 lines, 2 bars each. Rhythm assumed: quarter notes, held last note of each half-line
     notes:[[67,1],[64,1],[64,2],[65,1],[62,1],[62,2],
            [60,1],[62,1],[64,1],[65,1],[67,1],[67,1],[67,2],
@@ -147,7 +148,8 @@ var SONGS={
   },
   hora:{
     title:'הורה צוחקת',
-    bpm:132,
+    bpm:128,
+    backing:null,
     // D freygish (Hijaz-flavoured) hora, 16 beats = 4 bars
     notes:[[69,.5],[70,.5],[69,.5],[67,.5],[66,1],[63,.5],[62,.5],[63,1],[66,1],[67,2],
            [69,.5],[70,.5],[69,.5],[67,.5],[66,1],[67,.5],[66,.5],[63,1],[62,3]],
@@ -193,19 +195,34 @@ function parseWords(str){
   return out;
 }
 
-/* ---------- Timeline: the sentence repeats until the whole song is sung ---------- */
+/* ---------- Timeline ----------
+   The whole sentence is fitted onto the beat grid: one repetition fills a musical phrase (4, 8, 16 or 32 beats,
+   whichever is the smallest that fits the syllable count). Syllables land on beats (on half-beats for long
+   sentences), and each takes the pitch of the melody note that is sounding at that moment. */
 function buildTimeline(base,song){
-  var beat=60/song.bpm,M=song.notes.length,words=[],syl=[],t=0,i=0;
-  if(!base.length)return {words:words,syl:syl,total:0,beat:beat};
-  while(i<M){
-    for(var j=0;j<base.length&&i<M;j++){
-      var n=Math.min(base[j].n,M-i),w={text:base[j].text,n:n,first:i};
-      for(var k=0;k<n;k++){var nt=song.notes[i];syl.push({start:t,dur:nt[1]*beat,midi:nt[0]});t+=nt[1]*beat;i++}
-      w.last=i-1;w.start=syl[w.first].start;w.end=syl[w.last].start+syl[w.last].dur;
-      words.push(w);
-    }
+  var beat=60/song.bpm,words=[],syl=[];
+  var starts=[],acc=0;song.notes.forEach(function(n){starts.push(acc);acc+=n[1]});
+  var totalBeats=acc;
+  function noteAt(b){var k=0;for(var i=0;i<starts.length;i++){if(starts[i]<=b+1e-6)k=i}return song.notes[k][0]}
+  var S=base.reduce(function(a,w){return a+w.n},0);
+  if(!S)return {words:words,syl:syl,total:0,beat:beat};
+  var R=[4,8,16,32].filter(function(r){return S<=r})[0]||32;
+  var g=S<=R?1:(S<=2*R?0.5:0.25);
+  var pos=[];for(var j=0;j<S;j++){var p=Math.round(j*R/S/g)*g;if(j&&p<=pos[j-1])p=pos[j-1]+g;pos.push(p)}
+  var RL=Math.max(R,pos[S-1]+g);
+  for(var r0=0;r0<totalBeats-1e-6;r0+=RL){
+    var j2=0;
+    base.forEach(function(bw){
+      var w={text:bw.text,n:bw.n,first:syl.length},keep=false;
+      for(var k=0;k<bw.n;k++,j2++){
+        var sb=r0+pos[j2];if(sb>=totalBeats-1e-6)break;
+        var eb=Math.min(totalBeats,r0+(j2+1<S?pos[j2+1]:RL));
+        syl.push({start:sb*beat,dur:(eb-sb)*beat,midi:noteAt(sb),idx:j2});keep=true;
+      }
+      if(keep){w.last=syl.length-1;w.start=syl[w.first].start;w.end=syl[w.last].start+syl[w.last].dur;words.push(w)}
+    });
   }
-  return {words:words,syl:syl,total:t,beat:beat};
+  return {words:words,syl:syl,total:totalBeats*beat,beat:beat};
 }
 
 /* ---------- Pitch & segmentation for the recording ---------- */
@@ -246,27 +263,37 @@ function segment(buf,S){
 /* ---------- Offline render: accompaniment (+ sung recording) ---------- */
 function noise(octx,len){var b=octx.createBuffer(1,len,octx.sampleRate),d=b.getChannelData(0);for(var i=0;i<len;i++)d[i]=Math.random()*2-1;return b}
 
-function renderMix(song,tl,vocalSlices,vocalBuf){
+function renderMix(song,tl,vocalSlices,vocalBuf,backBuf){
   var sr=ac.sampleRate,tail=1.2,len=Math.ceil((tl.total+tail)*sr);
   var oc=new OfflineAudioContext(1,len,sr);
-  var master=oc.createGain();master.gain.value=1;master.connect(oc.destination);
-  var acc=oc.createGain();acc.gain.value=vocalBuf?0.3:0.5;acc.connect(master);
-  var beat=tl.beat,totalBeats=Math.ceil(tl.total/beat)+2,nz=noise(oc,Math.floor(sr*0.2));
+  var comp=oc.createDynamicsCompressor();comp.threshold.value=-16;comp.ratio.value=4;comp.attack.value=0.003;comp.release.value=0.15;comp.connect(oc.destination);
+  var master=oc.createGain();master.gain.value=0.95;master.connect(comp);
+  var acc=oc.createGain();acc.gain.value=vocalBuf?0.34:0.55;acc.connect(master);
+  var crowd=oc.createGain();crowd.gain.value=backBuf?0:0.5;crowd.connect(master);
+  var beat=tl.beat,totalBeats=Math.ceil(tl.total/beat)+2,nz=noise(oc,Math.floor(sr*0.3));
 
-  function tone(freq,t,dur,type,g){
+  function tone(freq,t,dur,type,g,out){
     var o=oc.createOscillator(),gn=oc.createGain();o.type=type;o.frequency.value=freq;
-    gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(g,t+0.01);gn.gain.exponentialRampToValueAtTime(0.001,t+dur);
-    o.connect(gn);gn.connect(acc);o.start(t);o.stop(t+dur+0.02);
+    gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(g,t+0.008);gn.gain.exponentialRampToValueAtTime(0.001,t+dur);
+    o.connect(gn);gn.connect(out||acc);o.start(t);o.stop(t+dur+0.02);
   }
   function hit(t,freq,q,g,dur,out){
     var s=oc.createBufferSource(),f=oc.createBiquadFilter(),gn=oc.createGain();s.buffer=nz;f.type='bandpass';f.frequency.value=freq;f.Q.value=q;
     gn.gain.setValueAtTime(g,t);gn.gain.exponentialRampToValueAtTime(0.001,t+dur);s.connect(f);f.connect(gn);gn.connect(out||acc);s.start(t);s.stop(t+dur+0.02);
   }
+  var hatBuf=oc.createBuffer(1,Math.floor(sr*0.05),sr),hd=hatBuf.getChannelData(0),pv=0;
+  for(var hi=0;hi<hd.length;hi++){var nv=Math.random()*2-1;hd[hi]=(nv-pv)*Math.exp(-hi/(sr*0.008));pv=nv}
+  function hat(t,g){var s=oc.createBufferSource(),gn=oc.createGain();s.buffer=hatBuf;gn.gain.value=g;s.connect(gn);gn.connect(acc);s.start(t)}
   function dum(t){
-    var o=oc.createOscillator(),gn=oc.createGain();o.frequency.setValueAtTime(170,t);o.frequency.exponentialRampToValueAtTime(70,t+0.1);
-    gn.gain.setValueAtTime(1,t);gn.gain.exponentialRampToValueAtTime(0.001,t+0.22);o.connect(gn);gn.connect(acc);o.start(t);o.stop(t+0.24);
+    var o=oc.createOscillator(),gn=oc.createGain();o.frequency.setValueAtTime(190,t);o.frequency.exponentialRampToValueAtTime(60,t+0.09);
+    gn.gain.setValueAtTime(1.1,t);gn.gain.exponentialRampToValueAtTime(0.001,t+0.26);o.connect(gn);gn.connect(acc);o.start(t);o.stop(t+0.28);
   }
-  var crowd=oc.createGain();crowd.gain.value=0.5;crowd.connect(master);
+  function clap(t){hit(t,1250,0.9,0.9,0.1);hit(t+0.012,1800,0.9,0.6,0.09);hit(t+0.03,1500,0.8,0.4,0.14)}
+  function stab(t,freqs,dur){
+    var f=oc.createBiquadFilter(),gn=oc.createGain();f.type='lowpass';f.frequency.value=2600;f.Q.value=1;
+    gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(0.11,t+0.01);gn.gain.exponentialRampToValueAtTime(0.001,t+dur);f.connect(gn);gn.connect(acc);
+    freqs.forEach(function(fr,i){var o=oc.createOscillator();o.type='sawtooth';o.frequency.value=fr;o.detune.value=(i-1)*5;o.connect(f);o.start(t);o.stop(t+dur+0.02)});
+  }
   function laugh(t,base){
     for(var k=0;k<5;k++){
       var tt=t+k*0.17,o=oc.createOscillator(),f1=oc.createBiquadFilter(),f2=oc.createBiquadFilter(),gn=oc.createGain();
@@ -284,28 +311,41 @@ function renderMix(song,tl,vocalSlices,vocalBuf){
     gn.gain.setValueAtTime(0,t);gn.gain.linearRampToValueAtTime(0.4,t+0.12);gn.gain.setValueAtTime(0.4,t+dur-0.2);gn.gain.linearRampToValueAtTime(0,t+dur);
     o.connect(f);f.connect(gn);gn.connect(crowd);o.start(t);lfo.start(t);o.stop(t+dur);lfo.stop(t+dur);
   }
-  function shout(t){hit(t,1100,3,0.7,0.28,crowd);tone(330,t,0.25,'sawtooth',0.0)}
+  function shout(t){hit(t,1100,3,0.7,0.28,crowd)}
 
-  for(var bt=0;bt<totalBeats;bt++){
-    var t=bt*beat,bar=Math.floor(bt/4),ch=song.chords[bar%song.chords.length],root=ch[0],pos=bt%4;
-    // dum on 1 and 3, tak on the off beats, quick darbuka fills on the eighths
-    if(pos===0||pos===2)dum(t);else hit(t,3000,1.2,0.5,0.07);
-    hit(t+beat*0.5,4200,1.2,0.28,0.05);
-    if(pos===1||pos===3)hit(t,1500,0.8,0.7,0.09);               // hand clap on 2 and 4
-    // oom-pah bass + accordion-like off-beat stabs
-    tone(hz(root-12+(pos===2?7:0)),t,beat*0.8,'triangle',0.5);
-    [0,ch[1],7].forEach(function(iv){tone(hz(root+12+iv),t+beat*0.5,beat*0.4,'square',0.06)});
+  if(backBuf){
+    var bs=oc.createBufferSource(),bg=oc.createGain();bs.buffer=backBuf;bg.gain.value=0.9;bs.connect(bg);bg.connect(acc);
+    bs.start(0,0,tl.total+tail);
+  }else{
+    for(var bt=0;bt<totalBeats;bt++){
+      var t=bt*beat,bar=Math.floor(bt/4),ch=song.chords[bar%song.chords.length],root=ch[0],pos=bt%4,q=beat/4;
+      var chordF=[0,ch[1],7].map(function(iv){return hz(root+12+iv)});
+      // drums: dum on 1 and 3 (+ pick-up), clap on 2 and 4, constant 16th shaker with accents
+      if(pos===0||pos===2)dum(t);
+      if(pos===3)dum(t+beat*0.75);
+      if(pos===1||pos===3)clap(t);
+      for(var k=0;k<4;k++)hat(t+k*q,k===2?0.3:(k%2?0.12:0.2));
+      // fill every 4th bar
+      if(bar%4===3&&pos===3)for(k=0;k<4;k++)hit(t+k*q,2200,0.8,0.5+k*0.1,0.07);
+      // bass: root, fifth, octave walk
+      var bn=[root-12,root-5,root-12,root-12+(bar%2?5:7)][pos];
+      tone(hz(bn),t,beat*0.85,'triangle',0.62);tone(hz(bn+12),t,beat*0.3,'sine',0.12);
+      // accordion-like stabs on the off-beats
+      stab(t+beat*0.5,chordF,beat*0.38);
+      if(pos===3)stab(t+beat*0.75,chordF,beat*0.2);
+    }
+    // the crowd
+    var barSec=beat*4,nbars=Math.ceil(tl.total/barSec)+1;
+    for(var br=0;br<nbars;br++){
+      var b0=br*barSec;
+      if(br%2===0)shout(b0);
+      if(br%4===0)ulu(b0+beat*0.5,880,Math.min(barSec*0.9,1.8));
+      if(br%4===1)laugh(b0+beat*1.5,230+Math.random()*50);
+      if(br%4===2){laugh(b0+beat*0.5,300);laugh(b0+beat*1.1,210)}
+      if(br%4===3){ulu(b0+beat*2,980,1.3);shout(b0+beat*3.5)}
+    }
+    ulu(tl.total-0.1,920,1.1);laugh(tl.total,260);
   }
-  // the crowd: laughter, ululation and shouts
-  var barSec=beat*4,nbars=Math.ceil(tl.total/barSec)+1;
-  for(var br=0;br<nbars;br++){
-    var bs=br*barSec;
-    if(br%4===0){shout(bs);ulu(bs+beat*0.5,880,Math.min(barSec*0.9,1.8))}
-    if(br%4===1)laugh(bs+beat*1.5,230+Math.random()*50);
-    if(br%4===2){laugh(bs+beat*0.5,300);laugh(bs+beat*1.1,210)}
-    if(br%4===3){ulu(bs+beat*2,980,1.3);shout(bs+beat*3.5)}
-  }
-  ulu(tl.total-0.1,920,1.1);laugh(tl.total,260);
 
   if(vocalBuf){
     var d=vocalBuf.getChannelData(0),peak=0;
@@ -316,13 +356,13 @@ function renderMix(song,tl,vocalSlices,vocalBuf){
     var tm=tl.syl.map(function(s){return hz(s.midi)}).sort(function(a,b){return a-b})[tl.syl.length>>1];
     var oct=Math.pow(2,Math.round(Math.log(medF/tm)/Math.LN2));
     var prev=medF;
-    tl.syl.forEach(function(sy,k){
-      var si=k%vocalSlices.length,s=vocalSlices[si],f=f0s[si]||prev;prev=f;
+    tl.syl.forEach(function(sy){
+      var si=sy.idx%vocalSlices.length,s=vocalSlices[si],f=f0s[si]||prev;prev=f;
       var rate=Math.max(0.5,Math.min(2.2,hz(sy.midi)*oct/f));
       var L=(s.b-s.a)/vocalBuf.sampleRate,use=Math.min(L,sy.dur*rate*0.95),playDur=use/rate;
       var src=oc.createBufferSource(),gn=oc.createGain();
       src.buffer=vocalBuf;src.playbackRate.value=rate;
-      gn.gain.setValueAtTime(0,sy.start);gn.gain.linearRampToValueAtTime(norm,sy.start+0.01);
+      gn.gain.setValueAtTime(0,sy.start);gn.gain.linearRampToValueAtTime(norm,sy.start+0.008);
       gn.gain.setValueAtTime(norm,sy.start+Math.max(0.01,playDur-0.03));gn.gain.linearRampToValueAtTime(0,sy.start+playDur);
       src.connect(gn);gn.connect(master);
       src.start(sy.start,s.a/vocalBuf.sampleRate,use);
@@ -391,7 +431,11 @@ async function prepare(){
   var baseSyl=base.reduce(function(a,w){return a+w.n},0);
   var slices=useVoice?segment(recBuffer,baseSyl):null;
   setStatus('מכינים את השיר…');
-  var mix=await renderMix(song,tl,slices,useVoice?recBuffer:null);
+  var backBuf=null;
+  if(song.backing){
+    try{if(!song._back){var rs=await fetch(song.backing);if(!rs.ok)throw 0;song._back=await ac.decodeAudioData(await rs.arrayBuffer())}backBuf=song._back}catch(e){backBuf=null}
+  }
+  var mix=await renderMix(song,tl,slices,useVoice?recBuffer:null,backBuf);
   return {words:words,song:song,tl:tl,mix:mix,lines:layoutLines(words),useVoice:useVoice};
 }
 
