@@ -338,6 +338,9 @@ strong{color:var(--ink)}
 .hero-shots{display:grid;grid-template-columns:1fr;gap:16px;max-width:520px;margin:30px auto 0}
 @media (min-width:860px){.hero-shots{grid-template-columns:1fr 1fr;max-width:860px;align-items:start}}
 .hero-shot{appearance:none;display:block;width:100%;padding:0;margin:0;border:1px solid rgba(224,190,114,0.4);border-radius:var(--radius-sm);background:var(--bg-soft);cursor:pointer;overflow:hidden;font-family:inherit;box-shadow:0 14px 34px rgba(0,0,0,0.35)}
+.hs-head{display:flex;flex-direction:column;gap:4px;padding:14px 16px 12px;text-align:right;background:var(--bg-soft);border-bottom:1px solid var(--line)}
+.hs-head b{font-family:var(--font-head);font-size:1.12rem;line-height:1.35;color:var(--ink);font-weight:700}
+.hs-head span{font-size:.92rem;line-height:1.5;color:var(--ink-soft);font-weight:400}
 .hero-shot img{display:block;width:100%;height:auto}
 .hs-by{display:block;padding:9px 12px;font-size:.84rem;font-weight:600;color:var(--gold-deep);background:var(--bg-soft);border-top:1px solid var(--line);text-align:center}
 .hero-shot:hover .hs-by,.hero-shot:focus-visible .hs-by{background:var(--gold-tint)}
@@ -428,18 +431,22 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
       </div>
       <div class="hero-shots reveal" style="animation-delay:340ms">
         <button type="button" class="hero-shot" data-lightbox-src="img/testimonial-panic-1.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <span class="hs-head"><b>שחררה את הפחד מהתקף פאניקה</b><span>יישמה את הכלים בזמן אמת, הרגישה שהכול בסדר, והכול עבר מעולה מול המנכ"ל.</span></span>
           <img src="img/testimonial-panic-1.jpg" alt="הודעת וואטסאפ ממטופלת ששחררה את הפחד מהתקף פאניקה לפני מצגת מול המנכ"ל" width="738" height="911" loading="eager">
           <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
         </button>
         <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-15.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <span class="hs-head"><b>עולה מדרגה בהתמודדות עם הפחד</b><span>אחרי שנים של חיים עם פחד, קיבלה כלים להכיל אותו, וזה נותן לה תקווה והרגשת נחת.</span></span>
           <img src="../hadracha/img/testimonial-15.jpg" alt="הודעת וואטסאפ ממטופלת על כלים להתמודדות עם פחד וחרדה לאורך שנים" width="738" height="920" loading="eager">
           <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
         </button>
         <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-14.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <span class="hs-head"><b>החרדה כבר לא שולטת בחיי היום יום</b><span>הפרידה בין החיים לבין החרדה, עושה הרבה יותר דברים, ויש לה יותר מוטיבציה להתגבר על עוד פחדים.</span></span>
           <img src="../hadracha/img/testimonial-14.jpg" alt="הודעת וואטסאפ ממטופלת על ירידה בשליטה של החרדה בחיי היום יום" width="1080" height="1017" loading="eager">
           <span class="hs-by">מהודעה של מטופלת · להגדלה</span>
         </button>
         <button type="button" class="hero-shot" data-lightbox-src="../hadracha/img/testimonial-5.jpg" aria-label="הצגת ההודעה בהגדלה">
+          <span class="hs-head"><b>מתמודד בקלילות ולא מפחד ממה שיגיע</b><span>עושה היום דברים שחשש מהם קודם, ומרגיש הרבה יותר בנוח עם עצמו.</span></span>
           <img src="../hadracha/img/testimonial-5.jpg" alt="הודעת וואטסאפ ממטופל על התמודדות קלה יותר עם החרדה" width="760" height="1131" loading="eager">
           <span class="hs-by">מהודעה של מטופל · להגדלה</span>
         </button>
