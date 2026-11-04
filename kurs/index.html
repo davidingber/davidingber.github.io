@@ -1189,9 +1189,15 @@ function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
 function buildPaymentUrl(d) {
   // Most Israeli payment pages ignore unknown params, so passing these is harmless.
   var u = new URL(PAYMENT_URL);
-  u.searchParams.set('full_name', d.name);
-  u.searchParams.set('email', d.email);
-  u.searchParams.set('phone', d.phone);
+  // Cardcom's accepted pre-fill names are unverified, so several common aliases are sent (unknown ones are ignored).
+  var map = {
+    email: ['Email', 'email', 'CardOwnerEmail', 'cardownerEmail', 'EmailAddress'],
+    name: ['CardOwnerName', 'cardownername', 'FullName', 'full_name', 'Name', 'CustomerName'],
+    phone: ['Phone', 'phone', 'CardOwnerPhone', 'CardOwnerMobilePhone', 'Mobile', 'Cellular']
+  };
+  Object.keys(map).forEach(function (k) {
+    map[k].forEach(function (key) { u.searchParams.set(key, d[k]); });
+  });
   return u.toString();
 }
 
