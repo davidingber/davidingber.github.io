@@ -1189,15 +1189,14 @@ function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
 function buildPaymentUrl(d) {
   // Most Israeli payment pages ignore unknown params, so passing these is harmless.
   var u = new URL(PAYMENT_URL);
-  // Cardcom's accepted pre-fill names are unverified, so several common aliases are sent (unknown ones are ignored).
-  var map = {
-    email: ['Email', 'email', 'CardOwnerEmail', 'cardownerEmail', 'EmailAddress'],
-    name: ['CardOwnerName', 'cardownername', 'FullName', 'full_name', 'Name', 'CustomerName'],
-    phone: ['Phone', 'phone', 'CardOwnerPhone', 'CardOwnerMobilePhone', 'Mobile', 'Cellular']
-  };
-  Object.keys(map).forEach(function (k) {
-    map[k].forEach(function (key) { u.searchParams.set(key, d[k]); });
-  });
+  // Cardcom pre-fill params (per Cardcom's "העברת פרמטרים אל דף אישורית זהב" guide, 20.10.2026):
+  // ExtCUserEmail / ExtCInvoiceTo / ExtMobilPhone (their subscribers_* aliases are sent too).
+  u.searchParams.set('ExtCUserEmail', d.email);
+  u.searchParams.set('subscribers_email', d.email);
+  u.searchParams.set('ExtCInvoiceTo', d.name);
+  u.searchParams.set('subscribers_name', d.name);
+  u.searchParams.set('ExtMobilPhone', d.phone);
+  u.searchParams.set('subscribers_phone', d.phone);
   return u.toString();
 }
 
