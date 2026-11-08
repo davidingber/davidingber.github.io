@@ -1191,11 +1191,11 @@ function buildPaymentUrl(d) {
   var u = new URL(PAYMENT_URL);
   // Cardcom pre-fill params (per Cardcom's "העברת פרמטרים אל דף אישורית זהב" guide, 20.10.2026):
   // ExtCUserEmail / ExtCInvoiceTo / ExtMobilPhone (their subscribers_* aliases are sent too).
-  // Name pre-fill is confirmed working via ExtCInvoiceTo / subscribers_name. Email + phone did not fill with
-  // ExtCUserEmail / ExtMobilPhone alone, so Cardcom's other documented field names are sent too (unknown ones are ignored).
-  ['ExtCUserEmail', 'subscribers_email', 'UserEmail', 'CardOwnerEmail', 'Email', 'email'].forEach(function (k) { u.searchParams.set(k, d.email); });
-  ['ExtCInvoiceTo', 'subscribers_name', 'CardOwnerName'].forEach(function (k) { u.searchParams.set(k, d.name); });
-  ['ExtMobilPhone', 'subscribers_phone', 'CardOwnerPhone', 'Phone', 'phone', 'Mobile'].forEach(function (k) { u.searchParams.set(k, d.phone); });
+  // Cardcom support's own working example uses only ExtCUserEmail + ExtMobilPhone (no sum). Name works via ExtCInvoiceTo.
+  // Kept to exactly the documented names: extra guessed aliases removed in case they interfere.
+  u.searchParams.set('ExtCUserEmail', d.email);
+  u.searchParams.set('ExtMobilPhone', d.phone);
+  u.searchParams.set('ExtCInvoiceTo', d.name);
   return u.toString();
 }
 
