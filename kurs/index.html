@@ -1189,10 +1189,10 @@ function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
 function buildPaymentUrl(d) {
   // Built exactly like Cardcom support's working example: only ExtCUserEmail + ExtMobilPhone after the "?",
   // with a raw "@" (URLSearchParams would send %40) and a plain digits-only phone like 0500000000.
-  // No name param and no sum: extra params did not fill email/phone on David's page.
+  // Name (ExtCInvoiceTo) is appended last: it is the only param that fills on David's page today. No sum.
   var phone = String(d.phone).replace(/[^\d]/g, '').replace(/^972/, '0');
   var email = String(d.email).replace(/[\s&?#=%]/g, '');
-  return PAYMENT_URL.split('?')[0] + '?ExtCUserEmail=' + email + '&ExtMobilPhone=' + phone;
+  return PAYMENT_URL.split('?')[0] + '?ExtCUserEmail=' + email + '&ExtMobilPhone=' + phone + '&ExtCInvoiceTo=' + encodeURIComponent(d.name);
 }
 
 (function () {
