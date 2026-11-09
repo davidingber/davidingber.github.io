@@ -1187,15 +1187,12 @@ var WA_NUMBER = "972559930227";
 
 function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
 function buildPaymentUrl(d) {
-  // Most Israeli payment pages ignore unknown params, so passing these is harmless.
-  var u = new URL(PAYMENT_URL);
-  // Cardcom pre-fill params (per Cardcom's "העברת פרמטרים אל דף אישורית זהב" guide, 20.10.2026):
-  // Cardcom support's own working example uses only ExtCUserEmail + ExtMobilPhone (no sum). Name works via ExtCInvoiceTo.
-  // Kept to exactly the documented names: extra guessed aliases removed in case they interfere.
-  u.searchParams.set('ExtCUserEmail', d.email);
-  u.searchParams.set('ExtMobilPhone', d.phone);
-  u.searchParams.set('ExtCInvoiceTo', d.name);
-  return u.toString();
+  // Built exactly like Cardcom support's working example: only ExtCUserEmail + ExtMobilPhone after the "?",
+  // with a raw "@" (URLSearchParams would send %40) and a plain digits-only phone like 0500000000.
+  // No name param and no sum: extra params did not fill email/phone on David's page.
+  var phone = String(d.phone).replace(/[^\d]/g, '').replace(/^972/, '0');
+  var email = String(d.email).replace(/[\s&?#=%]/g, '');
+  return PAYMENT_URL.split('?')[0] + '?ExtCUserEmail=' + email + '&ExtMobilPhone=' + phone;
 }
 
 (function () {
