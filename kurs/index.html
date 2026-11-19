@@ -1187,12 +1187,8 @@ var WA_NUMBER = "972559930227";
 
 function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
 function buildPaymentUrl(d) {
-  // Built exactly like Cardcom support's working example: only ExtCUserEmail + ExtMobilPhone after the "?",
-  // with a raw "@" (URLSearchParams would send %40) and a plain digits-only phone like 0500000000.
-  // No name param (David asked to drop ExtCInvoiceTo, 19.11) and no sum.
-  var phone = String(d.phone).replace(/[^\d]/g, '').replace(/^972/, '0');
-  var email = String(d.email).replace(/[\s&?#=%]/g, '');
-  return PAYMENT_URL.split('?')[0] + '?ExtCUserEmail=' + email + '&ExtMobilPhone=' + phone;
+  // TEMPORARY reset step (David, 19.11): no pre-fill params at all. The three params come back in the next commit.
+  return PAYMENT_URL.split('?')[0];
 }
 
 (function () {
