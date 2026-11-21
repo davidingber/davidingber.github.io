@@ -1185,6 +1185,9 @@ body.a11y-reduce .in-view,body.a11y-reduce .reveal{opacity:1!important;transform
 // Cardcom payment page (replaced the earlier Sumit page, 25.10).
 var PAYMENT_URL = "https://secure.cardcom.solutions/EA/EA5/qcEBIZGQAkSbY8HEWGxFA/PaymentSP";
 var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzF-RuqeeXYuv9w6JIssnhGygsVjx9FCyCVecEmgdLLrUenWKl4KoIvmDCIo1vTwvHByA/exec";
+// פונקציית Vercel שמקבלת את הליד: בודקת, שומרת עותק פרטי (כולל ref) ומעבירה ל-Apps Script שלמעלה (גיליון + רב מסר).
+// אם אין חיבור אליה, הדף שולח ישירות ל-SHEET_WEBAPP_URL כמו קודם.
+var LEAD_API_URL = "https://davidingber-api.vercel.app/api/lead";
 var WA_NUMBER = "972559930227";
 
 function isSet(u) { return u && u.indexOf('PASTE_YOUR') !== 0; }
@@ -1242,19 +1245,22 @@ function buildPaymentUrl(d) {
       stored.push(payload);
       localStorage.setItem('kurs-orders', JSON.stringify(stored));
     } catch (x) { /* no-op */ }
+    var sent = Promise.resolve();
     if (isSet(SHEET_WEBAPP_URL)) {
-      fetch(SHEET_WEBAPP_URL, { method: 'POST', mode: 'no-cors', headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) }).catch(function () {});
+      var sendOpts = { method: 'POST', mode: 'no-cors', keepalive: true, headers: { 'Content-Type': 'text/plain;charset=utf-8' }, body: JSON.stringify(payload) };
+      sent = fetch(LEAD_API_URL, sendOpts).catch(function () { return fetch(SHEET_WEBAPP_URL, sendOpts); }).catch(function () {});
     }
 
     try { if (window.fbq) fbq('track', 'InitiateCheckout', { value: 87, currency: 'ILS' }); } catch (x) { /* no-op */ }
-    setTimeout(function () {
+    // ממתינים לתשובה (עד 1.2 שניות) כדי שגיבוי הגיליון יספיק לצאת אם הפונקציה לא זמינה
+    Promise.race([sent, new Promise(function (r) { setTimeout(r, 1200); })]).then(function () {
       if (isSet(PAYMENT_URL)) {
         location.href = buildPaymentUrl(payload);
       } else {
         var msg = 'היי דוד, אני רוצה לרכוש את הקורס "איך להפסיק לפחד מהתקף החרדה הבא" (87 ₪).\nשם: ' + name + '\nמייל: ' + email + '\nטלפון: ' + phone;
         location.href = 'https://wa.me/' + WA_NUMBER + '?text=' + encodeURIComponent(msg);
       }
-    }, 250);
+    });
   });
 })();
 
