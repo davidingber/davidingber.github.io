@@ -109,6 +109,9 @@ textarea::placeholder{color:var(--ink-faint)}
 .field{margin-bottom:14px}
 .field label{display:block;font-size:.9rem;font-weight:600;color:var(--ink-soft);margin-bottom:6px}
 .field input{width:100%;font-family:inherit;font-size:1.02rem;padding:14px 16px;border-radius:12px;border:1.5px solid var(--line);background:var(--bg);color:var(--ink);transition:border-color .2s var(--ease)}
+.consent-field{margin:4px 0 14px}
+.consent-label{display:flex;align-items:flex-start;gap:10px;cursor:pointer;font-size:.86rem;color:var(--ink-soft);line-height:1.5}
+.consent-label input{flex:0 0 auto;width:18px;height:18px;margin-top:2px;accent-color:var(--gold)}
 .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(169,118,27,0.16)}
 .field input[type="email"],.field input[type="tel"]{direction:ltr;text-align:right}
 .hp{position:absolute;left:-9999px;top:-9999px;opacity:0;height:0;width:0;overflow:hidden}
@@ -347,6 +350,12 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
         <label for="lf-age">גיל</label>
         <input id="lf-age" name="age" type="number" min="12" max="120" placeholder="גיל" inputmode="numeric">
       </div>
+      <div class="consent-field">
+        <label class="consent-label">
+          <input type="checkbox" id="lf-consent" name="consent">
+          <span>אני מאשר/ת לקבל מיילים מדוד, בלי ספאם ועם אפשרות להסרה. (לא חובה, והשיחה לא תלויה בכך.)</span>
+        </label>
+      </div>
       <!-- honeypot — hidden from real visitors, spam bots tend to fill every field -->
       <div class="hp" aria-hidden="true">
         <label for="lf-website">Website</label>
@@ -407,6 +416,9 @@ body.a11y-reduce *{animation:none!important;transition:none!important;scroll-beh
  * עד שהכתובת לא תוחלף, הטופס עדיין ישמור את התשובות מקומית (localStorage) כגיבוי ויציג את מסך התודה כרגיל.
  */
 var SHEET_WEBAPP_URL = "https://script.google.com/macros/s/AKfycbzQoWUpr9MaaYTfD2W4hk2g60qh7jtjdGimZk3ZNm41OXLoZktMV7kqnOMaDMTruwUgXw/exec";
+// פונקציית Vercel שמקבלת את השאלון: שומרת עותק פרטי (כולל ref), מוסיפה לרב מסר רק עם הסכמה, ומעבירה ל-Apps Script שלמעלה.
+// אם אין חיבור אליה, הדף שולח ישירות ל-SHEET_WEBAPP_URL כמו קודם.
+var LEAD_API_URL = "https://davidingber-api.vercel.app/api/lead";
 
 // scroll progress bar across the form
 (function () {
@@ -509,10 +521,14 @@ document.querySelectorAll('.opt input').forEach(function (input) {
       q10_safety: radioValue('q10_safety'),
       q10_details: form.q10_details.value.trim(),
       q11_cost: form.q11_cost.value.trim(),
+      marketing_consent: form.consent.checked ? 'yes' : 'no',
       source: 'shealon-hataama',
+      ref: params.get('ref') || params.get('utm_content') || (function () { try { return localStorage.getItem('ad_ref') || ''; } catch (e) { return ''; } })(),
       utm_source: params.get('utm_source') || '',
       utm_medium: params.get('utm_medium') || '',
       utm_campaign: params.get('utm_campaign') || '',
+      utm_content: params.get('utm_content') || '',
+      utm_term: params.get('utm_term') || '',
       timestamp: new Date().toISOString()
     };
 
@@ -553,11 +569,15 @@ document.querySelectorAll('.opt input').forEach(function (input) {
       return;
     }
 
-    fetch(SHEET_WEBAPP_URL, {
+    var sendOpts = {
       method: 'POST',
       mode: 'no-cors',
+      keepalive: true,
       headers: { 'Content-Type': 'text/plain;charset=utf-8' },
       body: JSON.stringify(payload)
+    };
+    fetch(LEAD_API_URL, sendOpts).catch(function () {
+      return fetch(SHEET_WEBAPP_URL, sendOpts);
     }).catch(function () { /* גם אם הרשת נכשלה, התשובות כבר נשמרו מקומית */ });
   });
 })();
@@ -597,5 +617,6 @@ document.querySelectorAll('.opt input').forEach(function (input) {
 })();
 </script>
 
+<script>try{var q=new URLSearchParams(location.search),r=q.get("ref")||q.get("utm_content");if(r)localStorage.setItem("ad_ref",r);}catch(e){}</script>
 </body>
 </html>
