@@ -1217,15 +1217,24 @@ function buildPaymentUrl(d) {
     btn.disabled = true;
     btn.textContent = 'מעבירים לתשלום מאובטח...';
 
+    // ref מהמודעה (?ref=...): נשמר ב-localStorage כדי שיישאר גם אחרי מעבר בין דפים
+    function getAdRef(params) {
+      var r = params.get('ref') || params.get('utm_content') || '';
+      try { if (r) localStorage.setItem('ad_ref', r); else r = localStorage.getItem('ad_ref') || ''; } catch (e) { /* no-op */ }
+      return r;
+    }
     var params = new URLSearchParams(location.search);
     var payload = {
       name: name, email: email, phone: phone,
       marketing_consent: form.consent.checked ? 'yes' : 'no',
       product: 'kurs-lo-lefached', price: 87,
       source: 'kurs-sales-page',
+      ref: getAdRef(params),
       utm_source: params.get('utm_source') || '',
       utm_medium: params.get('utm_medium') || '',
       utm_campaign: params.get('utm_campaign') || '',
+      utm_content: params.get('utm_content') || '',
+      utm_term: params.get('utm_term') || '',
       timestamp: new Date().toISOString()
     };
     try {
@@ -1331,5 +1340,6 @@ function buildPaymentUrl(d) {
   document.addEventListener('keydown', function (e) { if (e.key === 'Escape' && !panel.hidden) close(); });
 })();
 </script>
+<script>try{var q=new URLSearchParams(location.search),r=q.get("ref")||q.get("utm_content");if(r)localStorage.setItem("ad_ref",r);}catch(e){}</script>
 </body>
 </html>
