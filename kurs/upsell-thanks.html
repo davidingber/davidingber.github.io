@@ -324,6 +324,16 @@ body{padding-bottom:0}
 .ty-hero h1{color:var(--on-dark);font-size:clamp(1.7rem,6vw,2.5rem);line-height:1.3;font-weight:800;max-width:22ch;margin:0 auto}
 .ty-hero h1 em{font-style:normal;color:var(--gold-soft)}
 .ty-hero .lead{max-width:36ch;margin:18px auto 0}
+.two-courses{display:grid;grid-template-columns:1fr 1fr;gap:16px;margin:26px 0 8px}
+.tc-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:22px 20px;box-shadow:var(--shadow-sm)}
+.tc-card .tc-tag{display:inline-block;font-size:12.5px;font-weight:700;letter-spacing:.02em;color:var(--gold-deep);background:var(--gold-tint);border:1px solid rgba(169,118,27,0.32);padding:4px 12px;border-radius:999px;margin-bottom:10px}
+.tc-card h3{font-size:1.08rem;margin-bottom:6px;line-height:1.35}
+.tc-card .tc-when{font-weight:700;color:var(--ink);margin-bottom:8px;font-size:.98rem}
+.tc-card p{font-size:.95rem}
+.tc-fit{margin-top:22px;background:var(--bg-soft);border:1px solid var(--line);border-radius:var(--radius);padding:22px 22px}
+.tc-fit p{font-size:1rem}
+.tc-fit p+p{margin-top:10px}
+@media(max-width:620px){.two-courses{grid-template-columns:1fr}}
 .next-steps{list-style:none;counter-reset:ns;display:flex;flex-direction:column;gap:14px;margin:26px 0 6px}
 .next-steps li{counter-increment:ns;display:flex;gap:16px;align-items:flex-start;background:var(--bg);border:1px solid var(--line);border-radius:var(--radius);padding:20px 20px;box-shadow:var(--shadow-sm)}
 .next-steps li::before{content:counter(ns);flex:0 0 38px;height:38px;border-radius:50%;background:var(--ink);color:var(--gold-soft);display:flex;align-items:center;justify-content:center;font-weight:800}
@@ -344,9 +354,35 @@ body{padding-bottom:0}
     <div class="wrap">
       <div class="ty-check" aria-hidden="true"><svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"><path d="M20 6 9 17l-5-5"/></svg></div>
       <h1>תודה! <em>מביקורת לחמלה</em> בדרך אליך</h1>
-      <p class="lead">ההזמנה התקבלה. פרטי הגישה לקורס ולבונוס, הסוויש הדיגיטלי, נשלחים אליך למייל.</p>
+      <p class="lead">ההזמנה התקבלה. פרטי הגישה ל"מביקורת לחמלה" ולבונוס, הסוויש הדיגיטלי, נשלחים אליך למייל. הקורס שרכשת קודם, "איך להפסיק לפחד מהתקף החרדה הבא", ממשיך להיות שלך, ושני הקורסים בנויים להשלים זה את זה.</p>
     </div>
   </header>
+
+  <section class="band band-soft">
+    <div class="wrap-wide in-view">
+      <p class="kicker center">שני קורסים, דרך אחת</p>
+      <h2 class="center">איך שני הקורסים משלימים זה את זה</h2>
+      <div class="two-courses">
+        <div class="tc-card">
+          <span class="tc-tag">הקורס שרכשת קודם</span>
+          <h3>איך להפסיק לפחד מהתקף החרדה הבא</h3>
+          <p class="tc-when">מה עושים ברגע שהתחושה מופיעה</p>
+          <p>ללמוד לזהות את הסחרור כשהוא מתחיל ולהגיב אחרת לתחושות בגוף: לתייג, להסכים, לצפות, לווסת את הגוף ולהמשיך הלאה, בלי להוסיף לתחושה עוד שכבה של פחד.</p>
+        </div>
+        <div class="tc-card">
+          <span class="tc-tag">הקורס שרכשת עכשיו</span>
+          <h3>מביקורת לחמלה</h3>
+          <p class="tc-when">מה אומרים לעצמך אחרי</p>
+          <p>ללמוד להחליף את הביקורת העצמית, "למה אני ככה" ו"שוב לא הצלחתי", בקול פנימי שמבין ותומך, ולהתייחס לעצמך בחמלה גם כשהחרדה כאן.</p>
+        </div>
+      </div>
+      <div class="tc-fit">
+        <p><strong>איך אחד משלים את השני:</strong> הקורס הראשון נותן לך כלים להגיב אחרת לתחושה עצמה, ברגע שהיא מופיעה. "מביקורת לחמלה" עובד על התגובה שלך לעצמך אחרי שהיא עברה, כדי שבמקום לבקר את עצמך תוכל להישאר לצדך.</p>
+        <p>כשאתה לומד גם להגיב אחרת לתחושה וגם להתייחס לעצמך אחרת, יש פחות מלחמה בשתי החזיתות, והחיים יכולים לחזור להיות רחבים יותר.</p>
+        <p>אין חובה להשלים את הקורס הראשון לפני שמתחילים את השני. אפשר להתקדם בשניהם במקביל, בקצב שלך, וכל אחד מהם נשאר פתוח לך לפי תקופת הגישה שלו.</p>
+      </div>
+    </div>
+  </section>
 
   <section class="band">
     <div class="wrap in-view">
@@ -375,7 +411,7 @@ body{padding-bottom:0}
     </div>
   </section>
 
-  <div class="disclaimer">הקורס והאפליקציה הם כלי ללמידה עצמית ואינם תחליף לאבחון או לטיפול רפואי או נפשי מותאם אישית. במקרה של תסמין רפואי חדש, חריג או מדאיג, יש לפנות לבדיקה רפואית בהתאם לצורך.</div>
+  <div class="disclaimer">הקורסים והאפליקציה הם כלי ללמידה עצמית ואינם תחליף לאבחון או לטיפול רפואי או נפשי מותאם אישית. במקרה של תסמין רפואי חדש, חריג או מדאיג, יש לפנות לבדיקה רפואית בהתאם לצורך.</div>
 </main>
 
 <footer class="footer">
