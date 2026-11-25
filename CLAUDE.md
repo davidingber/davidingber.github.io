@@ -10,6 +10,10 @@ Personal site and marketing funnels for David Ingber (דוד אינגבר), an e
 
 **`anxiety-wave/` runs under a separate, later, dedicated Google Doc** (the Doc's fileId is in the private `business-strategy.md`, linked from `strategy/business-strategy.md`'s "עדכון מאוחר יותר" section) that supersedes the older names for that funnel specifically: magnet "כשהגל עולה", group program "חוזרים לסמוך על עצמנו" everywhere, no links to "the app", every program CTA goes to the program's own landing page. That doc also holds the canonical ad/landing/email copy for `anxiety-wave/` — read it before rewriting any copy there instead of inventing new wording. `panel/` (older build, different names — see below) is unaffected and still governed by the strategy doc referenced above; don't mix the two.
 
+## Deployment (important)
+
+The live site is `https://davidingber.co.il/`, served by the Vercel project `davidingber` (git-connected to this repo; production = pushes to `main`). The old `davidingber.github.io` only redirects visitors there. **Push to `main` first and alone** (`git push origin HEAD:main`): Vercel creates one deployment per commit SHA, so pushing the working branch at the same moment can yield a preview-only deployment and leave production on the older commit. Push the working branch afterwards.
+
 ## Site structure
 
 - `index.html` — homepage (bundled/exported artifact format, Rubik font, sage/terra/gold palette).
